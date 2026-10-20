@@ -448,7 +448,13 @@ while true; do
   fi
   ROWS_TO_INSERT=$((TARGET_ROWS - CURRENT_ROWS))
   echo "Attempt $attempt: inserting $ROWS_TO_INSERT additional rows..."
-  if NUM_RECORDS=$ROWS_TO_INSERT TABLE_SUFFIX="_${TARGET_ROWS}" ./target/release/$BINARY_NAME; then
+  # A binary name with a slash is a path (the json-tree-bench crate builds
+  # into its own target/); a bare name is one of this package's binaries.
+  case "$BINARY_NAME" in
+    */*) BIN="$BINARY_NAME" ;;
+    *)   BIN="./target/release/$BINARY_NAME" ;;
+  esac
+  if NUM_RECORDS=$ROWS_TO_INSERT TABLE_SUFFIX="_${TARGET_ROWS}" "$BIN"; then
     echo "Attempt $attempt: succeeded."
   else
     echo "Attempt $attempt: failed (likely ZeroKMS transient), retrying after backoff..."
@@ -1223,4 +1229,144 @@ description = "Overview of ingest benchmark results — throughput per scenario,
 run = """
 #!/usr/bin/env bash
 python3 report_ingest.py "$@"
+"""
+
+# ---------------------------------------------------------------------------
+# EQL v4 — the JSON tree family (stack-encrypt's `Json` index)
+#
+# The v4 bundle installs eql_v4 / eql_v4_internal and the
+# public.eql_v4_json_tree domains and coexists with the v2 + v3 installs in
+# the same database. Results land under results/query/v4/ and
+# results/ingest/v4/ so the committed v2 and v3 numbers stay untouched.
+# ---------------------------------------------------------------------------
+
+[tasks.setup-db-v4]
+description = "Install the EQL v4 bundle (json_tree family) and create the v4 bench tables (coexists with v2 + v3)"
+depends = ["postgres"]
+run = """
+#!/usr/bin/env bash
+set -e
+
+echo "Waiting for PostgreSQL to be ready..."
+until pg_isready -U postgres > /dev/null 2>&1; do
+  sleep 1
+done
+
+# EQL v4 has no release yet: the bundle is built from a stack monorepo
+# checkout (`mise run build` in packages/eql writes
+# release/cipherstash-encrypt-v4.sql). Overrides:
+#   EQL_V4_SQL=<path to cipherstash-encrypt-v4.sql>  use a prebuilt bundle
+#   EQL_V4_DIR=<path to the stack checkout>          build from that checkout
+#     (default: ../stack, the sibling clone)
+if [ -z "${EQL_V4_SQL:-}" ]; then
+  EQL_V4_DIR="${EQL_V4_DIR:-../stack}"
+  if [ ! -d "$EQL_V4_DIR/packages/eql" ]; then
+    echo "Error: stack checkout not found at $EQL_V4_DIR (set EQL_V4_DIR or EQL_V4_SQL)"
+    exit 1
+  fi
+  echo "Building EQL v4 bundle from $EQL_V4_DIR/packages/eql..."
+  (cd "$EQL_V4_DIR/packages/eql" && mise run build)
+  EQL_V4_SQL="$EQL_V4_DIR/packages/eql/release/cipherstash-encrypt-v4.sql"
+fi
+
+# Skip the install if eql_v4 is already present; the bundle is not
+# idempotent. To reinstall after a bundle change, apply the matching
+# cipherstash-encrypt-v4-uninstall.sql first.
+if psql -U postgres -d postgres -tAc "SELECT 1 FROM pg_namespace WHERE nspname = 'eql_v4'" | grep -q 1; then
+  echo "eql_v4 schema already installed — skipping bundle install."
+else
+  echo "Installing EQL v4 from $EQL_V4_SQL..."
+  psql -v ON_ERROR_STOP=1 -U postgres -d postgres < "$EQL_V4_SQL"
+fi
+
+echo "Creating v4 bench tables..."
+psql -v ON_ERROR_STOP=1 -U postgres -d postgres < sql/schema_v4.sql
+
+echo "EQL v4 database setup complete!"
+"""
+
+[tasks."bench:build:v4"]
+description = "Build the json-tree-bench crate (stack-encrypt json_tree ingest + bench) in release mode"
+run = """
+#!/usr/bin/env bash
+set -e
+echo "Building json-tree-bench in release mode..."
+cargo build --release --manifest-path json-tree-bench/Cargo.toml --bins --benches
+"""
+
+[tasks."prepare:json_tree_small_v4"]
+description = "Prepare json_tree_small_encrypted_v4_<N> (public.eql_v4_json_tree, stack-encrypt Json index) with target row count"
+depends = ["bench:build:v4"]
+run = "mise run prepare:_table json_tree_small_encrypted_v4 json-tree-bench/target/release/encrypt_json_tree_v4 $1"
+
+[tasks."bench:v4:ingest:json-tree-small"]
+description = "Run encrypt_json_tree_v4 ingest benchmark (public.eql_v4_json_tree); results under results/ingest/v4/"
+run = """
+#!/usr/bin/env bash
+set -e
+# bench:ingest:_run runs ./target/release/<bench>; link the crate's binary
+# in so the shared hyperfine/combine_benchmark path drives it unchanged.
+mise run bench:build:v4
+ln -sf ../../json-tree-bench/target/release/encrypt_json_tree_v4 target/release/encrypt_json_tree_v4
+mise run bench:ingest:_run encrypt_json_tree_v4 json_tree_small_encrypted_v4
+mkdir -p results/ingest/v4
+mv "results/ingest/encrypt_json_tree_v4_combined.json" "results/ingest/v4/encrypt_json_tree_v4_combined.json"
+echo "Moved results to results/ingest/v4/encrypt_json_tree_v4_combined.json"
+"""
+
+[tasks."bench:v4:query:_run"]
+description = "Internal: run one v4 query bench (prepare deps, clean criterion group, write results under results/query/v4/)"
+run = """
+#!/usr/bin/env bash
+set -e
+
+# Signature: <bench> <group> [prepare tasks...] <target_rows> — see
+# bench:v3:query:_run for why the tier comes last.
+BENCH_NAME="$1"
+GROUP="$2"
+shift 2
+PREPS=""
+while [ $# -gt 1 ]; do
+  PREPS="$PREPS $1"
+  shift
+done
+TARGET_ROWS="${1:-}"
+
+if [ -z "$BENCH_NAME" ] || [ -z "$GROUP" ] || [ -z "$TARGET_ROWS" ]; then
+  echo "Usage: mise run bench:v4:query:_run <bench> <group> [prepare tasks...] <target_rows>"
+  exit 1
+fi
+if ! [[ "$TARGET_ROWS" =~ ^[0-9]+$ ]]; then
+  echo "Error: target row count must be a positive integer"
+  exit 1
+fi
+
+for prep in $PREPS; do
+  echo "Preparing via prepare:$prep..."
+  mise run "prepare:$prep" "$TARGET_ROWS"
+done
+
+echo "Cleaning old criterion data for $GROUP..."
+rm -rf "json-tree-bench/target/criterion/data/main/$GROUP" "json-tree-bench/target/criterion/reports/$GROUP"
+
+echo "Running $BENCH_NAME query benchmark..."
+mkdir -p results/query/v4
+OUTPUT_FILE="results/query/v4/${BENCH_NAME%_v4}_rows_${TARGET_ROWS}.json"
+# The bench lives in the json-tree-bench crate; cargo criterion runs it
+# with that directory as cwd, so the sidecar path is passed absolute.
+TARGET_ROWS="$TARGET_ROWS" RESULTS_DIR="$PWD/results/query/v4" \
+  cargo criterion --manifest-path json-tree-bench/Cargo.toml --bench "$BENCH_NAME" --message-format json > "$OUTPUT_FILE"
+
+echo "Benchmark complete! Results written to $OUTPUT_FILE"
+"""
+
+[tasks."bench:v4:query:json_tree"]
+description = "Run JSON tree v4 query benchmark (public.eql_v4_json_tree)"
+run = "mise run bench:v4:query:_run json_tree_v4 JSON_TREE json_tree_small_v4"
+
+[tasks."report:json-tree-compare"]
+description = "JSON: SteVec (v3) vs json_tree (v4) vs plaintext, per scenario and tier (medians + delta)"
+run = """
+#!/usr/bin/env bash
+python3 report_json_tree_compare.py "$@"
 """

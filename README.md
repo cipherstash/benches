@@ -54,6 +54,32 @@ output through `eql-bindings::from_v2` (the supported migration path — see
 `src/v3.rs` for the details and caveats). The `ope` benches use real
 CLLW-OPE `op` terms emitted by cipherstash-client 0.38.1 (`Index::new_ope()`).
 
+## 🌳 EQL v4 `json_tree` benches (stack-encrypt's JSON index)
+
+`json-tree-bench/` benchmarks the JSON tree family — the successor to the
+SteVec `public.json` scheme — against the same `FakeJsonSmall` corpus, so the
+two JSON schemes compare like for like (`mise run report:json-tree-compare`).
+It is a crate of its own because the root package's cipherstash-client 0.38.1
+and stack-encrypt cannot share one zerokms-protocol; it pulls stack-encrypt
+and eql-bindings from the stack monorepo's `feat/json-index-stack-encrypt`
+branch. Documents are sealed under an in-process fake key source (no ZeroKMS
+round-trip), so its ingest numbers are not comparable to the v3 ingest; its
+query numbers are, since the cost under measurement is Postgres's.
+
+```bash
+# Build + install the v4 bundle from ../stack (or EQL_V4_SQL=<bundle>), create tables
+mise run setup-db-v4
+
+# Populate (tiers as for v3) and run the query bench
+mise run bench:v4:query:json_tree 10000      # prepares json_tree_small_encrypted_v4_10000 first
+
+# Ingest throughput (hyperfine; results/ingest/v4/)
+mise run bench:v4:ingest:json-tree-small
+
+# SteVec vs json_tree vs plaintext, per scenario and tier
+mise run report:json-tree-compare -- --output report/JSON_TREE_COMPARISON.md
+```
+
 ### Other benchmarks
 
 - **[ZeroKMS vs AWS KMS](kms-app/REPORT.md)** — bulk field‑encryption throughput
