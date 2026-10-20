@@ -3,13 +3,18 @@ python = "latest"
 rust = "latest"
 
 [env]
-DATABASE_URL = "postgres://postgres:postgres@localhost:5400/postgres"
+# BENCH_DB picks the database on the benches cluster (default `postgres`).
+# A second database on the same cluster is how a different EQL install
+# (another v3 release, or v3 + v4 side by side) is benchmarked without
+# touching the one the committed results came from:
+#   BENCH_DB=jsonbench mise run setup-db-v3 ...
+DATABASE_URL = "postgres://postgres:postgres@localhost:5400/{{ get_env(name='BENCH_DB', default='postgres') }}"
 # Native Postgres benches cluster (migrated off Docker). psql / pg_isready /
 # pg_dump pick up host/port/user/db from these; pg_ctl uses PGDATA.
 PGHOST = "localhost"
 PGPORT = "5400"
 PGUSER = "postgres"
-PGDATABASE = "postgres"
+PGDATABASE = "{{ get_env(name='BENCH_DB', default='postgres') }}"
 PGDATA = "{{env.HOME}}/.eqlbench/pgdata"
 # Homebrew keg-only postgresql@17 — not on PATH by default.
 _.path = ["/opt/homebrew/opt/postgresql@17/bin"]
@@ -108,7 +113,7 @@ until pg_isready -U postgres > /dev/null 2>&1; do
 done
 
 echo "Truncating all bench tables in public schema..."
-psql -v ON_ERROR_STOP=1 -U postgres -d postgres <<'SQL'
+psql -v ON_ERROR_STOP=1 -U postgres <<'SQL'
 DO $$
 DECLARE
   r record;
@@ -161,10 +166,10 @@ else
 fi
 
 echo "Installing EQL..."
-psql -v ON_ERROR_STOP=1 -U postgres -d postgres < /tmp/cipherstash-encrypt.sql
+psql -v ON_ERROR_STOP=1 -U postgres < /tmp/cipherstash-encrypt.sql
 
 echo "Creating tables..."
-psql -v ON_ERROR_STOP=1 -U postgres -d postgres < sql/schema.sql
+psql -v ON_ERROR_STOP=1 -U postgres < sql/schema.sql
 
 echo "Database setup complete!"
 """
@@ -216,18 +221,18 @@ fi
 # still has eql_v3.* types), run the matching v3 uninstaller first
 # (cipherstash-encrypt-uninstall.sql from the same release — drops the eql_v3
 # schemas and the public.* domains).
-if psql -U postgres -d postgres -tAc "SELECT 1 FROM pg_namespace WHERE nspname = 'eql_v3'" | grep -q 1; then
+if psql -U postgres -tAc "SELECT 1 FROM pg_namespace WHERE nspname = 'eql_v3'" | grep -q 1; then
   echo "eql_v3 schema already installed — skipping bundle install."
 else
   echo "Installing EQL v3 from $EQL_V3_SQL..."
-  psql -v ON_ERROR_STOP=1 -U postgres -d postgres < "$EQL_V3_SQL"
+  psql -v ON_ERROR_STOP=1 -U postgres < "$EQL_V3_SQL"
 fi
 
 echo "Creating v3 bench tables..."
-psql -v ON_ERROR_STOP=1 -U postgres -d postgres < sql/schema_v3.sql
+psql -v ON_ERROR_STOP=1 -U postgres < sql/schema_v3.sql
 
 echo "Creating plaintext baseline tables..."
-psql -v ON_ERROR_STOP=1 -U postgres -d postgres < sql/plaintext_baselines.sql
+psql -v ON_ERROR_STOP=1 -U postgres < sql/plaintext_baselines.sql
 
 echo "EQL v3 database setup complete!"
 """
@@ -263,7 +268,7 @@ fi
 echo "Running $BENCH_NAME ingest benchmark..."
 mise x -- hyperfine --export-json target/${BENCH_NAME}_hyperfine.json \
   -L num_records "${NUM_RECORDS}" --runs 2 \
-  --prepare "psql -U postgres -d postgres -c 'TRUNCATE TABLE ${TABLE_NAME};'" \
+  --prepare "psql -U postgres -c 'TRUNCATE TABLE ${TABLE_NAME};'" \
   "NUM_RECORDS={num_records} ./target/release/$BENCH_NAME"
 
 echo "Combining results..."
@@ -353,15 +358,15 @@ until pg_isready -U postgres > /dev/null 2>&1; do
 done
 
 echo "Truncating table and creating GIN index before ingest..."
-psql -v ON_ERROR_STOP=1 -U postgres -d postgres -c "TRUNCATE TABLE ${TABLE_NAME};"
-psql -v ON_ERROR_STOP=1 -U postgres -d postgres < sql/indexes/${TABLE_NAME}_down.sql
-psql -v ON_ERROR_STOP=1 -U postgres -d postgres < sql/indexes/${TABLE_NAME}_up.sql
+psql -v ON_ERROR_STOP=1 -U postgres -c "TRUNCATE TABLE ${TABLE_NAME};"
+psql -v ON_ERROR_STOP=1 -U postgres < sql/indexes/${TABLE_NAME}_down.sql
+psql -v ON_ERROR_STOP=1 -U postgres < sql/indexes/${TABLE_NAME}_up.sql
 
 echo "Running $BENCH_NAME ingest benchmark (with GIN index)..."
 mkdir -p results/ingest
 hyperfine --export-json results/ingest/${BENCH_NAME}_gin_hyperfine.json \
   -L num_records "${NUM_RECORDS}" --runs 2 \
-  --prepare "psql -U postgres -d postgres -c 'TRUNCATE TABLE ${TABLE_NAME};'" \
+  --prepare "psql -U postgres -c 'TRUNCATE TABLE ${TABLE_NAME};'" \
   "NUM_RECORDS={num_records} ./target/release/$BENCH_NAME"
 
 echo "Benchmark complete! Results written to results/ingest/${BENCH_NAME}_gin_hyperfine.json"
@@ -416,7 +421,7 @@ until pg_isready -U postgres > /dev/null 2>&1; do
 done
 
 echo "Counting rows in $TABLE_NAME table..."
-CURRENT_ROWS=$(psql -U postgres -d postgres -t -c "SELECT COUNT(*) FROM $TABLE_NAME;" | tr -d ' ')
+CURRENT_ROWS=$(psql -U postgres -t -c "SELECT COUNT(*) FROM $TABLE_NAME;" | tr -d ' ')
 
 echo "Current rows: $CURRENT_ROWS"
 echo "Target rows: $TARGET_ROWS"
@@ -427,7 +432,7 @@ if [ "$CURRENT_ROWS" -ge "$TARGET_ROWS" ]; then
 fi
 
 echo "Dropping indexes..."
-psql -U postgres -d postgres < sql/indexes/${TABLE_NAME}_down.sql
+psql -U postgres < sql/indexes/${TABLE_NAME}_down.sql
 
 # ZeroKMS occasionally returns "Unexpected error" mid-stream on long encrypt
 # runs (typically 150-400k rows in), killing the binary. The binary writes
@@ -437,7 +442,7 @@ psql -U postgres -d postgres < sql/indexes/${TABLE_NAME}_down.sql
 MAX_ATTEMPTS=30
 attempt=1
 while true; do
-  CURRENT_ROWS=$(psql -U postgres -d postgres -t -c "SELECT COUNT(*) FROM $TABLE_NAME;" | tr -d ' ')
+  CURRENT_ROWS=$(psql -U postgres -t -c "SELECT COUNT(*) FROM $TABLE_NAME;" | tr -d ' ')
   if [ "$CURRENT_ROWS" -ge "$TARGET_ROWS" ]; then
     echo "Table reached $CURRENT_ROWS rows (>= $TARGET_ROWS)."
     break
@@ -468,7 +473,7 @@ echo "Creating indexes..."
 # is a first-class result for the v3 comparison (the v3 ORE btree opclass
 # has a plpgsql comparator; build time at 1M is a named risk to measure).
 INDEX_BUILD_START=$(date +%s)
-psql -U postgres -d postgres < sql/indexes/${TABLE_NAME}_up.sql
+psql -U postgres < sql/indexes/${TABLE_NAME}_up.sql
 INDEX_BUILD_SECS=$(( $(date +%s) - INDEX_BUILD_START ))
 mkdir -p results/ingest
 # NB: single-quoted printf format — this script lives in a TOML basic
@@ -483,9 +488,9 @@ echo "Index build took ${INDEX_BUILD_SECS}s (logged to results/ingest/index_buil
 # predicates — which silently looks like a benchmark of "EQL is slow"
 # when really it's "stats are stale". Costs seconds even at 10M rows.
 echo "Running ANALYZE..."
-psql -U postgres -d postgres -c "ANALYZE $TABLE_NAME;"
+psql -U postgres -c "ANALYZE $TABLE_NAME;"
 
-FINAL_ROWS=$(psql -U postgres -d postgres -t -c "SELECT COUNT(*) FROM $TABLE_NAME;" | tr -d ' ')
+FINAL_ROWS=$(psql -U postgres -t -c "SELECT COUNT(*) FROM $TABLE_NAME;" | tr -d ' ')
 echo "Preparation complete! Final row count: $FINAL_ROWS"
 """
 
@@ -539,7 +544,7 @@ depends = ["postgres", "bench:build"]
 run = """
 #!/usr/bin/env bash
 set -e
-CURRENT=$(psql -U postgres -d postgres -tAc "SELECT COUNT(*) FROM scalar_smoke_v3;")
+CURRENT=$(psql -U postgres -tAc "SELECT COUNT(*) FROM scalar_smoke_v3;")
 TARGET="${1:-10000}"
 if [ "$CURRENT" -ge "$TARGET" ]; then
   echo "scalar_smoke_v3 already has $CURRENT rows (>= $TARGET)."
@@ -591,7 +596,7 @@ until pg_isready -U postgres > /dev/null 2>&1; do
   sleep 1
 done
 
-CURRENT_ROWS=$(psql -U postgres -d postgres -t -c "SELECT COUNT(*) FROM $TABLE_NAME;" | tr -d ' ')
+CURRENT_ROWS=$(psql -U postgres -t -c "SELECT COUNT(*) FROM $TABLE_NAME;" | tr -d ' ')
 
 echo "Current rows in $TABLE_NAME: $CURRENT_ROWS"
 echo "Target rows: $TARGET_ROWS"
@@ -606,13 +611,13 @@ echo "Inserting $ROWS_TO_INSERT random category values (CAT_001..CAT_250, unifor
 
 # `format('CAT_%s', lpad(((random()*249)::int + 1)::text, 3, '0'))` matches the
 # Rust FakeCategory output `format!("CAT_{:03}", n)`. 250 distinct buckets.
-psql -v ON_ERROR_STOP=1 -U postgres -d postgres -c "
+psql -v ON_ERROR_STOP=1 -U postgres -c "
   INSERT INTO $TABLE_NAME (value)
   SELECT 'CAT_' || lpad(((random() * 249)::int + 1)::text, 3, '0')
   FROM generate_series(1, $ROWS_TO_INSERT) g;
 "
 
-FINAL_ROWS=$(psql -U postgres -d postgres -t -c "SELECT COUNT(*) FROM $TABLE_NAME;" | tr -d ' ')
+FINAL_ROWS=$(psql -U postgres -t -c "SELECT COUNT(*) FROM $TABLE_NAME;" | tr -d ' ')
 echo "Preparation complete! Final row count: $FINAL_ROWS"
 """
 
@@ -629,22 +634,22 @@ case "$TARGET_ROWS" in
 esac
 TABLE_NAME="integer_plaintext_${TARGET_ROWS}"
 until pg_isready -U postgres > /dev/null 2>&1; do sleep 1; done
-CURRENT_ROWS=$(psql -U postgres -d postgres -tAc "SELECT COUNT(*) FROM $TABLE_NAME;")
+CURRENT_ROWS=$(psql -U postgres -tAc "SELECT COUNT(*) FROM $TABLE_NAME;")
 if [ "$CURRENT_ROWS" -ge "$TARGET_ROWS" ]; then
   echo "$TABLE_NAME already has $CURRENT_ROWS rows (>= $TARGET_ROWS)."
-  psql -U postgres -d postgres -c "CREATE INDEX IF NOT EXISTS ${TABLE_NAME}_value_idx ON $TABLE_NAME (value);"
+  psql -U postgres -c "CREATE INDEX IF NOT EXISTS ${TABLE_NAME}_value_idx ON $TABLE_NAME (value);"
   exit 0
 fi
 ROWS_TO_INSERT=$((TARGET_ROWS - CURRENT_ROWS))
 echo "Inserting $ROWS_TO_INSERT rows into $TABLE_NAME..."
 # Same distribution as the encrypted integer bench: uniform over the full
 # i32 range (Faker.fake::<i32>()).
-psql -v ON_ERROR_STOP=1 -U postgres -d postgres -c "
+psql -v ON_ERROR_STOP=1 -U postgres -c "
   INSERT INTO $TABLE_NAME (value)
   SELECT (floor(random() * 4294967296) - 2147483648)::int
   FROM generate_series(1, $ROWS_TO_INSERT);"
-psql -U postgres -d postgres -c "CREATE INDEX IF NOT EXISTS ${TABLE_NAME}_value_idx ON $TABLE_NAME (value);"
-psql -U postgres -d postgres -c "ANALYZE $TABLE_NAME;"
+psql -U postgres -c "CREATE INDEX IF NOT EXISTS ${TABLE_NAME}_value_idx ON $TABLE_NAME (value);"
+psql -U postgres -c "ANALYZE $TABLE_NAME;"
 echo "Preparation complete."
 """
 
@@ -661,15 +666,15 @@ case "$TARGET_ROWS" in
 esac
 TABLE_NAME="json_small_plaintext_${TARGET_ROWS}"
 until pg_isready -U postgres > /dev/null 2>&1; do sleep 1; done
-CURRENT_ROWS=$(psql -U postgres -d postgres -tAc "SELECT COUNT(*) FROM $TABLE_NAME;")
+CURRENT_ROWS=$(psql -U postgres -tAc "SELECT COUNT(*) FROM $TABLE_NAME;")
 if [ "$CURRENT_ROWS" -ge "$TARGET_ROWS" ]; then
   echo "$TABLE_NAME already has $CURRENT_ROWS rows (>= $TARGET_ROWS)."
-  psql -U postgres -d postgres -c "CREATE INDEX IF NOT EXISTS ${TABLE_NAME}_gin_idx ON $TABLE_NAME USING GIN (value jsonb_path_ops);"
+  psql -U postgres -c "CREATE INDEX IF NOT EXISTS ${TABLE_NAME}_gin_idx ON $TABLE_NAME USING GIN (value jsonb_path_ops);"
   exit 0
 fi
 ROWS_TO_INSERT=$((TARGET_ROWS - CURRENT_ROWS))
 echo "Inserting $ROWS_TO_INSERT rows into $TABLE_NAME..."
-psql -v ON_ERROR_STOP=1 -U postgres -d postgres -c "
+psql -v ON_ERROR_STOP=1 -U postgres -c "
   INSERT INTO $TABLE_NAME (value)
   SELECT jsonb_build_object(
     'first_name', md5(random()::text),
@@ -678,8 +683,8 @@ psql -v ON_ERROR_STOP=1 -U postgres -d postgres -c "
     'email',      md5(random()::text) || '@example.com'
   )
   FROM generate_series(1, $ROWS_TO_INSERT);"
-psql -U postgres -d postgres -c "CREATE INDEX IF NOT EXISTS ${TABLE_NAME}_gin_idx ON $TABLE_NAME USING GIN (value jsonb_path_ops);"
-psql -U postgres -d postgres -c "ANALYZE $TABLE_NAME;"
+psql -U postgres -c "CREATE INDEX IF NOT EXISTS ${TABLE_NAME}_gin_idx ON $TABLE_NAME USING GIN (value jsonb_path_ops);"
+psql -U postgres -c "ANALYZE $TABLE_NAME;"
 echo "Preparation complete."
 """
 
@@ -714,7 +719,7 @@ until pg_isready -U postgres > /dev/null 2>&1; do
   sleep 1
 done
 
-CURRENT_ROWS=$(psql -U postgres -d postgres -t -c "SELECT COUNT(*) FROM $TABLE_NAME;" | tr -d ' ')
+CURRENT_ROWS=$(psql -U postgres -t -c "SELECT COUNT(*) FROM $TABLE_NAME;" | tr -d ' ')
 
 echo "Current rows in $TABLE_NAME: $CURRENT_ROWS"
 echo "Target rows: $TARGET_ROWS"
@@ -724,7 +729,7 @@ if [ "$CURRENT_ROWS" -ge "$TARGET_ROWS" ]; then
   # Still ensure the value index exists — older populations predate it, and
   # the early exit must not skip it (that's how the 1M plaintext baseline
   # ran unindexed the first time).
-  psql -U postgres -d postgres -c "CREATE INDEX IF NOT EXISTS ${TABLE_NAME}_value_idx ON $TABLE_NAME (value);"
+  psql -U postgres -c "CREATE INDEX IF NOT EXISTS ${TABLE_NAME}_value_idx ON $TABLE_NAME (value);"
   exit 0
 fi
 
@@ -734,7 +739,7 @@ echo "Inserting $ROWS_TO_INSERT random rows (md5 of (random, ordinal))..."
 # md5(random()::text || g::text) is high-cardinality 32-char hex per row.
 # Single SQL insert in PG is far faster than per-row roundtrips — completes
 # 10M rows in tens of seconds, no encryption-client dependency.
-psql -v ON_ERROR_STOP=1 -U postgres -d postgres -c "
+psql -v ON_ERROR_STOP=1 -U postgres -c "
   INSERT INTO $TABLE_NAME (value)
   SELECT md5(random()::text || g::text)
   FROM generate_series(1, $ROWS_TO_INSERT) g;
@@ -744,10 +749,10 @@ psql -v ON_ERROR_STOP=1 -U postgres -d postgres -c "
 # runs `WHERE value = $1` against this table, and the encrypted counterpart
 # is btree-indexed — an unindexed plaintext baseline would overstate EQL's
 # relative performance. Idempotent; harmless for other consumers.
-psql -U postgres -d postgres -c "CREATE INDEX IF NOT EXISTS ${TABLE_NAME}_value_idx ON $TABLE_NAME (value);"
-psql -U postgres -d postgres -c "ANALYZE $TABLE_NAME;"
+psql -U postgres -c "CREATE INDEX IF NOT EXISTS ${TABLE_NAME}_value_idx ON $TABLE_NAME (value);"
+psql -U postgres -c "ANALYZE $TABLE_NAME;"
 
-FINAL_ROWS=$(psql -U postgres -d postgres -t -c "SELECT COUNT(*) FROM $TABLE_NAME;" | tr -d ' ')
+FINAL_ROWS=$(psql -U postgres -t -c "SELECT COUNT(*) FROM $TABLE_NAME;" | tr -d ' ')
 echo "Preparation complete! Final row count: $FINAL_ROWS"
 """
 
@@ -1272,15 +1277,15 @@ fi
 # Skip the install if eql_v4 is already present; the bundle is not
 # idempotent. To reinstall after a bundle change, apply the matching
 # cipherstash-encrypt-v4-uninstall.sql first.
-if psql -U postgres -d postgres -tAc "SELECT 1 FROM pg_namespace WHERE nspname = 'eql_v4'" | grep -q 1; then
+if psql -U postgres -tAc "SELECT 1 FROM pg_namespace WHERE nspname = 'eql_v4'" | grep -q 1; then
   echo "eql_v4 schema already installed — skipping bundle install."
 else
   echo "Installing EQL v4 from $EQL_V4_SQL..."
-  psql -v ON_ERROR_STOP=1 -U postgres -d postgres < "$EQL_V4_SQL"
+  psql -v ON_ERROR_STOP=1 -U postgres < "$EQL_V4_SQL"
 fi
 
 echo "Creating v4 bench tables..."
-psql -v ON_ERROR_STOP=1 -U postgres -d postgres < sql/schema_v4.sql
+psql -v ON_ERROR_STOP=1 -U postgres < sql/schema_v4.sql
 
 echo "EQL v4 database setup complete!"
 """
@@ -1298,6 +1303,11 @@ cargo build --release --manifest-path json-tree-bench/Cargo.toml --bins --benche
 description = "Prepare json_tree_small_encrypted_v4_<N> (public.eql_v4_json_tree, stack-encrypt Json index) with target row count"
 depends = ["bench:build:v4"]
 run = "mise run prepare:_table json_tree_small_encrypted_v4 json-tree-bench/target/release/encrypt_json_tree_v4 $1"
+
+[tasks."prepare:json_tree_large_v4"]
+description = "Prepare json_tree_large_encrypted_v4_<N> (nested FakeJsonLarge corpus, public.eql_v4_json_tree) with target row count"
+depends = ["bench:build:v4"]
+run = "mise run prepare:_table json_tree_large_encrypted_v4 json-tree-bench/target/release/encrypt_json_tree_large_v4 $1"
 
 [tasks."bench:v4:ingest:json-tree-small"]
 description = "Run encrypt_json_tree_v4 ingest benchmark (public.eql_v4_json_tree); results under results/ingest/v4/"
@@ -1363,6 +1373,10 @@ echo "Benchmark complete! Results written to $OUTPUT_FILE"
 [tasks."bench:v4:query:json_tree"]
 description = "Run JSON tree v4 query benchmark (public.eql_v4_json_tree)"
 run = "mise run bench:v4:query:_run json_tree_v4 JSON_TREE json_tree_small_v4"
+
+[tasks."bench:v4:query:json_tree_nested"]
+description = "Run JSON tree v4 nested-corpus query benchmark (walks, array functions, deep containment, with the plaintext twin as baseline)"
+run = "mise run bench:v4:query:_run json_tree_nested_v4 JSON_TREE_NESTED json_tree_large_v4"
 
 [tasks."report:json-tree-compare"]
 description = "JSON: SteVec (v3) vs json_tree (v4) vs plaintext, per scenario and tier (medians + delta)"

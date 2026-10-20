@@ -79,7 +79,7 @@ def load_metadata(path: Path) -> dict:
 
 def tiers() -> list:
     found = set()
-    for f in V4_DIR.glob("json_tree_rows_*.json"):
+    for f in V4_DIR.glob("json_tree_rows_*.json"):  # not json_tree_nested_rows_*
         m = re.match(r"json_tree_rows_(\d+)\.json$", f.name)
         if m:
             found.add(int(m.group(1)))
@@ -140,6 +140,51 @@ def render(tier: int) -> list:
     return lines
 
 
+NESTED_ORDER = [
+    "contains/deep_object",
+    "contains/array_element",
+    "contains/nested_array",
+    "field_eq/nested",
+    "field_gt/nested",
+    "field_order/nested",
+    "subtree/company",
+    "subtree/user",
+    "subtree/orders",
+    "subtree_at/items",
+    "children/orders",
+    "child_count/orders",
+    "path_query/wildcard",
+    "extract/nested",
+]
+
+
+def render_nested(tier: int) -> list:
+    """The nested corpus: json_tree against the native jsonb twin (same rows)."""
+    res = load_medians(V4_DIR / f"json_tree_nested_rows_{tier}.json")
+    meta = load_metadata(V4_DIR / f"json_tree_nested_metadata_{tier}.json")
+    if not res:
+        return []
+    lines = [
+        f"### Nested corpus, {tier:,} rows (no SteVec twin; baseline is native jsonb over the same rows)",
+        "",
+        "| scenario | v4 json_tree | plaintext jsonb | v4 / plain | rows | v4 index | plain index |",
+        "|---|--:|--:|--:|--:|---|---|",
+    ]
+    for tail in NESTED_ORDER:
+        e_id = f"JSON_TREE_NESTED/json_tree/{tail}/{tier}"
+        p_id = f"JSON_TREE_NESTED/plain/{tail}/{tier}"
+        if e_id not in res:
+            continue
+        e, p = res.get(e_id), res.get(p_id)
+        ratio = "—" if e is None or p is None else f"{e / p:.1f}×"
+        me, mp = meta.get(e_id, {}), meta.get(p_id, {})
+        idx_e = ", ".join(i.replace(f"json_tree_large_encrypted_v4_{tier}_", "") for i in me.get("indexes_used", [])) or "seq scan"
+        idx_p = ", ".join(i.replace(f"json_tree_large_plain_v4_{tier}_", "") for i in mp.get("indexes_used", [])) or "seq scan"
+        lines.append(f"| {tail} | {ms(e)} | {ms(p)} | {ratio} | {me.get('rows_returned', '—')} | {idx_e} | {idx_p} |")
+    lines.append("")
+    return lines
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--output", type=Path, help="also write the markdown here")
@@ -148,6 +193,9 @@ def main():
            "Query-only medians (criterion, 10 samples), no decrypt. Delta is v4 relative to v3; negative is faster.", ""]
     for tier in tiers():
         out += render(tier)
+    for tier in sorted({int(m.group(1)) for f in V4_DIR.glob("json_tree_nested_rows_*.json")
+                        if (m := re.match(r"json_tree_nested_rows_(\d+)\.json$", f.name))}):
+        out += render_nested(tier)
     text = "\n".join(out)
     print(text)
     if args.output:

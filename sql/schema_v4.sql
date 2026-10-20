@@ -63,3 +63,53 @@ CREATE TABLE IF NOT EXISTS json_tree_small_plain_v4_10000000 (
     id INTEGER PRIMARY KEY,
     plain JSONB NOT NULL
 );
+
+-- Nested corpus: the root crate's FakeJsonLarge shape (user / company /
+-- addresses / orders with items) — containers at every depth and two
+-- arrays of objects — for the token-chain walks (json_tree_subtree,
+-- json_tree_children, json_tree_child_count), wildcard path queries and
+-- deep containment that the flat corpus cannot exercise. No SteVec twin:
+-- the v3 JSON bench is small-corpus only. The plaintext twin tables
+-- double as the jsonb baseline for these scenarios (same rows, native
+-- operators, jsonb_path_ops GIN), since no json_large_plaintext baseline
+-- exists.
+
+CREATE TABLE IF NOT EXISTS json_tree_large_encrypted_v4 (
+    id SERIAL PRIMARY KEY,
+    value public.eql_v4_json_tree NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS json_tree_large_plain_v4 (
+    id INTEGER PRIMARY KEY,
+    plain JSONB NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS json_tree_large_encrypted_v4_10000 (
+    id SERIAL PRIMARY KEY,
+    value public.eql_v4_json_tree NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS json_tree_large_plain_v4_10000 (
+    id INTEGER PRIMARY KEY,
+    plain JSONB NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS json_tree_large_encrypted_v4_100000 (
+    id SERIAL PRIMARY KEY,
+    value public.eql_v4_json_tree NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS json_tree_large_plain_v4_100000 (
+    id INTEGER PRIMARY KEY,
+    plain JSONB NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS json_tree_large_encrypted_v4_1000000 (
+    id SERIAL PRIMARY KEY,
+    value public.eql_v4_json_tree NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS json_tree_large_plain_v4_1000000 (
+    id INTEGER PRIMARY KEY,
+    plain JSONB NOT NULL
+);

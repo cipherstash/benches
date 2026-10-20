@@ -30,12 +30,20 @@ criterion = { version = "0.4.0", features = ["async_tokio"] }
 anyhow = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-fake = "4.4.0"
+fake = { version = "4.4.0", features = ["chrono"] }
 
 [[bin]]
 name = "encrypt_json_tree_v4"
 path = "src/bin/encrypt_json_tree_v4.rs"
 
+[[bin]]
+name = "encrypt_json_tree_large_v4"
+path = "src/bin/encrypt_json_tree_large_v4.rs"
+
 [[bench]]
 name = "json_tree_v4"
+harness = false
+
+[[bench]]
+name = "json_tree_nested_v4"
 harness = false

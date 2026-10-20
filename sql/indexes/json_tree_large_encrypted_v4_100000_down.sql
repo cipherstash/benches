@@ -1,0 +1,2 @@
+DROP INDEX IF EXISTS json_tree_large_encrypted_v4_100000_query_gin_idx;
+DROP INDEX IF EXISTS json_tree_large_plain_v4_100000_gin_idx;
