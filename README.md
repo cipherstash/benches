@@ -77,8 +77,11 @@ mise run bench:v4:query:json_tree 10000      # prepares json_tree_small_encrypte
 mise run bench:v4:ingest:json-tree-small
 
 # SteVec vs json_tree vs plaintext, per scenario and tier
-mise run report:json-tree-compare -- --output report/JSON_TREE_COMPARISON.md
+mise run report:json-tree-compare
 ```
+
+The first measurement, with the findings behind the numbers, is
+[`report/JSON_TREE_COMPARISON.md`](report/JSON_TREE_COMPARISON.md).
 
 ### Other benchmarks
 

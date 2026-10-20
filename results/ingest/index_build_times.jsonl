@@ -28,3 +28,7 @@
 {"table": "category_encrypted_v3_10000000", "build_seconds": 9, "recorded_at": "2026-07-04T12:11:35Z"}
 {"table": "category_encrypted_10000000", "build_seconds": 148, "recorded_at": "2026-07-04T12:34:08Z"}
 {"table": "string_encrypted_10000000", "build_seconds": 342, "recorded_at": "2026-07-04T12:54:54Z"}
+{"table": "json_tree_small_encrypted_v4_10000", "build_seconds": 1, "recorded_at": "2026-10-20T01:47:38Z"}
+{"table": "json_ste_vec_small_encrypted_v3_10000", "build_seconds": 1, "recorded_at": "2026-10-20T01:58:44Z"}
+{"table": "json_tree_small_encrypted_v4_10000", "build_seconds": 1, "recorded_at": "2026-10-20T01:58:49Z"}
+{"table": "json_tree_large_encrypted_v4_10000", "build_seconds": 44, "recorded_at": "2026-10-20T02:02:05Z"}

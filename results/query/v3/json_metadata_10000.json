@@ -21,7 +21,7 @@
                 "Plans": [
                   {
                     "Async Capable": false,
-                    "Index Cond": "(eql_v3.jsonb_array((value)::jsonb) @> '{\"{\\\"s\\\": \\\"75146c96a91ff82146e29e87b5accb95\\\", \\\"hm\\\": \\\"98b7664512c8c0125772e43e47dde0ce\\\"}\",\"{\\\"s\\\": \\\"b7cb88c99e692f82aa89ac83e6d52a83\\\", \\\"oc\\\": \\\"e2847ed445b99a8145a992feffd27dbccc23403644ed2feffa7aa72ca2e78d163b006e9765c25c979709adfac3eb53f92dcfcff868232545184a5122622c6d2e57\\\"}\",\"{\\\"s\\\": \\\"25519d3ecf26f1d3833f11d9757135a7\\\", \\\"oc\\\": \\\"e2847ed5ae112c2089404a378b7e03856b6281edd02159fedc2e7e61244c43b14ce9d67921f590c328d1587160f9af113ae95aaf453a37514c268eb4317678bfe4365cfa8f689edce9796f5ec194f8e6a48882b07607ae6e03c16a6a3d985d5edbe516bbca6094d9b73343a57de5f0311c4e25df6eaf7c094fe5d1b97ea3696a3043f38c68c7560242188228687fbb7880bbe891b3aaa83029995d9553b71bc27d8de087dfd65eb12f1a976887c322c729\\\"}\",\"{\\\"s\\\": \\\"6b769ff71409e303be5ca17b08063375\\\", \\\"oc\\\": \\\"e2847ed445b99a8145a992fefe400f7a9a1f0253ffa837b76c1602d4a28ae81114\\\"}\",\"{\\\"s\\\": \\\"1c16090f62b45fc9a1404b2135beab94\\\", \\\"oc\\\": \\\"e108bb37379dfda0f0143886d8b88e748150ce18ba0d1fa98dda6bf96cb47d12150661d4710365e26993420af2ccd1d836df55ccbc9bb7a6fb4f5589c09032c4bf\\\"}\"}'::jsonb[])",
+                    "Index Cond": "(eql_v3.jsonb_array((value)::jsonb) @> '{\"{\\\"s\\\": \\\"f14d8536f5d4abf1b983f67d461d85e2\\\", \\\"oc\\\": \\\"c0c6804c8d2c3b9cbd991e894a47ff5569c842a0fcecd7a86b6116a325753ce9b3328c0f2322ce7682bdf21a98e8087e5a\\\"}\",\"{\\\"s\\\": \\\"b81940706ae05004a9b95b6dbd1aaa60\\\", \\\"oc\\\": \\\"c0c6804d28400fa835abe7a3c5684ef55c4eb7486f4a78b357c01e206dc07e563a3ea9bf5c177e2c2d5d8af36a3f9474b2221211efb1b7100754ea8776d1921af59c6b418bcd2639b1d65d9827eb345e40b23683dd5c259d4eac5131d35bcbeac1dffed8281430ba91742cc60147f6561401bd22d5e8abfdb63703a7d362f3b85822d2aec8f6674fcd13bdc58778cd66635ca289df6b7d816c6666e1d1df4855a8caf6e1a0069a16106fa578ccb43a47b47952d4cd1672fceae9982df2a157c298434a70d2754dfbb7b2ebb37b2dfd68e2\\\"}\",\"{\\\"s\\\": \\\"cc6e1824ab3319e8f92dc6199ce671b9\\\", \\\"oc\\\": \\\"bf1327292d1fdf238acac979ae65d463725ee9f01bb0132faf55553a82d79ff040814672104e61376526abfe8e794a46ce7469b03e2204a8850ce75cd3f114f102\\\"}\",\"{\\\"s\\\": \\\"0062378a2a2037bf4cdd8c78c2a1aeb0\\\", \\\"hm\\\": \\\"25612f1751b8619090a88a84e96ef32a\\\"}\",\"{\\\"s\\\": \\\"89b067ede76d2a718225887f944cba12\\\", \\\"oc\\\": \\\"c0c6804c8d2dca392c78697583935558374f0960028a1f37728ba45915bed02d5334f9ea2539b4a188e9527703105651e237b83fea107a8ea1\\\"}\"}'::jsonb[])",
                     "Index Name": "json_ste_vec_small_encrypted_v3_10000_jsonb_array_index",
                     "Node Type": "Bitmap Index Scan",
                     "Parallel Aware": false,
@@ -32,7 +32,7 @@
                     "Total Cost": 68.86
                   }
                 ],
-                "Recheck Cond": "(eql_v3.jsonb_array((value)::jsonb) @> '{\"{\\\"s\\\": \\\"75146c96a91ff82146e29e87b5accb95\\\", \\\"hm\\\": \\\"98b7664512c8c0125772e43e47dde0ce\\\"}\",\"{\\\"s\\\": \\\"b7cb88c99e692f82aa89ac83e6d52a83\\\", \\\"oc\\\": \\\"e2847ed445b99a8145a992feffd27dbccc23403644ed2feffa7aa72ca2e78d163b006e9765c25c979709adfac3eb53f92dcfcff868232545184a5122622c6d2e57\\\"}\",\"{\\\"s\\\": \\\"25519d3ecf26f1d3833f11d9757135a7\\\", \\\"oc\\\": \\\"e2847ed5ae112c2089404a378b7e03856b6281edd02159fedc2e7e61244c43b14ce9d67921f590c328d1587160f9af113ae95aaf453a37514c268eb4317678bfe4365cfa8f689edce9796f5ec194f8e6a48882b07607ae6e03c16a6a3d985d5edbe516bbca6094d9b73343a57de5f0311c4e25df6eaf7c094fe5d1b97ea3696a3043f38c68c7560242188228687fbb7880bbe891b3aaa83029995d9553b71bc27d8de087dfd65eb12f1a976887c322c729\\\"}\",\"{\\\"s\\\": \\\"6b769ff71409e303be5ca17b08063375\\\", \\\"oc\\\": \\\"e2847ed445b99a8145a992fefe400f7a9a1f0253ffa837b76c1602d4a28ae81114\\\"}\",\"{\\\"s\\\": \\\"1c16090f62b45fc9a1404b2135beab94\\\", \\\"oc\\\": \\\"e108bb37379dfda0f0143886d8b88e748150ce18ba0d1fa98dda6bf96cb47d12150661d4710365e26993420af2ccd1d836df55ccbc9bb7a6fb4f5589c09032c4bf\\\"}\"}'::jsonb[])",
+                "Recheck Cond": "(eql_v3.jsonb_array((value)::jsonb) @> '{\"{\\\"s\\\": \\\"f14d8536f5d4abf1b983f67d461d85e2\\\", \\\"oc\\\": \\\"c0c6804c8d2c3b9cbd991e894a47ff5569c842a0fcecd7a86b6116a325753ce9b3328c0f2322ce7682bdf21a98e8087e5a\\\"}\",\"{\\\"s\\\": \\\"b81940706ae05004a9b95b6dbd1aaa60\\\", \\\"oc\\\": \\\"c0c6804d28400fa835abe7a3c5684ef55c4eb7486f4a78b357c01e206dc07e563a3ea9bf5c177e2c2d5d8af36a3f9474b2221211efb1b7100754ea8776d1921af59c6b418bcd2639b1d65d9827eb345e40b23683dd5c259d4eac5131d35bcbeac1dffed8281430ba91742cc60147f6561401bd22d5e8abfdb63703a7d362f3b85822d2aec8f6674fcd13bdc58778cd66635ca289df6b7d816c6666e1d1df4855a8caf6e1a0069a16106fa578ccb43a47b47952d4cd1672fceae9982df2a157c298434a70d2754dfbb7b2ebb37b2dfd68e2\\\"}\",\"{\\\"s\\\": \\\"cc6e1824ab3319e8f92dc6199ce671b9\\\", \\\"oc\\\": \\\"bf1327292d1fdf238acac979ae65d463725ee9f01bb0132faf55553a82d79ff040814672104e61376526abfe8e794a46ce7469b03e2204a8850ce75cd3f114f102\\\"}\",\"{\\\"s\\\": \\\"0062378a2a2037bf4cdd8c78c2a1aeb0\\\", \\\"hm\\\": \\\"25612f1751b8619090a88a84e96ef32a\\\"}\",\"{\\\"s\\\": \\\"89b067ede76d2a718225887f944cba12\\\", \\\"oc\\\": \\\"c0c6804c8d2dca392c78697583935558374f0960028a1f37728ba45915bed02d5334f9ea2539b4a188e9527703105651e237b83fea107a8ea1\\\"}\"}'::jsonb[])",
                 "Relation Name": "json_ste_vec_small_encrypted_v3_10000",
                 "Startup Cost": 68.86,
                 "Total Cost": 73.13
@@ -48,7 +48,7 @@
         "json_ste_vec_small_encrypted_v3_10000_jsonb_array_index"
       ],
       "parameters": [
-        "{\"sv\":[{\"hm\":\"98b7664512c8c0125772e43e47dde0ce\",\"s\":\"75146c96a91ff82146e29e87b5accb95\"},{\"oc\":\"e108bb37379dfda0f0143886d8b88e748150ce18ba0d1fa98dda6bf96cb47d12150661d4710365e26993420af2ccd1d836df55ccbc9bb7a6fb4f5589c09032c4bf\",\"s\":\"1c16090f62b45fc9a1404b2135beab94\"},{\"oc\":\"e2847ed5ae112c2089404a378b7e03856b6281edd02159fedc2e7e61244c43b14ce9d67921f590c328d1587160f9af113ae95aaf453a37514c268eb4317678bfe4365cfa8f689edce9796f5ec194f8e6a48882b07607ae6e03c16a6a3d985d5edbe516bbca6094d9b73343a57de5f0311c4e25df6eaf7c094fe5d1b97ea3696a3043f38c68c7560242188228687fbb7880bbe891b3aaa83029995d9553b71bc27d8de087dfd65eb12f1a976887c322c729\",\"s\":\"25519d3ecf26f1d3833f11d9757135a7\"},{\"oc\":\"e2847ed445b99a8145a992fefe400f7a9a1f0253ffa837b76c1602d4a28ae81114\",\"s\":\"6b769ff71409e303be5ca17b08063375\"},{\"oc\":\"e2847ed445b99a8145a992feffd27dbccc23403644ed2feffa7aa72ca2e78d163b006e9765c25c979709adfac3eb53f92dcfcff868232545184a5122622c6d2e57\",\"s\":\"b7cb88c99e692f82aa89ac83e6d52a83\"}]}"
+        "{\"sv\":[{\"hm\":\"25612f1751b8619090a88a84e96ef32a\",\"s\":\"0062378a2a2037bf4cdd8c78c2a1aeb0\"},{\"oc\":\"bf1327292d1fdf238acac979ae65d463725ee9f01bb0132faf55553a82d79ff040814672104e61376526abfe8e794a46ce7469b03e2204a8850ce75cd3f114f102\",\"s\":\"cc6e1824ab3319e8f92dc6199ce671b9\"},{\"oc\":\"c0c6804d28400fa835abe7a3c5684ef55c4eb7486f4a78b357c01e206dc07e563a3ea9bf5c177e2c2d5d8af36a3f9474b2221211efb1b7100754ea8776d1921af59c6b418bcd2639b1d65d9827eb345e40b23683dd5c259d4eac5131d35bcbeac1dffed8281430ba91742cc60147f6561401bd22d5e8abfdb63703a7d362f3b85822d2aec8f6674fcd13bdc58778cd66635ca289df6b7d816c6666e1d1df4855a8caf6e1a0069a16106fa578ccb43a47b47952d4cd1672fceae9982df2a157c298434a70d2754dfbb7b2ebb37b2dfd68e2\",\"s\":\"b81940706ae05004a9b95b6dbd1aaa60\"},{\"oc\":\"c0c6804c8d2dca392c78697583935558374f0960028a1f37728ba45915bed02d5334f9ea2539b4a188e9527703105651e237b83fea107a8ea1\",\"s\":\"89b067ede76d2a718225887f944cba12\"},{\"oc\":\"c0c6804c8d2c3b9cbd991e894a47ff5569c842a0fcecd7a86b6116a325753ce9b3328c0f2322ce7682bdf21a98e8087e5a\",\"s\":\"f14d8536f5d4abf1b983f67d461d85e2\"}]}"
       ],
       "query": "SELECT id FROM json_ste_vec_small_encrypted_v3_10000 WHERE eql_v3.jsonb_contains(value, $1::jsonb) LIMIT 10",
       "rows_returned": 1
@@ -66,7 +66,7 @@
               {
                 "Alias": "json_ste_vec_small_encrypted_v3_10000",
                 "Async Capable": false,
-                "Index Cond": "(eql_v3.eq_term(eql_v3.jsonb_path_query_first((value)::jsonb, '75146c96a91ff82146e29e87b5accb95'::text)) = eql_v3.eq_term(('{\"a\": false, \"c\": \"mBbKl&U3G&rdmu!jlvOTNtai|WzTf%GxRRf|8D&*yFcQeZw~`a2wXjcee|dUu?(RM*o=Mf^e@IT*g|>~0V||-vzKbT*s~X`M^rdAlgWgZ#Jz9V6vZ`F(4Uv%?$9NLh8{gxllTC75JJ6cXpEbP!uwg-8nnb9kNg%aApC#s*+tb_lY_4JjIjc(PWht(iJW)gKqCBRpuh\", \"i\": {\"c\": \"value\", \"t\": \"json_ste_vec_small_encrypted_v3_10000\"}, \"s\": \"75146c96a91ff82146e29e87b5accb95\", \"v\": 3, \"hm\": \"98b7664512c8c0125772e43e47dde0ce\"}'::jsonb)::jsonb_entry))",
+                "Index Cond": "(eql_v3.eq_term(eql_v3.jsonb_path_query_first((value)::jsonb, '0062378a2a2037bf4cdd8c78c2a1aeb0'::text)) = eql_v3.eq_term(('{\"a\": false, \"c\": \"mBbKVzrA1CBp;8hR~RxCCUe5XYF3!V;iwb`94-T<_uprX&FOJzWdUudI^n?M>-$~-KS(_`vS%aH@}8*Y+J)vx8!SJpf2q39j0F`~45cWYGfwdh{xS23T$;`qTL#1_<mrHPra|#-oKPw8hNSN?vo&^9XeJo$w(e`hAh}Ap3FFoIV|?nm#kR2E0ci^Aq(Di5Z3n?ue9tAhSD?T\", \"i\": {\"c\": \"value\", \"t\": \"json_ste_vec_small_encrypted_v3_10000\"}, \"s\": \"0062378a2a2037bf4cdd8c78c2a1aeb0\", \"v\": 3, \"hm\": \"25612f1751b8619090a88a84e96ef32a\"}'::jsonb)::jsonb_entry))",
                 "Index Name": "json_ste_vec_small_encrypted_v3_10000_field_eq_idx",
                 "Node Type": "Index Scan",
                 "Parallel Aware": false,
@@ -76,11 +76,11 @@
                 "Relation Name": "json_ste_vec_small_encrypted_v3_10000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.54,
-                "Total Cost": 2242.54
+                "Total Cost": 2236.54
               }
             ],
             "Startup Cost": 0.54,
-            "Total Cost": 2.78
+            "Total Cost": 2.77
           }
         }
       ],
@@ -89,9 +89,9 @@
         "json_ste_vec_small_encrypted_v3_10000_field_eq_idx"
       ],
       "parameters": [
-        "{\"a\":false,\"c\":\"mBbKl&U3G&rdmu!jlvOTNtai|WzTf%GxRRf|8D&*yFcQeZw~`a2wXjcee|dUu?(RM*o=Mf^e@IT*g|>~0V||-vzKbT*s~X`M^rdAlgWgZ#Jz9V6vZ`F(4Uv%?$9NLh8{gxllTC75JJ6cXpEbP!uwg-8nnb9kNg%aApC#s*+tb_lY_4JjIjc(PWht(iJW)gKqCBRpuh\",\"hm\":\"98b7664512c8c0125772e43e47dde0ce\",\"i\":{\"c\":\"value\",\"t\":\"json_ste_vec_small_encrypted_v3_10000\"},\"s\":\"75146c96a91ff82146e29e87b5accb95\",\"v\":3}"
+        "{\"a\":false,\"c\":\"mBbKVzrA1CBp;8hR~RxCCUe5XYF3!V;iwb`94-T<_uprX&FOJzWdUudI^n?M>-$~-KS(_`vS%aH@}8*Y+J)vx8!SJpf2q39j0F`~45cWYGfwdh{xS23T$;`qTL#1_<mrHPra|#-oKPw8hNSN?vo&^9XeJo$w(e`hAh}Ap3FFoIV|?nm#kR2E0ci^Aq(Di5Z3n?ue9tAhSD?T\",\"hm\":\"25612f1751b8619090a88a84e96ef32a\",\"i\":{\"c\":\"value\",\"t\":\"json_ste_vec_small_encrypted_v3_10000\"},\"s\":\"0062378a2a2037bf4cdd8c78c2a1aeb0\",\"v\":3}"
       ],
-      "query": "SELECT id FROM json_ste_vec_small_encrypted_v3_10000 WHERE eql_v3.jsonb_path_query_first(value, '75146c96a91ff82146e29e87b5accb95') = $1::jsonb::public.jsonb_entry LIMIT 10",
+      "query": "SELECT id FROM json_ste_vec_small_encrypted_v3_10000 WHERE eql_v3.jsonb_path_query_first(value, '0062378a2a2037bf4cdd8c78c2a1aeb0') = $1::jsonb::public.jsonb_entry LIMIT 10",
       "rows_returned": 10
     },
     {
@@ -107,7 +107,7 @@
               {
                 "Alias": "json_ste_vec_small_encrypted_v3_10000",
                 "Async Capable": false,
-                "Filter": "(eql_v3.jsonb_array((value)::jsonb) @> '{\"{\\\"s\\\": \\\"75146c96a91ff82146e29e87b5accb95\\\", \\\"hm\\\": \\\"98b7664512c8c0125772e43e47dde0ce\\\"}\"}'::jsonb[])",
+                "Filter": "(eql_v3.jsonb_array((value)::jsonb) @> '{\"{\\\"s\\\": \\\"0062378a2a2037bf4cdd8c78c2a1aeb0\\\", \\\"hm\\\": \\\"25612f1751b8619090a88a84e96ef32a\\\"}\"}'::jsonb[])",
                 "Node Type": "Seq Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
@@ -115,7 +115,7 @@
                 "Plan Width": 4,
                 "Relation Name": "json_ste_vec_small_encrypted_v3_10000",
                 "Startup Cost": 0.0,
-                "Total Cost": 4645.0
+                "Total Cost": 4639.0
               }
             ],
             "Startup Cost": 0.0,
@@ -126,7 +126,7 @@
       "id": "JSON/json/field_eq/extractor/10000",
       "indexes_used": [],
       "parameters": [
-        "{\"sv\":[{\"s\":\"75146c96a91ff82146e29e87b5accb95\",\"hm\":\"98b7664512c8c0125772e43e47dde0ce\"}]}"
+        "{\"sv\":[{\"s\":\"0062378a2a2037bf4cdd8c78c2a1aeb0\",\"hm\":\"25612f1751b8619090a88a84e96ef32a\"}]}"
       ],
       "query": "SELECT id FROM json_ste_vec_small_encrypted_v3_10000 WHERE eql_v3.jsonb_contains(value, $1::jsonb) LIMIT 10",
       "rows_returned": 10
@@ -144,7 +144,7 @@
               {
                 "Alias": "json_ste_vec_small_encrypted_v3_10000",
                 "Async Capable": false,
-                "Index Cond": "(eql_v3.eq_term(eql_v3.jsonb_path_query_first((value)::jsonb, '75146c96a91ff82146e29e87b5accb95'::text)) = eql_v3.eq_term(('{\"a\": false, \"c\": \"mBbKl&U3G&rdmu!jlvOTNtai|WzTf%GxRRf|8D&*yFcQeZw~`a2wXjcee|dUu?(RM*o=Mf^e@IT*g|>~0V||-vzKbT*s~X`M^rdAlgWgZ#Jz9V6vZ`F(4Uv%?$9NLh8{gxllTC75JJ6cXpEbP!uwg-8nnb9kNg%aApC#s*+tb_lY_4JjIjc(PWht(iJW)gKqCBRpuh\", \"i\": {\"c\": \"value\", \"t\": \"json_ste_vec_small_encrypted_v3_10000\"}, \"s\": \"75146c96a91ff82146e29e87b5accb95\", \"v\": 3, \"hm\": \"98b7664512c8c0125772e43e47dde0ce\"}'::jsonb)::jsonb_entry))",
+                "Index Cond": "(eql_v3.eq_term(eql_v3.jsonb_path_query_first((value)::jsonb, '0062378a2a2037bf4cdd8c78c2a1aeb0'::text)) = eql_v3.eq_term(('{\"a\": false, \"c\": \"mBbKVzrA1CBp;8hR~RxCCUe5XYF3!V;iwb`94-T<_uprX&FOJzWdUudI^n?M>-$~-KS(_`vS%aH@}8*Y+J)vx8!SJpf2q39j0F`~45cWYGfwdh{xS23T$;`qTL#1_<mrHPra|#-oKPw8hNSN?vo&^9XeJo$w(e`hAh}Ap3FFoIV|?nm#kR2E0ci^Aq(Di5Z3n?ue9tAhSD?T\", \"i\": {\"c\": \"value\", \"t\": \"json_ste_vec_small_encrypted_v3_10000\"}, \"s\": \"0062378a2a2037bf4cdd8c78c2a1aeb0\", \"v\": 3, \"hm\": \"25612f1751b8619090a88a84e96ef32a\"}'::jsonb)::jsonb_entry))",
                 "Index Name": "json_ste_vec_small_encrypted_v3_10000_field_eq_idx",
                 "Node Type": "Index Scan",
                 "Parallel Aware": false,
@@ -154,11 +154,11 @@
                 "Relation Name": "json_ste_vec_small_encrypted_v3_10000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.54,
-                "Total Cost": 2242.54
+                "Total Cost": 2236.54
               }
             ],
             "Startup Cost": 0.54,
-            "Total Cost": 2.78
+            "Total Cost": 2.77
           }
         }
       ],
@@ -167,9 +167,9 @@
         "json_ste_vec_small_encrypted_v3_10000_field_eq_idx"
       ],
       "parameters": [
-        "{\"a\":false,\"c\":\"mBbKl&U3G&rdmu!jlvOTNtai|WzTf%GxRRf|8D&*yFcQeZw~`a2wXjcee|dUu?(RM*o=Mf^e@IT*g|>~0V||-vzKbT*s~X`M^rdAlgWgZ#Jz9V6vZ`F(4Uv%?$9NLh8{gxllTC75JJ6cXpEbP!uwg-8nnb9kNg%aApC#s*+tb_lY_4JjIjc(PWht(iJW)gKqCBRpuh\",\"hm\":\"98b7664512c8c0125772e43e47dde0ce\",\"i\":{\"c\":\"value\",\"t\":\"json_ste_vec_small_encrypted_v3_10000\"},\"s\":\"75146c96a91ff82146e29e87b5accb95\",\"v\":3}"
+        "{\"a\":false,\"c\":\"mBbKVzrA1CBp;8hR~RxCCUe5XYF3!V;iwb`94-T<_uprX&FOJzWdUudI^n?M>-$~-KS(_`vS%aH@}8*Y+J)vx8!SJpf2q39j0F`~45cWYGfwdh{xS23T$;`qTL#1_<mrHPra|#-oKPw8hNSN?vo&^9XeJo$w(e`hAh}Ap3FFoIV|?nm#kR2E0ci^Aq(Di5Z3n?ue9tAhSD?T\",\"hm\":\"25612f1751b8619090a88a84e96ef32a\",\"i\":{\"c\":\"value\",\"t\":\"json_ste_vec_small_encrypted_v3_10000\"},\"s\":\"0062378a2a2037bf4cdd8c78c2a1aeb0\",\"v\":3}"
       ],
-      "query": "SELECT id FROM json_ste_vec_small_encrypted_v3_10000 WHERE eql_v3.eq_term(eql_v3.jsonb_path_query_first(value, '75146c96a91ff82146e29e87b5accb95')) = eql_v3.eq_term($1::jsonb::public.jsonb_entry) LIMIT 10",
+      "query": "SELECT id FROM json_ste_vec_small_encrypted_v3_10000 WHERE eql_v3.eq_term(eql_v3.jsonb_path_query_first(value, '0062378a2a2037bf4cdd8c78c2a1aeb0')) = eql_v3.eq_term($1::jsonb::public.jsonb_entry) LIMIT 10",
       "rows_returned": 10
     },
     {
@@ -194,11 +194,11 @@
                 "Relation Name": "json_ste_vec_small_encrypted_v3_10000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.41,
-                "Total Cost": 13797.16
+                "Total Cost": 13772.12
               }
             ],
             "Startup Cost": 0.41,
-            "Total Cost": 14.21
+            "Total Cost": 14.18
           }
         }
       ],
@@ -207,7 +207,7 @@
         "json_ste_vec_small_encrypted_v3_10000_field_order_idx"
       ],
       "parameters": [],
-      "query": "SELECT id FROM json_ste_vec_small_encrypted_v3_10000 ORDER BY eql_v3.ore_cllw(eql_v3.jsonb_path_query_first(value, '1c16090f62b45fc9a1404b2135beab94')) LIMIT 10",
+      "query": "SELECT id FROM json_ste_vec_small_encrypted_v3_10000 ORDER BY eql_v3.ore_cllw(eql_v3.jsonb_path_query_first(value, 'cc6e1824ab3319e8f92dc6199ce671b9')) LIMIT 10",
       "rows_returned": 10
     },
     {
@@ -223,21 +223,21 @@
               {
                 "Alias": "json_ste_vec_small_encrypted_v3_10000",
                 "Async Capable": false,
-                "Index Cond": "(eql_v3.ore_cllw(eql_v3.jsonb_path_query_first((value)::jsonb, '1c16090f62b45fc9a1404b2135beab94'::text)) > eql_v3.ore_cllw(('{\"a\": false, \"c\": \"mBbKl&U3G&rdmu!jlvOTNtai|6gK>*kN_ZyJpH9*c*$KTw9`)`)x;o={1z-A{D1D*Mb%o9gRb|Cu>!45`J)1foOj_sBK&5czy\", \"i\": {\"c\": \"value\", \"t\": \"json_ste_vec_small_encrypted_v3_10000\"}, \"s\": \"1c16090f62b45fc9a1404b2135beab94\", \"v\": 3, \"oc\": \"e108bb37379dfda0f0143886d8b88e748150ce18ba0d1fa98dda6bf96cb47d12150661d4710365e26993420af2ccd1d836df55ccbc9bb7a6fb4f5589c09032c4bf\"}'::jsonb)::jsonb_entry))",
+                "Index Cond": "(eql_v3.ore_cllw(eql_v3.jsonb_path_query_first((value)::jsonb, 'cc6e1824ab3319e8f92dc6199ce671b9'::text)) > eql_v3.ore_cllw(('{\"a\": false, \"c\": \"mBbKVzrA1CBp;8hR~RxCCUe5X6u~2UE8gwuf#VV578x-jGyTh;AjBZKO1TN+)%jz5>bk|Yu;2k{3hJalNr7z#!B>3GCAn9izy\", \"i\": {\"c\": \"value\", \"t\": \"json_ste_vec_small_encrypted_v3_10000\"}, \"s\": \"cc6e1824ab3319e8f92dc6199ce671b9\", \"v\": 3, \"oc\": \"bf1327292d1fdf238acac979ae65d463725ee9f01bb0132faf55553a82d79ff040814672104e61376526abfe8e794a46ce7469b03e2204a8850ce75cd3f114f102\"}'::jsonb)::jsonb_entry))",
                 "Index Name": "json_ste_vec_small_encrypted_v3_10000_field_order_idx",
                 "Node Type": "Index Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
-                "Plan Rows": 2646,
+                "Plan Rows": 8596,
                 "Plan Width": 4,
                 "Relation Name": "json_ste_vec_small_encrypted_v3_10000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.66,
-                "Total Cost": 6593.76
+                "Total Cost": 8696.7
               }
             ],
             "Startup Cost": 0.66,
-            "Total Cost": 25.58
+            "Total Cost": 10.78
           }
         }
       ],
@@ -246,9 +246,9 @@
         "json_ste_vec_small_encrypted_v3_10000_field_order_idx"
       ],
       "parameters": [
-        "{\"a\":false,\"c\":\"mBbKl&U3G&rdmu!jlvOTNtai|6gK>*kN_ZyJpH9*c*$KTw9`)`)x;o={1z-A{D1D*Mb%o9gRb|Cu>!45`J)1foOj_sBK&5czy\",\"i\":{\"c\":\"value\",\"t\":\"json_ste_vec_small_encrypted_v3_10000\"},\"oc\":\"e108bb37379dfda0f0143886d8b88e748150ce18ba0d1fa98dda6bf96cb47d12150661d4710365e26993420af2ccd1d836df55ccbc9bb7a6fb4f5589c09032c4bf\",\"s\":\"1c16090f62b45fc9a1404b2135beab94\",\"v\":3}"
+        "{\"a\":false,\"c\":\"mBbKVzrA1CBp;8hR~RxCCUe5X6u~2UE8gwuf#VV578x-jGyTh;AjBZKO1TN+)%jz5>bk|Yu;2k{3hJalNr7z#!B>3GCAn9izy\",\"i\":{\"c\":\"value\",\"t\":\"json_ste_vec_small_encrypted_v3_10000\"},\"oc\":\"bf1327292d1fdf238acac979ae65d463725ee9f01bb0132faf55553a82d79ff040814672104e61376526abfe8e794a46ce7469b03e2204a8850ce75cd3f114f102\",\"s\":\"cc6e1824ab3319e8f92dc6199ce671b9\",\"v\":3}"
       ],
-      "query": "SELECT id FROM json_ste_vec_small_encrypted_v3_10000 WHERE eql_v3.jsonb_path_query_first(value, '1c16090f62b45fc9a1404b2135beab94') > $1::jsonb::public.jsonb_entry LIMIT 10",
+      "query": "SELECT id FROM json_ste_vec_small_encrypted_v3_10000 WHERE eql_v3.jsonb_path_query_first(value, 'cc6e1824ab3319e8f92dc6199ce671b9') > $1::jsonb::public.jsonb_entry LIMIT 10",
       "rows_returned": 10
     }
   ],

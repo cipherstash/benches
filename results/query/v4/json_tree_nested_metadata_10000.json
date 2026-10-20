@@ -1,0 +1,1419 @@
+{
+  "scenarios": [
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_encrypted_v4_10000",
+                "Async Capable": false,
+                "Filter": "(((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a558049b1f2b37854fad227cc078e7e1\", \"vs\": \"a9b2d5aead378c75603ded2fba1afb71\"}, {\"s\": \"68b353c71822a7dcafeb8212177918ae\", \"vs\": \"0d9f3772a8733ade75a64d42b98e3791\"}, {\"s\": \"1da2beb83611728a300bdd10150560e1\", \"vs\": \"e3f66d4e1b3f66063fd5fd2e1cc7540b\"}, {\"s\": \"27ca3832686bad49ed52ffa9f8732ec4\", \"vs\": \"ed8efa68e3dff2dcf2ce2ed0b3155730\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a558049b1f2b37854fad227cc078e7e1\", \"vs\": \"a9b2d5aead378c75603ded2fba1afb71\"}, {\"s\": \"68b353c71822a7dcafeb8212177918ae\", \"vs\": \"0d9f3772a8733ade75a64d42b98e3791\"}, {\"s\": \"1da2beb83611728a300bdd10150560e1\", \"vs\": \"e3f66d4e1b3f66063fd5fd2e1cc7540b\"}, {\"s\": \"27ca3832686bad49ed52ffa9f8732ec4\", \"vs\": \"ed8efa68e3dff2dcf2ce2ed0b3155730\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND ((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a558049b1f2b37854fad227cc078e7e1\", \"vs\": \"a9b2d5aead378c75603ded2fba1afb71\"}, {\"s\": \"68b353c71822a7dcafeb8212177918ae\", \"vs\": \"0d9f3772a8733ade75a64d42b98e3791\"}, {\"s\": \"1da2beb83611728a300bdd10150560e1\", \"vs\": \"e3f66d4e1b3f66063fd5fd2e1cc7540b\"}, {\"s\": \"27ca3832686bad49ed52ffa9f8732ec4\", \"vs\": \"ed8efa68e3dff2dcf2ce2ed0b3155730\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
+                "Node Type": "Bitmap Heap Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 100,
+                "Plan Width": 4,
+                "Plans": [
+                  {
+                    "Async Capable": false,
+                    "Node Type": "BitmapOr",
+                    "Parallel Aware": false,
+                    "Parent Relationship": "Outer",
+                    "Plan Rows": 100,
+                    "Plan Width": 0,
+                    "Plans": [
+                      {
+                        "Async Capable": false,
+                        "Index Cond": "((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a558049b1f2b37854fad227cc078e7e1\", \"vs\": \"a9b2d5aead378c75603ded2fba1afb71\"}, {\"s\": \"68b353c71822a7dcafeb8212177918ae\", \"vs\": \"0d9f3772a8733ade75a64d42b98e3791\"}, {\"s\": \"1da2beb83611728a300bdd10150560e1\", \"vs\": \"e3f66d4e1b3f66063fd5fd2e1cc7540b\"}, {\"s\": \"27ca3832686bad49ed52ffa9f8732ec4\", \"vs\": \"ed8efa68e3dff2dcf2ce2ed0b3155730\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
+                        "Index Name": "json_tree_large_encrypted_v4_10000_query_gin_idx",
+                        "Node Type": "Bitmap Index Scan",
+                        "Parallel Aware": false,
+                        "Parent Relationship": "Member",
+                        "Plan Rows": 100,
+                        "Plan Width": 0,
+                        "Startup Cost": 0.0,
+                        "Total Cost": 176.91
+                      },
+                      {
+                        "Async Capable": false,
+                        "Index Cond": "((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a558049b1f2b37854fad227cc078e7e1\", \"vs\": \"a9b2d5aead378c75603ded2fba1afb71\"}, {\"s\": \"68b353c71822a7dcafeb8212177918ae\", \"vs\": \"0d9f3772a8733ade75a64d42b98e3791\"}, {\"s\": \"1da2beb83611728a300bdd10150560e1\", \"vs\": \"e3f66d4e1b3f66063fd5fd2e1cc7540b\"}, {\"s\": \"27ca3832686bad49ed52ffa9f8732ec4\", \"vs\": \"ed8efa68e3dff2dcf2ce2ed0b3155730\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
+                        "Index Name": "json_tree_large_encrypted_v4_10000_query_gin_idx",
+                        "Node Type": "Bitmap Index Scan",
+                        "Parallel Aware": false,
+                        "Parent Relationship": "Member",
+                        "Plan Rows": 1,
+                        "Plan Width": 0,
+                        "Startup Cost": 0.0,
+                        "Total Cost": 0.0
+                      }
+                    ],
+                    "Startup Cost": 176.96,
+                    "Total Cost": 176.96
+                  }
+                ],
+                "Recheck Cond": "(((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a558049b1f2b37854fad227cc078e7e1\", \"vs\": \"a9b2d5aead378c75603ded2fba1afb71\"}, {\"s\": \"68b353c71822a7dcafeb8212177918ae\", \"vs\": \"0d9f3772a8733ade75a64d42b98e3791\"}, {\"s\": \"1da2beb83611728a300bdd10150560e1\", \"vs\": \"e3f66d4e1b3f66063fd5fd2e1cc7540b\"}, {\"s\": \"27ca3832686bad49ed52ffa9f8732ec4\", \"vs\": \"ed8efa68e3dff2dcf2ce2ed0b3155730\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR ((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a558049b1f2b37854fad227cc078e7e1\", \"vs\": \"a9b2d5aead378c75603ded2fba1afb71\"}, {\"s\": \"68b353c71822a7dcafeb8212177918ae\", \"vs\": \"0d9f3772a8733ade75a64d42b98e3791\"}, {\"s\": \"1da2beb83611728a300bdd10150560e1\", \"vs\": \"e3f66d4e1b3f66063fd5fd2e1cc7540b\"}, {\"s\": \"27ca3832686bad49ed52ffa9f8732ec4\", \"vs\": \"ed8efa68e3dff2dcf2ce2ed0b3155730\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
+                "Relation Name": "json_tree_large_encrypted_v4_10000",
+                "Startup Cost": 176.96,
+                "Total Cost": 296.58
+              }
+            ],
+            "Startup Cost": 176.96,
+            "Total Cost": 188.92
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/json_tree/contains/deep_object/10000",
+      "indexes_used": [
+        "json_tree_large_encrypted_v4_10000_query_gin_idx"
+      ],
+      "parameters": [
+        "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"a558049b1f2b37854fad227cc078e7e1\",\"vs\":\"a9b2d5aead378c75603ded2fba1afb71\"},{\"s\":\"68b353c71822a7dcafeb8212177918ae\",\"vs\":\"0d9f3772a8733ade75a64d42b98e3791\"},{\"s\":\"1da2beb83611728a300bdd10150560e1\",\"vs\":\"e3f66d4e1b3f66063fd5fd2e1cc7540b\"},{\"s\":\"27ca3832686bad49ed52ffa9f8732ec4\",\"vs\":\"ed8efa68e3dff2dcf2ce2ed0b3155730\"}],\"el\":[]}"
+      ],
+      "query": "SELECT id FROM json_tree_large_encrypted_v4_10000 WHERE value @> $1::text::jsonb::eql_v4.query_json_tree LIMIT 10",
+      "rows_returned": 10
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_encrypted_v4_10000",
+                "Async Capable": false,
+                "Filter": "(((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [{\"el\": [], \"sv\": [{\"s\": \"5e40177c7900fee045b7b41f9b16a543\", \"vs\": \"0df24587d1e653a3f1eb3ac5f342f7da\"}, {\"s\": \"1e7c5ac847f435af056967008617376e\", \"vs\": \"e5694a78814709006d6e854f9688083c\"}, {\"s\": \"34a0298f7d70d7779bb7bd9650ca50eb\", \"vs\": \"e5b9764f9cd46b5cb762e8b73da09a3e\"}]}], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"cd8662649ca921696516c94f9885db6f\", \"vs\": \"6e5511d455c6211ecd9ce9e11427ad2f\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [{\"el\": [], \"sv\": [{\"s\": \"5e40177c7900fee045b7b41f9b16a543\", \"vs\": \"0df24587d1e653a3f1eb3ac5f342f7da\"}, {\"s\": \"1e7c5ac847f435af056967008617376e\", \"vs\": \"e5694a78814709006d6e854f9688083c\"}, {\"s\": \"34a0298f7d70d7779bb7bd9650ca50eb\", \"vs\": \"e5b9764f9cd46b5cb762e8b73da09a3e\"}]}], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"cd8662649ca921696516c94f9885db6f\", \"vs\": \"6e5511d455c6211ecd9ce9e11427ad2f\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND ((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [{\"el\": [], \"sv\": [{\"s\": \"5e40177c7900fee045b7b41f9b16a543\", \"vs\": \"0df24587d1e653a3f1eb3ac5f342f7da\"}, {\"s\": \"1e7c5ac847f435af056967008617376e\", \"vs\": \"e5694a78814709006d6e854f9688083c\"}, {\"s\": \"34a0298f7d70d7779bb7bd9650ca50eb\", \"vs\": \"e5b9764f9cd46b5cb762e8b73da09a3e\"}]}], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"cd8662649ca921696516c94f9885db6f\", \"vs\": \"6e5511d455c6211ecd9ce9e11427ad2f\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
+                "Node Type": "Bitmap Heap Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 100,
+                "Plan Width": 4,
+                "Plans": [
+                  {
+                    "Async Capable": false,
+                    "Node Type": "BitmapOr",
+                    "Parallel Aware": false,
+                    "Parent Relationship": "Outer",
+                    "Plan Rows": 100,
+                    "Plan Width": 0,
+                    "Plans": [
+                      {
+                        "Async Capable": false,
+                        "Index Cond": "((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [{\"el\": [], \"sv\": [{\"s\": \"5e40177c7900fee045b7b41f9b16a543\", \"vs\": \"0df24587d1e653a3f1eb3ac5f342f7da\"}, {\"s\": \"1e7c5ac847f435af056967008617376e\", \"vs\": \"e5694a78814709006d6e854f9688083c\"}, {\"s\": \"34a0298f7d70d7779bb7bd9650ca50eb\", \"vs\": \"e5b9764f9cd46b5cb762e8b73da09a3e\"}]}], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"cd8662649ca921696516c94f9885db6f\", \"vs\": \"6e5511d455c6211ecd9ce9e11427ad2f\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
+                        "Index Name": "json_tree_large_encrypted_v4_10000_query_gin_idx",
+                        "Node Type": "Bitmap Index Scan",
+                        "Parallel Aware": false,
+                        "Parent Relationship": "Member",
+                        "Plan Rows": 100,
+                        "Plan Width": 0,
+                        "Startup Cost": 0.0,
+                        "Total Cost": 176.91
+                      },
+                      {
+                        "Async Capable": false,
+                        "Index Cond": "((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [{\"el\": [], \"sv\": [{\"s\": \"5e40177c7900fee045b7b41f9b16a543\", \"vs\": \"0df24587d1e653a3f1eb3ac5f342f7da\"}, {\"s\": \"1e7c5ac847f435af056967008617376e\", \"vs\": \"e5694a78814709006d6e854f9688083c\"}, {\"s\": \"34a0298f7d70d7779bb7bd9650ca50eb\", \"vs\": \"e5b9764f9cd46b5cb762e8b73da09a3e\"}]}], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"cd8662649ca921696516c94f9885db6f\", \"vs\": \"6e5511d455c6211ecd9ce9e11427ad2f\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
+                        "Index Name": "json_tree_large_encrypted_v4_10000_query_gin_idx",
+                        "Node Type": "Bitmap Index Scan",
+                        "Parallel Aware": false,
+                        "Parent Relationship": "Member",
+                        "Plan Rows": 1,
+                        "Plan Width": 0,
+                        "Startup Cost": 0.0,
+                        "Total Cost": 0.0
+                      }
+                    ],
+                    "Startup Cost": 176.96,
+                    "Total Cost": 176.96
+                  }
+                ],
+                "Recheck Cond": "(((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [{\"el\": [], \"sv\": [{\"s\": \"5e40177c7900fee045b7b41f9b16a543\", \"vs\": \"0df24587d1e653a3f1eb3ac5f342f7da\"}, {\"s\": \"1e7c5ac847f435af056967008617376e\", \"vs\": \"e5694a78814709006d6e854f9688083c\"}, {\"s\": \"34a0298f7d70d7779bb7bd9650ca50eb\", \"vs\": \"e5b9764f9cd46b5cb762e8b73da09a3e\"}]}], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"cd8662649ca921696516c94f9885db6f\", \"vs\": \"6e5511d455c6211ecd9ce9e11427ad2f\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR ((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [{\"el\": [], \"sv\": [{\"s\": \"5e40177c7900fee045b7b41f9b16a543\", \"vs\": \"0df24587d1e653a3f1eb3ac5f342f7da\"}, {\"s\": \"1e7c5ac847f435af056967008617376e\", \"vs\": \"e5694a78814709006d6e854f9688083c\"}, {\"s\": \"34a0298f7d70d7779bb7bd9650ca50eb\", \"vs\": \"e5b9764f9cd46b5cb762e8b73da09a3e\"}]}], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"cd8662649ca921696516c94f9885db6f\", \"vs\": \"6e5511d455c6211ecd9ce9e11427ad2f\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
+                "Relation Name": "json_tree_large_encrypted_v4_10000",
+                "Startup Cost": 176.96,
+                "Total Cost": 296.58
+              }
+            ],
+            "Startup Cost": 176.96,
+            "Total Cost": 188.92
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/json_tree/contains/array_element/10000",
+      "indexes_used": [
+        "json_tree_large_encrypted_v4_10000_query_gin_idx"
+      ],
+      "parameters": [
+        "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"cd8662649ca921696516c94f9885db6f\",\"vs\":\"6e5511d455c6211ecd9ce9e11427ad2f\"}],\"el\":[{\"sv\":[{\"s\":\"5e40177c7900fee045b7b41f9b16a543\",\"vs\":\"0df24587d1e653a3f1eb3ac5f342f7da\"},{\"s\":\"1e7c5ac847f435af056967008617376e\",\"vs\":\"e5694a78814709006d6e854f9688083c\"},{\"s\":\"34a0298f7d70d7779bb7bd9650ca50eb\",\"vs\":\"e5b9764f9cd46b5cb762e8b73da09a3e\"}],\"el\":[]}]}"
+      ],
+      "query": "SELECT id FROM json_tree_large_encrypted_v4_10000 WHERE value @> $1::text::jsonb::eql_v4.query_json_tree LIMIT 10",
+      "rows_returned": 1
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_encrypted_v4_10000",
+                "Async Capable": false,
+                "Filter": "(((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [{\"el\": [{\"el\": [], \"sv\": [{\"s\": \"faddaae22fe3537b1695f51828fa0816\", \"vs\": \"5d397e3721894e3ed1868b4e64e0dae2\"}, {\"s\": \"eea0565362df46070fce9c9aaab8d2cb\", \"vs\": \"dea9d065812f123ee27cfa0a751955f8\"}]}], \"sv\": [{\"s\": \"8a5ad1b8aebb962ee9539eb459ffea0e\", \"vs\": \"3689dfebaee0d41bceb7e1257c01b389\"}, {\"s\": \"208ff7873e752681e27ce2c390974061\", \"vs\": \"81246fe5a41d6d7410f4444f46017bab\"}, {\"s\": \"ceb3c7568c3524d4ff8ec4ae300e48dc\", \"vs\": \"5b872ce505b55eb4ec407682127cc634\"}]}], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"6d6466f1acb57ea25fdb845810dc0dd7\", \"vs\": \"52dc39efe13a7361853666750e683983\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [{\"el\": [{\"el\": [], \"sv\": [{\"s\": \"faddaae22fe3537b1695f51828fa0816\", \"vs\": \"5d397e3721894e3ed1868b4e64e0dae2\"}, {\"s\": \"eea0565362df46070fce9c9aaab8d2cb\", \"vs\": \"dea9d065812f123ee27cfa0a751955f8\"}]}], \"sv\": [{\"s\": \"8a5ad1b8aebb962ee9539eb459ffea0e\", \"vs\": \"3689dfebaee0d41bceb7e1257c01b389\"}, {\"s\": \"208ff7873e752681e27ce2c390974061\", \"vs\": \"81246fe5a41d6d7410f4444f46017bab\"}, {\"s\": \"ceb3c7568c3524d4ff8ec4ae300e48dc\", \"vs\": \"5b872ce505b55eb4ec407682127cc634\"}]}], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"6d6466f1acb57ea25fdb845810dc0dd7\", \"vs\": \"52dc39efe13a7361853666750e683983\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND ((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [{\"el\": [{\"el\": [], \"sv\": [{\"s\": \"faddaae22fe3537b1695f51828fa0816\", \"vs\": \"5d397e3721894e3ed1868b4e64e0dae2\"}, {\"s\": \"eea0565362df46070fce9c9aaab8d2cb\", \"vs\": \"dea9d065812f123ee27cfa0a751955f8\"}]}], \"sv\": [{\"s\": \"8a5ad1b8aebb962ee9539eb459ffea0e\", \"vs\": \"3689dfebaee0d41bceb7e1257c01b389\"}, {\"s\": \"208ff7873e752681e27ce2c390974061\", \"vs\": \"81246fe5a41d6d7410f4444f46017bab\"}, {\"s\": \"ceb3c7568c3524d4ff8ec4ae300e48dc\", \"vs\": \"5b872ce505b55eb4ec407682127cc634\"}]}], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"6d6466f1acb57ea25fdb845810dc0dd7\", \"vs\": \"52dc39efe13a7361853666750e683983\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
+                "Node Type": "Bitmap Heap Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 100,
+                "Plan Width": 4,
+                "Plans": [
+                  {
+                    "Async Capable": false,
+                    "Node Type": "BitmapOr",
+                    "Parallel Aware": false,
+                    "Parent Relationship": "Outer",
+                    "Plan Rows": 100,
+                    "Plan Width": 0,
+                    "Plans": [
+                      {
+                        "Async Capable": false,
+                        "Index Cond": "((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [{\"el\": [{\"el\": [], \"sv\": [{\"s\": \"faddaae22fe3537b1695f51828fa0816\", \"vs\": \"5d397e3721894e3ed1868b4e64e0dae2\"}, {\"s\": \"eea0565362df46070fce9c9aaab8d2cb\", \"vs\": \"dea9d065812f123ee27cfa0a751955f8\"}]}], \"sv\": [{\"s\": \"8a5ad1b8aebb962ee9539eb459ffea0e\", \"vs\": \"3689dfebaee0d41bceb7e1257c01b389\"}, {\"s\": \"208ff7873e752681e27ce2c390974061\", \"vs\": \"81246fe5a41d6d7410f4444f46017bab\"}, {\"s\": \"ceb3c7568c3524d4ff8ec4ae300e48dc\", \"vs\": \"5b872ce505b55eb4ec407682127cc634\"}]}], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"6d6466f1acb57ea25fdb845810dc0dd7\", \"vs\": \"52dc39efe13a7361853666750e683983\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
+                        "Index Name": "json_tree_large_encrypted_v4_10000_query_gin_idx",
+                        "Node Type": "Bitmap Index Scan",
+                        "Parallel Aware": false,
+                        "Parent Relationship": "Member",
+                        "Plan Rows": 100,
+                        "Plan Width": 0,
+                        "Startup Cost": 0.0,
+                        "Total Cost": 245.81
+                      },
+                      {
+                        "Async Capable": false,
+                        "Index Cond": "((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [{\"el\": [{\"el\": [], \"sv\": [{\"s\": \"faddaae22fe3537b1695f51828fa0816\", \"vs\": \"5d397e3721894e3ed1868b4e64e0dae2\"}, {\"s\": \"eea0565362df46070fce9c9aaab8d2cb\", \"vs\": \"dea9d065812f123ee27cfa0a751955f8\"}]}], \"sv\": [{\"s\": \"8a5ad1b8aebb962ee9539eb459ffea0e\", \"vs\": \"3689dfebaee0d41bceb7e1257c01b389\"}, {\"s\": \"208ff7873e752681e27ce2c390974061\", \"vs\": \"81246fe5a41d6d7410f4444f46017bab\"}, {\"s\": \"ceb3c7568c3524d4ff8ec4ae300e48dc\", \"vs\": \"5b872ce505b55eb4ec407682127cc634\"}]}], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"6d6466f1acb57ea25fdb845810dc0dd7\", \"vs\": \"52dc39efe13a7361853666750e683983\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
+                        "Index Name": "json_tree_large_encrypted_v4_10000_query_gin_idx",
+                        "Node Type": "Bitmap Index Scan",
+                        "Parallel Aware": false,
+                        "Parent Relationship": "Member",
+                        "Plan Rows": 1,
+                        "Plan Width": 0,
+                        "Startup Cost": 0.0,
+                        "Total Cost": 0.0
+                      }
+                    ],
+                    "Startup Cost": 245.86,
+                    "Total Cost": 245.86
+                  }
+                ],
+                "Recheck Cond": "(((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [{\"el\": [{\"el\": [], \"sv\": [{\"s\": \"faddaae22fe3537b1695f51828fa0816\", \"vs\": \"5d397e3721894e3ed1868b4e64e0dae2\"}, {\"s\": \"eea0565362df46070fce9c9aaab8d2cb\", \"vs\": \"dea9d065812f123ee27cfa0a751955f8\"}]}], \"sv\": [{\"s\": \"8a5ad1b8aebb962ee9539eb459ffea0e\", \"vs\": \"3689dfebaee0d41bceb7e1257c01b389\"}, {\"s\": \"208ff7873e752681e27ce2c390974061\", \"vs\": \"81246fe5a41d6d7410f4444f46017bab\"}, {\"s\": \"ceb3c7568c3524d4ff8ec4ae300e48dc\", \"vs\": \"5b872ce505b55eb4ec407682127cc634\"}]}], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"6d6466f1acb57ea25fdb845810dc0dd7\", \"vs\": \"52dc39efe13a7361853666750e683983\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR ((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [{\"el\": [{\"el\": [], \"sv\": [{\"s\": \"faddaae22fe3537b1695f51828fa0816\", \"vs\": \"5d397e3721894e3ed1868b4e64e0dae2\"}, {\"s\": \"eea0565362df46070fce9c9aaab8d2cb\", \"vs\": \"dea9d065812f123ee27cfa0a751955f8\"}]}], \"sv\": [{\"s\": \"8a5ad1b8aebb962ee9539eb459ffea0e\", \"vs\": \"3689dfebaee0d41bceb7e1257c01b389\"}, {\"s\": \"208ff7873e752681e27ce2c390974061\", \"vs\": \"81246fe5a41d6d7410f4444f46017bab\"}, {\"s\": \"ceb3c7568c3524d4ff8ec4ae300e48dc\", \"vs\": \"5b872ce505b55eb4ec407682127cc634\"}]}], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"6d6466f1acb57ea25fdb845810dc0dd7\", \"vs\": \"52dc39efe13a7361853666750e683983\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
+                "Relation Name": "json_tree_large_encrypted_v4_10000",
+                "Startup Cost": 245.86,
+                "Total Cost": 365.49
+              }
+            ],
+            "Startup Cost": 245.86,
+            "Total Cost": 257.83
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/json_tree/contains/nested_array/10000",
+      "indexes_used": [
+        "json_tree_large_encrypted_v4_10000_query_gin_idx"
+      ],
+      "parameters": [
+        "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"6d6466f1acb57ea25fdb845810dc0dd7\",\"vs\":\"52dc39efe13a7361853666750e683983\"}],\"el\":[{\"sv\":[{\"s\":\"8a5ad1b8aebb962ee9539eb459ffea0e\",\"vs\":\"3689dfebaee0d41bceb7e1257c01b389\"},{\"s\":\"208ff7873e752681e27ce2c390974061\",\"vs\":\"81246fe5a41d6d7410f4444f46017bab\"},{\"s\":\"ceb3c7568c3524d4ff8ec4ae300e48dc\",\"vs\":\"5b872ce505b55eb4ec407682127cc634\"}],\"el\":[{\"sv\":[{\"s\":\"faddaae22fe3537b1695f51828fa0816\",\"vs\":\"5d397e3721894e3ed1868b4e64e0dae2\"},{\"s\":\"eea0565362df46070fce9c9aaab8d2cb\",\"vs\":\"dea9d065812f123ee27cfa0a751955f8\"}],\"el\":[]}]}]}"
+      ],
+      "query": "SELECT id FROM json_tree_large_encrypted_v4_10000 WHERE value @> $1::text::jsonb::eql_v4.query_json_tree LIMIT 10",
+      "rows_returned": 10
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_encrypted_v4_10000",
+                "Async Capable": false,
+                "Filter": "(((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a558049b1f2b37854fad227cc078e7e1\", \"vs\": \"a9b2d5aead378c75603ded2fba1afb71\"}, {\"s\": \"eb3cee3cb1af678f0f9982007e35e3ee\", \"vs\": \"b8bb9c28d5e39fe4d6cd9b609999e264\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a558049b1f2b37854fad227cc078e7e1\", \"vs\": \"a9b2d5aead378c75603ded2fba1afb71\"}, {\"s\": \"eb3cee3cb1af678f0f9982007e35e3ee\", \"vs\": \"b8bb9c28d5e39fe4d6cd9b609999e264\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND ((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a558049b1f2b37854fad227cc078e7e1\", \"vs\": \"a9b2d5aead378c75603ded2fba1afb71\"}, {\"s\": \"eb3cee3cb1af678f0f9982007e35e3ee\", \"vs\": \"b8bb9c28d5e39fe4d6cd9b609999e264\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
+                "Node Type": "Bitmap Heap Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 100,
+                "Plan Width": 4,
+                "Plans": [
+                  {
+                    "Async Capable": false,
+                    "Node Type": "BitmapOr",
+                    "Parallel Aware": false,
+                    "Parent Relationship": "Outer",
+                    "Plan Rows": 100,
+                    "Plan Width": 0,
+                    "Plans": [
+                      {
+                        "Async Capable": false,
+                        "Index Cond": "((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a558049b1f2b37854fad227cc078e7e1\", \"vs\": \"a9b2d5aead378c75603ded2fba1afb71\"}, {\"s\": \"eb3cee3cb1af678f0f9982007e35e3ee\", \"vs\": \"b8bb9c28d5e39fe4d6cd9b609999e264\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
+                        "Index Name": "json_tree_large_encrypted_v4_10000_query_gin_idx",
+                        "Node Type": "Bitmap Index Scan",
+                        "Parallel Aware": false,
+                        "Parent Relationship": "Member",
+                        "Plan Rows": 100,
+                        "Plan Width": 0,
+                        "Startup Cost": 0.0,
+                        "Total Cost": 107.99
+                      },
+                      {
+                        "Async Capable": false,
+                        "Index Cond": "((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a558049b1f2b37854fad227cc078e7e1\", \"vs\": \"a9b2d5aead378c75603ded2fba1afb71\"}, {\"s\": \"eb3cee3cb1af678f0f9982007e35e3ee\", \"vs\": \"b8bb9c28d5e39fe4d6cd9b609999e264\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
+                        "Index Name": "json_tree_large_encrypted_v4_10000_query_gin_idx",
+                        "Node Type": "Bitmap Index Scan",
+                        "Parallel Aware": false,
+                        "Parent Relationship": "Member",
+                        "Plan Rows": 1,
+                        "Plan Width": 0,
+                        "Startup Cost": 0.0,
+                        "Total Cost": 0.0
+                      }
+                    ],
+                    "Startup Cost": 108.05,
+                    "Total Cost": 108.05
+                  }
+                ],
+                "Recheck Cond": "(((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a558049b1f2b37854fad227cc078e7e1\", \"vs\": \"a9b2d5aead378c75603ded2fba1afb71\"}, {\"s\": \"eb3cee3cb1af678f0f9982007e35e3ee\", \"vs\": \"b8bb9c28d5e39fe4d6cd9b609999e264\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR ((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a558049b1f2b37854fad227cc078e7e1\", \"vs\": \"a9b2d5aead378c75603ded2fba1afb71\"}, {\"s\": \"eb3cee3cb1af678f0f9982007e35e3ee\", \"vs\": \"b8bb9c28d5e39fe4d6cd9b609999e264\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
+                "Relation Name": "json_tree_large_encrypted_v4_10000",
+                "Startup Cost": 108.05,
+                "Total Cost": 227.67
+              }
+            ],
+            "Startup Cost": 108.05,
+            "Total Cost": 120.01
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/json_tree/field_eq/nested/10000",
+      "indexes_used": [
+        "json_tree_large_encrypted_v4_10000_query_gin_idx"
+      ],
+      "parameters": [
+        "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"a558049b1f2b37854fad227cc078e7e1\",\"vs\":\"a9b2d5aead378c75603ded2fba1afb71\"},{\"s\":\"eb3cee3cb1af678f0f9982007e35e3ee\",\"vs\":\"b8bb9c28d5e39fe4d6cd9b609999e264\"}],\"el\":[]}"
+      ],
+      "query": "SELECT id FROM json_tree_large_encrypted_v4_10000 WHERE value @> $1::text::jsonb::eql_v4.query_json_tree LIMIT 10",
+      "rows_returned": 1
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_encrypted_v4_10000",
+                "Async Capable": false,
+                "Index Cond": "(decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'f37909387e6b7f65fbb88f01ff94e2cc'::text))::jsonb ->> 'op'::text), 'hex'::text) > decode(((('{\"s\": \"f37909387e6b7f65fbb88f01ff94e2cc\", \"op\": \"0126916d0e57e8845a06addeedede58a7682c604128abb36f0d8552f92e02cffb5006a55af81bdfb669ff07f021c9aba04cb110749a7de9875c8f2f06022b80117\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'hex'::text))",
+                "Index Name": "json_tree_large_encrypted_v4_10000_field_order_idx",
+                "Node Type": "Index Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 9064,
+                "Plan Width": 4,
+                "Relation Name": "json_tree_large_encrypted_v4_10000",
+                "Scan Direction": "Forward",
+                "Startup Cost": 0.42,
+                "Total Cost": 843.03
+              }
+            ],
+            "Startup Cost": 0.42,
+            "Total Cost": 1.35
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/json_tree/field_gt/nested/10000",
+      "indexes_used": [
+        "json_tree_large_encrypted_v4_10000_field_order_idx"
+      ],
+      "parameters": [
+        "{\"s\":\"f37909387e6b7f65fbb88f01ff94e2cc\",\"op\":\"0126916d0e57e8845a06addeedede58a7682c604128abb36f0d8552f92e02cffb5006a55af81bdfb669ff07f021c9aba04cb110749a7de9875c8f2f06022b80117\"}"
+      ],
+      "query": "SELECT id FROM json_tree_large_encrypted_v4_10000 WHERE (value -> 'f37909387e6b7f65fbb88f01ff94e2cc'::text) > $1::text::jsonb::eql_v4.query_json_tree_leaf LIMIT 10",
+      "rows_returned": 10
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 36,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_encrypted_v4_10000",
+                "Async Capable": false,
+                "Index Name": "json_tree_large_encrypted_v4_10000_field_order_idx",
+                "Node Type": "Index Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 10000,
+                "Plan Width": 36,
+                "Relation Name": "json_tree_large_encrypted_v4_10000",
+                "Scan Direction": "Forward",
+                "Startup Cost": 0.41,
+                "Total Cost": 3428.41
+              }
+            ],
+            "Startup Cost": 0.41,
+            "Total Cost": 3.84
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/json_tree/field_order/nested/10000",
+      "indexes_used": [
+        "json_tree_large_encrypted_v4_10000_field_order_idx"
+      ],
+      "parameters": [],
+      "query": "SELECT id FROM json_tree_large_encrypted_v4_10000 ORDER BY eql_v4.ord_term(value -> 'f37909387e6b7f65fbb88f01ff94e2cc'::text) LIMIT 10",
+      "rows_returned": 10
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Inner Unique": false,
+            "Join Type": "Inner",
+            "Node Type": "Nested Loop",
+            "Parallel Aware": false,
+            "Plan Rows": 1000,
+            "Plan Width": 32,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_encrypted_v4_10000",
+                "Async Capable": false,
+                "Index Cond": "(id = 5000)",
+                "Index Name": "json_tree_large_encrypted_v4_10000_pkey",
+                "Node Type": "Index Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 1,
+                "Plan Width": 18,
+                "Relation Name": "json_tree_large_encrypted_v4_10000",
+                "Scan Direction": "Forward",
+                "Startup Cost": 0.29,
+                "Total Cost": 8.3
+              },
+              {
+                "Alias": "e",
+                "Async Capable": false,
+                "Function Name": "json_tree_subtree",
+                "Node Type": "Function Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Inner",
+                "Plan Rows": 1000,
+                "Plan Width": 32,
+                "Startup Cost": 0.25,
+                "Total Cost": 10.25
+              }
+            ],
+            "Startup Cost": 0.54,
+            "Total Cost": 33.55
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/json_tree/subtree/company/10000",
+      "indexes_used": [
+        "json_tree_large_encrypted_v4_10000_pkey"
+      ],
+      "parameters": [
+        "eefdeed04a85f5da54de79d61c2a9ee1",
+        5000
+      ],
+      "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_10000, eql_v4.json_tree_subtree(value, $1::text) e WHERE id = $2",
+      "rows_returned": 6
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Inner Unique": false,
+            "Join Type": "Inner",
+            "Node Type": "Nested Loop",
+            "Parallel Aware": false,
+            "Plan Rows": 1000,
+            "Plan Width": 32,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_encrypted_v4_10000",
+                "Async Capable": false,
+                "Index Cond": "(id = 5000)",
+                "Index Name": "json_tree_large_encrypted_v4_10000_pkey",
+                "Node Type": "Index Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 1,
+                "Plan Width": 18,
+                "Relation Name": "json_tree_large_encrypted_v4_10000",
+                "Scan Direction": "Forward",
+                "Startup Cost": 0.29,
+                "Total Cost": 8.3
+              },
+              {
+                "Alias": "e",
+                "Async Capable": false,
+                "Function Name": "json_tree_subtree",
+                "Node Type": "Function Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Inner",
+                "Plan Rows": 1000,
+                "Plan Width": 32,
+                "Startup Cost": 0.25,
+                "Total Cost": 10.25
+              }
+            ],
+            "Startup Cost": 0.54,
+            "Total Cost": 33.55
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/json_tree/subtree/user/10000",
+      "indexes_used": [
+        "json_tree_large_encrypted_v4_10000_pkey"
+      ],
+      "parameters": [
+        "f605554208568ad644419c1e9e38a3e4",
+        5000
+      ],
+      "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_10000, eql_v4.json_tree_subtree(value, $1::text) e WHERE id = $2",
+      "rows_returned": 12
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Inner Unique": false,
+            "Join Type": "Inner",
+            "Node Type": "Nested Loop",
+            "Parallel Aware": false,
+            "Plan Rows": 1000,
+            "Plan Width": 32,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_encrypted_v4_10000",
+                "Async Capable": false,
+                "Index Cond": "(id = 5000)",
+                "Index Name": "json_tree_large_encrypted_v4_10000_pkey",
+                "Node Type": "Index Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 1,
+                "Plan Width": 18,
+                "Relation Name": "json_tree_large_encrypted_v4_10000",
+                "Scan Direction": "Forward",
+                "Startup Cost": 0.29,
+                "Total Cost": 8.3
+              },
+              {
+                "Alias": "e",
+                "Async Capable": false,
+                "Function Name": "json_tree_subtree",
+                "Node Type": "Function Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Inner",
+                "Plan Rows": 1000,
+                "Plan Width": 32,
+                "Startup Cost": 0.25,
+                "Total Cost": 10.25
+              }
+            ],
+            "Startup Cost": 0.54,
+            "Total Cost": 33.55
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/json_tree/subtree/orders/10000",
+      "indexes_used": [
+        "json_tree_large_encrypted_v4_10000_pkey"
+      ],
+      "parameters": [
+        "0f5023ce4f5f9736a384e6f1daf79c79",
+        5000
+      ],
+      "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_10000, eql_v4.json_tree_subtree(value, $1::text) e WHERE id = $2",
+      "rows_returned": 244
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Inner Unique": false,
+            "Join Type": "Inner",
+            "Node Type": "Nested Loop",
+            "Parallel Aware": false,
+            "Plan Rows": 1000,
+            "Plan Width": 32,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_encrypted_v4_10000",
+                "Async Capable": false,
+                "Index Cond": "(id = 5000)",
+                "Index Name": "json_tree_large_encrypted_v4_10000_pkey",
+                "Node Type": "Index Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 1,
+                "Plan Width": 18,
+                "Relation Name": "json_tree_large_encrypted_v4_10000",
+                "Scan Direction": "Forward",
+                "Startup Cost": 0.29,
+                "Total Cost": 8.3
+              },
+              {
+                "Alias": "e",
+                "Async Capable": false,
+                "Function Name": "json_tree_subtree_at",
+                "Node Type": "Function Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Inner",
+                "Plan Rows": 1000,
+                "Plan Width": 32,
+                "Startup Cost": 0.25,
+                "Total Cost": 10.25
+              }
+            ],
+            "Startup Cost": 0.54,
+            "Total Cost": 33.55
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/json_tree/subtree_at/items/10000",
+      "indexes_used": [
+        "json_tree_large_encrypted_v4_10000_pkey"
+      ],
+      "parameters": [
+        "0f5023ce4f5f9736a384e6f1daf79c79",
+        "208ff7873e752681e27ce2c390974061",
+        5000
+      ],
+      "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_10000, eql_v4.json_tree_subtree_at(value, $1::text, $2::text) e WHERE id = $3",
+      "rows_returned": 194
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Inner Unique": false,
+            "Join Type": "Inner",
+            "Node Type": "Nested Loop",
+            "Parallel Aware": false,
+            "Plan Rows": 1000,
+            "Plan Width": 32,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_encrypted_v4_10000",
+                "Async Capable": false,
+                "Index Cond": "(id = 5000)",
+                "Index Name": "json_tree_large_encrypted_v4_10000_pkey",
+                "Node Type": "Index Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 1,
+                "Plan Width": 18,
+                "Relation Name": "json_tree_large_encrypted_v4_10000",
+                "Scan Direction": "Forward",
+                "Startup Cost": 0.29,
+                "Total Cost": 8.3
+              },
+              {
+                "Alias": "e",
+                "Async Capable": false,
+                "Function Name": "json_tree_children",
+                "Node Type": "Function Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Inner",
+                "Plan Rows": 1000,
+                "Plan Width": 32,
+                "Startup Cost": 0.25,
+                "Total Cost": 10.25
+              }
+            ],
+            "Startup Cost": 0.54,
+            "Total Cost": 33.55
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/json_tree/children/orders/10000",
+      "indexes_used": [
+        "json_tree_large_encrypted_v4_10000_pkey"
+      ],
+      "parameters": [
+        "0f5023ce4f5f9736a384e6f1daf79c79",
+        5000
+      ],
+      "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_10000, eql_v4.json_tree_children(value, $1::text) e WHERE id = $2",
+      "rows_returned": 10
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Alias": "json_tree_large_encrypted_v4_10000",
+            "Async Capable": false,
+            "Index Cond": "(id = 5000)",
+            "Index Name": "json_tree_large_encrypted_v4_10000_pkey",
+            "Node Type": "Index Scan",
+            "Parallel Aware": false,
+            "Plan Rows": 1,
+            "Plan Width": 4,
+            "Relation Name": "json_tree_large_encrypted_v4_10000",
+            "Scan Direction": "Forward",
+            "Startup Cost": 0.29,
+            "Total Cost": 8.55
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/json_tree/child_count/orders/10000",
+      "indexes_used": [
+        "json_tree_large_encrypted_v4_10000_pkey"
+      ],
+      "parameters": [
+        "0f5023ce4f5f9736a384e6f1daf79c79",
+        5000
+      ],
+      "query": "SELECT eql_v4.json_tree_child_count(value, $1::text) FROM json_tree_large_encrypted_v4_10000 WHERE id = $2",
+      "rows_returned": 1
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Inner Unique": false,
+            "Join Type": "Inner",
+            "Node Type": "Nested Loop",
+            "Parallel Aware": false,
+            "Plan Rows": 1000,
+            "Plan Width": 32,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_encrypted_v4_10000",
+                "Async Capable": false,
+                "Index Cond": "(id = 5000)",
+                "Index Name": "json_tree_large_encrypted_v4_10000_pkey",
+                "Node Type": "Index Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 1,
+                "Plan Width": 18,
+                "Relation Name": "json_tree_large_encrypted_v4_10000",
+                "Scan Direction": "Forward",
+                "Startup Cost": 0.29,
+                "Total Cost": 8.3
+              },
+              {
+                "Alias": "e",
+                "Async Capable": false,
+                "Function Name": "json_tree_path_query",
+                "Node Type": "Function Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Inner",
+                "Plan Rows": 1000,
+                "Plan Width": 32,
+                "Startup Cost": 0.25,
+                "Total Cost": 10.25
+              }
+            ],
+            "Startup Cost": 0.54,
+            "Total Cost": 33.55
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/json_tree/path_query/wildcard/10000",
+      "indexes_used": [
+        "json_tree_large_encrypted_v4_10000_pkey"
+      ],
+      "parameters": [
+        "ceb3c7568c3524d4ff8ec4ae300e48dc",
+        5000
+      ],
+      "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_10000, eql_v4.json_tree_path_query(value::jsonb, $1::text) e WHERE id = $2",
+      "rows_returned": 10
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Alias": "json_tree_large_encrypted_v4_10000",
+            "Async Capable": false,
+            "Index Cond": "(id = 5000)",
+            "Index Name": "json_tree_large_encrypted_v4_10000_pkey",
+            "Node Type": "Index Scan",
+            "Parallel Aware": false,
+            "Plan Rows": 1,
+            "Plan Width": 32,
+            "Relation Name": "json_tree_large_encrypted_v4_10000",
+            "Scan Direction": "Forward",
+            "Startup Cost": 0.29,
+            "Total Cost": 8.56
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/json_tree/extract/nested/10000",
+      "indexes_used": [
+        "json_tree_large_encrypted_v4_10000_pkey"
+      ],
+      "parameters": [
+        5000
+      ],
+      "query": "SELECT (value -> 'f37909387e6b7f65fbb88f01ff94e2cc'::text)::jsonb::text FROM json_tree_large_encrypted_v4_10000 WHERE id = $1",
+      "rows_returned": 1
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_plain_v4_10000",
+                "Async Capable": false,
+                "Node Type": "Bitmap Heap Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 100,
+                "Plan Width": 4,
+                "Plans": [
+                  {
+                    "Async Capable": false,
+                    "Index Cond": "(plain @> '{\"user\": {\"contact\": {\"emergency_contact\": {\"relationship\": \"Spouse\"}}}}'::jsonb)",
+                    "Index Name": "json_tree_large_plain_v4_10000_gin_idx",
+                    "Node Type": "Bitmap Index Scan",
+                    "Parallel Aware": false,
+                    "Parent Relationship": "Outer",
+                    "Plan Rows": 100,
+                    "Plan Width": 0,
+                    "Startup Cost": 0.0,
+                    "Total Cost": 21.85
+                  }
+                ],
+                "Recheck Cond": "(plain @> '{\"user\": {\"contact\": {\"emergency_contact\": {\"relationship\": \"Spouse\"}}}}'::jsonb)",
+                "Relation Name": "json_tree_large_plain_v4_10000",
+                "Startup Cost": 21.88,
+                "Total Cost": 309.33
+              }
+            ],
+            "Startup Cost": 21.88,
+            "Total Cost": 50.62
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/plain/contains/deep_object/10000",
+      "indexes_used": [
+        "json_tree_large_plain_v4_10000_gin_idx"
+      ],
+      "parameters": [
+        {
+          "user": {
+            "contact": {
+              "emergency_contact": {
+                "relationship": "Spouse"
+              }
+            }
+          }
+        }
+      ],
+      "query": "SELECT id FROM json_tree_large_plain_v4_10000 WHERE plain @> $1 LIMIT 10",
+      "rows_returned": 10
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_plain_v4_10000",
+                "Async Capable": false,
+                "Node Type": "Bitmap Heap Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 100,
+                "Plan Width": 4,
+                "Plans": [
+                  {
+                    "Async Capable": false,
+                    "Index Cond": "(plain @> '{\"addresses\": [{\"city\": \"Brown stad\", \"state\": \"Massachusetts\"}]}'::jsonb)",
+                    "Index Name": "json_tree_large_plain_v4_10000_gin_idx",
+                    "Node Type": "Bitmap Index Scan",
+                    "Parallel Aware": false,
+                    "Parent Relationship": "Outer",
+                    "Plan Rows": 100,
+                    "Plan Width": 0,
+                    "Startup Cost": 0.0,
+                    "Total Cost": 39.08
+                  }
+                ],
+                "Recheck Cond": "(plain @> '{\"addresses\": [{\"city\": \"Brown stad\", \"state\": \"Massachusetts\"}]}'::jsonb)",
+                "Relation Name": "json_tree_large_plain_v4_10000",
+                "Startup Cost": 39.11,
+                "Total Cost": 326.55
+              }
+            ],
+            "Startup Cost": 39.11,
+            "Total Cost": 67.85
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/plain/contains/array_element/10000",
+      "indexes_used": [
+        "json_tree_large_plain_v4_10000_gin_idx"
+      ],
+      "parameters": [
+        {
+          "addresses": [
+            {
+              "city": "Brown stad",
+              "state": "Massachusetts"
+            }
+          ]
+        }
+      ],
+      "query": "SELECT id FROM json_tree_large_plain_v4_10000 WHERE plain @> $1 LIMIT 10",
+      "rows_returned": 1
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_plain_v4_10000",
+                "Async Capable": false,
+                "Node Type": "Bitmap Heap Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 100,
+                "Plan Width": 4,
+                "Plans": [
+                  {
+                    "Async Capable": false,
+                    "Index Cond": "(plain @> '{\"orders\": [{\"items\": [{\"product\": \"Reduced\"}], \"status\": \"Pending\"}]}'::jsonb)",
+                    "Index Name": "json_tree_large_plain_v4_10000_gin_idx",
+                    "Node Type": "Bitmap Index Scan",
+                    "Parallel Aware": false,
+                    "Parent Relationship": "Outer",
+                    "Plan Rows": 100,
+                    "Plan Width": 0,
+                    "Startup Cost": 0.0,
+                    "Total Cost": 39.08
+                  }
+                ],
+                "Recheck Cond": "(plain @> '{\"orders\": [{\"items\": [{\"product\": \"Reduced\"}], \"status\": \"Pending\"}]}'::jsonb)",
+                "Relation Name": "json_tree_large_plain_v4_10000",
+                "Startup Cost": 39.11,
+                "Total Cost": 326.55
+              }
+            ],
+            "Startup Cost": 39.11,
+            "Total Cost": 67.85
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/plain/contains/nested_array/10000",
+      "indexes_used": [
+        "json_tree_large_plain_v4_10000_gin_idx"
+      ],
+      "parameters": [
+        {
+          "orders": [
+            {
+              "items": [
+                {
+                  "product": "Reduced"
+                }
+              ],
+              "status": "Pending"
+            }
+          ]
+        }
+      ],
+      "query": "SELECT id FROM json_tree_large_plain_v4_10000 WHERE plain @> $1 LIMIT 10",
+      "rows_returned": 10
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_plain_v4_10000",
+                "Async Capable": false,
+                "Node Type": "Bitmap Heap Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 100,
+                "Plan Width": 4,
+                "Plans": [
+                  {
+                    "Async Capable": false,
+                    "Index Cond": "(plain @> '{\"user\": {\"email\": \"angie_quasi@hotmail.com\"}}'::jsonb)",
+                    "Index Name": "json_tree_large_plain_v4_10000_gin_idx",
+                    "Node Type": "Bitmap Index Scan",
+                    "Parallel Aware": false,
+                    "Parent Relationship": "Outer",
+                    "Plan Rows": 100,
+                    "Plan Width": 0,
+                    "Startup Cost": 0.0,
+                    "Total Cost": 21.85
+                  }
+                ],
+                "Recheck Cond": "(plain @> '{\"user\": {\"email\": \"angie_quasi@hotmail.com\"}}'::jsonb)",
+                "Relation Name": "json_tree_large_plain_v4_10000",
+                "Startup Cost": 21.88,
+                "Total Cost": 309.33
+              }
+            ],
+            "Startup Cost": 21.88,
+            "Total Cost": 50.62
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/plain/field_eq/nested/10000",
+      "indexes_used": [
+        "json_tree_large_plain_v4_10000_gin_idx"
+      ],
+      "parameters": [
+        {
+          "user": {
+            "email": "angie_quasi@hotmail.com"
+          }
+        }
+      ],
+      "query": "SELECT id FROM json_tree_large_plain_v4_10000 WHERE plain @> $1 LIMIT 10",
+      "rows_returned": 1
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_plain_v4_10000",
+                "Async Capable": false,
+                "Filter": "((((plain -> 'company'::text) ->> 'salary'::text))::integer > 64711)",
+                "Node Type": "Seq Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 9024,
+                "Plan Width": 4,
+                "Relation Name": "json_tree_large_plain_v4_10000",
+                "Startup Cost": 0.0,
+                "Total Cost": 1102.0
+              }
+            ],
+            "Startup Cost": 0.0,
+            "Total Cost": 1.22
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/plain/field_gt/nested/10000",
+      "indexes_used": [],
+      "parameters": [
+        64711
+      ],
+      "query": "SELECT id FROM json_tree_large_plain_v4_10000 WHERE (plain -> 'company' ->> 'salary')::int > $1 LIMIT 10",
+      "rows_returned": 10
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 8,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_plain_v4_10000",
+                "Async Capable": false,
+                "Index Name": "json_tree_large_plain_v4_10000_salary_idx",
+                "Node Type": "Index Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 10000,
+                "Plan Width": 8,
+                "Relation Name": "json_tree_large_plain_v4_10000",
+                "Scan Direction": "Forward",
+                "Startup Cost": 0.29,
+                "Total Cost": 3878.24
+              }
+            ],
+            "Startup Cost": 0.29,
+            "Total Cost": 4.16
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/plain/field_order/nested/10000",
+      "indexes_used": [
+        "json_tree_large_plain_v4_10000_salary_idx"
+      ],
+      "parameters": [],
+      "query": "SELECT id FROM json_tree_large_plain_v4_10000 ORDER BY (plain -> 'company' ->> 'salary')::int LIMIT 10",
+      "rows_returned": 10
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Alias": "json_tree_large_plain_v4_10000",
+            "Async Capable": false,
+            "Index Cond": "(id = 5000)",
+            "Index Name": "json_tree_large_plain_v4_10000_pkey",
+            "Node Type": "Index Scan",
+            "Parallel Aware": false,
+            "Plan Rows": 1,
+            "Plan Width": 32,
+            "Relation Name": "json_tree_large_plain_v4_10000",
+            "Scan Direction": "Forward",
+            "Startup Cost": 0.29,
+            "Total Cost": 8.31
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/plain/subtree/company/10000",
+      "indexes_used": [
+        "json_tree_large_plain_v4_10000_pkey"
+      ],
+      "parameters": [
+        5000
+      ],
+      "query": "SELECT (plain -> 'company')::text FROM json_tree_large_plain_v4_10000 WHERE id = $1",
+      "rows_returned": 1
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Alias": "json_tree_large_plain_v4_10000",
+            "Async Capable": false,
+            "Index Cond": "(id = 5000)",
+            "Index Name": "json_tree_large_plain_v4_10000_pkey",
+            "Node Type": "Index Scan",
+            "Parallel Aware": false,
+            "Plan Rows": 1,
+            "Plan Width": 32,
+            "Relation Name": "json_tree_large_plain_v4_10000",
+            "Scan Direction": "Forward",
+            "Startup Cost": 0.29,
+            "Total Cost": 8.31
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/plain/subtree/user/10000",
+      "indexes_used": [
+        "json_tree_large_plain_v4_10000_pkey"
+      ],
+      "parameters": [
+        5000
+      ],
+      "query": "SELECT (plain -> 'user')::text FROM json_tree_large_plain_v4_10000 WHERE id = $1",
+      "rows_returned": 1
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Alias": "json_tree_large_plain_v4_10000",
+            "Async Capable": false,
+            "Index Cond": "(id = 5000)",
+            "Index Name": "json_tree_large_plain_v4_10000_pkey",
+            "Node Type": "Index Scan",
+            "Parallel Aware": false,
+            "Plan Rows": 1,
+            "Plan Width": 32,
+            "Relation Name": "json_tree_large_plain_v4_10000",
+            "Scan Direction": "Forward",
+            "Startup Cost": 0.29,
+            "Total Cost": 8.31
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/plain/subtree/orders/10000",
+      "indexes_used": [
+        "json_tree_large_plain_v4_10000_pkey"
+      ],
+      "parameters": [
+        5000
+      ],
+      "query": "SELECT (plain -> 'orders')::text FROM json_tree_large_plain_v4_10000 WHERE id = $1",
+      "rows_returned": 1
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Inner Unique": false,
+            "Join Type": "Inner",
+            "Node Type": "Nested Loop",
+            "Parallel Aware": false,
+            "Plan Rows": 1000,
+            "Plan Width": 32,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_plain_v4_10000",
+                "Async Capable": false,
+                "Index Cond": "(id = 5000)",
+                "Index Name": "json_tree_large_plain_v4_10000_pkey",
+                "Node Type": "Index Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 1,
+                "Plan Width": 642,
+                "Relation Name": "json_tree_large_plain_v4_10000",
+                "Scan Direction": "Forward",
+                "Startup Cost": 0.29,
+                "Total Cost": 8.3
+              },
+              {
+                "Alias": "e",
+                "Async Capable": false,
+                "Function Name": "jsonb_path_query",
+                "Node Type": "Function Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Inner",
+                "Plan Rows": 1000,
+                "Plan Width": 32,
+                "Startup Cost": 0.0,
+                "Total Cost": 10.0
+              }
+            ],
+            "Startup Cost": 0.29,
+            "Total Cost": 33.3
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/plain/subtree_at/items/10000",
+      "indexes_used": [
+        "json_tree_large_plain_v4_10000_pkey"
+      ],
+      "parameters": [
+        5000
+      ],
+      "query": "SELECT e::text FROM json_tree_large_plain_v4_10000, jsonb_path_query(plain, '$.orders[*].items') e WHERE id = $1",
+      "rows_returned": 10
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Inner Unique": false,
+            "Join Type": "Inner",
+            "Node Type": "Nested Loop",
+            "Parallel Aware": false,
+            "Plan Rows": 100,
+            "Plan Width": 32,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_plain_v4_10000",
+                "Async Capable": false,
+                "Index Cond": "(id = 5000)",
+                "Index Name": "json_tree_large_plain_v4_10000_pkey",
+                "Node Type": "Index Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 1,
+                "Plan Width": 642,
+                "Relation Name": "json_tree_large_plain_v4_10000",
+                "Scan Direction": "Forward",
+                "Startup Cost": 0.29,
+                "Total Cost": 8.3
+              },
+              {
+                "Alias": "e",
+                "Async Capable": false,
+                "Function Name": "jsonb_array_elements",
+                "Node Type": "Function Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Inner",
+                "Plan Rows": 100,
+                "Plan Width": 32,
+                "Startup Cost": 0.01,
+                "Total Cost": 1.0
+              }
+            ],
+            "Startup Cost": 0.29,
+            "Total Cost": 10.81
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/plain/children/orders/10000",
+      "indexes_used": [
+        "json_tree_large_plain_v4_10000_pkey"
+      ],
+      "parameters": [
+        5000
+      ],
+      "query": "SELECT e::text FROM json_tree_large_plain_v4_10000, jsonb_array_elements(plain -> 'orders') e WHERE id = $1",
+      "rows_returned": 10
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Alias": "json_tree_large_plain_v4_10000",
+            "Async Capable": false,
+            "Index Cond": "(id = 5000)",
+            "Index Name": "json_tree_large_plain_v4_10000_pkey",
+            "Node Type": "Index Scan",
+            "Parallel Aware": false,
+            "Plan Rows": 1,
+            "Plan Width": 4,
+            "Relation Name": "json_tree_large_plain_v4_10000",
+            "Scan Direction": "Forward",
+            "Startup Cost": 0.29,
+            "Total Cost": 8.31
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/plain/child_count/orders/10000",
+      "indexes_used": [
+        "json_tree_large_plain_v4_10000_pkey"
+      ],
+      "parameters": [
+        5000
+      ],
+      "query": "SELECT jsonb_array_length(plain -> 'orders') FROM json_tree_large_plain_v4_10000 WHERE id = $1",
+      "rows_returned": 1
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Inner Unique": false,
+            "Join Type": "Inner",
+            "Node Type": "Nested Loop",
+            "Parallel Aware": false,
+            "Plan Rows": 1000,
+            "Plan Width": 32,
+            "Plans": [
+              {
+                "Alias": "json_tree_large_plain_v4_10000",
+                "Async Capable": false,
+                "Index Cond": "(id = 5000)",
+                "Index Name": "json_tree_large_plain_v4_10000_pkey",
+                "Node Type": "Index Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 1,
+                "Plan Width": 642,
+                "Relation Name": "json_tree_large_plain_v4_10000",
+                "Scan Direction": "Forward",
+                "Startup Cost": 0.29,
+                "Total Cost": 8.3
+              },
+              {
+                "Alias": "e",
+                "Async Capable": false,
+                "Function Name": "jsonb_path_query",
+                "Node Type": "Function Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Inner",
+                "Plan Rows": 1000,
+                "Plan Width": 32,
+                "Startup Cost": 0.0,
+                "Total Cost": 10.0
+              }
+            ],
+            "Startup Cost": 0.29,
+            "Total Cost": 33.3
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/plain/path_query/wildcard/10000",
+      "indexes_used": [
+        "json_tree_large_plain_v4_10000_pkey"
+      ],
+      "parameters": [
+        5000
+      ],
+      "query": "SELECT e::text FROM json_tree_large_plain_v4_10000, jsonb_path_query(plain, '$.orders[*].status') e WHERE id = $1",
+      "rows_returned": 10
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Alias": "json_tree_large_plain_v4_10000",
+            "Async Capable": false,
+            "Index Cond": "(id = 5000)",
+            "Index Name": "json_tree_large_plain_v4_10000_pkey",
+            "Node Type": "Index Scan",
+            "Parallel Aware": false,
+            "Plan Rows": 1,
+            "Plan Width": 32,
+            "Relation Name": "json_tree_large_plain_v4_10000",
+            "Scan Direction": "Forward",
+            "Startup Cost": 0.29,
+            "Total Cost": 8.31
+          }
+        }
+      ],
+      "id": "JSON_TREE_NESTED/plain/extract/nested/10000",
+      "indexes_used": [
+        "json_tree_large_plain_v4_10000_pkey"
+      ],
+      "parameters": [
+        5000
+      ],
+      "query": "SELECT (plain -> 'company' -> 'salary')::text FROM json_tree_large_plain_v4_10000 WHERE id = $1",
+      "rows_returned": 1
+    }
+  ],
+  "target_rows": "10000"
+}

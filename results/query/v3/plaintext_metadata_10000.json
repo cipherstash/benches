@@ -13,7 +13,7 @@
               {
                 "Alias": "string_plaintext_10000",
                 "Async Capable": false,
-                "Index Cond": "(value = '267f4e4740f4d3598ed11f9332de54a0'::text)",
+                "Index Cond": "(value = '32ce70e88f7c106a6e1cf3a508ad6f44'::text)",
                 "Index Name": "string_plaintext_10000_value_idx",
                 "Node Type": "Index Scan",
                 "Parallel Aware": false,
@@ -56,7 +56,7 @@
                 "Node Type": "Seq Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
-                "Plan Rows": 5019,
+                "Plan Rows": 5054,
                 "Plan Width": 8,
                 "Relation Name": "integer_plaintext_10000",
                 "Startup Cost": 0.0,
@@ -92,16 +92,16 @@
                 "Node Type": "Index Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
-                "Plan Rows": 4980,
+                "Plan Rows": 4945,
                 "Plan Width": 8,
                 "Relation Name": "integer_plaintext_10000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.29,
-                "Total Cost": 327.43
+                "Total Cost": 326.82
               }
             ],
             "Startup Cost": 0.29,
-            "Total Cost": 0.94
+            "Total Cost": 0.95
           }
         }
       ],
@@ -134,7 +134,7 @@
                 "Plans": [
                   {
                     "Async Capable": false,
-                    "Index Cond": "(value @> '{\"age\": 97}'::jsonb)",
+                    "Index Cond": "(value @> '{\"age\": 43}'::jsonb)",
                     "Index Name": "json_small_plaintext_10000_gin_idx",
                     "Node Type": "Bitmap Index Scan",
                     "Parallel Aware": false,
@@ -145,7 +145,7 @@
                     "Total Cost": 13.33
                   }
                 ],
-                "Recheck Cond": "(value @> '{\"age\": 97}'::jsonb)",
+                "Recheck Cond": "(value @> '{\"age\": 43}'::jsonb)",
                 "Relation Name": "json_small_plaintext_10000",
                 "Startup Cost": 13.36,
                 "Total Cost": 213.28
@@ -177,7 +177,7 @@
               {
                 "Alias": "json_small_plaintext_10000",
                 "Async Capable": false,
-                "Filter": "((value -> 'age'::text) = '97'::jsonb)",
+                "Filter": "((value -> 'age'::text) = '43'::jsonb)",
                 "Node Type": "Seq Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
