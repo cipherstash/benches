@@ -101,12 +101,14 @@ tag a child at that ordinal would carry, and matching it against `p` across
 `sv`. The SQL puts `json_tree_parent_tag(iv, w.t, o)` inside the LATERAL that
 scans `sv`, so it is evaluated once per (node, ordinal, element): for the
 sampled row (fan-out 10, 274 entries, 244 nodes walked) that is ~670k
-sha256 + `json_tree_xor16` calls, the latter a plpgsql byte loop. 10.3 s.
+evaluations of `json_tree_parent_tag` (a sha256 each, plus the `->> 'p'`
+extraction and hex encode around it). 10.3 s.
 
 Computing the fan-out's tags once per node and joining them against a
 per-document `p → entry` map (a CTE over `sv`, no other change) returns the
-identical 244 entries in 141 ms. That is still ~1 ms per node — the xor loop
-and the recursive CTE's per-level re-scan remain — but it is the difference
+identical 244 entries in 141 ms. That is still ~1 ms per node — the plpgsql
+`json_tree_xor16` in each child's unwrap and the recursive CTE's per-level
+re-scan of the map remain — but it is the difference
 between unusable and usable. `children/orders` (7 ms) and `child_count` (7 ms)
 have the same shape and the same fix.
 
