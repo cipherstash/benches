@@ -13,7 +13,7 @@
               {
                 "Alias": "json_tree_small_encrypted_v4_10000",
                 "Async Capable": false,
-                "Filter": "(((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"0dbfe1a233b844d25b466ce66dbc5e3c\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"24d6878ba6fd31f045742bb2d81e3864\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"0dbfe1a233b844d25b466ce66dbc5e3c\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"24d6878ba6fd31f045742bb2d81e3864\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND ((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"0dbfe1a233b844d25b466ce66dbc5e3c\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"24d6878ba6fd31f045742bb2d81e3864\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
+                "Filter": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
                 "Node Type": "Bitmap Heap Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
@@ -30,7 +30,7 @@
                     "Plans": [
                       {
                         "Async Capable": false,
-                        "Index Cond": "((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"0dbfe1a233b844d25b466ce66dbc5e3c\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"24d6878ba6fd31f045742bb2d81e3864\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
                         "Index Name": "json_tree_small_encrypted_v4_10000_query_gin_idx",
                         "Node Type": "Bitmap Index Scan",
                         "Parallel Aware": false,
@@ -42,7 +42,7 @@
                       },
                       {
                         "Async Capable": false,
-                        "Index Cond": "((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"0dbfe1a233b844d25b466ce66dbc5e3c\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"24d6878ba6fd31f045742bb2d81e3864\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
                         "Index Name": "json_tree_small_encrypted_v4_10000_query_gin_idx",
                         "Node Type": "Bitmap Index Scan",
                         "Parallel Aware": false,
@@ -57,14 +57,14 @@
                     "Total Cost": 91.11
                   }
                 ],
-                "Recheck Cond": "(((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"0dbfe1a233b844d25b466ce66dbc5e3c\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"24d6878ba6fd31f045742bb2d81e3864\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR ((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"0dbfe1a233b844d25b466ce66dbc5e3c\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"24d6878ba6fd31f045742bb2d81e3864\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
+                "Recheck Cond": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
                 "Relation Name": "json_tree_small_encrypted_v4_10000",
                 "Startup Cost": 91.11,
-                "Total Cost": 95.64
+                "Total Cost": 100.14
               }
             ],
             "Startup Cost": 91.11,
-            "Total Cost": 95.64
+            "Total Cost": 100.14
           }
         }
       ],
@@ -73,7 +73,7 @@
         "json_tree_small_encrypted_v4_10000_query_gin_idx"
       ],
       "parameters": [
-        "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"vs\":\"0dbfe1a233b844d25b466ce66dbc5e3c\"},{\"s\":\"7349633426741ad6074ff9e7ffa69599\",\"vs\":\"70f72921af0e2697880a1bfcc07da3ff\"},{\"s\":\"9f7f562232761fd6f7624026c36859c9\",\"vs\":\"e364f018658c6e1d47db6d2a4992e0e1\"},{\"s\":\"adde476512a10c4663437ac59bc53598\",\"vs\":\"24d6878ba6fd31f045742bb2d81e3864\"}],\"el\":[]}"
+        "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"vs\":\"db71fd147cc63c46e93d9aac09879d7d\"},{\"s\":\"7349633426741ad6074ff9e7ffa69599\",\"vs\":\"62848e70087d6feb4e4976f8eac93fbd\"},{\"s\":\"9f7f562232761fd6f7624026c36859c9\",\"vs\":\"1d985c42f8ec8ab42714f069cc4811aa\"},{\"s\":\"adde476512a10c4663437ac59bc53598\",\"vs\":\"f6d39e9186782604786e59fcb9383214\"}],\"el\":[]}"
       ],
       "query": "SELECT id FROM json_tree_small_encrypted_v4_10000 WHERE eql_v4.json_tree_contains(value, $1::text::jsonb::eql_v4.query_json_tree) LIMIT 10",
       "rows_returned": 1
@@ -91,7 +91,7 @@
               {
                 "Alias": "json_tree_small_encrypted_v4_10000",
                 "Async Capable": false,
-                "Filter": "(((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"0dbfe1a233b844d25b466ce66dbc5e3c\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"24d6878ba6fd31f045742bb2d81e3864\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"0dbfe1a233b844d25b466ce66dbc5e3c\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"24d6878ba6fd31f045742bb2d81e3864\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND ((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"0dbfe1a233b844d25b466ce66dbc5e3c\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"24d6878ba6fd31f045742bb2d81e3864\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
+                "Filter": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
                 "Node Type": "Bitmap Heap Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
@@ -108,7 +108,7 @@
                     "Plans": [
                       {
                         "Async Capable": false,
-                        "Index Cond": "((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"0dbfe1a233b844d25b466ce66dbc5e3c\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"24d6878ba6fd31f045742bb2d81e3864\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
                         "Index Name": "json_tree_small_encrypted_v4_10000_query_gin_idx",
                         "Node Type": "Bitmap Index Scan",
                         "Parallel Aware": false,
@@ -120,7 +120,7 @@
                       },
                       {
                         "Async Capable": false,
-                        "Index Cond": "((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"0dbfe1a233b844d25b466ce66dbc5e3c\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"24d6878ba6fd31f045742bb2d81e3864\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
                         "Index Name": "json_tree_small_encrypted_v4_10000_query_gin_idx",
                         "Node Type": "Bitmap Index Scan",
                         "Parallel Aware": false,
@@ -135,14 +135,14 @@
                     "Total Cost": 91.11
                   }
                 ],
-                "Recheck Cond": "(((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"0dbfe1a233b844d25b466ce66dbc5e3c\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"24d6878ba6fd31f045742bb2d81e3864\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR ((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"0dbfe1a233b844d25b466ce66dbc5e3c\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"24d6878ba6fd31f045742bb2d81e3864\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
+                "Recheck Cond": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
                 "Relation Name": "json_tree_small_encrypted_v4_10000",
                 "Startup Cost": 91.11,
-                "Total Cost": 95.64
+                "Total Cost": 100.14
               }
             ],
             "Startup Cost": 91.11,
-            "Total Cost": 95.64
+            "Total Cost": 100.14
           }
         }
       ],
@@ -151,7 +151,7 @@
         "json_tree_small_encrypted_v4_10000_query_gin_idx"
       ],
       "parameters": [
-        "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"vs\":\"0dbfe1a233b844d25b466ce66dbc5e3c\"},{\"s\":\"7349633426741ad6074ff9e7ffa69599\",\"vs\":\"70f72921af0e2697880a1bfcc07da3ff\"},{\"s\":\"9f7f562232761fd6f7624026c36859c9\",\"vs\":\"e364f018658c6e1d47db6d2a4992e0e1\"},{\"s\":\"adde476512a10c4663437ac59bc53598\",\"vs\":\"24d6878ba6fd31f045742bb2d81e3864\"}],\"el\":[]}"
+        "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"vs\":\"db71fd147cc63c46e93d9aac09879d7d\"},{\"s\":\"7349633426741ad6074ff9e7ffa69599\",\"vs\":\"62848e70087d6feb4e4976f8eac93fbd\"},{\"s\":\"9f7f562232761fd6f7624026c36859c9\",\"vs\":\"1d985c42f8ec8ab42714f069cc4811aa\"},{\"s\":\"adde476512a10c4663437ac59bc53598\",\"vs\":\"f6d39e9186782604786e59fcb9383214\"}],\"el\":[]}"
       ],
       "query": "SELECT id FROM json_tree_small_encrypted_v4_10000 WHERE value @> $1::text::jsonb::eql_v4.query_json_tree LIMIT 10",
       "rows_returned": 1
@@ -169,7 +169,7 @@
               {
                 "Alias": "json_tree_small_encrypted_v4_10000",
                 "Async Capable": false,
-                "Filter": "(((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND ((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
+                "Filter": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
                 "Node Type": "Bitmap Heap Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
@@ -186,7 +186,7 @@
                     "Plans": [
                       {
                         "Async Capable": false,
-                        "Index Cond": "((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
                         "Index Name": "json_tree_small_encrypted_v4_10000_query_gin_idx",
                         "Node Type": "Bitmap Index Scan",
                         "Parallel Aware": false,
@@ -198,7 +198,7 @@
                       },
                       {
                         "Async Capable": false,
-                        "Index Cond": "((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
                         "Index Name": "json_tree_small_encrypted_v4_10000_query_gin_idx",
                         "Node Type": "Bitmap Index Scan",
                         "Parallel Aware": false,
@@ -213,14 +213,14 @@
                     "Total Cost": 38.93
                   }
                 ],
-                "Recheck Cond": "(((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR ((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"e364f018658c6e1d47db6d2a4992e0e1\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
+                "Recheck Cond": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
                 "Relation Name": "json_tree_small_encrypted_v4_10000",
                 "Startup Cost": 38.93,
-                "Total Cost": 43.46
+                "Total Cost": 47.96
               }
             ],
             "Startup Cost": 38.93,
-            "Total Cost": 43.46
+            "Total Cost": 47.96
           }
         }
       ],
@@ -229,10 +229,10 @@
         "json_tree_small_encrypted_v4_10000_query_gin_idx"
       ],
       "parameters": [
-        "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"9f7f562232761fd6f7624026c36859c9\",\"vs\":\"e364f018658c6e1d47db6d2a4992e0e1\"}],\"el\":[]}"
+        "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"9f7f562232761fd6f7624026c36859c9\",\"vs\":\"1d985c42f8ec8ab42714f069cc4811aa\"}],\"el\":[]}"
       ],
       "query": "SELECT id FROM json_tree_small_encrypted_v4_10000 WHERE eql_v4.json_tree_contains(value, $1::text::jsonb::eql_v4.query_json_tree) LIMIT 10",
-      "rows_returned": 5
+      "rows_returned": 6
     },
     {
       "explain": [
@@ -247,7 +247,7 @@
               {
                 "Alias": "json_tree_small_encrypted_v4_10000",
                 "Async Capable": false,
-                "Filter": "(((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND ((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
+                "Filter": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
                 "Node Type": "Bitmap Heap Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
@@ -264,7 +264,7 @@
                     "Plans": [
                       {
                         "Async Capable": false,
-                        "Index Cond": "((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
                         "Index Name": "json_tree_small_encrypted_v4_10000_query_gin_idx",
                         "Node Type": "Bitmap Index Scan",
                         "Parallel Aware": false,
@@ -276,7 +276,7 @@
                       },
                       {
                         "Async Capable": false,
-                        "Index Cond": "((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
                         "Index Name": "json_tree_small_encrypted_v4_10000_query_gin_idx",
                         "Node Type": "Bitmap Index Scan",
                         "Parallel Aware": false,
@@ -291,14 +291,14 @@
                     "Total Cost": 38.93
                   }
                 ],
-                "Recheck Cond": "(((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR ((eql_v4.json_tree_query(value))::jsonb @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"70f72921af0e2697880a1bfcc07da3ff\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
+                "Recheck Cond": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
                 "Relation Name": "json_tree_small_encrypted_v4_10000",
                 "Startup Cost": 38.93,
-                "Total Cost": 43.46
+                "Total Cost": 47.96
               }
             ],
             "Startup Cost": 38.93,
-            "Total Cost": 43.46
+            "Total Cost": 47.96
           }
         }
       ],
@@ -307,7 +307,7 @@
         "json_tree_small_encrypted_v4_10000_query_gin_idx"
       ],
       "parameters": [
-        "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"7349633426741ad6074ff9e7ffa69599\",\"vs\":\"70f72921af0e2697880a1bfcc07da3ff\"}],\"el\":[]}"
+        "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"7349633426741ad6074ff9e7ffa69599\",\"vs\":\"62848e70087d6feb4e4976f8eac93fbd\"}],\"el\":[]}"
       ],
       "query": "SELECT id FROM json_tree_small_encrypted_v4_10000 WHERE eql_v4.json_tree_contains(value, $1::text::jsonb::eql_v4.query_json_tree) LIMIT 10",
       "rows_returned": 1
@@ -325,33 +325,21 @@
               {
                 "Alias": "json_tree_small_encrypted_v4_10000",
                 "Async Capable": false,
-                "Node Type": "Bitmap Heap Scan",
+                "Index Cond": "(decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'a7b53d9b98181a98c49559f86362fcce'::text))::jsonb ->> 'op'::text), 'hex'::text) > decode(((('{\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"op\": \"0126916d0e57e8845986fe3bfe60f9c87467ec1e474738bc2fc6bd329ec6511790c29a32280543e78d3da8283fd27d119e2901afc6cd86d7f45d8f33d3e422e2cc\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'hex'::text))",
+                "Index Name": "json_tree_small_encrypted_v4_10000_field_order_idx",
+                "Node Type": "Index Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
-                "Plan Rows": 505,
+                "Plan Rows": 9643,
                 "Plan Width": 4,
-                "Plans": [
-                  {
-                    "Async Capable": false,
-                    "Index Cond": "(decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'a7b53d9b98181a98c49559f86362fcce'::text))::jsonb ->> 'op'::text), 'hex'::text) > decode(((('{\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"op\": \"0126916d0e57e88459877d69dffdc752bd9bf509e406e4b1c6b17e54a15cc2038886407038b14aba928cf3a1cd745d95d0aab4046de67deebcfcdf0cf031c97d00\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'hex'::text))",
-                    "Index Name": "json_tree_small_encrypted_v4_10000_field_order_idx",
-                    "Node Type": "Bitmap Index Scan",
-                    "Parallel Aware": false,
-                    "Parent Relationship": "Outer",
-                    "Plan Rows": 505,
-                    "Plan Width": 0,
-                    "Startup Cost": 0.0,
-                    "Total Cost": 8.08
-                  }
-                ],
-                "Recheck Cond": "(decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'a7b53d9b98181a98c49559f86362fcce'::text))::jsonb ->> 'op'::text), 'hex'::text) > decode(((('{\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"op\": \"0126916d0e57e88459877d69dffdc752bd9bf509e406e4b1c6b17e54a15cc2038886407038b14aba928cf3a1cd745d95d0aab4046de67deebcfcdf0cf031c97d00\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'hex'::text))",
                 "Relation Name": "json_tree_small_encrypted_v4_10000",
-                "Startup Cost": 8.21,
-                "Total Cost": 1271.09
+                "Scan Direction": "Forward",
+                "Startup Cost": 0.29,
+                "Total Cost": 473.04
               }
             ],
-            "Startup Cost": 8.21,
-            "Total Cost": 33.21
+            "Startup Cost": 0.29,
+            "Total Cost": 0.78
           }
         }
       ],
@@ -360,7 +348,7 @@
         "json_tree_small_encrypted_v4_10000_field_order_idx"
       ],
       "parameters": [
-        "{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"op\":\"0126916d0e57e88459877d69dffdc752bd9bf509e406e4b1c6b17e54a15cc2038886407038b14aba928cf3a1cd745d95d0aab4046de67deebcfcdf0cf031c97d00\"}"
+        "{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"op\":\"0126916d0e57e8845986fe3bfe60f9c87467ec1e474738bc2fc6bd329ec6511790c29a32280543e78d3da8283fd27d119e2901afc6cd86d7f45d8f33d3e422e2cc\"}"
       ],
       "query": "SELECT id FROM json_tree_small_encrypted_v4_10000 WHERE (value -> 'a7b53d9b98181a98c49559f86362fcce'::text) > $1::text::jsonb::eql_v4.query_json_tree_leaf LIMIT 10",
       "rows_returned": 10
@@ -378,21 +366,21 @@
               {
                 "Alias": "json_tree_small_encrypted_v4_10000",
                 "Async Capable": false,
-                "Index Cond": "((decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'a7b53d9b98181a98c49559f86362fcce'::text))::jsonb ->> 'op'::text), 'hex'::text) >= decode(((('{\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"op\": \"0126916d0e57e88459877d69dffdc7523e69b97834e76b8e8c86815ee714d13fea361a23b9b2bf7bfebdb4092220569fe281b350f3139d8f5f136f323282fff57b\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'hex'::text)) AND (decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'a7b53d9b98181a98c49559f86362fcce'::text))::jsonb ->> 'op'::text), 'hex'::text) <= decode(((('{\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"op\": \"0126916d0e57e88459877d69e07d27d843e190e01efadb9ed4ddaca5810c63580fe7dc07bae278eb55f9e3aae11d186d936b234d5a1ed27c89c1ae5bafd72426c4\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'hex'::text)))",
+                "Index Cond": "((decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'a7b53d9b98181a98c49559f86362fcce'::text))::jsonb ->> 'op'::text), 'hex'::text) >= decode(((('{\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"op\": \"0126916d0e57e8845986fe3bfe607a7609eee1bd205fe95c135006d95b2914b21b1f381acc6ad0e6a05a372477ab4edff6900674e7da6d680b43ebbf915f67b1c8\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'hex'::text)) AND (decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'a7b53d9b98181a98c49559f86362fcce'::text))::jsonb ->> 'op'::text), 'hex'::text) <= decode(((('{\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"op\": \"0126916d0e57e8845986fe3bfee0cb10ecc20c6c3af9481a7d2215198fccd536dfae347a6a977d6c37ce0c406356bc99e22f52f3164e83e884e2ef76385527d50c\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'hex'::text)))",
                 "Index Name": "json_tree_small_encrypted_v4_10000_field_order_idx",
                 "Node Type": "Index Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
-                "Plan Rows": 1245,
+                "Plan Rows": 995,
                 "Plan Width": 4,
                 "Relation Name": "json_tree_small_encrypted_v4_10000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.3,
-                "Total Cost": 3755.42
+                "Total Cost": 284.2
               }
             ],
             "Startup Cost": 0.3,
-            "Total Cost": 30.46
+            "Total Cost": 3.15
           }
         }
       ],
@@ -401,8 +389,8 @@
         "json_tree_small_encrypted_v4_10000_field_order_idx"
       ],
       "parameters": [
-        "{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"op\":\"0126916d0e57e88459877d69dffdc7523e69b97834e76b8e8c86815ee714d13fea361a23b9b2bf7bfebdb4092220569fe281b350f3139d8f5f136f323282fff57b\"}",
-        "{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"op\":\"0126916d0e57e88459877d69e07d27d843e190e01efadb9ed4ddaca5810c63580fe7dc07bae278eb55f9e3aae11d186d936b234d5a1ed27c89c1ae5bafd72426c4\"}"
+        "{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"op\":\"0126916d0e57e8845986fe3bfe607a7609eee1bd205fe95c135006d95b2914b21b1f381acc6ad0e6a05a372477ab4edff6900674e7da6d680b43ebbf915f67b1c8\"}",
+        "{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"op\":\"0126916d0e57e8845986fe3bfee0cb10ecc20c6c3af9481a7d2215198fccd536dfae347a6a977d6c37ce0c406356bc99e22f52f3164e83e884e2ef76385527d50c\"}"
       ],
       "query": "SELECT id FROM json_tree_small_encrypted_v4_10000 WHERE (value -> 'a7b53d9b98181a98c49559f86362fcce'::text) >= $1::text::jsonb::eql_v4.query_json_tree_leaf AND (value -> 'a7b53d9b98181a98c49559f86362fcce'::text) <= $2::text::jsonb::eql_v4.query_json_tree_leaf LIMIT 10",
       "rows_returned": 10
@@ -429,11 +417,11 @@
                 "Relation Name": "json_tree_small_encrypted_v4_10000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.29,
-                "Total Cost": 10117.47
+                "Total Cost": 25504.28
               }
             ],
             "Startup Cost": 0.29,
-            "Total Cost": 10.4
+            "Total Cost": 25.79
           }
         }
       ],
@@ -460,7 +448,7 @@
             "Relation Name": "json_tree_small_encrypted_v4_10000",
             "Scan Direction": "Forward",
             "Startup Cost": 0.29,
-            "Total Cost": 8.56
+            "Total Cost": 10.81
           }
         }
       ],

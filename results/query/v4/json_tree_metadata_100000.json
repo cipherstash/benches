@@ -1,0 +1,467 @@
+{
+  "scenarios": [
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_small_encrypted_v4_100000",
+                "Async Capable": false,
+                "Filter": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"b7f5a480da22a30372f7898793d15162\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"51d1f15ef38ac146b86c0a11c2f20a40\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"b7f5a480da22a30372f7898793d15162\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"51d1f15ef38ac146b86c0a11c2f20a40\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"b7f5a480da22a30372f7898793d15162\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"51d1f15ef38ac146b86c0a11c2f20a40\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
+                "Node Type": "Bitmap Heap Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 10,
+                "Plan Width": 4,
+                "Plans": [
+                  {
+                    "Async Capable": false,
+                    "Node Type": "BitmapOr",
+                    "Parallel Aware": false,
+                    "Parent Relationship": "Outer",
+                    "Plan Rows": 10,
+                    "Plan Width": 0,
+                    "Plans": [
+                      {
+                        "Async Capable": false,
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"b7f5a480da22a30372f7898793d15162\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"51d1f15ef38ac146b86c0a11c2f20a40\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
+                        "Index Name": "json_tree_small_encrypted_v4_100000_query_gin_idx",
+                        "Node Type": "Bitmap Index Scan",
+                        "Parallel Aware": false,
+                        "Parent Relationship": "Member",
+                        "Plan Rows": 10,
+                        "Plan Width": 0,
+                        "Startup Cost": 0.0,
+                        "Total Cost": 133.81
+                      },
+                      {
+                        "Async Capable": false,
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"b7f5a480da22a30372f7898793d15162\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"51d1f15ef38ac146b86c0a11c2f20a40\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
+                        "Index Name": "json_tree_small_encrypted_v4_100000_query_gin_idx",
+                        "Node Type": "Bitmap Index Scan",
+                        "Parallel Aware": false,
+                        "Parent Relationship": "Member",
+                        "Plan Rows": 1,
+                        "Plan Width": 0,
+                        "Startup Cost": 0.0,
+                        "Total Cost": 0.0
+                      }
+                    ],
+                    "Startup Cost": 133.81,
+                    "Total Cost": 133.81
+                  }
+                ],
+                "Recheck Cond": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"b7f5a480da22a30372f7898793d15162\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"51d1f15ef38ac146b86c0a11c2f20a40\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"b7f5a480da22a30372f7898793d15162\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"51d1f15ef38ac146b86c0a11c2f20a40\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
+                "Relation Name": "json_tree_small_encrypted_v4_100000",
+                "Startup Cost": 133.81,
+                "Total Cost": 220.35
+              }
+            ],
+            "Startup Cost": 133.81,
+            "Total Cost": 220.35
+          }
+        }
+      ],
+      "id": "JSON_TREE/json_tree/contains/functional/100000",
+      "indexes_used": [
+        "json_tree_small_encrypted_v4_100000_query_gin_idx"
+      ],
+      "parameters": [
+        "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"vs\":\"b7f5a480da22a30372f7898793d15162\"},{\"s\":\"7349633426741ad6074ff9e7ffa69599\",\"vs\":\"d566b7e03127d5532141d303eee2bb26\"},{\"s\":\"9f7f562232761fd6f7624026c36859c9\",\"vs\":\"cdc46799430eea809fc8da821fddded8\"},{\"s\":\"adde476512a10c4663437ac59bc53598\",\"vs\":\"51d1f15ef38ac146b86c0a11c2f20a40\"}],\"el\":[]}"
+      ],
+      "query": "SELECT id FROM json_tree_small_encrypted_v4_100000 WHERE eql_v4.json_tree_contains(value, $1::text::jsonb::eql_v4.query_json_tree) LIMIT 10",
+      "rows_returned": 1
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_small_encrypted_v4_100000",
+                "Async Capable": false,
+                "Filter": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"b7f5a480da22a30372f7898793d15162\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"51d1f15ef38ac146b86c0a11c2f20a40\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"b7f5a480da22a30372f7898793d15162\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"51d1f15ef38ac146b86c0a11c2f20a40\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"b7f5a480da22a30372f7898793d15162\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"51d1f15ef38ac146b86c0a11c2f20a40\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
+                "Node Type": "Bitmap Heap Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 10,
+                "Plan Width": 4,
+                "Plans": [
+                  {
+                    "Async Capable": false,
+                    "Node Type": "BitmapOr",
+                    "Parallel Aware": false,
+                    "Parent Relationship": "Outer",
+                    "Plan Rows": 10,
+                    "Plan Width": 0,
+                    "Plans": [
+                      {
+                        "Async Capable": false,
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"b7f5a480da22a30372f7898793d15162\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"51d1f15ef38ac146b86c0a11c2f20a40\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
+                        "Index Name": "json_tree_small_encrypted_v4_100000_query_gin_idx",
+                        "Node Type": "Bitmap Index Scan",
+                        "Parallel Aware": false,
+                        "Parent Relationship": "Member",
+                        "Plan Rows": 10,
+                        "Plan Width": 0,
+                        "Startup Cost": 0.0,
+                        "Total Cost": 133.81
+                      },
+                      {
+                        "Async Capable": false,
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"b7f5a480da22a30372f7898793d15162\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"51d1f15ef38ac146b86c0a11c2f20a40\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
+                        "Index Name": "json_tree_small_encrypted_v4_100000_query_gin_idx",
+                        "Node Type": "Bitmap Index Scan",
+                        "Parallel Aware": false,
+                        "Parent Relationship": "Member",
+                        "Plan Rows": 1,
+                        "Plan Width": 0,
+                        "Startup Cost": 0.0,
+                        "Total Cost": 0.0
+                      }
+                    ],
+                    "Startup Cost": 133.81,
+                    "Total Cost": 133.81
+                  }
+                ],
+                "Recheck Cond": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"b7f5a480da22a30372f7898793d15162\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"51d1f15ef38ac146b86c0a11c2f20a40\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"b7f5a480da22a30372f7898793d15162\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"51d1f15ef38ac146b86c0a11c2f20a40\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
+                "Relation Name": "json_tree_small_encrypted_v4_100000",
+                "Startup Cost": 133.81,
+                "Total Cost": 220.35
+              }
+            ],
+            "Startup Cost": 133.81,
+            "Total Cost": 220.35
+          }
+        }
+      ],
+      "id": "JSON_TREE/json_tree/contains/operator/100000",
+      "indexes_used": [
+        "json_tree_small_encrypted_v4_100000_query_gin_idx"
+      ],
+      "parameters": [
+        "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"vs\":\"b7f5a480da22a30372f7898793d15162\"},{\"s\":\"7349633426741ad6074ff9e7ffa69599\",\"vs\":\"d566b7e03127d5532141d303eee2bb26\"},{\"s\":\"9f7f562232761fd6f7624026c36859c9\",\"vs\":\"cdc46799430eea809fc8da821fddded8\"},{\"s\":\"adde476512a10c4663437ac59bc53598\",\"vs\":\"51d1f15ef38ac146b86c0a11c2f20a40\"}],\"el\":[]}"
+      ],
+      "query": "SELECT id FROM json_tree_small_encrypted_v4_100000 WHERE value @> $1::text::jsonb::eql_v4.query_json_tree LIMIT 10",
+      "rows_returned": 1
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_small_encrypted_v4_100000",
+                "Async Capable": false,
+                "Filter": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
+                "Node Type": "Bitmap Heap Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 10,
+                "Plan Width": 4,
+                "Plans": [
+                  {
+                    "Async Capable": false,
+                    "Node Type": "BitmapOr",
+                    "Parallel Aware": false,
+                    "Parent Relationship": "Outer",
+                    "Plan Rows": 10,
+                    "Plan Width": 0,
+                    "Plans": [
+                      {
+                        "Async Capable": false,
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
+                        "Index Name": "json_tree_small_encrypted_v4_100000_query_gin_idx",
+                        "Node Type": "Bitmap Index Scan",
+                        "Parallel Aware": false,
+                        "Parent Relationship": "Member",
+                        "Plan Rows": 10,
+                        "Plan Width": 0,
+                        "Startup Cost": 0.0,
+                        "Total Cost": 56.03
+                      },
+                      {
+                        "Async Capable": false,
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
+                        "Index Name": "json_tree_small_encrypted_v4_100000_query_gin_idx",
+                        "Node Type": "Bitmap Index Scan",
+                        "Parallel Aware": false,
+                        "Parent Relationship": "Member",
+                        "Plan Rows": 1,
+                        "Plan Width": 0,
+                        "Startup Cost": 0.0,
+                        "Total Cost": 0.0
+                      }
+                    ],
+                    "Startup Cost": 56.03,
+                    "Total Cost": 56.03
+                  }
+                ],
+                "Recheck Cond": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
+                "Relation Name": "json_tree_small_encrypted_v4_100000",
+                "Startup Cost": 56.03,
+                "Total Cost": 142.58
+              }
+            ],
+            "Startup Cost": 56.03,
+            "Total Cost": 142.58
+          }
+        }
+      ],
+      "id": "JSON_TREE/json_tree/field_eq/extractor/100000",
+      "indexes_used": [
+        "json_tree_small_encrypted_v4_100000_query_gin_idx"
+      ],
+      "parameters": [
+        "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"9f7f562232761fd6f7624026c36859c9\",\"vs\":\"cdc46799430eea809fc8da821fddded8\"}],\"el\":[]}"
+      ],
+      "query": "SELECT id FROM json_tree_small_encrypted_v4_100000 WHERE eql_v4.json_tree_contains(value, $1::text::jsonb::eql_v4.query_json_tree) LIMIT 10",
+      "rows_returned": 10
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_small_encrypted_v4_100000",
+                "Async Capable": false,
+                "Filter": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
+                "Node Type": "Bitmap Heap Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 10,
+                "Plan Width": 4,
+                "Plans": [
+                  {
+                    "Async Capable": false,
+                    "Node Type": "BitmapOr",
+                    "Parallel Aware": false,
+                    "Parent Relationship": "Outer",
+                    "Plan Rows": 10,
+                    "Plan Width": 0,
+                    "Plans": [
+                      {
+                        "Async Capable": false,
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
+                        "Index Name": "json_tree_small_encrypted_v4_100000_query_gin_idx",
+                        "Node Type": "Bitmap Index Scan",
+                        "Parallel Aware": false,
+                        "Parent Relationship": "Member",
+                        "Plan Rows": 10,
+                        "Plan Width": 0,
+                        "Startup Cost": 0.0,
+                        "Total Cost": 56.03
+                      },
+                      {
+                        "Async Capable": false,
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
+                        "Index Name": "json_tree_small_encrypted_v4_100000_query_gin_idx",
+                        "Node Type": "Bitmap Index Scan",
+                        "Parallel Aware": false,
+                        "Parent Relationship": "Member",
+                        "Plan Rows": 1,
+                        "Plan Width": 0,
+                        "Startup Cost": 0.0,
+                        "Total Cost": 0.0
+                      }
+                    ],
+                    "Startup Cost": 56.03,
+                    "Total Cost": 56.03
+                  }
+                ],
+                "Recheck Cond": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
+                "Relation Name": "json_tree_small_encrypted_v4_100000",
+                "Startup Cost": 56.03,
+                "Total Cost": 142.58
+              }
+            ],
+            "Startup Cost": 56.03,
+            "Total Cost": 142.58
+          }
+        }
+      ],
+      "id": "JSON_TREE/json_tree/field_eq/unique/100000",
+      "indexes_used": [
+        "json_tree_small_encrypted_v4_100000_query_gin_idx"
+      ],
+      "parameters": [
+        "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"7349633426741ad6074ff9e7ffa69599\",\"vs\":\"d566b7e03127d5532141d303eee2bb26\"}],\"el\":[]}"
+      ],
+      "query": "SELECT id FROM json_tree_small_encrypted_v4_100000 WHERE eql_v4.json_tree_contains(value, $1::text::jsonb::eql_v4.query_json_tree) LIMIT 10",
+      "rows_returned": 1
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_small_encrypted_v4_100000",
+                "Async Capable": false,
+                "Index Cond": "(decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'a7b53d9b98181a98c49559f86362fcce'::text))::jsonb ->> 'op'::text), 'hex'::text) > decode(((('{\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"op\": \"0126916d0e57e88459877d695fcdfaf73b768a7ffa991915b19a6e59958b9bff05b9ba3e0ac5ab3b01cebf79fd0ba8c634f6a4053bf4a51fff5decc1ef272ef777\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'hex'::text))",
+                "Index Name": "json_tree_small_encrypted_v4_100000_field_order_idx",
+                "Node Type": "Index Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 64520,
+                "Plan Width": 4,
+                "Relation Name": "json_tree_small_encrypted_v4_100000",
+                "Scan Direction": "Forward",
+                "Startup Cost": 0.42,
+                "Total Cost": 3941.2
+              }
+            ],
+            "Startup Cost": 0.42,
+            "Total Cost": 1.04
+          }
+        }
+      ],
+      "id": "JSON_TREE/json_tree/field_gt/functional/100000",
+      "indexes_used": [
+        "json_tree_small_encrypted_v4_100000_field_order_idx"
+      ],
+      "parameters": [
+        "{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"op\":\"0126916d0e57e88459877d695fcdfaf73b768a7ffa991915b19a6e59958b9bff05b9ba3e0ac5ab3b01cebf79fd0ba8c634f6a4053bf4a51fff5decc1ef272ef777\"}"
+      ],
+      "query": "SELECT id FROM json_tree_small_encrypted_v4_100000 WHERE (value -> 'a7b53d9b98181a98c49559f86362fcce'::text) > $1::text::jsonb::eql_v4.query_json_tree_leaf LIMIT 10",
+      "rows_returned": 10
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_small_encrypted_v4_100000",
+                "Async Capable": false,
+                "Index Cond": "((decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'a7b53d9b98181a98c49559f86362fcce'::text))::jsonb ->> 'op'::text), 'hex'::text) >= decode(((('{\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"op\": \"0126916d0e57e88459877d695fcdfa76f550148b1cd6aa60645b6578b9126ba62ad7557c151e9fc048a0abe06487878fd8b6e14f516e68434c01dd986c42a572dc\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'hex'::text)) AND (decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'a7b53d9b98181a98c49559f86362fcce'::text))::jsonb ->> 'op'::text), 'hex'::text) <= decode(((('{\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"op\": \"0126916d0e57e88459877d69604d820bfc063d0dd23a14bc64ba6382d3e53b91f1f8e9ce1f20ee44a19810e5a5e586f9ddd78df28075c226b617a96d6b50050b5f\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'hex'::text)))",
+                "Index Name": "json_tree_small_encrypted_v4_100000_field_order_idx",
+                "Node Type": "Index Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 13930,
+                "Plan Width": 4,
+                "Relation Name": "json_tree_small_encrypted_v4_100000",
+                "Scan Direction": "Forward",
+                "Startup Cost": 0.43,
+                "Total Cost": 2886.66
+              }
+            ],
+            "Startup Cost": 0.43,
+            "Total Cost": 2.5
+          }
+        }
+      ],
+      "id": "JSON_TREE/json_tree/field_between/functional/100000",
+      "indexes_used": [
+        "json_tree_small_encrypted_v4_100000_field_order_idx"
+      ],
+      "parameters": [
+        "{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"op\":\"0126916d0e57e88459877d695fcdfa76f550148b1cd6aa60645b6578b9126ba62ad7557c151e9fc048a0abe06487878fd8b6e14f516e68434c01dd986c42a572dc\"}",
+        "{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"op\":\"0126916d0e57e88459877d69604d820bfc063d0dd23a14bc64ba6382d3e53b91f1f8e9ce1f20ee44a19810e5a5e586f9ddd78df28075c226b617a96d6b50050b5f\"}"
+      ],
+      "query": "SELECT id FROM json_tree_small_encrypted_v4_100000 WHERE (value -> 'a7b53d9b98181a98c49559f86362fcce'::text) >= $1::text::jsonb::eql_v4.query_json_tree_leaf AND (value -> 'a7b53d9b98181a98c49559f86362fcce'::text) <= $2::text::jsonb::eql_v4.query_json_tree_leaf LIMIT 10",
+      "rows_returned": 10
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 36,
+            "Plans": [
+              {
+                "Alias": "json_tree_small_encrypted_v4_100000",
+                "Async Capable": false,
+                "Index Name": "json_tree_small_encrypted_v4_100000_field_order_idx",
+                "Node Type": "Index Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 100000,
+                "Plan Width": 36,
+                "Relation Name": "json_tree_small_encrypted_v4_100000",
+                "Scan Direction": "Forward",
+                "Startup Cost": 0.42,
+                "Total Cost": 254952.13
+              }
+            ],
+            "Startup Cost": 0.42,
+            "Total Cost": 25.91
+          }
+        }
+      ],
+      "id": "JSON_TREE/json_tree/field_order/functional/100000",
+      "indexes_used": [
+        "json_tree_small_encrypted_v4_100000_field_order_idx"
+      ],
+      "parameters": [],
+      "query": "SELECT id FROM json_tree_small_encrypted_v4_100000 ORDER BY eql_v4.ord_term(value -> 'a7b53d9b98181a98c49559f86362fcce'::text) LIMIT 10",
+      "rows_returned": 10
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Alias": "json_tree_small_encrypted_v4_100000",
+            "Async Capable": false,
+            "Index Cond": "(id = 50000)",
+            "Index Name": "json_tree_small_encrypted_v4_100000_pkey",
+            "Node Type": "Index Scan",
+            "Parallel Aware": false,
+            "Plan Rows": 1,
+            "Plan Width": 32,
+            "Relation Name": "json_tree_small_encrypted_v4_100000",
+            "Scan Direction": "Forward",
+            "Startup Cost": 0.29,
+            "Total Cost": 10.82
+          }
+        }
+      ],
+      "id": "JSON_TREE/json_tree/extract/by_id/100000",
+      "indexes_used": [
+        "json_tree_small_encrypted_v4_100000_pkey"
+      ],
+      "parameters": [
+        50000
+      ],
+      "query": "SELECT (value -> 'a7b53d9b98181a98c49559f86362fcce'::text)::jsonb::text FROM json_tree_small_encrypted_v4_100000 WHERE id = $1",
+      "rows_returned": 1
+    }
+  ],
+  "target_rows": "100000"
+}

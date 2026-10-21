@@ -13,7 +13,7 @@
               {
                 "Alias": "string_plaintext_100000",
                 "Async Capable": false,
-                "Index Cond": "(value = 'd76d68cf03e259209831f84f5cfa3bfc'::text)",
+                "Index Cond": "(value = '56495d9531b002db89c29d4ec3fb0d27'::text)",
                 "Index Name": "string_plaintext_100000_value_idx",
                 "Node Type": "Index Scan",
                 "Parallel Aware": false,
@@ -56,7 +56,7 @@
                 "Node Type": "Seq Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
-                "Plan Rows": 49805,
+                "Plan Rows": 49589,
                 "Plan Width": 8,
                 "Relation Name": "integer_plaintext_100000",
                 "Startup Cost": 0.0,
@@ -92,12 +92,12 @@
                 "Node Type": "Index Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
-                "Plan Rows": 50194,
+                "Plan Rows": 50410,
                 "Plan Width": 8,
                 "Relation Name": "integer_plaintext_100000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.29,
-                "Total Cost": 3206.69
+                "Total Cost": 3214.46
               }
             ],
             "Startup Cost": 0.29,
@@ -126,11 +126,11 @@
               {
                 "Alias": "json_small_plaintext_100000",
                 "Async Capable": false,
-                "Filter": "(value @> '{\"age\": 63}'::jsonb)",
+                "Filter": "(value @> '{\"age\": 27}'::jsonb)",
                 "Node Type": "Seq Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
-                "Plan Rows": 1010,
+                "Plan Rows": 2020,
                 "Plan Width": 4,
                 "Relation Name": "json_small_plaintext_100000",
                 "Startup Cost": 0.0,
@@ -138,7 +138,7 @@
               }
             ],
             "Startup Cost": 0.0,
-            "Total Cost": 39.14
+            "Total Cost": 19.57
           }
         }
       ],
@@ -161,7 +161,7 @@
               {
                 "Alias": "json_small_plaintext_100000",
                 "Async Capable": false,
-                "Filter": "((value -> 'age'::text) = '63'::jsonb)",
+                "Filter": "((value -> 'age'::text) = '27'::jsonb)",
                 "Node Type": "Seq Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
