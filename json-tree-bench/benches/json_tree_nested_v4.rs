@@ -16,6 +16,8 @@
 //!   subtree/user              … `$.user`: 3 levels, 12 leaves
 //!   subtree/orders            … `$.orders`: every order and item, the largest walk (hundreds of entries)
 //!   subtree_at/items          eql_v4.json_tree_subtree_at(value, token, sel) for `$.orders[*].items`
+//!   subtree/orders_walked     the two above with the budget off (0): the walk returns every
+//!   subtree_at/items_walked   entry, where the default budget (64) returns the sealed root
 //!   children/orders           eql_v4.json_tree_children(value, token) — one row per order
 //!   child_count/orders        eql_v4.json_tree_child_count(value, token)
 //!   path_query/wildcard       eql_v4.json_tree_path_query(value::jsonb, sel) for `$.orders[*].status`
@@ -280,6 +282,14 @@ fn criterion_benchmark(c: &mut Criterion) {
             Scenario { name: "json_tree/subtree_at/items",
                 sql: format!("SELECT e::jsonb::text FROM {table}, eql_v4.json_tree_subtree_at(value, $1::text, $2::text) e WHERE id = $3"),
                 args: vec![t(&tok_items), t(&sel_items), i(id)] },
+            // The same two walks with the budget off (0): every entry of the
+            // subtree, where the default budget returns the sealed root.
+            Scenario { name: "json_tree/subtree/orders_walked",
+                sql: format!("SELECT e::jsonb::text FROM {table}, eql_v4.json_tree_subtree(value, $1::text, 0) e WHERE id = $2"),
+                args: vec![t(&tok_orders), i(id)] },
+            Scenario { name: "json_tree/subtree_at/items_walked",
+                sql: format!("SELECT e::jsonb::text FROM {table}, eql_v4.json_tree_subtree_at(value, $1::text, $2::text, 0) e WHERE id = $3"),
+                args: vec![t(&tok_items), t(&sel_items), i(id)] },
             Scenario { name: "json_tree/children/orders",
                 sql: format!("SELECT e::jsonb::text FROM {table}, eql_v4.json_tree_children(value, $1::text) e WHERE id = $2"),
                 args: vec![t(&tok_orders), i(id)] },
@@ -321,6 +331,12 @@ fn criterion_benchmark(c: &mut Criterion) {
                 sql: format!("SELECT (plain -> 'orders')::text FROM {plain_table} WHERE id = $1"),
                 args: vec![i(id)] },
             Scenario { name: "plain/subtree_at/items",
+                sql: format!("SELECT e::text FROM {plain_table}, jsonb_path_query(plain, '$.orders[*].items') e WHERE id = $1"),
+                args: vec![i(id)] },
+            Scenario { name: "plain/subtree/orders_walked",
+                sql: format!("SELECT (plain -> 'orders')::text FROM {plain_table} WHERE id = $1"),
+                args: vec![i(id)] },
+            Scenario { name: "plain/subtree_at/items_walked",
                 sql: format!("SELECT e::text FROM {plain_table}, jsonb_path_query(plain, '$.orders[*].items') e WHERE id = $1"),
                 args: vec![i(id)] },
             Scenario { name: "plain/children/orders",

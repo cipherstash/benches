@@ -151,6 +151,8 @@ NESTED_ORDER = [
     "subtree/user",
     "subtree/orders",
     "subtree_at/items",
+    "subtree/orders_walked",
+    "subtree_at/items_walked",
     "children/orders",
     "child_count/orders",
     "path_query/wildcard",
