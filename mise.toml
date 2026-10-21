@@ -1378,6 +1378,17 @@ run = "mise run bench:v4:query:_run json_tree_v4 JSON_TREE json_tree_small_v4"
 description = "Run JSON tree v4 nested-corpus query benchmark (walks, array functions, deep containment, with the plaintext twin as baseline)"
 run = "mise run bench:v4:query:_run json_tree_nested_v4 JSON_TREE_NESTED json_tree_large_v4"
 
+[tasks."check:v4:json_tree"]
+description = "Correctness of the json_tree tables at a tier: decrypt what the walks return against the plaintext twin, and compare encrypted and native jsonb id sets for the containment and field predicates"
+depends = ["bench:build:v4"]
+run = """
+#!/usr/bin/env bash
+set -e
+# Needs both corpora prepared at the tier (prepare:json_tree_{small,large}_v4 <N>).
+TARGET_ROWS="${1:-10000}" RESULTS_DIR="$PWD/results/query/v4" \
+  json-tree-bench/target/release/check_json_tree_v4
+"""
+
 [tasks."report:json-tree-compare"]
 description = "JSON: SteVec (v3) vs json_tree (v4) vs plaintext, per scenario and tier (medians + delta)"
 run = """

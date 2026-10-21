@@ -20,10 +20,10 @@ publish = false
 # operands. Both from the stack monorepo's feature branch until they ship;
 # Cargo.lock pins the rev. `default-features = false` on stack-encrypt
 # drops the HTTP/ZeroKMS transport: the benches seal and derive terms under
-# `FakeDataKeySource` (feature `test-support`), because what is measured
+# `DeterministicSource` (feature `test-support`), because what is measured
 # is Postgres, not a KMS round-trip.
-stack-encrypt = { git = "https://github.com/cipherstash/stack", branch = "perf/json-tree-walk-and-projection", default-features = false, features = ["test-support"] }
-eql-bindings = { git = "https://github.com/cipherstash/stack", branch = "perf/json-tree-walk-and-projection", default-features = false, features = ["stack-encrypt"] }
+stack-encrypt = { git = "https://github.com/cipherstash/stack", branch = "feat/json-tree-ordinal-chain", default-features = false, features = ["test-support"] }
+eql-bindings = { git = "https://github.com/cipherstash/stack", branch = "feat/json-tree-ordinal-chain", default-features = false, features = ["stack-encrypt"] }
 sqlx = { version = "0.8", features = ["runtime-tokio-native-tls", "postgres", "json"] }
 tokio = { version = "1.47.1", features = ["full"] }
 criterion = { version = "0.4.0", features = ["async_tokio"] }
@@ -47,3 +47,7 @@ harness = false
 [[bench]]
 name = "json_tree_nested_v4"
 harness = false
+
+[[bin]]
+name = "check_json_tree_v4"
+path = "src/bin/check_json_tree_v4.rs"

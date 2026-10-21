@@ -15,7 +15,8 @@
 //!   subtree/company           eql_v4.json_tree_subtree(value, token) by id — 6 leaves
 //!   subtree/user              … `$.user`: 3 levels, 12 leaves
 //!   subtree/orders            … `$.orders`: every order and item, the largest walk (hundreds of entries)
-//!   subtree_at/items          eql_v4.json_tree_subtree_at(value, token, sel) for `$.orders[*].items`
+//!   subtree_at/items          eql_v4.json_tree_subtree_at(value, token, gates) for `$.orders[*].items`
+//!                             (the `$.orders` token, gates [s($.orders[*]), s($.orders[*].items)])
 //!   subtree/orders_walked     the two above with the budget off (0): the walk returns every
 //!   subtree_at/items_walked   entry, where the default budget (64) returns the sealed root
 //!   children/orders           eql_v4.json_tree_children(value, token) — one row per order
@@ -50,6 +51,7 @@ enum Arg {
     Text(String),
     Jsonb(JsonValue),
     Int(i32),
+    TextArray(Vec<String>),
 }
 
 struct Scenario {
@@ -66,6 +68,7 @@ fn query_with<'q>(
         Arg::Text(t) => q.bind(t),
         Arg::Jsonb(v) => q.bind(Json(v)),
         Arg::Int(i) => q.bind(*i),
+        Arg::TextArray(v) => q.bind(v),
     })
 }
 
@@ -98,7 +101,6 @@ async fn token(cipher: &Cipher, path: &str) -> String {
         .await
         .expect("derive subtree key")
         .token()
-        .to_string()
 }
 
 fn criterion_benchmark(c: &mut Criterion) {
@@ -183,11 +185,13 @@ fn criterion_benchmark(c: &mut Criterion) {
             )
             .await
             .expect("derive subtree key");
-        let tok_items = items_key.token().to_string();
-        let sel_items = items_key
-            .selector()
-            .expect("a wildcard path carries a selector")
-            .to_string();
+        // `$.orders[*].items` walks from the chain head `$.orders`'s token
+        // through one gate per step below it: the wildcard's selector, then
+        // `items`'s.
+        let tok_items = items_key.token();
+        let gates_items = items_key.gates();
+        assert_eq!(tok_items, tok_orders, "anchored at the chain head");
+        assert_eq!(gates_items.len(), 2, "one gate per step below the head");
 
         // --- Per-path functional indexes for the ordering scenarios ---
         for (name, expr) in [
@@ -250,6 +254,7 @@ fn criterion_benchmark(c: &mut Criterion) {
         let i = |n: i32| Arg::Int(n);
         let t = |s: &str| Arg::Text(s.to_string());
         let j = |v: &JsonValue| Arg::Jsonb(v.clone());
+        let ta = |v: &[String]| Arg::TextArray(v.to_vec());
         let mut scenarios = vec![
             // ---- encrypted ----
             Scenario { name: "json_tree/contains/deep_object",
@@ -280,16 +285,16 @@ fn criterion_benchmark(c: &mut Criterion) {
                 sql: format!("SELECT e::jsonb::text FROM {table}, eql_v4.json_tree_subtree(value, $1::text) e WHERE id = $2"),
                 args: vec![t(&tok_orders), i(id)] },
             Scenario { name: "json_tree/subtree_at/items",
-                sql: format!("SELECT e::jsonb::text FROM {table}, eql_v4.json_tree_subtree_at(value, $1::text, $2::text) e WHERE id = $3"),
-                args: vec![t(&tok_items), t(&sel_items), i(id)] },
+                sql: format!("SELECT e::jsonb::text FROM {table}, eql_v4.json_tree_subtree_at(value, $1::text, $2::text[]) e WHERE id = $3"),
+                args: vec![t(&tok_items), ta(&gates_items), i(id)] },
             // The same two walks with the budget off (0): every entry of the
             // subtree, where the default budget returns the sealed root.
             Scenario { name: "json_tree/subtree/orders_walked",
                 sql: format!("SELECT e::jsonb::text FROM {table}, eql_v4.json_tree_subtree(value, $1::text, 0) e WHERE id = $2"),
                 args: vec![t(&tok_orders), i(id)] },
             Scenario { name: "json_tree/subtree_at/items_walked",
-                sql: format!("SELECT e::jsonb::text FROM {table}, eql_v4.json_tree_subtree_at(value, $1::text, $2::text, 0) e WHERE id = $3"),
-                args: vec![t(&tok_items), t(&sel_items), i(id)] },
+                sql: format!("SELECT e::jsonb::text FROM {table}, eql_v4.json_tree_subtree_at(value, $1::text, $2::text[], 0) e WHERE id = $3"),
+                args: vec![t(&tok_items), ta(&gates_items), i(id)] },
             Scenario { name: "json_tree/children/orders",
                 sql: format!("SELECT e::jsonb::text FROM {table}, eql_v4.json_tree_children(value, $1::text) e WHERE id = $2"),
                 args: vec![t(&tok_orders), i(id)] },
@@ -378,6 +383,7 @@ fn criterion_benchmark(c: &mut Criterion) {
                     Arg::Text(t) => JsonValue::String(t.clone()),
                     Arg::Jsonb(v) => v.clone(),
                     Arg::Int(i) => JsonValue::from(*i),
+                    Arg::TextArray(v) => JsonValue::from(v.clone()),
                 })
                 .collect();
             out.push(ScenarioMetadata {

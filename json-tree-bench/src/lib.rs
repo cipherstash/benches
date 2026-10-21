@@ -15,11 +15,11 @@ use sqlx::postgres::PgPoolOptions;
 use sqlx::types::Json;
 use sqlx::QueryBuilder;
 use stack_encrypt::json::JsonDocument;
-use stack_encrypt::kms::FakeDataKeySource;
+use stack_encrypt::kms::DeterministicSource;
 use stack_encrypt::plan::{Typed, ValuePlan};
 use stack_encrypt::{NonEmpty, Plan, StackCipher};
 
-pub type Cipher = StackCipher<FakeDataKeySource>;
+pub type Cipher = StackCipher<DeterministicSource>;
 pub type JsonPlan = ValuePlan<Value, Typed<JsonDocument>>;
 
 /// The context every document is sealed under, whatever the tier table:
@@ -44,18 +44,25 @@ pub fn plan() -> JsonPlan {
         .expect("a valid plan")
 }
 
-/// A cipher over the fake in-memory key source. Its index key is
-/// deterministic per keyset, so the ingest process and a later bench
-/// process derive identical selectors, tokens and ordering terms. Its DATA
-/// keys live only in the process that generated them, which is why the
-/// bench samples needle plaintexts from the `*_plain_v4` twin tables rather
-/// than opening a stored row.
+/// The seed every bench process derives its data keys from. Fixed, so a
+/// document sealed by the ingest opens in a later process (the correctness
+/// check decrypts what the walks return). Test infrastructure only.
+const SEED: [u8; 32] = *b"json-tree-bench::seed::v1\0\0\0\0\0\0\0";
+
+/// A cipher over stack-kms's deterministic test source. Its index key is
+/// `FakeDataKeySource`'s, deterministic per keyset, so the ingest process and
+/// a later bench process derive identical selectors, tokens and ordering
+/// terms. Its DATA keys are a function of the seed, the descriptor and the
+/// IV, so a later process built from the same seed opens a stored row too.
+/// (Until the ordinal-chain measurement the ingest sealed under
+/// `FakeDataKeySource`, whose data keys lived only in the ingest process;
+/// the terms, and so every measured query, are the same under either.)
 pub async fn cipher() -> Cipher {
     StackCipher::builder()
-        .kms(FakeDataKeySource::new())
+        .kms(DeterministicSource::new(SEED))
         .init()
         .await
-        .expect("build cipher over the fake key source")
+        .expect("build cipher over the deterministic key source")
 }
 
 /// The small, flat document of the root crate's `FakeJsonSmall` (4 fields),
@@ -156,9 +163,11 @@ pub fn fake_json_large() -> Value {
 /// The ingest loop both binaries run: `NUM_RECORDS` documents from `generate`,
 /// sealed in `BATCH_SIZE` batches, into `json_tree_<corpus>_encrypted_v4<suffix>`
 /// with the plaintext twin into `json_tree_<corpus>_plain_v4<suffix>` under the
-/// same id.
+/// same id. Where the twin already holds a document for an id (a re-ingest of
+/// the encrypted table alone), that document is resealed instead of a new one
+/// generated.
 ///
-/// Sealing is under `FakeDataKeySource`, in-process, with one batched
+/// Sealing is under `DeterministicSource`, in-process, with one batched
 /// `generate_keys` per batch — no ZeroKMS round-trip. So the hyperfine
 /// numbers for these binaries measure "derive terms + AEAD + INSERT" and are
 /// NOT comparable to the v3 `encrypt_ste_vec_small_v3` ingest, which pays
@@ -206,7 +215,27 @@ pub async fn ingest(bench_name: &str, corpus: &str, generate: fn() -> Value) -> 
     let mut remaining = num_records;
     while remaining > 0 {
         let count = remaining.min(batch_size as i64) as usize;
-        let docs: Vec<Value> = (0..count).map(|_| generate()).collect();
+        let ids: Vec<i64> = (id..id + count as i64).collect();
+
+        // A plaintext twin that already holds a document for an id is
+        // resealed rather than replaced, so a re-ingest after a wire change
+        // measures the new format over the same corpus as the run before it.
+        // Only the ids with no twin get a generated document (and a twin).
+        let id32: Vec<i32> = ids.iter().map(|&i| i as i32).collect();
+        let existing: std::collections::HashMap<i32, Value> =
+            sqlx::query_as::<_, (i32, Json<Value>)>(&format!(
+                "SELECT id, plain FROM {plain} WHERE id = ANY($1)"
+            ))
+            .bind(&id32)
+            .fetch_all(&pool)
+            .await?
+            .into_iter()
+            .map(|(i, Json(v))| (i, v))
+            .collect();
+        let docs: Vec<Value> = id32
+            .iter()
+            .map(|i| existing.get(i).cloned().unwrap_or_else(generate))
+            .collect();
 
         // One batched derivation: a `Vec<JsonTreeDocument>` is settled in
         // one `generate_keys` call for the whole batch.
@@ -215,7 +244,6 @@ pub async fn ingest(bench_name: &str, corpus: &str, generate: fn() -> Value) -> 
             .await
             .context("seal batch")?;
 
-        let ids: Vec<i64> = (id..id + count as i64).collect();
         let mut tx = pool.begin().await?;
         QueryBuilder::new(format!("INSERT INTO {encrypted} (id, value) "))
             .push_values(ids.iter().zip(&sealed), |mut b, (id, doc)| {
@@ -225,13 +253,21 @@ pub async fn ingest(bench_name: &str, corpus: &str, generate: fn() -> Value) -> 
             .build()
             .execute(&mut *tx)
             .await?;
-        QueryBuilder::new(format!("INSERT INTO {plain} (id, plain) "))
-            .push_values(ids.iter().zip(&docs), |mut b, (id, doc)| {
-                b.push_bind(*id as i32).push_bind(Json(doc.clone()));
-            })
-            .build()
-            .execute(&mut *tx)
-            .await?;
+        let fresh: Vec<(i32, &Value)> = id32
+            .iter()
+            .zip(&docs)
+            .filter(|(i, _)| !existing.contains_key(i))
+            .map(|(i, d)| (*i, d))
+            .collect();
+        if !fresh.is_empty() {
+            QueryBuilder::new(format!("INSERT INTO {plain} (id, plain) "))
+                .push_values(fresh, |mut b, (id, doc)| {
+                    b.push_bind(id).push_bind(Json(doc.clone()));
+                })
+                .build()
+                .execute(&mut *tx)
+                .await?;
+        }
         tx.commit().await?;
 
         id += count as i64;
