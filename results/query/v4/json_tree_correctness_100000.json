@@ -1,0 +1,118 @@
+{
+  "checks": {
+    "child_count/orders": {
+      "fail": 0,
+      "pass": 25
+    },
+    "children/orders (count, d = 1)": {
+      "fail": 0,
+      "pass": 25
+    },
+    "extract/nested": {
+      "fail": 0,
+      "pass": 25
+    },
+    "flat contains/functional": {
+      "fail": 0,
+      "pass": 10
+    },
+    "flat contains/operator": {
+      "fail": 0,
+      "pass": 10
+    },
+    "flat field_between/functional": {
+      "fail": 0,
+      "pass": 10
+    },
+    "flat field_eq/extractor ($.first_name)": {
+      "fail": 0,
+      "pass": 10
+    },
+    "flat field_eq/unique ($.email)": {
+      "fail": 0,
+      "pass": 10
+    },
+    "flat field_gt/functional": {
+      "fail": 0,
+      "pass": 10
+    },
+    "flat field_order/functional (top 10)": {
+      "fail": 0,
+      "pass": 1
+    },
+    "nested contains/array_element": {
+      "fail": 0,
+      "pass": 10
+    },
+    "nested contains/deep_object": {
+      "fail": 0,
+      "pass": 10
+    },
+    "nested contains/nested_array": {
+      "fail": 0,
+      "pass": 10
+    },
+    "nested field_eq/nested": {
+      "fail": 0,
+      "pass": 10
+    },
+    "nested field_gt/nested": {
+      "fail": 0,
+      "pass": 10
+    },
+    "nested field_order/nested (top 10)": {
+      "fail": 0,
+      "pass": 1
+    },
+    "path_query/wildcard": {
+      "fail": 0,
+      "pass": 25
+    },
+    "subtree/company (default_budget)": {
+      "fail": 0,
+      "pass": 25
+    },
+    "subtree/company (walked)": {
+      "fail": 0,
+      "pass": 25
+    },
+    "subtree/orders (default_budget)": {
+      "fail": 0,
+      "pass": 25
+    },
+    "subtree/orders (walked)": {
+      "fail": 0,
+      "pass": 25
+    },
+    "subtree/orders[k] (each child)": {
+      "fail": 0,
+      "pass": 25
+    },
+    "subtree/user (default_budget)": {
+      "fail": 0,
+      "pass": 25
+    },
+    "subtree/user (walked)": {
+      "fail": 0,
+      "pass": 25
+    },
+    "subtree_at/items (default_budget)": {
+      "fail": 0,
+      "pass": 25
+    },
+    "subtree_at/items (walked)": {
+      "fail": 0,
+      "pass": 25
+    },
+    "subtree_at/user.contact (walked)": {
+      "fail": 0,
+      "pass": 25
+    }
+  },
+  "failed": 0,
+  "failures": [],
+  "needle_rows_per_predicate": 10,
+  "passed": 462,
+  "target_rows": "100000",
+  "walk_rows_checked": 25
+}

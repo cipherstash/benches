@@ -330,16 +330,16 @@
                 "Node Type": "Index Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
-                "Plan Rows": 64520,
+                "Plan Rows": 65000,
                 "Plan Width": 4,
                 "Relation Name": "json_tree_small_encrypted_v4_100000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.42,
-                "Total Cost": 3941.2
+                "Total Cost": 3953.79
               }
             ],
             "Startup Cost": 0.42,
-            "Total Cost": 1.04
+            "Total Cost": 1.03
           }
         }
       ],
@@ -371,16 +371,16 @@
                 "Node Type": "Index Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
-                "Plan Rows": 13930,
+                "Plan Rows": 13687,
                 "Plan Width": 4,
                 "Relation Name": "json_tree_small_encrypted_v4_100000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.43,
-                "Total Cost": 2886.66
+                "Total Cost": 2882.02
               }
             ],
             "Startup Cost": 0.43,
-            "Total Cost": 2.5
+            "Total Cost": 2.54
           }
         }
       ],
@@ -417,7 +417,7 @@
                 "Relation Name": "json_tree_small_encrypted_v4_100000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.42,
-                "Total Cost": 254952.13
+                "Total Cost": 254956.3
               }
             ],
             "Startup Cost": 0.42,

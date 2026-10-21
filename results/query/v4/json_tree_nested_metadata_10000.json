@@ -610,10 +610,13 @@
       ],
       "parameters": [
         "0f5023ce4f5f9736a384e6f1daf79c79",
-        "208ff7873e752681e27ce2c390974061",
+        [
+          "8a5ad1b8aebb962ee9539eb459ffea0e",
+          "208ff7873e752681e27ce2c390974061"
+        ],
         5000
       ],
-      "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_10000, eql_v4.json_tree_subtree_at(value, $1::text, $2::text) e WHERE id = $3",
+      "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_10000, eql_v4.json_tree_subtree_at(value, $1::text, $2::text[]) e WHERE id = $3",
       "rows_returned": 1
     },
     {
@@ -723,10 +726,13 @@
       ],
       "parameters": [
         "0f5023ce4f5f9736a384e6f1daf79c79",
-        "208ff7873e752681e27ce2c390974061",
+        [
+          "8a5ad1b8aebb962ee9539eb459ffea0e",
+          "208ff7873e752681e27ce2c390974061"
+        ],
         5000
       ],
-      "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_10000, eql_v4.json_tree_subtree_at(value, $1::text, $2::text, 0) e WHERE id = $3",
+      "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_10000, eql_v4.json_tree_subtree_at(value, $1::text, $2::text[], 0) e WHERE id = $3",
       "rows_returned": 87
     },
     {

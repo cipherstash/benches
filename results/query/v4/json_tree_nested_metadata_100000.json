@@ -330,16 +330,16 @@
                 "Node Type": "Index Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
-                "Plan Rows": 57000,
+                "Plan Rows": 56000,
                 "Plan Width": 4,
                 "Relation Name": "json_tree_large_encrypted_v4_100000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.42,
-                "Total Cost": 5845.92
+                "Total Cost": 5788.4
               }
             ],
             "Startup Cost": 0.42,
-            "Total Cost": 1.45
+            "Total Cost": 1.46
           }
         }
       ],
@@ -375,7 +375,7 @@
                 "Relation Name": "json_tree_large_encrypted_v4_100000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.42,
-                "Total Cost": 258580.42
+                "Total Cost": 258580.4
               }
             ],
             "Startup Cost": 0.42,
@@ -610,10 +610,13 @@
       ],
       "parameters": [
         "0f5023ce4f5f9736a384e6f1daf79c79",
-        "208ff7873e752681e27ce2c390974061",
+        [
+          "8a5ad1b8aebb962ee9539eb459ffea0e",
+          "208ff7873e752681e27ce2c390974061"
+        ],
         50000
       ],
-      "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_100000, eql_v4.json_tree_subtree_at(value, $1::text, $2::text) e WHERE id = $3",
+      "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_100000, eql_v4.json_tree_subtree_at(value, $1::text, $2::text[]) e WHERE id = $3",
       "rows_returned": 1
     },
     {
@@ -723,10 +726,13 @@
       ],
       "parameters": [
         "0f5023ce4f5f9736a384e6f1daf79c79",
-        "208ff7873e752681e27ce2c390974061",
+        [
+          "8a5ad1b8aebb962ee9539eb459ffea0e",
+          "208ff7873e752681e27ce2c390974061"
+        ],
         50000
       ],
-      "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_100000, eql_v4.json_tree_subtree_at(value, $1::text, $2::text, 0) e WHERE id = $3",
+      "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_100000, eql_v4.json_tree_subtree_at(value, $1::text, $2::text[], 0) e WHERE id = $3",
       "rows_returned": 105
     },
     {
@@ -1159,7 +1165,7 @@
                 "Node Type": "Seq Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
-                "Plan Rows": 57108,
+                "Plan Rows": 56862,
                 "Plan Width": 4,
                 "Relation Name": "json_tree_large_plain_v4_100000",
                 "Startup Cost": 0.0,
@@ -1201,7 +1207,7 @@
                 "Relation Name": "json_tree_large_plain_v4_100000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.29,
-                "Total Cost": 39236.29
+                "Total Cost": 39236.24
               }
             ],
             "Startup Cost": 0.29,
@@ -1325,7 +1331,7 @@
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
                 "Plan Rows": 1,
-                "Plan Width": 658,
+                "Plan Width": 661,
                 "Relation Name": "json_tree_large_plain_v4_100000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.29,
@@ -1409,7 +1415,7 @@
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
                 "Plan Rows": 1,
-                "Plan Width": 658,
+                "Plan Width": 661,
                 "Relation Name": "json_tree_large_plain_v4_100000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.29,
@@ -1464,7 +1470,7 @@
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
                 "Plan Rows": 1,
-                "Plan Width": 658,
+                "Plan Width": 661,
                 "Relation Name": "json_tree_large_plain_v4_100000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.29,
@@ -1548,7 +1554,7 @@
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
                 "Plan Rows": 1,
-                "Plan Width": 658,
+                "Plan Width": 661,
                 "Relation Name": "json_tree_large_plain_v4_100000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.29,
