@@ -45,7 +45,8 @@
     "corpus": "flat",
     "rows": 10000,
     "table": "json_tree_small_encrypted_v4_10000",
-    "gin": "json_tree_small_encrypted_v4_10000_query_gin_idx"
+    "gin": "json_tree_small_encrypted_v4_10000_query_gin_idx",
+    "measurement": "third: ordinal chain (stack 6adf37fcc), op on every number and string leaf"
   },
   {
     "rows_counted": 10000.0,
@@ -93,7 +94,8 @@
     "corpus": "nested",
     "rows": 10000,
     "table": "json_tree_large_encrypted_v4_10000",
-    "gin": "json_tree_large_encrypted_v4_10000_query_gin_idx"
+    "gin": "json_tree_large_encrypted_v4_10000_query_gin_idx",
+    "measurement": "third: ordinal chain (stack 6adf37fcc), op on every number and string leaf"
   },
   {
     "rows_counted": 100000.0,
@@ -141,7 +143,8 @@
     "corpus": "flat",
     "rows": 100000,
     "table": "json_tree_small_encrypted_v4_100000",
-    "gin": "json_tree_small_encrypted_v4_100000_query_gin_idx"
+    "gin": "json_tree_small_encrypted_v4_100000_query_gin_idx",
+    "measurement": "third: ordinal chain (stack 6adf37fcc), op on every number and string leaf"
   },
   {
     "rows_counted": 100000.0,
@@ -189,6 +192,91 @@
     "corpus": "nested",
     "rows": 100000,
     "table": "json_tree_large_encrypted_v4_100000",
-    "gin": "json_tree_large_encrypted_v4_100000_query_gin_idx"
+    "gin": "json_tree_large_encrypted_v4_100000_query_gin_idx",
+    "measurement": "third: ordinal chain (stack 6adf37fcc), op on every number and string leaf"
+  },
+  {
+    "rows_counted": 10000.0,
+    "avg_column_bytes": 1596.4,
+    "avg_text_chars": 1474.4,
+    "main_bytes": 17825792.0,
+    "toast_bytes": 8192.0,
+    "table_bytes": 17866752.0,
+    "gin_bytes": 1081344.0,
+    "indexes_bytes": 1425408.0,
+    "total_bytes": 19292160.0,
+    "system": "json_tree",
+    "corpus": "flat",
+    "rows": 10000,
+    "table": "json_tree_small_encrypted_v4_10000",
+    "gin": "json_tree_small_encrypted_v4_10000_query_gin_idx",
+    "measurement": "fourth: ordering term opt-in (stack ba62e3fc5), op only on the ordered path",
+    "ordered": [
+      "$.age"
+    ],
+    "measured_at": "2026-10-22"
+  },
+  {
+    "rows_counted": 10000.0,
+    "avg_column_bytes": 40578.0,
+    "avg_text_chars": 60045.0,
+    "main_bytes": 524288.0,
+    "toast_bytes": 426762240.0,
+    "table_bytes": 427319296.0,
+    "gin_bytes": 41869312.0,
+    "indexes_bytes": 43081728.0,
+    "total_bytes": 470401024.0,
+    "system": "json_tree",
+    "corpus": "nested",
+    "rows": 10000,
+    "table": "json_tree_large_encrypted_v4_10000",
+    "gin": "json_tree_large_encrypted_v4_10000_query_gin_idx",
+    "measurement": "fourth: ordering term opt-in (stack ba62e3fc5), op only on the ordered path",
+    "ordered": [
+      "$.company.salary"
+    ],
+    "measured_at": "2026-10-22"
+  },
+  {
+    "rows_counted": 100000.0,
+    "avg_column_bytes": 1596.4,
+    "avg_text_chars": 1474.4,
+    "main_bytes": 178307072.0,
+    "toast_bytes": 8192.0,
+    "table_bytes": 178388992.0,
+    "gin_bytes": 8314880.0,
+    "indexes_bytes": 11403264.0,
+    "total_bytes": 189792256.0,
+    "system": "json_tree",
+    "corpus": "flat",
+    "rows": 100000,
+    "table": "json_tree_small_encrypted_v4_100000",
+    "gin": "json_tree_small_encrypted_v4_100000_query_gin_idx",
+    "measurement": "fourth: ordering term opt-in (stack ba62e3fc5), op only on the ordered path",
+    "ordered": [
+      "$.age"
+    ],
+    "measured_at": "2026-10-22"
+  },
+  {
+    "rows_counted": 100000.0,
+    "avg_column_bytes": 40548.9,
+    "avg_text_chars": 59997.7,
+    "main_bytes": 5218304.0,
+    "toast_bytes": 4261502976.0,
+    "table_bytes": 4266754048.0,
+    "gin_bytes": 375562240.0,
+    "indexes_bytes": 386080768.0,
+    "total_bytes": 4652834816.0,
+    "system": "json_tree",
+    "corpus": "nested",
+    "rows": 100000,
+    "table": "json_tree_large_encrypted_v4_100000",
+    "gin": "json_tree_large_encrypted_v4_100000_query_gin_idx",
+    "measurement": "fourth: ordering term opt-in (stack ba62e3fc5), op only on the ordered path",
+    "ordered": [
+      "$.company.salary"
+    ],
+    "measured_at": "2026-10-22"
   }
 ]

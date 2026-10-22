@@ -56,7 +56,7 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use eql_bindings::v4::json_tree::{JsonTreeLeafQuery, JsonTreeQuery};
 use json_tree_bench::{
-    bench_assert, cipher, column, extract_indexes_used, plan, write_metadata_file_in, Cipher,
+    bench_assert, cipher, column, extract_indexes_used, write_metadata_file_in, Cipher, Corpus,
     JsonPlan, ScenarioMetadata,
 };
 use serde_json::Value as JsonValue;
@@ -273,7 +273,7 @@ fn criterion_benchmark(c: &mut Criterion) {
             .await
             .expect("Failed to connect to database");
         let cipher = cipher().await;
-        let plan = plan();
+        let plan = Corpus::Flat.plan();
         let needles = sample_needles(&pool, &cipher, &plan, &plain_table).await;
         eprintln!(
             "json_tree_v4 bench picked row {} from `{}` — age selector {}",

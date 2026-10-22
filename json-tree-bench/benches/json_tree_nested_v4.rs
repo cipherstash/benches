@@ -37,14 +37,14 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use eql_bindings::v4::json_tree::{JsonTreeLeafQuery, JsonTreeQuery};
 use json_tree_bench::{
-    bench_assert, cipher, column, extract_indexes_used, plan, write_metadata_file_in, Cipher,
+    bench_assert, cipher, column, extract_indexes_used, write_metadata_file_in, Cipher, Corpus,
     JsonPlan, ScenarioMetadata,
 };
 use serde_json::{json, Value as JsonValue};
 use sqlx::postgres::PgPoolOptions;
 use sqlx::types::Json;
 use sqlx::Row;
-use stack_encrypt::json::{JsonOptions, JsonPath};
+use stack_encrypt::json::JsonPath;
 use stack_encrypt::op;
 use tokio::runtime::Runtime;
 
@@ -100,7 +100,7 @@ async fn token(cipher: &Cipher, path: &str) -> String {
         .default_keyset()
         .json_subtree_key(
             &JsonPath::parse(path).unwrap(),
-            JsonOptions::default(),
+            &Corpus::Nested.options(),
             column(),
         )
         .await
@@ -130,7 +130,7 @@ fn criterion_benchmark(c: &mut Criterion) {
             .await
             .expect("Failed to connect to database");
         let cipher = cipher().await;
-        let plan = plan();
+        let plan = Corpus::Nested.plan();
 
         // A row from the middle of the table.
         let row = sqlx::query(&format!(
@@ -208,7 +208,7 @@ fn criterion_benchmark(c: &mut Criterion) {
             .default_keyset()
             .json_subtree_key(
                 &JsonPath::parse("$.orders[*].items").unwrap(),
-                JsonOptions::default(),
+                &Corpus::Nested.options(),
                 column(),
             )
             .await

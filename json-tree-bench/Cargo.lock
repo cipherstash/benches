@@ -930,7 +930,7 @@ dependencies = [
 [[package]]
 name = "eql-bindings"
 version = "3.0.6"
-source = "git+https://github.com/cipherstash/stack?branch=feat%2Fjson-tree-ordinal-chain#6adf37fccfc2341e605d1f5f361a2f1d2a6c3e33"
+source = "git+https://github.com/cipherstash/stack?branch=feat%2Fjson-tree-ordinal-chain#ba62e3fc50bf46dd0b86bd384bb4ff2e99843162"
 dependencies = [
  "base64",
  "hex",
@@ -2987,7 +2987,7 @@ checksum = "6ce2be8dc25455e1f91df71bfa12ad37d7af1092ae736f3a6cd0e37bc7810596"
 [[package]]
 name = "stack-auth"
 version = "0.43.0"
-source = "git+https://github.com/cipherstash/stack?branch=feat%2Fjson-tree-ordinal-chain#6adf37fccfc2341e605d1f5f361a2f1d2a6c3e33"
+source = "git+https://github.com/cipherstash/stack?branch=feat%2Fjson-tree-ordinal-chain#ba62e3fc50bf46dd0b86bd384bb4ff2e99843162"
 dependencies = [
  "aquamarine",
  "base64",
@@ -3015,7 +3015,7 @@ dependencies = [
 [[package]]
 name = "stack-encrypt"
 version = "0.3.0"
-source = "git+https://github.com/cipherstash/stack?branch=feat%2Fjson-tree-ordinal-chain#6adf37fccfc2341e605d1f5f361a2f1d2a6c3e33"
+source = "git+https://github.com/cipherstash/stack?branch=feat%2Fjson-tree-ordinal-chain#ba62e3fc50bf46dd0b86bd384bb4ff2e99843162"
 dependencies = [
  "base64ct",
  "cllw-ore",
@@ -3040,7 +3040,7 @@ dependencies = [
 [[package]]
 name = "stack-encrypt-derive"
 version = "0.3.0"
-source = "git+https://github.com/cipherstash/stack?branch=feat%2Fjson-tree-ordinal-chain#6adf37fccfc2341e605d1f5f361a2f1d2a6c3e33"
+source = "git+https://github.com/cipherstash/stack?branch=feat%2Fjson-tree-ordinal-chain#ba62e3fc50bf46dd0b86bd384bb4ff2e99843162"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -3050,7 +3050,7 @@ dependencies = [
 [[package]]
 name = "stack-kms"
 version = "0.1.0"
-source = "git+https://github.com/cipherstash/stack?branch=feat%2Fjson-tree-ordinal-chain#6adf37fccfc2341e605d1f5f361a2f1d2a6c3e33"
+source = "git+https://github.com/cipherstash/stack?branch=feat%2Fjson-tree-ordinal-chain#ba62e3fc50bf46dd0b86bd384bb4ff2e99843162"
 dependencies = [
  "base16ct",
  "base64ct",
@@ -3079,7 +3079,7 @@ dependencies = [
 [[package]]
 name = "stack-profile"
 version = "0.43.0"
-source = "git+https://github.com/cipherstash/stack?branch=feat%2Fjson-tree-ordinal-chain#6adf37fccfc2341e605d1f5f361a2f1d2a6c3e33"
+source = "git+https://github.com/cipherstash/stack?branch=feat%2Fjson-tree-ordinal-chain#ba62e3fc50bf46dd0b86bd384bb4ff2e99843162"
 dependencies = [
  "dirs",
  "gethostname",
@@ -4039,7 +4039,7 @@ version = "0.1.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c2a7b1c03c876122aa43f3020e6c3c3ee5c05081c9a00739faf7503aeba10d22"
 dependencies = [
- "windows-sys 0.61.2",
+ "windows-sys 0.48.0",
 ]
 
 [[package]]

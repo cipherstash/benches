@@ -24,11 +24,11 @@ use anyhow::{Context, Result};
 use eql_bindings::v4::json_tree::{
     JsonTreeEntry, JsonTreeLeafQuery, JsonTreeQuery, JsonTreeSubtree,
 };
-use json_tree_bench::{cipher, column, plan, Cipher, JsonPlan};
+use json_tree_bench::{cipher, column, Cipher, Corpus, JsonPlan};
 use serde_json::{json, Value};
 use sqlx::types::Json;
 use sqlx::{PgPool, Row};
-use stack_encrypt::json::{JsonOptions, JsonPath};
+use stack_encrypt::json::JsonPath;
 use stack_encrypt::op;
 
 const CONTAINS_CAST: &str = "::text::jsonb::eql_v4.query_json_tree";
@@ -59,10 +59,12 @@ impl Tally {
     }
 }
 
+/// A subtree key for the nested corpus (the only corpus the walks run on),
+/// under the options it was sealed with.
 async fn subtree_key(cipher: &Cipher, path: &str) -> (String, Vec<String>) {
     let key = cipher
         .default_keyset()
-        .json_subtree_key(&JsonPath::parse(path).unwrap(), JsonOptions::default(), column())
+        .json_subtree_key(&JsonPath::parse(path).unwrap(), &Corpus::Nested.options(), column())
         .await
         .expect("derive subtree key");
     (key.token(), key.gates())
@@ -543,12 +545,15 @@ async fn main() -> Result<()> {
         .connect(&database_url)
         .await?;
     let cipher = cipher().await;
-    let plan = plan();
+    // Each corpus is queried through the plan it was sealed under: `$.age`
+    // ordered on the flat corpus, `$.company.salary` on the nested one.
+    let nested_plan = Corpus::Nested.plan();
+    let flat_plan = Corpus::Flat.plan();
     let mut t = Tally::default();
 
     check_walks(&pool, &cipher, &tier, n_ids, &mut t).await?;
-    check_nested_predicates(&pool, &cipher, &plan, &tier, n_needles, &mut t).await?;
-    check_flat_predicates(&pool, &cipher, &plan, &tier, n_needles, &mut t).await?;
+    check_nested_predicates(&pool, &cipher, &nested_plan, &tier, n_needles, &mut t).await?;
+    check_flat_predicates(&pool, &cipher, &flat_plan, &tier, n_needles, &mut t).await?;
 
     let (pass, fail) = t.totals();
     println!("json_tree v4 correctness, {tier} rows: {pass} passed, {fail} failed");

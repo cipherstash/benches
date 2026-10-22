@@ -1,4 +1,4 @@
-# JSON: SteVec (EQL v3) vs json_tree (EQL v4) — third measurement
+# JSON: SteVec (EQL v3) vs json_tree (EQL v4) — fourth measurement
 
 Three-way comparison over identical documents (native jsonb, SteVec, json_tree; stack 6adf37fcc): [JSON_TREE_VS_STEVEC_VS_PLAINTEXT.md](JSON_TREE_VS_STEVEC_VS_PLAINTEXT.md).
 
@@ -12,15 +12,141 @@ each scheme filled the same day, every containment scenario checked against `jso
 the plaintext twin table before timing. How it was run: `mise run
 report:json-tree-compare`, and the `bench:v4:*` tasks in `mise.toml`.
 
-This is the third measurement. The first (commit 076ebfc of this branch) found
+This is the fourth measurement. The first (commit 076ebfc of this branch) found
 three mechanisms that put the nested corpus one to four orders of magnitude off
 native jsonb; the fixes landed in cipherstash/stack#1325 (stacked on #1288,
 branch `perf/json-tree-walk-and-projection`), and the second (commit 57abcf9)
 measured that branch. The third measures branch `feat/json-tree-ordinal-chain`
 (commit dd13d800a), which shrinks the stored entry to four fields and chains the
 walk by ordinal; its before/after comparison against the second measurement is
-the next section. The Summary and Findings further down are the second
-measurement's and quote its numbers; the Results tables are this run's.
+the section after next. The fourth (stack ba62e3fc5, same branch) measures
+storage only: it makes the leaf ordering term opt-in per path, and the bench
+now orders only `$.age` (flat) and `$.company.salary` (nested); see the next
+section. The Summary and Findings further down are the second measurement's
+and quote its numbers. The Results tables are the third measurement's.
+
+## Fourth measurement (2026-10-22): ordering term opt-in
+
+Storage only. No query was re-timed for this measurement; the Results tables
+below are still the third measurement's.
+
+### What changed
+
+Stack commit ba62e3fc5 (branch `feat/json-tree-ordinal-chain`) makes the leaf
+ordering term `op` opt-in per path. `JsonOptions` gained `ordered`, a set of
+`JsonPath`s, and no path is ordered by default. A leaf carries `op` only when
+an ordered path covers it. An ordering query (`Lt`, `Lte`, `Gt`, `Gte`,
+`Between`) at a path the index does not order is refused with
+`TermError::JsonPathNotOrdered` before any SQL runs. Until this commit every
+number and string leaf carried `op`. In the third measurement it was the
+largest field of a nested document: 24,832 of 85,157 characters, on 156 of its
+213 entries.
+
+The bench now orders one path per corpus, the one its scenarios order and
+range-compare on:
+
+- flat corpus: `$.age` (`field_gt`, `field_between`, `field_order`);
+- nested corpus: `$.company.salary` (`field_gt/nested`,
+  `field_between/nested`, `field_order/nested`).
+
+Nothing else is ordered. Every flat document now carries one `op` (5 entries,
+was 4 with `op`), and every nested document one (213 entries, was 156). The
+projection `q` and the containment index are unchanged: `q` is still 443
+characters per flat document and 18,961 per nested one.
+
+Bench crate changes: `stack-encrypt` and `eql-bindings` pinned to ba62e3fc5.
+A `Corpus` enum in `json-tree-bench/src/lib.rs` holds each corpus's ordered
+paths, its `JsonOptions`, its query plan
+(`Plan::value().encrypt_as(Json::new(options))`) and its sealing layout
+(`eql_bindings::v4::json_tree::JsonTree::new(options)`). The ingest seals one
+document at a time with `keyset.run(layout.encryption(), ..)`, because the
+layout has no `Vec` form. The benches and `check_json_tree_v4` query each
+corpus through its own plan, and they derive subtree keys under the nested
+corpus's options.
+
+### How it was run
+
+Same machine, cluster and database (`BENCH_DB=jsonbench`). The EQL v4 bundle
+was not reinstalled, because the SQL did not change: `ord_term` was already
+NULL for an entry without `op`. The four `json_tree_*_encrypted_v4_{10000,100000}`
+tables were truncated and re-ingested with `mise run
+prepare:json_tree_{small,large}_v4 <N>`. Truncating keeps each table's indexes
+and leaves the plaintext twins alone. The ingest reseals the document each
+twin already holds, so the documents are the same as in the third
+measurement. Ingest time, including the GIN build: flat 10k 17 s, nested 10k
+50 s, flat 100k 35 s, nested 100k 7 min 9 s. The prepare task built the GIN
+after the load. The bench-built `field_order_idx` btree was maintained during
+the load, so it was then `REINDEX`ed to match a fresh build. Each table was
+then `VACUUM (ANALYZE)`d.
+
+Sizes come from the query in `report_json_three_way.py storage`:
+`avg(pg_column_size(value))`, `avg(length(value::text))`, `pg_table_size`
+(heap with TOAST), the TOAST relation's total size, the containment GIN's
+`pg_relation_size` and `pg_indexes_size`. "Before" is the third measurement's
+row in `results/query/compare/storage.json`. Before truncating, the live
+tables were measured again and matched those rows exactly.
+
+### Sizes
+
+| | before (`op` on every number and string leaf) | after (`op` on the ordered path only) | change |
+|---|--:|--:|--:|
+| flat `pg_column_size`, 10k / 100k | 2,250 B / 2,250 B | 1,596 B / 1,596 B | −29% |
+| flat `::text` chars, 10k / 100k | 2,132 / 2,132 | 1,474 / 1,474 | −31% |
+| flat heap incl. TOAST, 10k | 27.1 MiB (26.5 MiB TOAST) | 17.0 MiB (0.0 MiB TOAST) | −37% |
+| flat heap incl. TOAST, 100k | 269.8 MiB (264.8 MiB TOAST) | 170.1 MiB (0.0 MiB TOAST) | −37% |
+| flat containment GIN, 10k / 100k | 0.98 MiB / 7.09 MiB | 1.03 MiB / 7.93 MiB | +5% / +12% |
+| flat other indexes (pkey + `field_order_idx`), 10k / 100k | 0.33 MiB / 2.95 MiB | 0.33 MiB / 2.95 MiB | 0 |
+| flat total, 10k / 100k | 28.4 MiB / 279.9 MiB | 18.4 MiB / 181.0 MiB | −35% |
+| nested `pg_column_size`, 10k / 100k | 62,143 B / 62,092 B | 40,578 B / 40,549 B | −35% |
+| nested `::text` chars, 10k / 100k | 86,821 / 86,743 | 60,045 / 59,998 | −31% |
+| nested heap incl. TOAST, 10k | 620.9 MiB | 407.5 MiB | −34% |
+| nested heap incl. TOAST, 100k | 6,201.2 MiB | 4,069.1 MiB | −34% |
+| nested containment GIN, 10k / 100k | 39.9 MiB / 358.2 MiB | 39.9 MiB / 358.2 MiB | 0 |
+| nested other indexes, 10k / 100k | 1.16 MiB / 10.03 MiB | 1.16 MiB / 10.03 MiB | 0 |
+| nested total, 10k / 100k | 662.0 MiB / 6,569.4 MiB | 448.6 MiB / 4,437.3 MiB | −32% |
+
+A nested document is now 40.5 KB on disk. In the three-way report SteVec is
+108.5 KB and plaintext 2.2 KB, so json_tree is now 0.37× SteVec, down from
+0.57×, and 19× plaintext, down from 29×. A flat document is 1.6 KB against
+SteVec's 1.9 KB.
+
+Two side effects:
+
+- **The flat document no longer goes to TOAST.** At 1,596 bytes it is under
+  PostgreSQL's ~2 KB TOAST threshold, so it is stored in the main heap.
+  Before, it was a TOAST pointer in a 0.5 MiB main fork. Now the main fork is
+  17 MiB at 10k rows and 170 MiB at 100k. Finding 4 below rests on the column
+  being TOASTed: a sequential scan reads only the small main fork until it
+  detoasts. The flat timings, the sequential-scan ones above all, may move
+  and need re-measuring.
+- **The flat GIN grew 5% at 10k and 12% at 100k with the same projection.**
+  A GIN posting list stores row addresses as deltas, and those deltas are
+  wider when rows are spread over 34 times as many heap pages. A `REINDEX` reproduces
+  the size. The nested documents are still TOASTed and their GIN is
+  byte-for-byte the same size.
+
+Raw: `results/query/compare/storage.json`. The four new rows carry
+`"measurement": "fourth: ..."` and `"ordered"`. The earlier json_tree rows are
+labelled `"third: ..."`. `report_json_three_way.py render` takes the first row
+per system, corpus and tier, so the three-way report still renders the third
+measurement's sizes, which match its timings. Running
+`report_json_three_way.py storage` again overwrites the file with the live
+tables, which are now the fourth measurement's.
+
+### Correctness
+
+`mise run check:v4:json_tree <N>` ran after the re-ingest. Its flat checks
+query through the `$.age`-ordered plan and its nested checks through the
+`$.company.salary`-ordered plan.
+
+| tier | result |
+|---|---|
+| 10,000 | `json_tree v4 correctness, 10000 rows: 462 passed, 0 failed` |
+| 100,000 | `json_tree v4 correctness, 100000 rows: 462 passed, 0 failed` |
+
+The checks and counts are the same as in the third measurement, ordering
+checks included: `field_gt`, `field_between` and `field_order` on `$.age`, and
+`field_gt` and `field_order` on `$.company.salary`.
 
 ## Third measurement (2026-10-22): ordinal-chained walk
 

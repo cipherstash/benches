@@ -45,3 +45,7 @@
 {"table": "json_ste_vec_large_encrypted_v3_100000", "build_seconds": 1634, "recorded_at": "2026-10-22T01:31:57Z"}
 {"table": "json_ste_vec_small_encrypted_v3_10000", "build_seconds": 1, "recorded_at": "2026-10-22T01:33:23Z"}
 {"table": "json_ste_vec_small_encrypted_v3_100000", "build_seconds": 11, "recorded_at": "2026-10-22T01:35:03Z"}
+{"table": "json_tree_small_encrypted_v4_10000", "build_seconds": 0, "recorded_at": "2026-10-22T10:29:25Z"}
+{"table": "json_tree_large_encrypted_v4_10000", "build_seconds": 4, "recorded_at": "2026-10-22T10:30:18Z"}
+{"table": "json_tree_small_encrypted_v4_100000", "build_seconds": 0, "recorded_at": "2026-10-22T10:31:16Z"}
+{"table": "json_tree_large_encrypted_v4_100000", "build_seconds": 52, "recorded_at": "2026-10-22T10:38:17Z"}

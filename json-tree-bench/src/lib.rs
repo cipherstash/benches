@@ -7,20 +7,77 @@ use std::env;
 use std::path::PathBuf;
 
 use anyhow::{Context, Result};
-use eql_bindings::v4::json_tree::JsonTreeDocument;
+use eql_bindings::v4::json_tree::{JsonTree, JsonTreeDocument};
 use eql_bindings::Identifier;
 use fake::Fake;
 use serde_json::{json, Value};
 use sqlx::postgres::PgPoolOptions;
 use sqlx::types::Json;
 use sqlx::QueryBuilder;
-use stack_encrypt::json::JsonDocument;
+use stack_encrypt::json::{JsonDocument, JsonOptions};
 use stack_encrypt::kms::DeterministicSource;
-use stack_encrypt::plan::{Typed, ValuePlan};
+use stack_encrypt::plan::{Laid, ValuePlan};
+use stack_encrypt::target::{Json as JsonIndex, Layout};
 use stack_encrypt::{NonEmpty, Plan, StackCipher};
 
 pub type Cipher = StackCipher<DeterministicSource>;
-pub type JsonPlan = ValuePlan<Value, Typed<JsonDocument>>;
+pub type JsonPlan = ValuePlan<Value, Laid<JsonIndex, JsonDocument>>;
+
+/// The two corpora, each sealed and queried under its own index options.
+/// The leaf ordering term `op` is opt-in per path, so each corpus orders
+/// only the path its scenarios order or range-compare on: `$.age` for the
+/// flat corpus, `$.company.salary` for the nested one. Nothing else carries
+/// `op`; an ordering query anywhere else is refused by the plan.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Corpus {
+    /// `FakeJsonSmall`: tables `json_tree_small_*_v4_<N>`.
+    Flat,
+    /// `FakeJsonLarge`: tables `json_tree_large_*_v4_<N>`.
+    Nested,
+}
+
+impl Corpus {
+    /// The paths the corpus's index orders.
+    pub fn ordered(self) -> &'static [&'static str] {
+        match self {
+            Corpus::Flat => &["$.age"],
+            Corpus::Nested => &["$.company.salary"],
+        }
+    }
+
+    /// The table-name stem: `json_tree_<stem>_{encrypted,plain}_v4_<N>`.
+    pub fn stem(self) -> &'static str {
+        match self {
+            Corpus::Flat => "small",
+            Corpus::Nested => "large",
+        }
+    }
+
+    /// The JSON index options the corpus is sealed and queried under.
+    pub fn options(self) -> JsonOptions {
+        JsonOptions::default()
+            .ordering(self.ordered().iter().copied())
+            .expect("valid ordered paths")
+    }
+
+    /// The engine plan a query derives through, laid out under the corpus's
+    /// options, so an ordering query resolves through the same index the
+    /// documents were sealed under. Its context is the identifier rendered
+    /// `table/column` — the same context the typed document was sealed
+    /// under, so its selectors are the stored documents' selectors.
+    pub fn plan(self) -> JsonPlan {
+        Plan::value::<Value>()
+            .context(format!("{TABLE}/{COLUMN}"))
+            .encrypt_as(JsonIndex::new(self.options()))
+            .build()
+            .expect("a valid plan")
+    }
+
+    /// The EQL layout the ingest seals a document with.
+    pub fn layout(self) -> JsonTree {
+        JsonTree::new(self.options())
+    }
+}
 
 /// The context every document is sealed under, whatever the tier table:
 /// one identifier for the family, so terms derived for one tier are the
@@ -31,17 +88,6 @@ pub const COLUMN: &str = "value";
 /// The EQL identifier: the context `encrypt_as::<_, JsonTreeDocument>` takes.
 pub fn column() -> NonEmpty<Identifier> {
     Identifier::for_column(TABLE, COLUMN).expect("a valid identifier")
-}
-
-/// The engine plan a query derives through. Its context is the identifier
-/// rendered `table/column` — the same context the typed document was
-/// sealed under, so its selectors are the stored documents' selectors.
-pub fn plan() -> JsonPlan {
-    Plan::value::<Value>()
-        .context(format!("{TABLE}/{COLUMN}"))
-        .encrypt_into::<JsonDocument>()
-        .build()
-        .expect("a valid plan")
 }
 
 /// The seed every bench process derives its data keys from. Fixed, so a
@@ -177,7 +223,7 @@ pub fn fake_json_large() -> Value {
 /// Environment variables: DATABASE_URL, NUM_RECORDS, BATCH_SIZE,
 /// TABLE_SUFFIX, HYPERFINE_ITERATION — the root crate's ingest contract, so
 /// `prepare:_table` and `bench:ingest:_run` drive these binaries unchanged.
-pub async fn ingest(bench_name: &str, corpus: &str, generate: fn() -> Value) -> Result<()> {
+pub async fn ingest(bench_name: &str, corpus: Corpus, generate: fn() -> Value) -> Result<()> {
     let database_url =
         env::var("DATABASE_URL").context("DATABASE_URL environment variable must be set")?;
     let num_records: i64 = env::var("NUM_RECORDS")
@@ -193,8 +239,10 @@ pub async fn ingest(bench_name: &str, corpus: &str, generate: fn() -> Value) -> 
         .parse()
         .context("HYPERFINE_ITERATION must be a valid integer")?;
     let suffix = env::var("TABLE_SUFFIX").unwrap_or_default();
-    let encrypted = format!("json_tree_{corpus}_encrypted_v4{suffix}");
-    let plain = format!("json_tree_{corpus}_plain_v4{suffix}");
+    let stem = corpus.stem();
+    let encrypted = format!("json_tree_{stem}_encrypted_v4{suffix}");
+    let plain = format!("json_tree_{stem}_plain_v4{suffix}");
+    let layout = corpus.layout();
 
     let pool = PgPoolOptions::new()
         .max_connections(5)
@@ -237,12 +285,19 @@ pub async fn ingest(bench_name: &str, corpus: &str, generate: fn() -> Value) -> 
             .map(|i| existing.get(i).cloned().unwrap_or_else(generate))
             .collect();
 
-        // One batched derivation: a `Vec<JsonTreeDocument>` is settled in
-        // one `generate_keys` call for the whole batch.
-        let sealed: Vec<JsonTreeDocument> = keyset
-            .encrypt_as::<Vec<Value>, Vec<JsonTreeDocument>>(&docs, column())
-            .await
-            .context("seal batch")?;
+        // Sealed one document at a time under the corpus's layout (its
+        // ordered paths): the layout has no `Vec` form, so each document
+        // is one `generate_keys` call. Ingest speed is not what these
+        // benches measure, and the key source is in-process.
+        let mut sealed: Vec<JsonTreeDocument> = Vec::with_capacity(docs.len());
+        for doc in &docs {
+            sealed.push(
+                keyset
+                    .run(layout.encryption(), doc, column())
+                    .await
+                    .context("seal document")?,
+            );
+        }
 
         let mut tx = pool.begin().await?;
         QueryBuilder::new(format!("INSERT INTO {encrypted} (id, value) "))

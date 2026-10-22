@@ -6,9 +6,9 @@
 //! in `json_tree_bench::ingest`.
 
 use anyhow::Result;
-use json_tree_bench::{fake_json_large, ingest};
+use json_tree_bench::{fake_json_large, ingest, Corpus};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    ingest("encrypt_json_tree_large_v4", "large", fake_json_large).await
+    ingest("encrypt_json_tree_large_v4", Corpus::Nested, fake_json_large).await
 }
