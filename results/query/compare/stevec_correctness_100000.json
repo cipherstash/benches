@@ -1,0 +1,218 @@
+{
+  "checks": {
+    "flat/plain/field_eq/extractor": {
+      "agree": 10,
+      "control_rows": 360,
+      "disagree": 0,
+      "extra_rows": 0,
+      "missing_rows": 0,
+      "needles": 10
+    },
+    "flat/plain/field_eq/unique": {
+      "agree": 10,
+      "control_rows": 10,
+      "disagree": 0,
+      "extra_rows": 0,
+      "missing_rows": 0,
+      "needles": 10
+    },
+    "flat/stevec/contains/functional": {
+      "agree": 10,
+      "control_rows": 10,
+      "disagree": 0,
+      "extra_rows": 0,
+      "missing_rows": 0,
+      "needles": 10
+    },
+    "flat/stevec/contains/operator": {
+      "agree": 10,
+      "control_rows": 10,
+      "disagree": 0,
+      "extra_rows": 0,
+      "missing_rows": 0,
+      "needles": 10
+    },
+    "flat/stevec/field_between/functional": {
+      "agree": 10,
+      "control_rows": 129462,
+      "disagree": 0,
+      "extra_rows": 0,
+      "missing_rows": 0,
+      "needles": 10
+    },
+    "flat/stevec/field_eq/eq_term": {
+      "agree": 10,
+      "control_rows": 10,
+      "disagree": 0,
+      "extra_rows": 0,
+      "missing_rows": 0,
+      "needles": 10
+    },
+    "flat/stevec/field_eq/extractor": {
+      "agree": 10,
+      "control_rows": 360,
+      "disagree": 0,
+      "extra_rows": 0,
+      "missing_rows": 0,
+      "needles": 10
+    },
+    "flat/stevec/field_eq/unique": {
+      "agree": 10,
+      "control_rows": 10,
+      "disagree": 0,
+      "extra_rows": 0,
+      "missing_rows": 0,
+      "needles": 10
+    },
+    "flat/stevec/field_gt/functional": {
+      "agree": 10,
+      "control_rows": 426351,
+      "disagree": 0,
+      "extra_rows": 0,
+      "missing_rows": 0,
+      "needles": 10
+    },
+    "flat/stevec/field_order/functional": {
+      "agree": 1,
+      "disagree": 0,
+      "needles": 1
+    },
+    "nested/plain/field_eq/nested": {
+      "agree": 10,
+      "control_rows": 11,
+      "disagree": 0,
+      "extra_rows": 0,
+      "missing_rows": 0,
+      "needles": 10
+    },
+    "nested/stevec/child_count/orders": {
+      "agree": 10,
+      "disagree": 0,
+      "needles": 10
+    },
+    "nested/stevec/children/orders": {
+      "agree": 10,
+      "disagree": 0,
+      "needles": 10
+    },
+    "nested/stevec/contains/array_element": {
+      "agree": 6,
+      "control_rows": 11,
+      "disagree": 4,
+      "extra_rows": 5,
+      "missing_rows": 0,
+      "needles": 10
+    },
+    "nested/stevec/contains/array_element_fn": {
+      "agree": 6,
+      "control_rows": 11,
+      "disagree": 4,
+      "extra_rows": 5,
+      "missing_rows": 0,
+      "needles": 10
+    },
+    "nested/stevec/contains/deep_object": {
+      "agree": 10,
+      "control_rows": 199462,
+      "disagree": 0,
+      "extra_rows": 0,
+      "missing_rows": 0,
+      "needles": 10
+    },
+    "nested/stevec/contains/deep_object_fn": {
+      "agree": 10,
+      "control_rows": 199462,
+      "disagree": 0,
+      "extra_rows": 0,
+      "missing_rows": 0,
+      "needles": 10
+    },
+    "nested/stevec/contains/nested_array": {
+      "agree": 10,
+      "control_rows": 47278,
+      "disagree": 0,
+      "extra_rows": 0,
+      "missing_rows": 0,
+      "needles": 10
+    },
+    "nested/stevec/contains/nested_array_fn": {
+      "agree": 10,
+      "control_rows": 47278,
+      "disagree": 0,
+      "extra_rows": 0,
+      "missing_rows": 0,
+      "needles": 10
+    },
+    "nested/stevec/extract/nested": {
+      "agree": 10,
+      "disagree": 0,
+      "needles": 10
+    },
+    "nested/stevec/field_between/nested": {
+      "agree": 10,
+      "control_rows": 38929,
+      "disagree": 0,
+      "extra_rows": 0,
+      "missing_rows": 0,
+      "needles": 10
+    },
+    "nested/stevec/field_eq/nested": {
+      "agree": 10,
+      "control_rows": 11,
+      "disagree": 0,
+      "extra_rows": 0,
+      "missing_rows": 0,
+      "needles": 10
+    },
+    "nested/stevec/field_gt/nested": {
+      "agree": 10,
+      "control_rows": 582257,
+      "disagree": 0,
+      "extra_rows": 0,
+      "missing_rows": 0,
+      "needles": 10
+    },
+    "nested/stevec/field_order/nested": {
+      "agree": 1,
+      "disagree": 0,
+      "needles": 1
+    },
+    "nested/stevec/path_query/wildcard": {
+      "agree": 10,
+      "disagree": 0,
+      "needles": 10
+    },
+    "nested/stevec/subtree/company": {
+      "agree": 10,
+      "disagree": 0,
+      "needles": 10
+    },
+    "nested/stevec/subtree/orders": {
+      "agree": 10,
+      "disagree": 0,
+      "needles": 10
+    },
+    "nested/stevec/subtree/user": {
+      "agree": 10,
+      "disagree": 0,
+      "needles": 10
+    },
+    "nested/stevec/subtree_at/items": {
+      "agree": 10,
+      "disagree": 0,
+      "needles": 10
+    }
+  },
+  "disagreements": [
+    "DISAGREE nested/stevec/contains/array_element_fn: needle row 11213: 2 ids, control 1 ids (1 extra, 0 missing)",
+    "DISAGREE nested/stevec/contains/array_element: needle row 11213: 2 ids, control 1 ids (1 extra, 0 missing)",
+    "DISAGREE nested/stevec/contains/array_element_fn: needle row 35146: 2 ids, control 1 ids (1 extra, 0 missing)",
+    "DISAGREE nested/stevec/contains/array_element: needle row 35146: 2 ids, control 1 ids (1 extra, 0 missing)",
+    "DISAGREE nested/stevec/contains/array_element_fn: needle row 50591: 3 ids, control 2 ids (1 extra, 0 missing)",
+    "DISAGREE nested/stevec/contains/array_element: needle row 50591: 3 ids, control 2 ids (1 extra, 0 missing)",
+    "DISAGREE nested/stevec/contains/array_element_fn: needle row 32601: 3 ids, control 1 ids (2 extra, 0 missing)",
+    "DISAGREE nested/stevec/contains/array_element: needle row 32601: 3 ids, control 1 ids (2 extra, 0 missing)"
+  ],
+  "needles_per_predicate": 10,
+  "target_rows": "100000"
+}

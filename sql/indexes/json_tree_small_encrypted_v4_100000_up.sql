@@ -11,3 +11,8 @@ CREATE INDEX json_tree_small_encrypted_v4_100000_query_gin_idx
 ON json_tree_small_encrypted_v4_100000 USING GIN (
     (eql_v4.json_tree_query(value)::jsonb) jsonb_path_ops
 );
+
+-- The plaintext twin gets the native equivalent, so the bench's plain/*
+-- scenarios (native jsonb over the same rows) are indexed the same way.
+CREATE INDEX IF NOT EXISTS json_tree_small_plain_v4_100000_gin_idx
+ON json_tree_small_plain_v4_100000 USING GIN (plain jsonb_path_ops);

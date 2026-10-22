@@ -118,6 +118,22 @@ path = "src/bin/encrypt_scalar_smoke_v3.rs"
 name = "decrypt_probe"
 path = "src/bin/decrypt_probe.rs"
 
+[[bin]]
+name = "encrypt_ste_vec_twin_small_v3"
+path = "src/bin/encrypt_ste_vec_twin_small_v3.rs"
+
+[[bin]]
+name = "encrypt_ste_vec_twin_large_v3"
+path = "src/bin/encrypt_ste_vec_twin_large_v3.rs"
+
+[[bin]]
+name = "v3_twin_probe"
+path = "src/bin/v3_twin_probe.rs"
+
+[[bin]]
+name = "check_json_v3_twin"
+path = "src/bin/check_json_v3_twin.rs"
+
 [[bench]]
 name = "ore"
 harness = false
@@ -176,4 +192,8 @@ harness = false
 
 [[bench]]
 name = "plaintext_v3"
+harness = false
+
+[[bench]]
+name = "json_compare_v3"
 harness = false

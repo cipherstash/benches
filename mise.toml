@@ -535,8 +535,17 @@ description = "Prepare combo_encrypted_v3 table (three eql_v3 columns) with targ
 run = "mise run prepare:_table combo_encrypted_v3 encrypt_combo_v3 $1"
 
 [tasks."prepare:json_ste_vec_small_v3"]
-description = "Prepare json_ste_vec_small_encrypted_v3 table (public.json) with target row count"
-run = "mise run prepare:_table json_ste_vec_small_encrypted_v3 encrypt_ste_vec_small_v3 $1"
+description = "Prepare json_ste_vec_small_encrypted_v3 table (public.json) with target row count, sealing the json_tree flat twin's documents id for id (prepare:json_tree_small_v4 first)"
+# Sealed from json_tree_small_plain_v4_<N> rather than freshly generated, so
+# SteVec, json_tree and native jsonb hold the same documents
+# (report/JSON_TREE_VS_STEVEC_VS_PLAINTEXT.md). The original generator
+# (encrypt_ste_vec_small_v3, FakeJsonSmall) is still the hyperfine ingest
+# bench's binary.
+run = "mise run prepare:_table json_ste_vec_small_encrypted_v3 encrypt_ste_vec_twin_small_v3 $1"
+
+[tasks."prepare:json_ste_vec_large_v3"]
+description = "Prepare json_ste_vec_large_encrypted_v3 (public.json, nested corpus) by sealing the json_tree nested twin's documents id for id (prepare:json_tree_large_v4 first)"
+run = "mise run prepare:_table json_ste_vec_large_encrypted_v3 encrypt_ste_vec_twin_large_v3 $1"
 
 [tasks."prepare:scalar_smoke_v3"]
 description = "Populate the scalar_smoke_v3 new-family smoke table (10k rows, no tier variants)"
@@ -1394,4 +1403,67 @@ description = "JSON: SteVec (v3) vs json_tree (v4) vs plaintext, per scenario an
 run = """
 #!/usr/bin/env bash
 python3 report_json_tree_compare.py "$@"
+"""
+
+# ---------------------------------------------------------------------------
+# Three-way JSON comparison: native jsonb vs SteVec (EQL v3) vs json_tree
+# (EQL v4), same documents in all three (the v3 tables are sealed from the
+# json_tree plaintext twins). Report: report/JSON_TREE_VS_STEVEC_VS_PLAINTEXT.md.
+# Results under results/query/compare/.
+# ---------------------------------------------------------------------------
+
+[tasks."bench:compare:json"]
+description = "Timing matrix for the three-way JSON comparison: flat 10k twice (noise floor), flat 100k, nested 10k, nested 100k; per tier SteVec then json_tree + plaintext"
+run = """
+#!/usr/bin/env bash
+set -e
+OUT="$PWD/results/query/compare"
+LOGS="$OUT/logs"
+mkdir -p "$OUT" "$LOGS"
+cargo build --release --bench json_compare_v3
+cargo build --release --manifest-path json-tree-bench/Cargo.toml --benches
+
+run_tier() {
+  corpus="$1"; rows="$2"; tag="$3"
+  if [ "$corpus" = small ]; then bench=json_tree_v4; prefix=json_tree; else bench=json_tree_nested_v4; prefix=json_tree_nested; fi
+  rm -rf target/criterion/data/main/JSON_COMPARE_V3 target/criterion/reports/JSON_COMPARE_V3
+  rm -rf json-tree-bench/target/criterion/data/main/JSON_TREE* json-tree-bench/target/criterion/reports/JSON_TREE*
+  echo "[$(date -u +%FT%TZ)] SteVec $corpus $rows $tag"
+  CORPUS="$corpus" TARGET_ROWS="$rows" RESULTS_DIR="$OUT" \
+    cargo criterion --bench json_compare_v3 --message-format json \
+    > "$OUT/stevec_${corpus}_rows_${rows}${tag}.json" 2> "$LOGS/stevec_${corpus}_${rows}${tag}.log"
+  echo "[$(date -u +%FT%TZ)] json_tree + plaintext $corpus $rows $tag"
+  TARGET_ROWS="$rows" RESULTS_DIR="$OUT" \
+    cargo criterion --manifest-path json-tree-bench/Cargo.toml --bench "$bench" --message-format json \
+    > "$OUT/${prefix}_rows_${rows}${tag}.json" 2> "$LOGS/${prefix}_${rows}${tag}.log"
+  if [ -n "$tag" ]; then
+    for m in "stevec_${corpus}_metadata_${rows}" "stevec_${corpus}_slow_${rows}" "${prefix}_metadata_${rows}"; do
+      mv "$OUT/$m.json" "$OUT/$m${tag}.json"
+    done
+  fi
+}
+
+echo "[$(date -u +%FT%TZ)] timing session start"
+run_tier small 10000 _run1
+run_tier small 10000 ""
+run_tier small 100000 ""
+run_tier large 10000 ""
+run_tier large 100000 ""
+echo "[$(date -u +%FT%TZ)] timing session end"
+"""
+
+[tasks."check:compare:json"]
+description = "Correctness of the SteVec tables and the plaintext bench queries against the plaintext control at a tier (10 needles per predicate)"
+run = """
+#!/usr/bin/env bash
+set -e
+cargo build --release --bin check_json_v3_twin
+TARGET_ROWS="${1:-10000}" ./target/release/check_json_v3_twin
+"""
+
+[tasks."report:compare:json"]
+description = "Storage, EXPLAIN (ANALYZE, BUFFERS) appendix and result tables for the three-way JSON comparison"
+run = """
+#!/usr/bin/env bash
+python3 report_json_three_way.py "$@"
 """

@@ -31,6 +31,15 @@
 //!     v3 twin: field_order/functional, on the same functional btree.
 //!   extract/by_id         SELECT (value -> '<sel>'::text)::jsonb::text … WHERE id = $1
 //!     v4-only: the cost of lifting one entry (no decrypt) by primary key.
+//!   path_query/field      eql_v4.json_tree_path_query(value::jsonb, sel) for `$.email`, by id
+//!
+//! Each scenario has a `plain/*` twin over the plaintext twin table (same
+//! rows, same sampled row, same plaintext needles): native `@>` under a
+//! jsonb_path_ops GIN, `(plain ->> 'age')::int` comparisons and ordering
+//! under a btree on that expression (built at startup), `->` and
+//! `jsonb_path_query` by id. Ids are `JSON_TREE/<json_tree|plain>/<scenario>/<N>`;
+//! the SteVec side of the comparison is the root crate's
+//! `benches/json_compare_v3.rs`.
 //!
 //! Not exercised on this flat corpus: the token-chain walks
 //! (`json_tree_subtree`, `json_tree_children`, `json_tree_child_count`)
@@ -75,6 +84,11 @@ struct Needles {
     age_selector: String,
     age_gt: String,
     age_between: (String, String),
+    /// The plaintext ages behind `age_gt` and `age_between`.
+    age: i64,
+    age_bounds: (i64, i64),
+    /// `$.email` selector (hex), for the path query.
+    email_selector: String,
 }
 
 /// The containment operand for `needle`, as the SQL takes it.
@@ -146,6 +160,12 @@ async fn sample_needles(
         .await
         .expect("derive selector")
         .to_string();
+    let email_selector = cipher
+        .default_keyset()
+        .json_selector(&JsonPath::parse("$.email").unwrap(), column())
+        .await
+        .expect("derive selector")
+        .to_string();
 
     Needles {
         sample_id,
@@ -161,13 +181,39 @@ async fn sample_needles(
         age_selector,
         age_gt: leaf(&age_gt),
         age_between: (leaf(age_between.lo()), leaf(age_between.hi())),
+        age,
+        age_bounds: (lo, hi),
+        email_selector,
         sample,
     }
 }
 
 /// The per-path functional btree for the ordering scenarios (the selector
-/// is known only once derived), mirroring the v3 bench's field_order_idx.
-async fn create_field_indexes(pool: &sqlx::PgPool, table: &str, needles: &Needles) {
+/// is known only once derived), mirroring the v3 bench's field_order_idx;
+/// and the plaintext twin's indexes: the jsonb_path_ops GIN its `@>` uses
+/// (also in sql/indexes/json_tree_small_encrypted_v4_<N>_up.sql) and a btree
+/// on `(plain ->> 'age')::int`.
+async fn create_field_indexes(pool: &sqlx::PgPool, table: &str, plain_table: &str, needles: &Needles) {
+    sqlx::query(&format!(
+        "CREATE INDEX IF NOT EXISTS {plain_table}_gin_idx ON {plain_table} USING GIN (plain jsonb_path_ops)"
+    ))
+    .execute(pool)
+    .await
+    .expect("create plaintext GIN");
+    sqlx::query(&format!("DROP INDEX IF EXISTS {plain_table}_age_idx"))
+        .execute(pool)
+        .await
+        .expect("drop stale plaintext age index");
+    sqlx::query(&format!(
+        "CREATE INDEX {plain_table}_age_idx ON {plain_table} USING btree (((plain ->> 'age')::int))"
+    ))
+    .execute(pool)
+    .await
+    .expect("create plaintext age index");
+    sqlx::query(&format!("ANALYZE {plain_table}"))
+        .execute(pool)
+        .await
+        .expect("ANALYZE plaintext twin");
     eprintln!("json_tree_v4 bench: building the per-selector functional index...");
     sqlx::query(&format!("DROP INDEX IF EXISTS {table}_field_order_idx"))
         .execute(pool)
@@ -193,6 +239,10 @@ enum Bind {
     Text(String),
     Texts(String, String),
     Id(i32),
+    TextId(String, i32),
+    Jsonb(JsonValue),
+    Int(i32),
+    Ints(i32, i32),
 }
 
 struct Scenario {
@@ -229,14 +279,14 @@ fn criterion_benchmark(c: &mut Criterion) {
             "json_tree_v4 bench picked row {} from `{}` — age selector {}",
             needles.sample_id, table, needles.age_selector
         );
-        create_field_indexes(&pool, &table, &needles).await;
+        create_field_indexes(&pool, &table, &plain_table, &needles).await;
         (pool, needles)
     });
 
     let sel = &needles.age_selector;
     let scenarios = vec![
         Scenario {
-            name: "contains/functional",
+            name: "json_tree/contains/functional",
             sql: format!(
                 "SELECT id FROM {table} \
                  WHERE eql_v4.json_tree_contains(value, $1{CONTAINS_CAST}) LIMIT 10"
@@ -244,12 +294,12 @@ fn criterion_benchmark(c: &mut Criterion) {
             bind: Bind::Text(needles.document_query.clone()),
         },
         Scenario {
-            name: "contains/operator",
+            name: "json_tree/contains/operator",
             sql: format!("SELECT id FROM {table} WHERE value @> $1{CONTAINS_CAST} LIMIT 10"),
             bind: Bind::Text(needles.document_query.clone()),
         },
         Scenario {
-            name: "field_eq/extractor",
+            name: "json_tree/field_eq/extractor",
             sql: format!(
                 "SELECT id FROM {table} \
                  WHERE eql_v4.json_tree_contains(value, $1{CONTAINS_CAST}) LIMIT 10"
@@ -257,7 +307,7 @@ fn criterion_benchmark(c: &mut Criterion) {
             bind: Bind::Text(needles.first_name_query.clone()),
         },
         Scenario {
-            name: "field_eq/unique",
+            name: "json_tree/field_eq/unique",
             sql: format!(
                 "SELECT id FROM {table} \
                  WHERE eql_v4.json_tree_contains(value, $1{CONTAINS_CAST}) LIMIT 10"
@@ -265,7 +315,7 @@ fn criterion_benchmark(c: &mut Criterion) {
             bind: Bind::Text(needles.email_query.clone()),
         },
         Scenario {
-            name: "field_gt/functional",
+            name: "json_tree/field_gt/functional",
             sql: format!(
                 "SELECT id FROM {table} \
                  WHERE (value -> '{sel}'::text) > $1{LEAF_CAST} LIMIT 10"
@@ -273,7 +323,7 @@ fn criterion_benchmark(c: &mut Criterion) {
             bind: Bind::Text(needles.age_gt.clone()),
         },
         Scenario {
-            name: "field_between/functional",
+            name: "json_tree/field_between/functional",
             sql: format!(
                 "SELECT id FROM {table} \
                  WHERE (value -> '{sel}'::text) >= $1{LEAF_CAST} \
@@ -282,7 +332,7 @@ fn criterion_benchmark(c: &mut Criterion) {
             bind: Bind::Texts(needles.age_between.0.clone(), needles.age_between.1.clone()),
         },
         Scenario {
-            name: "field_order/functional",
+            name: "json_tree/field_order/functional",
             sql: format!(
                 "SELECT id FROM {table} \
                  ORDER BY eql_v4.ord_term(value -> '{sel}'::text) LIMIT 10"
@@ -290,8 +340,62 @@ fn criterion_benchmark(c: &mut Criterion) {
             bind: Bind::None,
         },
         Scenario {
-            name: "extract/by_id",
+            name: "json_tree/extract/by_id",
             sql: format!("SELECT (value -> '{sel}'::text)::jsonb::text FROM {table} WHERE id = $1"),
+            bind: Bind::Id(needles.sample_id),
+        },
+        Scenario {
+            name: "json_tree/path_query/field",
+            sql: format!(
+                "SELECT e::jsonb::text FROM {table}, \
+                 eql_v4.json_tree_path_query(value::jsonb, $1::text) e WHERE id = $2"
+            ),
+            bind: Bind::TextId(needles.email_selector.clone(), needles.sample_id),
+        },
+        // ---- plaintext twins (same rows, same needles) ----
+        Scenario {
+            name: "plain/contains/operator",
+            sql: format!("SELECT id FROM {plain_table} WHERE plain @> $1 LIMIT 10"),
+            bind: Bind::Jsonb(needles.sample.clone()),
+        },
+        Scenario {
+            name: "plain/field_eq/extractor",
+            sql: format!("SELECT id FROM {plain_table} WHERE plain @> $1 LIMIT 10"),
+            bind: Bind::Jsonb(serde_json::json!({"first_name": needles.sample["first_name"]})),
+        },
+        Scenario {
+            name: "plain/field_eq/unique",
+            sql: format!("SELECT id FROM {plain_table} WHERE plain @> $1 LIMIT 10"),
+            bind: Bind::Jsonb(serde_json::json!({"email": needles.sample["email"]})),
+        },
+        Scenario {
+            name: "plain/field_gt/functional",
+            sql: format!("SELECT id FROM {plain_table} WHERE (plain ->> 'age')::int > $1 LIMIT 10"),
+            bind: Bind::Int(needles.age as i32),
+        },
+        Scenario {
+            name: "plain/field_between/functional",
+            sql: format!(
+                "SELECT id FROM {plain_table} \
+                 WHERE (plain ->> 'age')::int BETWEEN $1 AND $2 LIMIT 10"
+            ),
+            bind: Bind::Ints(needles.age_bounds.0 as i32, needles.age_bounds.1 as i32),
+        },
+        Scenario {
+            name: "plain/field_order/functional",
+            sql: format!("SELECT id FROM {plain_table} ORDER BY (plain ->> 'age')::int LIMIT 10"),
+            bind: Bind::None,
+        },
+        Scenario {
+            name: "plain/extract/by_id",
+            sql: format!("SELECT (plain -> 'age')::text FROM {plain_table} WHERE id = $1"),
+            bind: Bind::Id(needles.sample_id),
+        },
+        Scenario {
+            name: "plain/path_query/field",
+            sql: format!(
+                "SELECT e::text FROM {plain_table}, jsonb_path_query(plain, '$.email') e WHERE id = $1"
+            ),
             bind: Bind::Id(needles.sample_id),
         },
     ];
@@ -308,13 +412,17 @@ fn criterion_benchmark(c: &mut Criterion) {
             Bind::Text(a) => q.bind(a),
             Bind::Texts(a, b) => q.bind(a).bind(b),
             Bind::Id(id) => q.bind(*id),
+            Bind::TextId(a, id) => q.bind(a).bind(*id),
+            Bind::Jsonb(v) => q.bind(Json(v)),
+            Bind::Int(i) => q.bind(*i),
+            Bind::Ints(a, b) => q.bind(*a).bind(*b),
         }
     }
 
     let metadata = rt.block_on(async {
         let mut out = Vec::with_capacity(scenarios.len());
         for s in &scenarios {
-            let id = format!("JSON_TREE/json_tree/{}/{}", s.name, target_rows);
+            let id = format!("JSON_TREE/{}/{}", s.name, target_rows);
             let explain_sql = format!("EXPLAIN (FORMAT JSON) {}", s.sql);
             let explain: Json<JsonValue> = query_with(&explain_sql, &s.bind)
                 .fetch_one(&pool)
@@ -332,6 +440,10 @@ fn criterion_benchmark(c: &mut Criterion) {
                     vec![JsonValue::String(a.clone()), JsonValue::String(b.clone())]
                 }
                 Bind::Id(id) => vec![JsonValue::from(*id)],
+                Bind::TextId(a, id) => vec![JsonValue::String(a.clone()), JsonValue::from(*id)],
+                Bind::Jsonb(v) => vec![v.clone()],
+                Bind::Int(i) => vec![JsonValue::from(*i)],
+                Bind::Ints(a, b) => vec![JsonValue::from(*a), JsonValue::from(*b)],
             };
             out.push(ScenarioMetadata {
                 id,
@@ -387,10 +499,10 @@ fn criterion_benchmark(c: &mut Criterion) {
     let mut group = c.benchmark_group("JSON_TREE");
     group.sample_size(10);
     for s in &scenarios {
-        let id = format!("JSON_TREE/json_tree/{}/{}", s.name, target_rows);
+        let id = format!("JSON_TREE/{}/{}", s.name, target_rows);
         let sql = s.sql.clone();
         let bind = s.bind.clone();
-        group.bench_function(format!("json_tree/{}/{}", s.name, target_rows), |b| {
+        group.bench_function(format!("{}/{}", s.name, target_rows), |b| {
             b.to_async(&rt).iter(|| async {
                 let rows = bench_assert(query_with(&sql, &bind).fetch_all(&pool).await, &id);
                 black_box(rows.len())

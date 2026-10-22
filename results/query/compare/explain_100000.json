@@ -1,0 +1,1135 @@
+[
+  {
+    "id": "JSON_COMPARE_V3/small/contains/functional/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE eql_v3.jsonb_contains(value, $1::jsonb) LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"hm\":\"25612f1751b8619090a88a84e96ef32a\",\"s\":\"0062378a2a2037bf4cdd8c78c2a1aeb0\"},{\"oc\":\"bf1327292d1fdf238acacacc7fcbb5e6a59be9089f03a9944861cbeef84580a7394e42bdb62c3123f2c47fd6c3771804d8e914c66c53a5c02d4756c351fe19b92b\",\"s\":\"cc6e1824ab3319e8f92dc6199ce671b9\"},{\"oc\":\"c0c6804d283fb95c5f39c71d66b26a03807a78b15c257690ec06fea00af8983f9e2ee120808d3fec0da11f70fc1b43410410afb8d31154b623a85632959e3c3374d699712829d539d3910ddd917ef78f39b93607d5d15dd578640eed4a9f0fca6d734f478795759459058cdf4d80aba1d4411698ff60e17bd67bf41cd3e7105c1123cd7e82d501fa2a3ad573b7ec6f9f0e3481ecf778f49bab7e11d6d88d517920be0544a695de526b8cc8c1e30f3d824abb238e0dde278def8d40955c602b8f0d\",\"s\":\"b81940706ae05004a9b95b6dbd1aaa60\"},{\"oc\":\"c0c6804c8d2c3ad3e88a2b6b78b41825fb5e070d408f0988ecba0f05ec97c9673a2cdeb83cc6f83b51bb8d869edac6d2321b819d44df6f5b955be0c517d9d19167\",\"s\":\"89b067ede76d2a718225887f944cba12\"},{\"oc\":\"c0c6804c8d2c3b9cbca2037c4de16e157229f8e033d84076e94770c93a54bca08f7391d6477cbb4c0500cb2c45139144803e1e0b16678e58163bd96bb0873eb8c3\",\"s\":\"f14d8536f5d4abf1b983f67d461d85e2\"}]}"
+    ],
+    "plan": "Limit  (cost=24.22..64.28 rows=10 width=4) (actual time=0.185..0.185 rows=1 loops=1)\n  Buffers: shared hit=32\n  ->  Bitmap Heap Scan on json_ste_vec_small_encrypted_v3_100000  (cost=24.22..2027.10 rows=500 width=4) (actual time=0.185..0.185 rows=1 loops=1)\n        Recheck Cond: (eql_v3.jsonb_array((value)::jsonb) @> eql_v3.jsonb_array(($1)::jsonb))\n        Heap Blocks: exact=1\n        Buffers: shared hit=32\n        ->  Bitmap Index Scan on json_ste_vec_small_encrypted_v3_100000_jsonb_array_index  (cost=0.00..24.09 rows=500 width=0) (actual time=0.183..0.184 rows=1 loops=1)\n              Index Cond: (eql_v3.jsonb_array((value)::jsonb) @> eql_v3.jsonb_array(($1)::jsonb))\n              Buffers: shared hit=31\nPlanning:\n  Buffers: shared hit=1\nPlanning Time: 0.052 ms\nExecution Time: 0.192 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/small/contains/operator/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"hm\":\"25612f1751b8619090a88a84e96ef32a\",\"s\":\"0062378a2a2037bf4cdd8c78c2a1aeb0\"},{\"oc\":\"bf1327292d1fdf238acacacc7fcbb5e6a59be9089f03a9944861cbeef84580a7394e42bdb62c3123f2c47fd6c3771804d8e914c66c53a5c02d4756c351fe19b92b\",\"s\":\"cc6e1824ab3319e8f92dc6199ce671b9\"},{\"oc\":\"c0c6804d283fb95c5f39c71d66b26a03807a78b15c257690ec06fea00af8983f9e2ee120808d3fec0da11f70fc1b43410410afb8d31154b623a85632959e3c3374d699712829d539d3910ddd917ef78f39b93607d5d15dd578640eed4a9f0fca6d734f478795759459058cdf4d80aba1d4411698ff60e17bd67bf41cd3e7105c1123cd7e82d501fa2a3ad573b7ec6f9f0e3481ecf778f49bab7e11d6d88d517920be0544a695de526b8cc8c1e30f3d824abb238e0dde278def8d40955c602b8f0d\",\"s\":\"b81940706ae05004a9b95b6dbd1aaa60\"},{\"oc\":\"c0c6804c8d2c3ad3e88a2b6b78b41825fb5e070d408f0988ecba0f05ec97c9673a2cdeb83cc6f83b51bb8d869edac6d2321b819d44df6f5b955be0c517d9d19167\",\"s\":\"89b067ede76d2a718225887f944cba12\"},{\"oc\":\"c0c6804c8d2c3b9cbca2037c4de16e157229f8e033d84076e94770c93a54bca08f7391d6477cbb4c0500cb2c45139144803e1e0b16678e58163bd96bb0873eb8c3\",\"s\":\"f14d8536f5d4abf1b983f67d461d85e2\"}]}"
+    ],
+    "plan": "Limit  (cost=0.00..471.81 rows=10 width=4) (actual time=1369.605..2740.285 rows=1 loops=1)\n  Buffers: shared hit=78009\n  ->  Seq Scan on json_ste_vec_small_encrypted_v3_100000  (cost=0.00..47181.00 rows=1000 width=4) (actual time=1369.604..2740.282 rows=1 loops=1)\n        Filter: ((eql_v3.to_ste_vec_query(value))::jsonb @> ((($1)::jsonb)::eql_v3.query_jsonb)::jsonb)\n        Rows Removed by Filter: 99999\n        Buffers: shared hit=78009\nPlanning Time: 0.094 ms\nExecution Time: 2740.293 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/small/field_eq/extractor/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE eql_v3.jsonb_contains(value, $1::jsonb) LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"hm\":\"25612f1751b8619090a88a84e96ef32a\",\"s\":\"0062378a2a2037bf4cdd8c78c2a1aeb0\"},{\"oc\":\"c0c6804c8d2c3ad3e88a2b6b78b41825fb5e070d408f0988ecba0f05ec97c9673a2cdeb83cc6f83b51bb8d869edac6d2321b819d44df6f5b955be0c517d9d19167\",\"s\":\"89b067ede76d2a718225887f944cba12\"}]}"
+    ],
+    "plan": "Limit  (cost=24.22..64.28 rows=10 width=4) (actual time=0.328..0.330 rows=10 loops=1)\n  Buffers: shared hit=51\n  ->  Bitmap Heap Scan on json_ste_vec_small_encrypted_v3_100000  (cost=24.22..2027.10 rows=500 width=4) (actual time=0.328..0.329 rows=10 loops=1)\n        Recheck Cond: (eql_v3.jsonb_array((value)::jsonb) @> eql_v3.jsonb_array(($1)::jsonb))\n        Heap Blocks: exact=10\n        Buffers: shared hit=51\n        ->  Bitmap Index Scan on json_ste_vec_small_encrypted_v3_100000_jsonb_array_index  (cost=0.00..24.09 rows=500 width=0) (actual time=0.325..0.325 rows=30 loops=1)\n              Index Cond: (eql_v3.jsonb_array((value)::jsonb) @> eql_v3.jsonb_array(($1)::jsonb))\n              Buffers: shared hit=41\nPlanning:\n  Buffers: shared hit=1\nPlanning Time: 0.053 ms\nExecution Time: 0.337 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/small/field_eq/unique/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE eql_v3.jsonb_contains(value, $1::jsonb) LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"hm\":\"25612f1751b8619090a88a84e96ef32a\",\"s\":\"0062378a2a2037bf4cdd8c78c2a1aeb0\"},{\"oc\":\"c0c6804d283fb95c5f39c71d66b26a03807a78b15c257690ec06fea00af8983f9e2ee120808d3fec0da11f70fc1b43410410afb8d31154b623a85632959e3c3374d699712829d539d3910ddd917ef78f39b93607d5d15dd578640eed4a9f0fca6d734f478795759459058cdf4d80aba1d4411698ff60e17bd67bf41cd3e7105c1123cd7e82d501fa2a3ad573b7ec6f9f0e3481ecf778f49bab7e11d6d88d517920be0544a695de526b8cc8c1e30f3d824abb238e0dde278def8d40955c602b8f0d\",\"s\":\"b81940706ae05004a9b95b6dbd1aaa60\"}]}"
+    ],
+    "plan": "Limit  (cost=24.22..64.28 rows=10 width=4) (actual time=0.131..0.131 rows=1 loops=1)\n  Buffers: shared hit=16\n  ->  Bitmap Heap Scan on json_ste_vec_small_encrypted_v3_100000  (cost=24.22..2027.10 rows=500 width=4) (actual time=0.131..0.131 rows=1 loops=1)\n        Recheck Cond: (eql_v3.jsonb_array((value)::jsonb) @> eql_v3.jsonb_array(($1)::jsonb))\n        Heap Blocks: exact=1\n        Buffers: shared hit=16\n        ->  Bitmap Index Scan on json_ste_vec_small_encrypted_v3_100000_jsonb_array_index  (cost=0.00..24.09 rows=500 width=0) (actual time=0.129..0.129 rows=1 loops=1)\n              Index Cond: (eql_v3.jsonb_array((value)::jsonb) @> eql_v3.jsonb_array(($1)::jsonb))\n              Buffers: shared hit=15\nPlanning:\n  Buffers: shared hit=1\nPlanning Time: 0.053 ms\nExecution Time: 0.138 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/small/field_eq/eq_term/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE eql_v3.eq_term(eql_v3.jsonb_path_query_first(value, 'b81940706ae05004a9b95b6dbd1aaa60')) = eql_v3.eq_term($1::jsonb::public.jsonb_entry) LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"a\": false, \"c\": \"mBbKAFJFwNsBbDQAbcb_8YhCpD?qduQ?>^u+%Z3^^@@<kcVU&e*849?NAwrap~NP~A!-L@Sy<4Ma7EfF#2_Tajg2>tlcZBcxZbRC_?dug22fXH>RU<>*l8Eq_4=T|\", \"i\": {\"c\": \"value\", \"t\": \"json_ste_vec_small_encrypted_v3_100000\"}, \"s\": \"b81940706ae05004a9b95b6dbd1aaa60\", \"v\": 3, \"oc\": \"c0c6804d283fb95c5f39c71d66b26a03807a78b15c257690ec06fea00af8983f9e2ee120808d3fec0da11f70fc1b43410410afb8d31154b623a85632959e3c3374d699712829d539d3910ddd917ef78f39b93607d5d15dd578640eed4a9f0fca6d734f478795759459058cdf4d80aba1d4411698ff60e17bd67bf41cd3e7105c1123cd7e82d501fa2a3ad573b7ec6f9f0e3481ecf778f49bab7e11d6d88d517920be0544a695de526b8cc8c1e30f3d824abb238e0dde278def8d40955c602b8f0d\"}"
+    ],
+    "plan": "Limit  (cost=0.80..8.82 rows=1 width=4) (actual time=0.011..0.012 rows=1 loops=1)\n  Buffers: shared hit=5\n  ->  Index Scan using json_ste_vec_small_encrypted_v3_100000_field_eq_idx on json_ste_vec_small_encrypted_v3_100000  (cost=0.80..8.82 rows=1 width=4) (actual time=0.011..0.011 rows=1 loops=1)\n        Index Cond: (eql_v3.eq_term(eql_v3.jsonb_path_query_first((value)::jsonb, 'b81940706ae05004a9b95b6dbd1aaa60'::text)) = eql_v3.eq_term((($1)::jsonb)::jsonb_entry))\n        Buffers: shared hit=5\nPlanning Time: 0.028 ms\nExecution Time: 0.017 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/small/field_gt/functional/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE eql_v3.jsonb_path_query_first(value, 'cc6e1824ab3319e8f92dc6199ce671b9') > $1::jsonb::public.jsonb_entry LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"a\": false, \"c\": \"mBbKAFJFwNsBbDQAbcb_8YhCp6b|jw5kWim9anNPR=F2h_vBCP+{7Rx#f^<OkCUWRMY!Iqa`>5mYz9zQW9nN<5ZGxK+V%RNzy\", \"i\": {\"c\": \"value\", \"t\": \"json_ste_vec_small_encrypted_v3_100000\"}, \"s\": \"cc6e1824ab3319e8f92dc6199ce671b9\", \"v\": 3, \"oc\": \"bf1327292d1fdf238acacacc7fcbb5e6a59be9089f03a9944861cbeef84580a7394e42bdb62c3123f2c47fd6c3771804d8e914c66c53a5c02d4756c351fe19b92b\"}"
+    ],
+    "plan": "Limit  (cost=0.67..13.85 rows=10 width=4) (actual time=0.125..0.127 rows=10 loops=1)\n  Buffers: shared hit=12\n  ->  Index Scan using json_ste_vec_small_encrypted_v3_100000_field_order_idx on json_ste_vec_small_encrypted_v3_100000  (cost=0.67..85484.38 rows=64847 width=4) (actual time=0.125..0.126 rows=10 loops=1)\n        Index Cond: (eql_v3.ore_cllw(eql_v3.jsonb_path_query_first((value)::jsonb, 'cc6e1824ab3319e8f92dc6199ce671b9'::text)) > eql_v3.ore_cllw(('{\"a\": false, \"c\": \"mBbKAFJFwNsBbDQAbcb_8YhCp6b|jw5kWim9anNPR=F2h_vBCP+{7Rx#f^<OkCUWRMY!Iqa`>5mYz9zQW9nN<5ZGxK+V%RNzy\", \"i\": {\"c\": \"value\", \"t\": \"json_ste_vec_small_encrypted_v3_100000\"}, \"s\": \"cc6e1824ab3319e8f92dc6199ce671b9\", \"v\": 3, \"oc\": \"bf1327292d1fdf238acacacc7fcbb5e6a59be9089f03a9944861cbeef84580a7394e42bdb62c3123f2c47fd6c3771804d8e914c66c53a5c02d4756c351fe19b92b\"}'::jsonb)::jsonb_entry))\n        Buffers: shared hit=12\nPlanning Time: 0.565 ms\nExecution Time: 0.132 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/small/field_between/functional/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE eql_v3.jsonb_path_query_first(value, 'cc6e1824ab3319e8f92dc6199ce671b9') >= $1::jsonb::public.jsonb_entry AND eql_v3.jsonb_path_query_first(value, 'cc6e1824ab3319e8f92dc6199ce671b9') <= $2::jsonb::public.jsonb_entry LIMIT 10",
+    "parameter_types": [
+      "text",
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"a\": false, \"c\": \"mBbLFTBlai!-dTZX+*;IuEgNP6hOkGW{U{tG^=X{=8>#?J2TS9WW*qib+NlmVxl&Ug<$l_uyZN2V@Si>-t?XyYW>+e8s5F2zy\", \"i\": {\"c\": \"value\", \"t\": \"json_ste_vec_small_encrypted_v3_100000\"}, \"s\": \"cc6e1824ab3319e8f92dc6199ce671b9\", \"v\": 3, \"oc\": \"bf1327292d1fdf238acacacc7fcbb5e5af073dfc2f0195ebd6fb1917ab9e26fe2cd20b547c3e9b8cb8661cf4c30f312e2c4cc80658f7993c4ae67a66d89f1662b4\"}",
+      "{\"a\": false, \"c\": \"mBbK4NuUb&y8^(|Sd$6EF1qE!6g_B^+q)F|cR|#=<++=|!}8BNUBn=y`WDV!J&u;2U2OrS_3xW7v*A)E@ebEcYwxE^SaTJizy\", \"i\": {\"c\": \"value\", \"t\": \"json_ste_vec_small_encrypted_v3_100000\"}, \"s\": \"cc6e1824ab3319e8f92dc6199ce671b9\", \"v\": 3, \"oc\": \"bf1327292d1fdf238acacacc7fccc928f0b7d814f4e74317af1e3ee228d3b9323453163ff54e60d3847ff40f0d92e78d449d849ae1b32a665bef300065dab34113\"}"
+    ],
+    "plan": "Limit  (cost=0.92..31.65 rows=10 width=4) (actual time=0.167..0.196 rows=10 loops=1)\n  Buffers: shared hit=13\n  ->  Index Scan using json_ste_vec_small_encrypted_v3_100000_field_order_idx on json_ste_vec_small_encrypted_v3_100000  (cost=0.92..41529.53 rows=13517 width=4) (actual time=0.167..0.196 rows=10 loops=1)\n        Index Cond: ((eql_v3.ore_cllw(eql_v3.jsonb_path_query_first((value)::jsonb, 'cc6e1824ab3319e8f92dc6199ce671b9'::text)) >= eql_v3.ore_cllw(('{\"a\": false, \"c\": \"mBbLFTBlai!-dTZX+*;IuEgNP6hOkGW{U{tG^=X{=8>#?J2TS9WW*qib+NlmVxl&Ug<$l_uyZN2V@Si>-t?XyYW>+e8s5F2zy\", \"i\": {\"c\": \"value\", \"t\": \"json_ste_vec_small_encrypted_v3_100000\"}, \"s\": \"cc6e1824ab3319e8f92dc6199ce671b9\", \"v\": 3, \"oc\": \"bf1327292d1fdf238acacacc7fcbb5e5af073dfc2f0195ebd6fb1917ab9e26fe2cd20b547c3e9b8cb8661cf4c30f312e2c4cc80658f7993c4ae67a66d89f1662b4\"}'::jsonb)::jsonb_entry)) AND (eql_v3.ore_cllw(eql_v3.jsonb_path_query_first((value)::jsonb, 'cc6e1824ab3319e8f92dc6199ce671b9'::text)) <= eql_v3.ore_cllw(('{\"a\": false, \"c\": \"mBbK4NuUb&y8^(|Sd$6EF1qE!6g_B^+q)F|cR|#=<++=|!}8BNUBn=y`WDV!J&u;2U2OrS_3xW7v*A)E@ebEcYwxE^SaTJizy\", \"i\": {\"c\": \"value\", \"t\": \"json_ste_vec_small_encrypted_v3_100000\"}, \"s\": \"cc6e1824ab3319e8f92dc6199ce671b9\", \"v\": 3, \"oc\": \"bf1327292d1fdf238acacacc7fccc928f0b7d814f4e74317af1e3ee228d3b9323453163ff54e60d3847ff40f0d92e78d449d849ae1b32a665bef300065dab34113\"}'::jsonb)::jsonb_entry)))\n        Buffers: shared hit=13\nPlanning Time: 1.093 ms\nExecution Time: 0.204 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/small/field_order/functional/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_ste_vec_small_encrypted_v3_100000 ORDER BY eql_v3.ore_cllw(eql_v3.jsonb_path_query_first(value, 'cc6e1824ab3319e8f92dc6199ce671b9')) LIMIT 10",
+    "parameter_types": [],
+    "warm_executions": 5,
+    "parameters": [],
+    "plan": "Limit  (cost=0.42..14.20 rows=10 width=36) (actual time=0.040..0.145 rows=10 loops=1)\n  Buffers: shared hit=22\n  ->  Index Scan using json_ste_vec_small_encrypted_v3_100000_field_order_idx on json_ste_vec_small_encrypted_v3_100000  (cost=0.42..137813.64 rows=100000 width=36) (actual time=0.040..0.145 rows=10 loops=1)\n        Buffers: shared hit=22\nPlanning Time: 0.000 ms\nExecution Time: 0.148 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/small/extract/by_id/100000",
+    "corpus": "flat",
+    "query": "SELECT (value -> 'cc6e1824ab3319e8f92dc6199ce671b9'::text)::jsonb::text FROM json_ste_vec_small_encrypted_v3_100000 WHERE id = $1",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      50000
+    ],
+    "plan": "Index Scan using json_ste_vec_small_encrypted_v3_100000_pkey on json_ste_vec_small_encrypted_v3_100000  (cost=0.29..8.57 rows=1 width=32) (actual time=0.028..0.028 rows=1 loops=1)\n  Index Cond: (id = $1)\n  Buffers: shared hit=3\nPlanning Time: 0.019 ms\nExecution Time: 0.031 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/small/path_query/field/100000",
+    "corpus": "flat",
+    "query": "SELECT e::jsonb::text FROM json_ste_vec_small_encrypted_v3_100000, eql_v3.jsonb_path_query(value, $1::text) e WHERE id = $2",
+    "parameter_types": [
+      "text",
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "b81940706ae05004a9b95b6dbd1aaa60",
+      50000
+    ],
+    "plan": "Nested Loop  (cost=0.54..33.56 rows=1000 width=32) (actual time=0.030..0.031 rows=1 loops=1)\n  Buffers: shared hit=3\n  ->  Index Scan using json_ste_vec_small_encrypted_v3_100000_pkey on json_ste_vec_small_encrypted_v3_100000  (cost=0.29..8.31 rows=1 width=1547) (actual time=0.002..0.002 rows=1 loops=1)\n        Index Cond: (id = $2)\n        Buffers: shared hit=3\n  ->  Function Scan on jsonb_path_query e  (cost=0.25..10.25 rows=1000 width=32) (actual time=0.027..0.027 rows=1 loops=1)\nPlanning Time: 0.015 ms\nExecution Time: 0.034 ms"
+  },
+  {
+    "id": "JSON_TREE/json_tree/contains/functional/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_tree_small_encrypted_v4_100000 WHERE eql_v4.json_tree_contains(value, $1::text::jsonb::eql_v4.query_json_tree) LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"vs\":\"b7f5a480da22a30372f7898793d15162\"},{\"s\":\"7349633426741ad6074ff9e7ffa69599\",\"vs\":\"d566b7e03127d5532141d303eee2bb26\"},{\"s\":\"9f7f562232761fd6f7624026c36859c9\",\"vs\":\"cdc46799430eea809fc8da821fddded8\"},{\"s\":\"adde476512a10c4663437ac59bc53598\",\"vs\":\"51d1f15ef38ac146b86c0a11c2f20a40\"}],\"el\":[]}"
+    ],
+    "plan": "Limit  (cost=44.70..150.92 rows=10 width=4) (actual time=0.262..0.263 rows=1 loops=1)\n  Buffers: shared hit=64\n  ->  Bitmap Heap Scan on json_tree_small_encrypted_v4_100000  (cost=44.70..10772.70 rows=1010 width=4) (actual time=0.262..0.262 rows=1 loops=1)\n        Recheck Cond: ((eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))\n        Filter: ((eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR ((((($1)::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))\n        Heap Blocks: exact=1\n        Buffers: shared hit=64\n        ->  BitmapOr  (cost=44.70..44.70 rows=2000 width=0) (actual time=0.228..0.228 rows=0 loops=1)\n              Buffers: shared hit=55\n              ->  Bitmap Index Scan on json_tree_small_encrypted_v4_100000_query_gin_idx  (cost=0.00..22.10 rows=1000 width=0) (actual time=0.215..0.215 rows=1 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))\n                    Buffers: shared hit=55\n              ->  Bitmap Index Scan on json_tree_small_encrypted_v4_100000_query_gin_idx  (cost=0.00..22.10 rows=1000 width=0) (actual time=0.012..0.012 rows=0 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))\nPlanning:\n  Buffers: shared hit=2\nPlanning Time: 0.028 ms\nExecution Time: 0.269 ms"
+  },
+  {
+    "id": "JSON_TREE/json_tree/contains/operator/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_tree_small_encrypted_v4_100000 WHERE value @> $1::text::jsonb::eql_v4.query_json_tree LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"vs\":\"b7f5a480da22a30372f7898793d15162\"},{\"s\":\"7349633426741ad6074ff9e7ffa69599\",\"vs\":\"d566b7e03127d5532141d303eee2bb26\"},{\"s\":\"9f7f562232761fd6f7624026c36859c9\",\"vs\":\"cdc46799430eea809fc8da821fddded8\"},{\"s\":\"adde476512a10c4663437ac59bc53598\",\"vs\":\"51d1f15ef38ac146b86c0a11c2f20a40\"}],\"el\":[]}"
+    ],
+    "plan": "Limit  (cost=44.70..150.92 rows=10 width=4) (actual time=0.264..0.264 rows=1 loops=1)\n  Buffers: shared hit=64\n  ->  Bitmap Heap Scan on json_tree_small_encrypted_v4_100000  (cost=44.70..10772.70 rows=1010 width=4) (actual time=0.264..0.264 rows=1 loops=1)\n        Recheck Cond: ((eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))\n        Filter: ((eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR ((((($1)::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))\n        Heap Blocks: exact=1\n        Buffers: shared hit=64\n        ->  BitmapOr  (cost=44.70..44.70 rows=2000 width=0) (actual time=0.229..0.229 rows=0 loops=1)\n              Buffers: shared hit=55\n              ->  Bitmap Index Scan on json_tree_small_encrypted_v4_100000_query_gin_idx  (cost=0.00..22.10 rows=1000 width=0) (actual time=0.217..0.217 rows=1 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))\n                    Buffers: shared hit=55\n              ->  Bitmap Index Scan on json_tree_small_encrypted_v4_100000_query_gin_idx  (cost=0.00..22.10 rows=1000 width=0) (actual time=0.012..0.012 rows=0 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))\nPlanning:\n  Buffers: shared hit=2\nPlanning Time: 0.031 ms\nExecution Time: 0.271 ms"
+  },
+  {
+    "id": "JSON_TREE/json_tree/field_eq/extractor/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_tree_small_encrypted_v4_100000 WHERE eql_v4.json_tree_contains(value, $1::text::jsonb::eql_v4.query_json_tree) LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"9f7f562232761fd6f7624026c36859c9\",\"vs\":\"cdc46799430eea809fc8da821fddded8\"}],\"el\":[]}"
+    ],
+    "plan": "Limit  (cost=56.03..142.58 rows=10 width=4) (actual time=0.680..0.857 rows=10 loops=1)\n  Buffers: shared hit=175\n  ->  Bitmap Heap Scan on json_tree_small_encrypted_v4_100000  (cost=56.03..142.58 rows=10 width=4) (actual time=0.680..0.856 rows=10 loops=1)\n        Recheck Cond: ((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))\n        Filter: ((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))\n        Heap Blocks: exact=10\n        Buffers: shared hit=175\n        ->  BitmapOr  (cost=56.03..56.03 rows=10 width=0) (actual time=0.654..0.655 rows=0 loops=1)\n              Buffers: shared hit=85\n              ->  Bitmap Index Scan on json_tree_small_encrypted_v4_100000_query_gin_idx  (cost=0.00..56.03 rows=10 width=0) (actual time=0.646..0.646 rows=30 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))\n                    Buffers: shared hit=85\n              ->  Bitmap Index Scan on json_tree_small_encrypted_v4_100000_query_gin_idx  (cost=0.00..0.00 rows=1 width=0) (actual time=0.008..0.008 rows=0 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"cdc46799430eea809fc8da821fddded8\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))\nPlanning:\n  Buffers: shared hit=4\nPlanning Time: 0.128 ms\nExecution Time: 0.863 ms"
+  },
+  {
+    "id": "JSON_TREE/json_tree/field_eq/unique/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_tree_small_encrypted_v4_100000 WHERE eql_v4.json_tree_contains(value, $1::text::jsonb::eql_v4.query_json_tree) LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"7349633426741ad6074ff9e7ffa69599\",\"vs\":\"d566b7e03127d5532141d303eee2bb26\"}],\"el\":[]}"
+    ],
+    "plan": "Limit  (cost=56.03..142.58 rows=10 width=4) (actual time=0.145..0.145 rows=1 loops=1)\n  Buffers: shared hit=34\n  ->  Bitmap Heap Scan on json_tree_small_encrypted_v4_100000  (cost=56.03..142.58 rows=10 width=4) (actual time=0.144..0.145 rows=1 loops=1)\n        Recheck Cond: ((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))\n        Filter: ((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))\n        Heap Blocks: exact=1\n        Buffers: shared hit=34\n        ->  BitmapOr  (cost=56.03..56.03 rows=10 width=0) (actual time=0.119..0.119 rows=0 loops=1)\n              Buffers: shared hit=25\n              ->  Bitmap Index Scan on json_tree_small_encrypted_v4_100000_query_gin_idx  (cost=0.00..56.03 rows=10 width=0) (actual time=0.110..0.110 rows=1 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))\n                    Buffers: shared hit=25\n              ->  Bitmap Index Scan on json_tree_small_encrypted_v4_100000_query_gin_idx  (cost=0.00..0.00 rows=1 width=0) (actual time=0.009..0.009 rows=0 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"d566b7e03127d5532141d303eee2bb26\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))\nPlanning:\n  Buffers: shared hit=4\nPlanning Time: 0.129 ms\nExecution Time: 0.151 ms"
+  },
+  {
+    "id": "JSON_TREE/json_tree/field_gt/functional/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_tree_small_encrypted_v4_100000 WHERE (value -> 'a7b53d9b98181a98c49559f86362fcce'::text) > $1::text::jsonb::eql_v4.query_json_tree_leaf LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"op\":\"0126916d0e57e88459877d695fcdfaf73b768a7ffa991915b19a6e59958b9bff05b9ba3e0ac5ab3b01cebf79fd0ba8c634f6a4053bf4a51fff5decc1ef272ef777\"}"
+    ],
+    "plan": "Limit  (cost=0.43..1.41 rows=10 width=4) (actual time=0.004..0.006 rows=10 loops=1)\n  Buffers: shared hit=7\n  ->  Index Scan using json_tree_small_encrypted_v4_100000_field_order_idx on json_tree_small_encrypted_v4_100000  (cost=0.43..3271.31 rows=33333 width=4) (actual time=0.004..0.005 rows=10 loops=1)\n        Index Cond: (decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'a7b53d9b98181a98c49559f86362fcce'::text))::jsonb ->> 'op'::text), 'hex'::text) > decode((((($1)::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'hex'::text))\n        Buffers: shared hit=7\nPlanning Time: 0.058 ms\nExecution Time: 0.010 ms"
+  },
+  {
+    "id": "JSON_TREE/json_tree/field_between/functional/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_tree_small_encrypted_v4_100000 WHERE (value -> 'a7b53d9b98181a98c49559f86362fcce'::text) >= $1::text::jsonb::eql_v4.query_json_tree_leaf AND (value -> 'a7b53d9b98181a98c49559f86362fcce'::text) <= $2::text::jsonb::eql_v4.query_json_tree_leaf LIMIT 10",
+    "parameter_types": [
+      "text",
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"op\":\"0126916d0e57e88459877d695fcdfa76f550148b1cd6aa60645b6578b9126ba62ad7557c151e9fc048a0abe06487878fd8b6e14f516e68434c01dd986c42a572dc\"}",
+      "{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"op\":\"0126916d0e57e88459877d69604d820bfc063d0dd23a14bc64ba6382d3e53b91f1f8e9ce1f20ee44a19810e5a5e586f9ddd78df28075c226b617a96d6b50050b5f\"}"
+    ],
+    "plan": "Limit  (cost=0.43..2.57 rows=10 width=4) (actual time=0.006..0.007 rows=10 loops=1)\n  Buffers: shared hit=7\n  ->  Index Scan using json_tree_small_encrypted_v4_100000_field_order_idx on json_tree_small_encrypted_v4_100000  (cost=0.43..2876.82 rows=13443 width=4) (actual time=0.006..0.007 rows=10 loops=1)\n        Index Cond: ((decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'a7b53d9b98181a98c49559f86362fcce'::text))::jsonb ->> 'op'::text), 'hex'::text) >= decode(((('{\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"op\": \"0126916d0e57e88459877d695fcdfa76f550148b1cd6aa60645b6578b9126ba62ad7557c151e9fc048a0abe06487878fd8b6e14f516e68434c01dd986c42a572dc\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'hex'::text)) AND (decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'a7b53d9b98181a98c49559f86362fcce'::text))::jsonb ->> 'op'::text), 'hex'::text) <= decode(((('{\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"op\": \"0126916d0e57e88459877d69604d820bfc063d0dd23a14bc64ba6382d3e53b91f1f8e9ce1f20ee44a19810e5a5e586f9ddd78df28075c226b617a96d6b50050b5f\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'hex'::text)))\n        Buffers: shared hit=7\nPlanning Time: 0.194 ms\nExecution Time: 0.014 ms"
+  },
+  {
+    "id": "JSON_TREE/json_tree/field_order/functional/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_tree_small_encrypted_v4_100000 ORDER BY eql_v4.ord_term(value -> 'a7b53d9b98181a98c49559f86362fcce'::text) LIMIT 10",
+    "parameter_types": [],
+    "warm_executions": 5,
+    "parameters": [],
+    "plan": "Limit  (cost=0.42..25.91 rows=10 width=36) (actual time=0.081..0.627 rows=10 loops=1)\n  Buffers: shared hit=169\n  ->  Index Scan using json_tree_small_encrypted_v4_100000_field_order_idx on json_tree_small_encrypted_v4_100000  (cost=0.42..254956.05 rows=100000 width=36) (actual time=0.081..0.627 rows=10 loops=1)\n        Buffers: shared hit=169\nPlanning Time: 0.000 ms\nExecution Time: 0.630 ms"
+  },
+  {
+    "id": "JSON_TREE/json_tree/extract/by_id/100000",
+    "corpus": "flat",
+    "query": "SELECT (value -> 'a7b53d9b98181a98c49559f86362fcce'::text)::jsonb::text FROM json_tree_small_encrypted_v4_100000 WHERE id = $1",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      50000
+    ],
+    "plan": "Index Scan using json_tree_small_encrypted_v4_100000_pkey on json_tree_small_encrypted_v4_100000  (cost=0.29..10.82 rows=1 width=32) (actual time=0.083..0.083 rows=1 loops=1)\n  Index Cond: (id = $1)\n  Buffers: shared hit=19\nPlanning Time: 0.022 ms\nExecution Time: 0.086 ms"
+  },
+  {
+    "id": "JSON_TREE/json_tree/path_query/field/100000",
+    "corpus": "flat",
+    "query": "SELECT e::jsonb::text FROM json_tree_small_encrypted_v4_100000, eql_v4.json_tree_path_query(value::jsonb, $1::text) e WHERE id = $2",
+    "parameter_types": [
+      "text",
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "7349633426741ad6074ff9e7ffa69599",
+      50000
+    ],
+    "plan": "Nested Loop  (cost=0.54..33.56 rows=1000 width=32) (actual time=0.085..0.085 rows=1 loops=1)\n  Buffers: shared hit=19\n  ->  Index Scan using json_tree_small_encrypted_v4_100000_pkey on json_tree_small_encrypted_v4_100000  (cost=0.29..8.31 rows=1 width=18) (actual time=0.002..0.002 rows=1 loops=1)\n        Index Cond: (id = $2)\n        Buffers: shared hit=3\n  ->  Function Scan on json_tree_path_query e  (cost=0.25..10.25 rows=1000 width=32) (actual time=0.081..0.081 rows=1 loops=1)\n        Buffers: shared hit=16\nPlanning Time: 0.015 ms\nExecution Time: 0.088 ms"
+  },
+  {
+    "id": "JSON_TREE/plain/contains/operator/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_tree_small_plain_v4_100000 WHERE plain @> $1 LIMIT 10",
+    "parameter_types": [
+      "jsonb"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      {
+        "age": 46,
+        "email": "catalina_et@hotmail.com",
+        "first_name": "Claudia",
+        "last_name": "Flatley"
+      }
+    ],
+    "plan": "Limit  (cost=0.00..30.35 rows=10 width=4) (actual time=8.622..15.471 rows=1 loops=1)\n  Buffers: shared hit=1 read=1784\n  ->  Seq Scan on json_tree_small_plain_v4_100000  (cost=0.00..3035.00 rows=1000 width=4) (actual time=8.622..15.470 rows=1 loops=1)\n        Filter: (plain @> $1)\n        Rows Removed by Filter: 99999\n        Buffers: shared hit=1 read=1784\nPlanning:\n  Buffers: shared hit=1\nPlanning Time: 0.011 ms\nExecution Time: 15.477 ms"
+  },
+  {
+    "id": "JSON_TREE/plain/field_eq/extractor/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_tree_small_plain_v4_100000 WHERE plain @> $1 LIMIT 10",
+    "parameter_types": [
+      "jsonb"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      {
+        "first_name": "Claudia"
+      }
+    ],
+    "plan": "Limit  (cost=0.00..30.35 rows=10 width=4) (actual time=0.059..3.928 rows=10 loops=1)\n  Buffers: shared hit=545\n  ->  Seq Scan on json_tree_small_plain_v4_100000  (cost=0.00..3035.00 rows=1000 width=4) (actual time=0.059..3.927 rows=10 loops=1)\n        Filter: (plain @> $1)\n        Rows Removed by Filter: 30447\n        Buffers: shared hit=545\nPlanning:\n  Buffers: shared hit=1\nPlanning Time: 0.011 ms\nExecution Time: 3.931 ms"
+  },
+  {
+    "id": "JSON_TREE/plain/field_eq/unique/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_tree_small_plain_v4_100000 WHERE plain @> $1 LIMIT 10",
+    "parameter_types": [
+      "jsonb"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      {
+        "email": "catalina_et@hotmail.com"
+      }
+    ],
+    "plan": "Limit  (cost=0.00..30.35 rows=10 width=4) (actual time=6.012..11.735 rows=1 loops=1)\n  Buffers: shared hit=1785\n  ->  Seq Scan on json_tree_small_plain_v4_100000  (cost=0.00..3035.00 rows=1000 width=4) (actual time=6.012..11.735 rows=1 loops=1)\n        Filter: (plain @> $1)\n        Rows Removed by Filter: 99999\n        Buffers: shared hit=1785\nPlanning:\n  Buffers: shared hit=1\nPlanning Time: 0.012 ms\nExecution Time: 11.739 ms"
+  },
+  {
+    "id": "JSON_TREE/plain/field_gt/functional/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_tree_small_plain_v4_100000 WHERE (plain ->> 'age')::int > $1 LIMIT 10",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      46
+    ],
+    "plan": "Limit  (cost=0.00..1.14 rows=10 width=4) (actual time=0.002..0.004 rows=10 loops=1)\n  Buffers: shared hit=2\n  ->  Seq Scan on json_tree_small_plain_v4_100000  (cost=0.00..3785.00 rows=33333 width=4) (actual time=0.002..0.004 rows=10 loops=1)\n        Filter: (((plain ->> 'age'::text))::integer > $1)\n        Rows Removed by Filter: 6\n        Buffers: shared hit=2\nPlanning Time: 0.011 ms\nExecution Time: 0.007 ms"
+  },
+  {
+    "id": "JSON_TREE/plain/field_between/functional/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_tree_small_plain_v4_100000 WHERE (plain ->> 'age')::int BETWEEN $1 AND $2 LIMIT 10",
+    "parameter_types": [
+      "int4",
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      41,
+      51
+    ],
+    "plan": "Limit  (cost=0.00..3.49 rows=10 width=4) (actual time=0.003..0.012 rows=10 loops=1)\n  Buffers: shared hit=3\n  ->  Seq Scan on json_tree_small_plain_v4_100000  (cost=0.00..4785.00 rows=13727 width=4) (actual time=0.003..0.011 rows=10 loops=1)\n        Filter: ((((plain ->> 'age'::text))::integer >= 41) AND (((plain ->> 'age'::text))::integer <= 51))\n        Rows Removed by Filter: 51\n        Buffers: shared hit=3\nPlanning Time: 0.028 ms\nExecution Time: 0.015 ms"
+  },
+  {
+    "id": "JSON_TREE/plain/field_order/functional/100000",
+    "corpus": "flat",
+    "query": "SELECT id FROM json_tree_small_plain_v4_100000 ORDER BY (plain ->> 'age')::int LIMIT 10",
+    "parameter_types": [],
+    "warm_executions": 5,
+    "parameters": [],
+    "plan": "Limit  (cost=0.29..1.27 rows=10 width=8) (actual time=0.003..0.006 rows=10 loops=1)\n  Buffers: shared hit=12\n  ->  Index Scan using json_tree_small_plain_v4_100000_age_idx on json_tree_small_plain_v4_100000  (cost=0.29..9741.00 rows=100000 width=8) (actual time=0.003..0.005 rows=10 loops=1)\n        Buffers: shared hit=12\nPlanning Time: 0.000 ms\nExecution Time: 0.008 ms"
+  },
+  {
+    "id": "JSON_TREE/plain/extract/by_id/100000",
+    "corpus": "flat",
+    "query": "SELECT (plain -> 'age')::text FROM json_tree_small_plain_v4_100000 WHERE id = $1",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      50000
+    ],
+    "plan": "Index Scan using json_tree_small_plain_v4_100000_pkey on json_tree_small_plain_v4_100000  (cost=0.29..8.32 rows=1 width=32) (actual time=0.002..0.003 rows=1 loops=1)\n  Index Cond: (id = $1)\n  Buffers: shared hit=3\nPlanning Time: 0.011 ms\nExecution Time: 0.006 ms"
+  },
+  {
+    "id": "JSON_TREE/plain/path_query/field/100000",
+    "corpus": "flat",
+    "query": "SELECT e::text FROM json_tree_small_plain_v4_100000, jsonb_path_query(plain, '$.email') e WHERE id = $1",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      50000
+    ],
+    "plan": "Nested Loop  (cost=0.29..33.31 rows=1000 width=32) (actual time=0.005..0.005 rows=1 loops=1)\n  Buffers: shared hit=3\n  ->  Index Scan using json_tree_small_plain_v4_100000_pkey on json_tree_small_plain_v4_100000  (cost=0.29..8.31 rows=1 width=108) (actual time=0.002..0.002 rows=1 loops=1)\n        Index Cond: (id = $1)\n        Buffers: shared hit=3\n  ->  Function Scan on jsonb_path_query e  (cost=0.00..10.00 rows=1000 width=32) (actual time=0.003..0.003 rows=1 loops=1)\nPlanning Time: 0.015 ms\nExecution Time: 0.008 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/large/contains/deep_object/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_ste_vec_large_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"hm\":\"25612f1751b8619090a88a84e96ef32a\",\"s\":\"0062378a2a2037bf4cdd8c78c2a1aeb0\"},{\"hm\":\"b73749245cfc271d517c8dcd319c58a8\",\"s\":\"e664932c6ea787b9719aac08f464437b\"},{\"hm\":\"8441ca23e973b1301a7026fb46ccb84c\",\"s\":\"3d2bf30af54965e84e8ad8f985efc949\"},{\"hm\":\"6296979109fd10f32dd09c926e8dec75\",\"s\":\"6aaa094793c51614e2bd024bba065dc7\"},{\"oc\":\"c0c6804c8e4461a11a9277513ed51c76af31e3a1c93334912928dc8086673d70a9183b848b956f537a6c772aa1d1a4547b103160712f001a7f0265d795c453160f\",\"s\":\"cad2b13f4afcdbbbc299dca9f6d1c43d\"}]}"
+    ],
+    "plan": "Limit  (cost=0.00..271.37 rows=10 width=4) (actual time=2.435..57.693 rows=10 loops=1)\n  Buffers: shared hit=671\n  ->  Seq Scan on json_ste_vec_large_encrypted_v3_100000  (cost=0.00..27137.00 rows=1000 width=4) (actual time=2.435..57.692 rows=10 loops=1)\n        Filter: ((eql_v3.to_ste_vec_query(value))::jsonb @> (('{\"sv\": [{\"s\": \"0062378a2a2037bf4cdd8c78c2a1aeb0\", \"hm\": \"25612f1751b8619090a88a84e96ef32a\"}, {\"s\": \"e664932c6ea787b9719aac08f464437b\", \"hm\": \"b73749245cfc271d517c8dcd319c58a8\"}, {\"s\": \"3d2bf30af54965e84e8ad8f985efc949\", \"hm\": \"8441ca23e973b1301a7026fb46ccb84c\"}, {\"s\": \"6aaa094793c51614e2bd024bba065dc7\", \"hm\": \"6296979109fd10f32dd09c926e8dec75\"}, {\"s\": \"cad2b13f4afcdbbbc299dca9f6d1c43d\", \"oc\": \"c0c6804c8e4461a11a9277513ed51c76af31e3a1c93334912928dc8086673d70a9183b848b956f537a6c772aa1d1a4547b103160712f001a7f0265d795c453160f\"}]}'::jsonb)::eql_v3.query_jsonb)::jsonb)\n        Rows Removed by Filter: 30\n        Buffers: shared hit=671\nPlanning Time: 0.127 ms\nExecution Time: 57.700 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/large/contains/deep_object_fn/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_ste_vec_large_encrypted_v3_100000 WHERE eql_v3.jsonb_contains(value, $1::jsonb) LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"hm\":\"25612f1751b8619090a88a84e96ef32a\",\"s\":\"0062378a2a2037bf4cdd8c78c2a1aeb0\"},{\"hm\":\"b73749245cfc271d517c8dcd319c58a8\",\"s\":\"e664932c6ea787b9719aac08f464437b\"},{\"hm\":\"8441ca23e973b1301a7026fb46ccb84c\",\"s\":\"3d2bf30af54965e84e8ad8f985efc949\"},{\"hm\":\"6296979109fd10f32dd09c926e8dec75\",\"s\":\"6aaa094793c51614e2bd024bba065dc7\"},{\"oc\":\"c0c6804c8e4461a11a9277513ed51c76af31e3a1c93334912928dc8086673d70a9183b848b956f537a6c772aa1d1a4547b103160712f001a7f0265d795c453160f\",\"s\":\"cad2b13f4afcdbbbc299dca9f6d1c43d\"}]}"
+    ],
+    "plan": "Limit  (cost=0.00..13.98 rows=10 width=4) (actual time=3.928..95.423 rows=10 loops=1)\n  Buffers: shared hit=1340\n  ->  Seq Scan on json_ste_vec_large_encrypted_v3_100000  (cost=0.00..26887.00 rows=19227 width=4) (actual time=3.928..95.422 rows=10 loops=1)\n        Filter: (eql_v3.jsonb_array((value)::jsonb) @> '{\"{\\\"s\\\": \\\"3d2bf30af54965e84e8ad8f985efc949\\\", \\\"hm\\\": \\\"8441ca23e973b1301a7026fb46ccb84c\\\"}\",\"{\\\"s\\\": \\\"0062378a2a2037bf4cdd8c78c2a1aeb0\\\", \\\"hm\\\": \\\"25612f1751b8619090a88a84e96ef32a\\\"}\",\"{\\\"s\\\": \\\"6aaa094793c51614e2bd024bba065dc7\\\", \\\"hm\\\": \\\"6296979109fd10f32dd09c926e8dec75\\\"}\",\"{\\\"s\\\": \\\"cad2b13f4afcdbbbc299dca9f6d1c43d\\\", \\\"oc\\\": \\\"c0c6804c8e4461a11a9277513ed51c76af31e3a1c93334912928dc8086673d70a9183b848b956f537a6c772aa1d1a4547b103160712f001a7f0265d795c453160f\\\"}\",\"{\\\"s\\\": \\\"e664932c6ea787b9719aac08f464437b\\\", \\\"hm\\\": \\\"b73749245cfc271d517c8dcd319c58a8\\\"}\"}'::jsonb[])\n        Rows Removed by Filter: 30\n        Buffers: shared hit=1340\nPlanning:\n  Buffers: shared hit=2\nPlanning Time: 0.337 ms\nExecution Time: 95.429 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/large/contains/array_element/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_ste_vec_large_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 0,
+    "parameters": [
+      "{\"sv\":[{\"hm\":\"25612f1751b8619090a88a84e96ef32a\",\"s\":\"0062378a2a2037bf4cdd8c78c2a1aeb0\"},{\"hm\":\"69c122a33c8355120251e1a477a9ca87\",\"s\":\"19ffa8318e79484be876c0b24988b44b\"},{\"hm\":\"51b2de2210abc1a7b841c3b17d89ff79\",\"s\":\"57d253e634a40888df675c5a748e16b4\"},{\"oc\":\"c0c6804c8d2c3b9b21708e49b7b75c2f6fb73947d2a93d0d3a7dfc37d05c61748057e3a42e473282b95706ef23822c3e4771e5a99a347a6d54414a2c1cf5c123cd22bd67521afc58aef6b8be723737bf63fc45e1a7b309c81009fa57e409849364e3ad267e48c9703cac5ebfb5bf18a0d944e0b5ae14b16358\",\"s\":\"91ab88c8169b5b849c13ed34149fd31c\"},{\"oc\":\"c0c6804c8d2c3ad2e2a7a64d1a89f6c92219a5175d44368b4816aa7283b128771ecd07c75c21be9bf7bb424cba1924929edabb3180f3919ef9739818dca08d4c2c\",\"s\":\"15a585f82b197c2b3070d2db33d1a26a\"},{\"hm\":\"fea982e76b1a18db13ed7bbaabbbbb07\",\"s\":\"4cb784ef90cc5f5b692a71c3f53aa19b\"},{\"oc\":\"c0c6804c8d2c3b9b21708e49b7b75c2f6fb73947d2a93d0d3a7dfc37d05c61748057e3a42e473282b95706ef23822c3e4771e5a99a347a6d54414a2c1cf5c123cd22bd67521afc58aef6b8be723737bf63fc45e1a7b309c81009fa57e409849364e3ad267e48c9703cac5ebfb5bf18a0d944e0b5ae14b16358\",\"s\":\"14f3fbe93302d65071048fe63be27589\"},{\"oc\":\"c0c6804c8d2c3ad2e2a7a64d1a89f6c92219a5175d44368b4816aa7283b128771ecd07c75c21be9bf7bb424cba1924929edabb3180f3919ef9739818dca08d4c2c\",\"s\":\"8e7632cef02b847bc68df289ba305afa\"}]}"
+    ],
+    "plan": "Limit  (cost=0.00..271.37 rows=10 width=4) (actual time=35635.854..143512.405 rows=2 loops=1)\n  Buffers: shared hit=364746 read=1380619\n  ->  Seq Scan on json_ste_vec_large_encrypted_v3_100000  (cost=0.00..27137.00 rows=1000 width=4) (actual time=35635.853..143512.401 rows=2 loops=1)\n        Filter: ((eql_v3.to_ste_vec_query(value))::jsonb @> (('{\"sv\": [{\"s\": \"0062378a2a2037bf4cdd8c78c2a1aeb0\", \"hm\": \"25612f1751b8619090a88a84e96ef32a\"}, {\"s\": \"19ffa8318e79484be876c0b24988b44b\", \"hm\": \"69c122a33c8355120251e1a477a9ca87\"}, {\"s\": \"57d253e634a40888df675c5a748e16b4\", \"hm\": \"51b2de2210abc1a7b841c3b17d89ff79\"}, {\"s\": \"91ab88c8169b5b849c13ed34149fd31c\", \"oc\": \"c0c6804c8d2c3b9b21708e49b7b75c2f6fb73947d2a93d0d3a7dfc37d05c61748057e3a42e473282b95706ef23822c3e4771e5a99a347a6d54414a2c1cf5c123cd22bd67521afc58aef6b8be723737bf63fc45e1a7b309c81009fa57e409849364e3ad267e48c9703cac5ebfb5bf18a0d944e0b5ae14b16358\"}, {\"s\": \"15a585f82b197c2b3070d2db33d1a26a\", \"oc\": \"c0c6804c8d2c3ad2e2a7a64d1a89f6c92219a5175d44368b4816aa7283b128771ecd07c75c21be9bf7bb424cba1924929edabb3180f3919ef9739818dca08d4c2c\"}, {\"s\": \"4cb784ef90cc5f5b692a71c3f53aa19b\", \"hm\": \"fea982e76b1a18db13ed7bbaabbbbb07\"}, {\"s\": \"14f3fbe93302d65071048fe63be27589\", \"oc\": \"c0c6804c8d2c3b9b21708e49b7b75c2f6fb73947d2a93d0d3a7dfc37d05c61748057e3a42e473282b95706ef23822c3e4771e5a99a347a6d54414a2c1cf5c123cd22bd67521afc58aef6b8be723737bf63fc45e1a7b309c81009fa57e409849364e3ad267e48c9703cac5ebfb5bf18a0d944e0b5ae14b16358\"}, {\"s\": \"8e7632cef02b847bc68df289ba305afa\", \"oc\": \"c0c6804c8d2c3ad2e2a7a64d1a89f6c92219a5175d44368b4816aa7283b128771ecd07c75c21be9bf7bb424cba1924929edabb3180f3919ef9739818dca08d4c2c\"}]}'::jsonb)::eql_v3.query_jsonb)::jsonb)\n        Rows Removed by Filter: 99998\n        Buffers: shared hit=364746 read=1380619\nPlanning:\n  Buffers: shared hit=1188\nPlanning Time: 1.421 ms\nExecution Time: 143513.055 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/large/contains/array_element_fn/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_ste_vec_large_encrypted_v3_100000 WHERE eql_v3.jsonb_contains(value, $1::jsonb) LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"hm\":\"25612f1751b8619090a88a84e96ef32a\",\"s\":\"0062378a2a2037bf4cdd8c78c2a1aeb0\"},{\"hm\":\"69c122a33c8355120251e1a477a9ca87\",\"s\":\"19ffa8318e79484be876c0b24988b44b\"},{\"hm\":\"51b2de2210abc1a7b841c3b17d89ff79\",\"s\":\"57d253e634a40888df675c5a748e16b4\"},{\"oc\":\"c0c6804c8d2c3b9b21708e49b7b75c2f6fb73947d2a93d0d3a7dfc37d05c61748057e3a42e473282b95706ef23822c3e4771e5a99a347a6d54414a2c1cf5c123cd22bd67521afc58aef6b8be723737bf63fc45e1a7b309c81009fa57e409849364e3ad267e48c9703cac5ebfb5bf18a0d944e0b5ae14b16358\",\"s\":\"91ab88c8169b5b849c13ed34149fd31c\"},{\"oc\":\"c0c6804c8d2c3ad2e2a7a64d1a89f6c92219a5175d44368b4816aa7283b128771ecd07c75c21be9bf7bb424cba1924929edabb3180f3919ef9739818dca08d4c2c\",\"s\":\"15a585f82b197c2b3070d2db33d1a26a\"},{\"hm\":\"fea982e76b1a18db13ed7bbaabbbbb07\",\"s\":\"4cb784ef90cc5f5b692a71c3f53aa19b\"},{\"oc\":\"c0c6804c8d2c3b9b21708e49b7b75c2f6fb73947d2a93d0d3a7dfc37d05c61748057e3a42e473282b95706ef23822c3e4771e5a99a347a6d54414a2c1cf5c123cd22bd67521afc58aef6b8be723737bf63fc45e1a7b309c81009fa57e409849364e3ad267e48c9703cac5ebfb5bf18a0d944e0b5ae14b16358\",\"s\":\"14f3fbe93302d65071048fe63be27589\"},{\"oc\":\"c0c6804c8d2c3ad2e2a7a64d1a89f6c92219a5175d44368b4816aa7283b128771ecd07c75c21be9bf7bb424cba1924929edabb3180f3919ef9739818dca08d4c2c\",\"s\":\"8e7632cef02b847bc68df289ba305afa\"}]}"
+    ],
+    "plan": "Limit  (cost=41.26..58.99 rows=10 width=4) (actual time=0.836..0.837 rows=2 loops=1)\n  Buffers: shared hit=125\n  ->  Bitmap Heap Scan on json_ste_vec_large_encrypted_v3_100000  (cost=41.26..928.10 rows=500 width=4) (actual time=0.836..0.836 rows=2 loops=1)\n        Recheck Cond: (eql_v3.jsonb_array((value)::jsonb) @> eql_v3.jsonb_array(($1)::jsonb))\n        Heap Blocks: exact=2\n        Buffers: shared hit=125\n        ->  Bitmap Index Scan on json_ste_vec_large_encrypted_v3_100000_jsonb_array_index  (cost=0.00..41.13 rows=500 width=0) (actual time=0.834..0.834 rows=2 loops=1)\n              Index Cond: (eql_v3.jsonb_array((value)::jsonb) @> eql_v3.jsonb_array(($1)::jsonb))\n              Buffers: shared hit=123\nPlanning:\n  Buffers: shared hit=1\nPlanning Time: 0.052 ms\nExecution Time: 0.847 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/large/contains/nested_array/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_ste_vec_large_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"hm\":\"25612f1751b8619090a88a84e96ef32a\",\"s\":\"0062378a2a2037bf4cdd8c78c2a1aeb0\"},{\"hm\":\"2a28c910690a618f4980925f04c0183c\",\"s\":\"b418a3fd4b4547815842585c07002390\"},{\"hm\":\"b00f836c900c302b1e2428fc14ac7d6e\",\"s\":\"3e8b84e1d71e2bab7ed8780ff7f0955f\"},{\"hm\":\"c55aa26fd0a1d559616d60c1d1b9563d\",\"s\":\"7117713fe4de20c757df09656cc63196\"},{\"hm\":\"5c70a69f734333f8fd04329b4f0551d5\",\"s\":\"0bb95acf07085f41281e08f23a3e3d4b\"},{\"oc\":\"c0c6804c8e4462b2713be7e0e17c12cc303a4342534e376d2491ea018c450541ae039cf70ca919b8872c2613f384d529d2a643ec81a18a1931b108202a3aaac02a83d67769a4ddac444b9a264320fbe57d6eb780f1ff611dc0879f539d499b1db1ac7f6a4fe0d7ce4ee003d8c14f0e6e2a\",\"s\":\"8c72f78b77b6e6dcbcfe982e56014d46\"},{\"hm\":\"4de48e9bbc45f339acc7ea8c2df73926\",\"s\":\"044d637d68af085279fd54af7e1fef0f\"},{\"oc\":\"c0c6804c8e4462b2713be7e0e17c12cc303a4342534e376d2491ea018c450541ae039cf70ca919b8872c2613f384d529d2a643ec81a18a1931b108202a3aaac02a83d67769a4ddac444b9a264320fbe57d6eb780f1ff611dc0879f539d499b1db1ac7f6a4fe0d7ce4ee003d8c14f0e6e2a\",\"s\":\"79d43fe8f9ed8ba39a6ade79c6d1832e\"},{\"oc\":\"c0c6804c8e4461a06e5a71e737db98ef4f86a74d00008a99cc9fc78ce1cbcf40124da70a2eefcf4ce52dd8d92f85f51172082c7a66172394bd44f908f2719248308219adbc7b69c72d781b727c972f8d8e7a8012bf5921a17b\",\"s\":\"299df6737e9b0a221bd0d90b42cb181a\"},{\"hm\":\"e8468a734ead4c30de9e5cf171cf5620\",\"s\":\"9ea850333605716efd9e9154b81cb2fb\"},{\"hm\":\"028961098cb0f3e404404d7f2fed60b6\",\"s\":\"76fc31e8dbb914f0e99ed88a20484615\"},{\"hm\":\"cfe43d835716f328ba25b293dfe989d3\",\"s\":\"f172bdf5bb5c8c24618d57f8c42283e0\"},{\"oc\":\"c0c6804c8e4462b2713be7e0e17c12cc303a4342534e376d2491ea018c450541ae039cf70ca919b8872c2613f384d529d2a643ec81a18a1931b108202a3aaac02a83d67769a4ddac444b9a264320fbe57d6eb780f1ff611dc0879f539d499b1db1ac7f6a4fe0d7ce4ee003d8c14f0e6e2a\",\"s\":\"04479d0cd3ea30e0e86611587824da1f\"},{\"hm\":\"10d8305cdcb563cfd7bbc503f62bc2f6\",\"s\":\"276e218b038c290fe1f6d2bd6ee3473b\"},{\"oc\":\"c0c6804c8e4462b2713be7e0e17c12cc303a4342534e376d2491ea018c450541ae039cf70ca919b8872c2613f384d529d2a643ec81a18a1931b108202a3aaac02a83d67769a4ddac444b9a264320fbe57d6eb780f1ff611dc0879f539d499b1db1ac7f6a4fe0d7ce4ee003d8c14f0e6e2a\",\"s\":\"f8fa78b400365432a7d55cd0d5ebf1d5\"},{\"oc\":\"c0c6804c8e4461a06e5a71e737db98ef4f86a74d00008a99cc9fc78ce1cbcf40124da70a2eefcf4ce52dd8d92f85f51172082c7a66172394bd44f908f2719248308219adbc7b69c72d781b727c972f8d8e7a8012bf5921a17b\",\"s\":\"5d4c057b36d263872830c03c467209c0\"}]}"
+    ],
+    "plan": "Limit  (cost=0.00..271.37 rows=10 width=4) (actual time=7.922..157.199 rows=10 loops=1)\n  Buffers: shared hit=1859\n  ->  Seq Scan on json_ste_vec_large_encrypted_v3_100000  (cost=0.00..27137.00 rows=1000 width=4) (actual time=7.921..157.197 rows=10 loops=1)\n        Filter: ((eql_v3.to_ste_vec_query(value))::jsonb @> (('{\"sv\": [{\"s\": \"0062378a2a2037bf4cdd8c78c2a1aeb0\", \"hm\": \"25612f1751b8619090a88a84e96ef32a\"}, {\"s\": \"b418a3fd4b4547815842585c07002390\", \"hm\": \"2a28c910690a618f4980925f04c0183c\"}, {\"s\": \"3e8b84e1d71e2bab7ed8780ff7f0955f\", \"hm\": \"b00f836c900c302b1e2428fc14ac7d6e\"}, {\"s\": \"7117713fe4de20c757df09656cc63196\", \"hm\": \"c55aa26fd0a1d559616d60c1d1b9563d\"}, {\"s\": \"0bb95acf07085f41281e08f23a3e3d4b\", \"hm\": \"5c70a69f734333f8fd04329b4f0551d5\"}, {\"s\": \"8c72f78b77b6e6dcbcfe982e56014d46\", \"oc\": \"c0c6804c8e4462b2713be7e0e17c12cc303a4342534e376d2491ea018c450541ae039cf70ca919b8872c2613f384d529d2a643ec81a18a1931b108202a3aaac02a83d67769a4ddac444b9a264320fbe57d6eb780f1ff611dc0879f539d499b1db1ac7f6a4fe0d7ce4ee003d8c14f0e6e2a\"}, {\"s\": \"044d637d68af085279fd54af7e1fef0f\", \"hm\": \"4de48e9bbc45f339acc7ea8c2df73926\"}, {\"s\": \"79d43fe8f9ed8ba39a6ade79c6d1832e\", \"oc\": \"c0c6804c8e4462b2713be7e0e17c12cc303a4342534e376d2491ea018c450541ae039cf70ca919b8872c2613f384d529d2a643ec81a18a1931b108202a3aaac02a83d67769a4ddac444b9a264320fbe57d6eb780f1ff611dc0879f539d499b1db1ac7f6a4fe0d7ce4ee003d8c14f0e6e2a\"}, {\"s\": \"299df6737e9b0a221bd0d90b42cb181a\", \"oc\": \"c0c6804c8e4461a06e5a71e737db98ef4f86a74d00008a99cc9fc78ce1cbcf40124da70a2eefcf4ce52dd8d92f85f51172082c7a66172394bd44f908f2719248308219adbc7b69c72d781b727c972f8d8e7a8012bf5921a17b\"}, {\"s\": \"9ea850333605716efd9e9154b81cb2fb\", \"hm\": \"e8468a734ead4c30de9e5cf171cf5620\"}, {\"s\": \"76fc31e8dbb914f0e99ed88a20484615\", \"hm\": \"028961098cb0f3e404404d7f2fed60b6\"}, {\"s\": \"f172bdf5bb5c8c24618d57f8c42283e0\", \"hm\": \"cfe43d835716f328ba25b293dfe989d3\"}, {\"s\": \"04479d0cd3ea30e0e86611587824da1f\", \"oc\": \"c0c6804c8e4462b2713be7e0e17c12cc303a4342534e376d2491ea018c450541ae039cf70ca919b8872c2613f384d529d2a643ec81a18a1931b108202a3aaac02a83d67769a4ddac444b9a264320fbe57d6eb780f1ff611dc0879f539d499b1db1ac7f6a4fe0d7ce4ee003d8c14f0e6e2a\"}, {\"s\": \"276e218b038c290fe1f6d2bd6ee3473b\", \"hm\": \"10d8305cdcb563cfd7bbc503f62bc2f6\"}, {\"s\": \"f8fa78b400365432a7d55cd0d5ebf1d5\", \"oc\": \"c0c6804c8e4462b2713be7e0e17c12cc303a4342534e376d2491ea018c450541ae039cf70ca919b8872c2613f384d529d2a643ec81a18a1931b108202a3aaac02a83d67769a4ddac444b9a264320fbe57d6eb780f1ff611dc0879f539d499b1db1ac7f6a4fe0d7ce4ee003d8c14f0e6e2a\"}, {\"s\": \"5d4c057b36d263872830c03c467209c0\", \"oc\": \"c0c6804c8e4461a06e5a71e737db98ef4f86a74d00008a99cc9fc78ce1cbcf40124da70a2eefcf4ce52dd8d92f85f51172082c7a66172394bd44f908f2719248308219adbc7b69c72d781b727c972f8d8e7a8012bf5921a17b\"}]}'::jsonb)::eql_v3.query_jsonb)::jsonb)\n        Rows Removed by Filter: 97\n        Buffers: shared hit=1859\nPlanning Time: 0.125 ms\nExecution Time: 157.205 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/large/contains/nested_array_fn/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_ste_vec_large_encrypted_v3_100000 WHERE eql_v3.jsonb_contains(value, $1::jsonb) LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"hm\":\"25612f1751b8619090a88a84e96ef32a\",\"s\":\"0062378a2a2037bf4cdd8c78c2a1aeb0\"},{\"hm\":\"2a28c910690a618f4980925f04c0183c\",\"s\":\"b418a3fd4b4547815842585c07002390\"},{\"hm\":\"b00f836c900c302b1e2428fc14ac7d6e\",\"s\":\"3e8b84e1d71e2bab7ed8780ff7f0955f\"},{\"hm\":\"c55aa26fd0a1d559616d60c1d1b9563d\",\"s\":\"7117713fe4de20c757df09656cc63196\"},{\"hm\":\"5c70a69f734333f8fd04329b4f0551d5\",\"s\":\"0bb95acf07085f41281e08f23a3e3d4b\"},{\"oc\":\"c0c6804c8e4462b2713be7e0e17c12cc303a4342534e376d2491ea018c450541ae039cf70ca919b8872c2613f384d529d2a643ec81a18a1931b108202a3aaac02a83d67769a4ddac444b9a264320fbe57d6eb780f1ff611dc0879f539d499b1db1ac7f6a4fe0d7ce4ee003d8c14f0e6e2a\",\"s\":\"8c72f78b77b6e6dcbcfe982e56014d46\"},{\"hm\":\"4de48e9bbc45f339acc7ea8c2df73926\",\"s\":\"044d637d68af085279fd54af7e1fef0f\"},{\"oc\":\"c0c6804c8e4462b2713be7e0e17c12cc303a4342534e376d2491ea018c450541ae039cf70ca919b8872c2613f384d529d2a643ec81a18a1931b108202a3aaac02a83d67769a4ddac444b9a264320fbe57d6eb780f1ff611dc0879f539d499b1db1ac7f6a4fe0d7ce4ee003d8c14f0e6e2a\",\"s\":\"79d43fe8f9ed8ba39a6ade79c6d1832e\"},{\"oc\":\"c0c6804c8e4461a06e5a71e737db98ef4f86a74d00008a99cc9fc78ce1cbcf40124da70a2eefcf4ce52dd8d92f85f51172082c7a66172394bd44f908f2719248308219adbc7b69c72d781b727c972f8d8e7a8012bf5921a17b\",\"s\":\"299df6737e9b0a221bd0d90b42cb181a\"},{\"hm\":\"e8468a734ead4c30de9e5cf171cf5620\",\"s\":\"9ea850333605716efd9e9154b81cb2fb\"},{\"hm\":\"028961098cb0f3e404404d7f2fed60b6\",\"s\":\"76fc31e8dbb914f0e99ed88a20484615\"},{\"hm\":\"cfe43d835716f328ba25b293dfe989d3\",\"s\":\"f172bdf5bb5c8c24618d57f8c42283e0\"},{\"oc\":\"c0c6804c8e4462b2713be7e0e17c12cc303a4342534e376d2491ea018c450541ae039cf70ca919b8872c2613f384d529d2a643ec81a18a1931b108202a3aaac02a83d67769a4ddac444b9a264320fbe57d6eb780f1ff611dc0879f539d499b1db1ac7f6a4fe0d7ce4ee003d8c14f0e6e2a\",\"s\":\"04479d0cd3ea30e0e86611587824da1f\"},{\"hm\":\"10d8305cdcb563cfd7bbc503f62bc2f6\",\"s\":\"276e218b038c290fe1f6d2bd6ee3473b\"},{\"oc\":\"c0c6804c8e4462b2713be7e0e17c12cc303a4342534e376d2491ea018c450541ae039cf70ca919b8872c2613f384d529d2a643ec81a18a1931b108202a3aaac02a83d67769a4ddac444b9a264320fbe57d6eb780f1ff611dc0879f539d499b1db1ac7f6a4fe0d7ce4ee003d8c14f0e6e2a\",\"s\":\"f8fa78b400365432a7d55cd0d5ebf1d5\"},{\"oc\":\"c0c6804c8e4461a06e5a71e737db98ef4f86a74d00008a99cc9fc78ce1cbcf40124da70a2eefcf4ce52dd8d92f85f51172082c7a66172394bd44f908f2719248308219adbc7b69c72d781b727c972f8d8e7a8012bf5921a17b\",\"s\":\"5d4c057b36d263872830c03c467209c0\"}]}"
+    ],
+    "plan": "Limit  (cost=41.26..58.99 rows=10 width=4) (actual time=6.101..6.101 rows=10 loops=1)\n  Buffers: shared hit=370\n  ->  Bitmap Heap Scan on json_ste_vec_large_encrypted_v3_100000  (cost=41.26..928.10 rows=500 width=4) (actual time=6.100..6.101 rows=10 loops=1)\n        Recheck Cond: (eql_v3.jsonb_array((value)::jsonb) @> eql_v3.jsonb_array(($1)::jsonb))\n        Heap Blocks: exact=1\n        Buffers: shared hit=370\n        ->  Bitmap Index Scan on json_ste_vec_large_encrypted_v3_100000_jsonb_array_index  (cost=0.00..41.13 rows=500 width=0) (actual time=6.064..6.064 rows=4617 loops=1)\n              Index Cond: (eql_v3.jsonb_array((value)::jsonb) @> eql_v3.jsonb_array(($1)::jsonb))\n              Buffers: shared hit=369\nPlanning:\n  Buffers: shared hit=1\nPlanning Time: 0.055 ms\nExecution Time: 6.112 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/large/field_eq/nested/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_ste_vec_large_encrypted_v3_100000 WHERE eql_v3.jsonb_contains(value, $1::jsonb) LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"hm\":\"25612f1751b8619090a88a84e96ef32a\",\"s\":\"0062378a2a2037bf4cdd8c78c2a1aeb0\"},{\"hm\":\"b73749245cfc271d517c8dcd319c58a8\",\"s\":\"e664932c6ea787b9719aac08f464437b\"},{\"oc\":\"c0c6804d284010628694e6e2b08411391897c2f7278cf5e8ed958fa20140659dbe8fc9b137ce09124a5c50559dfa5e9ad9449a08b40bffba62fc6216398d9e5fee490670bf2ec4b65848680f1e1da4576d9e3a75503ec0baae007752d31d4718408024079ec16852f63a97bed41bec88942484dadc4c089eef68ed24fb784b45258dc4ac0114c8de7c8ce6dbfb62fc4cf739be9026cf2329bdb6ffb35d8c5d7755\",\"s\":\"5ed67d52b5deae0b6e633ef098d509d4\"}]}"
+    ],
+    "plan": "Limit  (cost=41.26..58.99 rows=10 width=4) (actual time=0.164..0.165 rows=1 loops=1)\n  Buffers: shared hit=28\n  ->  Bitmap Heap Scan on json_ste_vec_large_encrypted_v3_100000  (cost=41.26..928.10 rows=500 width=4) (actual time=0.164..0.164 rows=1 loops=1)\n        Recheck Cond: (eql_v3.jsonb_array((value)::jsonb) @> eql_v3.jsonb_array(($1)::jsonb))\n        Heap Blocks: exact=1\n        Buffers: shared hit=28\n        ->  Bitmap Index Scan on json_ste_vec_large_encrypted_v3_100000_jsonb_array_index  (cost=0.00..41.13 rows=500 width=0) (actual time=0.163..0.163 rows=1 loops=1)\n              Index Cond: (eql_v3.jsonb_array((value)::jsonb) @> eql_v3.jsonb_array(($1)::jsonb))\n              Buffers: shared hit=27\nPlanning:\n  Buffers: shared hit=1\nPlanning Time: 0.051 ms\nExecution Time: 0.171 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/large/field_gt/nested/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_ste_vec_large_encrypted_v3_100000 WHERE eql_v3.jsonb_path_query_first(value, '7a3882d0f44d16913361486af5f74096') > $1::jsonb::public.jsonb_entry LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"a\": false, \"c\": \"mBbLn><D1!#x(SI;&dMPa~SHx7|MtKCEI3f*yq|b;sawkI@BGBV?=;lti&KSNkBrC#Qf_2)L<bqT|9d2>gzxr4vU|60+V;vO%n#7zy\", \"i\": {\"c\": \"value\", \"t\": \"json_ste_vec_large_encrypted_v3_100000\"}, \"s\": \"7a3882d0f44d16913361486af5f74096\", \"v\": 3, \"oc\": \"bf1327292d1fdf238b9ad0f8c1b04de9bac933eb1ca3a7223f6747fd9c55c11c46303f70e98ed434bce74f4cda88482a34179e6584123cbab8aef4f6986fc7e4fb\"}"
+    ],
+    "plan": "Limit  (cost=0.68..2.17 rows=10 width=4) (actual time=0.126..0.128 rows=10 loops=1)\n  Buffers: shared hit=13\n  ->  Index Scan using json_ste_vec_large_encrypted_v3_100000_field_order_idx on json_ste_vec_large_encrypted_v3_100000  (cost=0.68..4995.76 rows=33333 width=4) (actual time=0.126..0.127 rows=10 loops=1)\n        Index Cond: (eql_v3.ore_cllw(eql_v3.jsonb_path_query_first((value)::jsonb, '7a3882d0f44d16913361486af5f74096'::text)) > eql_v3.ore_cllw((($1)::jsonb)::jsonb_entry))\n        Buffers: shared hit=13\nPlanning Time: 0.043 ms\nExecution Time: 0.133 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/large/field_between/nested/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_ste_vec_large_encrypted_v3_100000 WHERE eql_v3.jsonb_path_query_first(value, '7a3882d0f44d16913361486af5f74096') >= $1::jsonb::public.jsonb_entry AND eql_v3.jsonb_path_query_first(value, '7a3882d0f44d16913361486af5f74096') <= $2::jsonb::public.jsonb_entry LIMIT 10",
+    "parameter_types": [
+      "text",
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"a\": false, \"c\": \"mBbLn><D1!#x(SI;&dMPa~SHx7|MtKCEI3f*yq|b;sawkI@BGBV?=;lti&KSNkBrC#Qf_2)L<bqT|9d2>gzxr4vU|60+V;vO%n#7zy\", \"i\": {\"c\": \"value\", \"t\": \"json_ste_vec_large_encrypted_v3_100000\"}, \"s\": \"7a3882d0f44d16913361486af5f74096\", \"v\": 3, \"oc\": \"bf1327292d1fdf238b9ad0f8c1b04de9bac933eb1ca3a7223f6747fd9c55c11c46303f70e98ed434bce74f4cda88482a34179e6584123cbab8aef4f6986fc7e4fb\"}",
+      "{\"a\": false, \"c\": \"mBbLjT5gez2F!#RaRzr<ynlAY7-=Hu$z@pEWh-(VYOk_5jURhhzTbsRIm93~)G{jx(27s++E+Y4B^4ZhyMUDL*}!z2%J~f~^FaWhzy\", \"i\": {\"c\": \"value\", \"t\": \"json_ste_vec_large_encrypted_v3_100000\"}, \"s\": \"7a3882d0f44d16913361486af5f74096\", \"v\": 3, \"oc\": \"bf1327292d1fdf238b9ad0f8c1b04de9bbe45dd6a03231726b288e474863b2bf2803166f96aba991606ded59b458905771a337521637eb36d5580ea49961c7ae92\"}"
+    ],
+    "plan": "Limit  (cost=0.92..10.17 rows=10 width=4) (actual time=0.258..0.260 rows=10 loops=1)\n  Buffers: shared hit=13\n  ->  Index Scan using json_ste_vec_large_encrypted_v3_100000_field_order_idx on json_ste_vec_large_encrypted_v3_100000  (cost=0.92..2776.68 rows=3001 width=4) (actual time=0.258..0.260 rows=10 loops=1)\n        Index Cond: ((eql_v3.ore_cllw(eql_v3.jsonb_path_query_first((value)::jsonb, '7a3882d0f44d16913361486af5f74096'::text)) >= eql_v3.ore_cllw(('{\"a\": false, \"c\": \"mBbLn><D1!#x(SI;&dMPa~SHx7|MtKCEI3f*yq|b;sawkI@BGBV?=;lti&KSNkBrC#Qf_2)L<bqT|9d2>gzxr4vU|60+V;vO%n#7zy\", \"i\": {\"c\": \"value\", \"t\": \"json_ste_vec_large_encrypted_v3_100000\"}, \"s\": \"7a3882d0f44d16913361486af5f74096\", \"v\": 3, \"oc\": \"bf1327292d1fdf238b9ad0f8c1b04de9bac933eb1ca3a7223f6747fd9c55c11c46303f70e98ed434bce74f4cda88482a34179e6584123cbab8aef4f6986fc7e4fb\"}'::jsonb)::jsonb_entry)) AND (eql_v3.ore_cllw(eql_v3.jsonb_path_query_first((value)::jsonb, '7a3882d0f44d16913361486af5f74096'::text)) <= eql_v3.ore_cllw(('{\"a\": false, \"c\": \"mBbLjT5gez2F!#RaRzr<ynlAY7-=Hu$z@pEWh-(VYOk_5jURhhzTbsRIm93~)G{jx(27s++E+Y4B^4ZhyMUDL*}!z2%J~f~^FaWhzy\", \"i\": {\"c\": \"value\", \"t\": \"json_ste_vec_large_encrypted_v3_100000\"}, \"s\": \"7a3882d0f44d16913361486af5f74096\", \"v\": 3, \"oc\": \"bf1327292d1fdf238b9ad0f8c1b04de9bbe45dd6a03231726b288e474863b2bf2803166f96aba991606ded59b458905771a337521637eb36d5580ea49961c7ae92\"}'::jsonb)::jsonb_entry)))\n        Buffers: shared hit=13\nPlanning Time: 0.243 ms\nExecution Time: 0.267 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/large/field_order/nested/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_ste_vec_large_encrypted_v3_100000 ORDER BY eql_v3.ore_cllw(eql_v3.jsonb_path_query_first(value, '7a3882d0f44d16913361486af5f74096')) LIMIT 10",
+    "parameter_types": [],
+    "warm_executions": 5,
+    "parameters": [],
+    "plan": "Limit  (cost=0.42..6.38 rows=10 width=36) (actual time=0.485..4.195 rows=10 loops=1)\n  Buffers: shared hit=529\n  ->  Index Scan using json_ste_vec_large_encrypted_v3_100000_field_order_idx on json_ste_vec_large_encrypted_v3_100000  (cost=0.42..59636.22 rows=100000 width=36) (actual time=0.484..4.194 rows=10 loops=1)\n        Buffers: shared hit=529\nPlanning Time: 0.000 ms\nExecution Time: 4.198 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/large/subtree/company/100000",
+    "corpus": "nested",
+    "query": "SELECT (value -> 'aa06852b97a000d2a2ed9169b3e2bfb3'::text)::jsonb::text FROM json_ste_vec_large_encrypted_v3_100000 WHERE id = $1",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      50000
+    ],
+    "plan": "Index Scan using json_ste_vec_large_encrypted_v3_100000_pkey on json_ste_vec_large_encrypted_v3_100000  (cost=0.29..8.57 rows=1 width=32) (actual time=0.338..0.338 rows=1 loops=1)\n  Index Cond: (id = $1)\n  Buffers: shared hit=48\nPlanning Time: 0.018 ms\nExecution Time: 0.341 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/large/subtree/user/100000",
+    "corpus": "nested",
+    "query": "SELECT (value -> 'e664932c6ea787b9719aac08f464437b'::text)::jsonb::text FROM json_ste_vec_large_encrypted_v3_100000 WHERE id = $1",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      50000
+    ],
+    "plan": "Index Scan using json_ste_vec_large_encrypted_v3_100000_pkey on json_ste_vec_large_encrypted_v3_100000  (cost=0.29..8.57 rows=1 width=32) (actual time=0.339..0.339 rows=1 loops=1)\n  Index Cond: (id = $1)\n  Buffers: shared hit=48\nPlanning Time: 0.019 ms\nExecution Time: 0.342 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/large/subtree/orders/100000",
+    "corpus": "nested",
+    "query": "SELECT (value -> 'b418a3fd4b4547815842585c07002390'::text)::jsonb::text FROM json_ste_vec_large_encrypted_v3_100000 WHERE id = $1",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      50000
+    ],
+    "plan": "Index Scan using json_ste_vec_large_encrypted_v3_100000_pkey on json_ste_vec_large_encrypted_v3_100000  (cost=0.29..8.57 rows=1 width=32) (actual time=0.344..0.344 rows=1 loops=1)\n  Index Cond: (id = $1)\n  Buffers: shared hit=48\nPlanning Time: 0.019 ms\nExecution Time: 0.347 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/large/subtree_at/items/100000",
+    "corpus": "nested",
+    "query": "SELECT e::jsonb::text FROM json_ste_vec_large_encrypted_v3_100000, eql_v3.jsonb_path_query(value, $1::text) e WHERE id = $2",
+    "parameter_types": [
+      "text",
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "76fc31e8dbb914f0e99ed88a20484615",
+      50000
+    ],
+    "plan": "Nested Loop  (cost=0.54..33.56 rows=1000 width=32) (actual time=1.048..1.055 rows=5 loops=1)\n  Buffers: shared hit=168\n  ->  Index Scan using json_ste_vec_large_encrypted_v3_100000_pkey on json_ste_vec_large_encrypted_v3_100000  (cost=0.29..8.31 rows=1 width=18) (actual time=0.002..0.002 rows=1 loops=1)\n        Index Cond: (id = $2)\n        Buffers: shared hit=3\n  ->  Function Scan on jsonb_path_query e  (cost=0.25..10.25 rows=1000 width=32) (actual time=1.045..1.045 rows=5 loops=1)\n        Buffers: shared hit=165\nPlanning Time: 0.015 ms\nExecution Time: 1.058 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/large/children/orders/100000",
+    "corpus": "nested",
+    "query": "SELECT e::jsonb::text FROM json_ste_vec_large_encrypted_v3_100000, eql_v3.jsonb_path_query(value, $1::text) e WHERE id = $2",
+    "parameter_types": [
+      "text",
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "9ea850333605716efd9e9154b81cb2fb",
+      50000
+    ],
+    "plan": "Nested Loop  (cost=0.54..33.56 rows=1000 width=32) (actual time=1.050..1.058 rows=5 loops=1)\n  Buffers: shared hit=168\n  ->  Index Scan using json_ste_vec_large_encrypted_v3_100000_pkey on json_ste_vec_large_encrypted_v3_100000  (cost=0.29..8.31 rows=1 width=18) (actual time=0.002..0.002 rows=1 loops=1)\n        Index Cond: (id = $2)\n        Buffers: shared hit=3\n  ->  Function Scan on jsonb_path_query e  (cost=0.25..10.25 rows=1000 width=32) (actual time=1.046..1.046 rows=5 loops=1)\n        Buffers: shared hit=165\nPlanning Time: 0.015 ms\nExecution Time: 1.061 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/large/child_count/orders/100000",
+    "corpus": "nested",
+    "query": "SELECT count(*) FROM json_ste_vec_large_encrypted_v3_100000, eql_v3.jsonb_path_query(value, $1::text) e WHERE id = $2",
+    "parameter_types": [
+      "text",
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "9ea850333605716efd9e9154b81cb2fb",
+      50000
+    ],
+    "plan": "Aggregate  (cost=31.06..31.07 rows=1 width=8) (actual time=1.049..1.049 rows=1 loops=1)\n  Buffers: shared hit=168\n  ->  Nested Loop  (cost=0.54..28.56 rows=1000 width=0) (actual time=1.048..1.048 rows=5 loops=1)\n        Buffers: shared hit=168\n        ->  Index Scan using json_ste_vec_large_encrypted_v3_100000_pkey on json_ste_vec_large_encrypted_v3_100000  (cost=0.29..8.31 rows=1 width=18) (actual time=0.002..0.002 rows=1 loops=1)\n              Index Cond: (id = $2)\n              Buffers: shared hit=3\n        ->  Function Scan on jsonb_path_query e  (cost=0.25..10.25 rows=1000 width=0) (actual time=1.046..1.046 rows=5 loops=1)\n              Buffers: shared hit=165\nPlanning Time: 0.015 ms\nExecution Time: 1.053 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/large/path_query/wildcard/100000",
+    "corpus": "nested",
+    "query": "SELECT e::jsonb::text FROM json_ste_vec_large_encrypted_v3_100000, eql_v3.jsonb_path_query(value, $1::text) e WHERE id = $2",
+    "parameter_types": [
+      "text",
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "5d4c057b36d263872830c03c467209c0",
+      50000
+    ],
+    "plan": "Nested Loop  (cost=0.54..33.56 rows=1000 width=32) (actual time=1.051..1.056 rows=5 loops=1)\n  Buffers: shared hit=168\n  ->  Index Scan using json_ste_vec_large_encrypted_v3_100000_pkey on json_ste_vec_large_encrypted_v3_100000  (cost=0.29..8.31 rows=1 width=18) (actual time=0.002..0.002 rows=1 loops=1)\n        Index Cond: (id = $2)\n        Buffers: shared hit=3\n  ->  Function Scan on jsonb_path_query e  (cost=0.25..10.25 rows=1000 width=32) (actual time=1.047..1.047 rows=5 loops=1)\n        Buffers: shared hit=165\nPlanning Time: 0.015 ms\nExecution Time: 1.059 ms"
+  },
+  {
+    "id": "JSON_COMPARE_V3/large/extract/nested/100000",
+    "corpus": "nested",
+    "query": "SELECT (value -> '7a3882d0f44d16913361486af5f74096'::text)::jsonb::text FROM json_ste_vec_large_encrypted_v3_100000 WHERE id = $1",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      50000
+    ],
+    "plan": "Index Scan using json_ste_vec_large_encrypted_v3_100000_pkey on json_ste_vec_large_encrypted_v3_100000  (cost=0.29..8.57 rows=1 width=32) (actual time=0.340..0.341 rows=1 loops=1)\n  Index Cond: (id = $1)\n  Buffers: shared hit=48\nPlanning Time: 0.019 ms\nExecution Time: 0.343 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/json_tree/contains/deep_object/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_tree_large_encrypted_v4_100000 WHERE value @> $1::text::jsonb::eql_v4.query_json_tree LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"a558049b1f2b37854fad227cc078e7e1\",\"vs\":\"a9b2d5aead378c75603ded2fba1afb71\"},{\"s\":\"68b353c71822a7dcafeb8212177918ae\",\"vs\":\"0d9f3772a8733ade75a64d42b98e3791\"},{\"s\":\"1da2beb83611728a300bdd10150560e1\",\"vs\":\"e3f66d4e1b3f66063fd5fd2e1cc7540b\"},{\"s\":\"27ca3832686bad49ed52ffa9f8732ec4\",\"vs\":\"80238475cb58c4b2d520d27bc9b80188\"}],\"el\":[]}"
+    ],
+    "plan": "Limit  (cost=61.76..167.97 rows=10 width=4) (actual time=4.978..6.511 rows=10 loops=1)\n  Buffers: shared hit=458\n  ->  Bitmap Heap Scan on json_tree_large_encrypted_v4_100000  (cost=61.76..10788.76 rows=1010 width=4) (actual time=4.978..6.510 rows=10 loops=1)\n        Recheck Cond: ((eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))\n        Filter: ((eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR ((((($1)::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))\n        Heap Blocks: exact=1\n        Buffers: shared hit=458\n        ->  BitmapOr  (cost=61.76..61.76 rows=2000 width=0) (actual time=4.783..4.783 rows=0 loops=1)\n              Buffers: shared hit=233\n              ->  Bitmap Index Scan on json_tree_large_encrypted_v4_100000_query_gin_idx  (cost=0.00..30.63 rows=1000 width=0) (actual time=4.770..4.770 rows=19761 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))\n                    Buffers: shared hit=233\n              ->  Bitmap Index Scan on json_tree_large_encrypted_v4_100000_query_gin_idx  (cost=0.00..30.63 rows=1000 width=0) (actual time=0.013..0.013 rows=0 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))\nPlanning:\n  Buffers: shared hit=2\nPlanning Time: 0.034 ms\nExecution Time: 6.519 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/json_tree/contains/array_element/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_tree_large_encrypted_v4_100000 WHERE value @> $1::text::jsonb::eql_v4.query_json_tree LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"cd8662649ca921696516c94f9885db6f\",\"vs\":\"6e5511d455c6211ecd9ce9e11427ad2f\"}],\"el\":[{\"sv\":[{\"s\":\"5e40177c7900fee045b7b41f9b16a543\",\"vs\":\"0df24587d1e653a3f1eb3ac5f342f7da\"},{\"s\":\"1e7c5ac847f435af056967008617376e\",\"vs\":\"4f53297e35fca56a6a0f43b7e1ee7f3a\"},{\"s\":\"34a0298f7d70d7779bb7bd9650ca50eb\",\"vs\":\"12729ccb7cdc464ec1023ffe48019bbc\"}],\"el\":[]}]}"
+    ],
+    "plan": "Limit  (cost=61.76..167.97 rows=10 width=4) (actual time=1.674..1.675 rows=1 loops=1)\n  Buffers: shared hit=224\n  ->  Bitmap Heap Scan on json_tree_large_encrypted_v4_100000  (cost=61.76..10788.76 rows=1010 width=4) (actual time=1.674..1.674 rows=1 loops=1)\n        Recheck Cond: ((eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))\n        Rows Removed by Index Recheck: 1\n        Filter: ((eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR ((((($1)::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))\n        Heap Blocks: exact=2\n        Buffers: shared hit=224\n        ->  BitmapOr  (cost=61.76..61.76 rows=2000 width=0) (actual time=1.319..1.319 rows=0 loops=1)\n              Buffers: shared hit=176\n              ->  Bitmap Index Scan on json_tree_large_encrypted_v4_100000_query_gin_idx  (cost=0.00..30.63 rows=1000 width=0) (actual time=1.300..1.300 rows=2 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))\n                    Buffers: shared hit=176\n              ->  Bitmap Index Scan on json_tree_large_encrypted_v4_100000_query_gin_idx  (cost=0.00..30.63 rows=1000 width=0) (actual time=0.019..0.019 rows=0 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))\nPlanning:\n  Buffers: shared hit=2\nPlanning Time: 0.031 ms\nExecution Time: 1.682 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/json_tree/contains/nested_array/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_tree_large_encrypted_v4_100000 WHERE value @> $1::text::jsonb::eql_v4.query_json_tree LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"6d6466f1acb57ea25fdb845810dc0dd7\",\"vs\":\"52dc39efe13a7361853666750e683983\"}],\"el\":[{\"sv\":[{\"s\":\"8a5ad1b8aebb962ee9539eb459ffea0e\",\"vs\":\"3689dfebaee0d41bceb7e1257c01b389\"},{\"s\":\"208ff7873e752681e27ce2c390974061\",\"vs\":\"81246fe5a41d6d7410f4444f46017bab\"},{\"s\":\"ceb3c7568c3524d4ff8ec4ae300e48dc\",\"vs\":\"198b13c2d30f94dc4ad757628dad7e16\"}],\"el\":[{\"sv\":[{\"s\":\"faddaae22fe3537b1695f51828fa0816\",\"vs\":\"5d397e3721894e3ed1868b4e64e0dae2\"},{\"s\":\"eea0565362df46070fce9c9aaab8d2cb\",\"vs\":\"a48506e926fdfadbb684dfbbfc4fec51\"}],\"el\":[]}]}]}"
+    ],
+    "plan": "Limit  (cost=61.76..167.97 rows=10 width=4) (actual time=6.266..8.486 rows=10 loops=1)\n  Buffers: shared hit=572\n  ->  Bitmap Heap Scan on json_tree_large_encrypted_v4_100000  (cost=61.76..10788.76 rows=1010 width=4) (actual time=6.266..8.485 rows=10 loops=1)\n        Recheck Cond: ((eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))\n        Filter: ((eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR ((((($1)::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))\n        Heap Blocks: exact=1\n        Buffers: shared hit=572\n        ->  BitmapOr  (cost=61.76..61.76 rows=2000 width=0) (actual time=6.041..6.041 rows=0 loops=1)\n              Buffers: shared hit=331\n              ->  Bitmap Index Scan on json_tree_large_encrypted_v4_100000_query_gin_idx  (cost=0.00..30.63 rows=1000 width=0) (actual time=6.011..6.011 rows=4617 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))\n                    Buffers: shared hit=331\n              ->  Bitmap Index Scan on json_tree_large_encrypted_v4_100000_query_gin_idx  (cost=0.00..30.63 rows=1000 width=0) (actual time=0.030..0.030 rows=0 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))\nPlanning:\n  Buffers: shared hit=2\nPlanning Time: 0.034 ms\nExecution Time: 8.495 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/json_tree/contains/deep_object_fn/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_tree_large_encrypted_v4_100000 WHERE eql_v4.json_tree_contains(value, $1::text::jsonb::eql_v4.query_json_tree) LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"a558049b1f2b37854fad227cc078e7e1\",\"vs\":\"a9b2d5aead378c75603ded2fba1afb71\"},{\"s\":\"68b353c71822a7dcafeb8212177918ae\",\"vs\":\"0d9f3772a8733ade75a64d42b98e3791\"},{\"s\":\"1da2beb83611728a300bdd10150560e1\",\"vs\":\"e3f66d4e1b3f66063fd5fd2e1cc7540b\"},{\"s\":\"27ca3832686bad49ed52ffa9f8732ec4\",\"vs\":\"80238475cb58c4b2d520d27bc9b80188\"}],\"el\":[]}"
+    ],
+    "plan": "Limit  (cost=61.76..167.97 rows=10 width=4) (actual time=4.974..6.527 rows=10 loops=1)\n  Buffers: shared hit=458\n  ->  Bitmap Heap Scan on json_tree_large_encrypted_v4_100000  (cost=61.76..10788.76 rows=1010 width=4) (actual time=4.974..6.526 rows=10 loops=1)\n        Recheck Cond: ((eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))\n        Filter: ((eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR ((((($1)::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))\n        Heap Blocks: exact=1\n        Buffers: shared hit=458\n        ->  BitmapOr  (cost=61.76..61.76 rows=2000 width=0) (actual time=4.779..4.780 rows=0 loops=1)\n              Buffers: shared hit=233\n              ->  Bitmap Index Scan on json_tree_large_encrypted_v4_100000_query_gin_idx  (cost=0.00..30.63 rows=1000 width=0) (actual time=4.767..4.767 rows=19761 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))\n                    Buffers: shared hit=233\n              ->  Bitmap Index Scan on json_tree_large_encrypted_v4_100000_query_gin_idx  (cost=0.00..30.63 rows=1000 width=0) (actual time=0.012..0.012 rows=0 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))\nPlanning:\n  Buffers: shared hit=2\nPlanning Time: 0.034 ms\nExecution Time: 6.535 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/json_tree/contains/array_element_fn/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_tree_large_encrypted_v4_100000 WHERE eql_v4.json_tree_contains(value, $1::text::jsonb::eql_v4.query_json_tree) LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"cd8662649ca921696516c94f9885db6f\",\"vs\":\"6e5511d455c6211ecd9ce9e11427ad2f\"}],\"el\":[{\"sv\":[{\"s\":\"5e40177c7900fee045b7b41f9b16a543\",\"vs\":\"0df24587d1e653a3f1eb3ac5f342f7da\"},{\"s\":\"1e7c5ac847f435af056967008617376e\",\"vs\":\"4f53297e35fca56a6a0f43b7e1ee7f3a\"},{\"s\":\"34a0298f7d70d7779bb7bd9650ca50eb\",\"vs\":\"12729ccb7cdc464ec1023ffe48019bbc\"}],\"el\":[]}]}"
+    ],
+    "plan": "Limit  (cost=61.76..167.97 rows=10 width=4) (actual time=1.691..1.691 rows=1 loops=1)\n  Buffers: shared hit=224\n  ->  Bitmap Heap Scan on json_tree_large_encrypted_v4_100000  (cost=61.76..10788.76 rows=1010 width=4) (actual time=1.691..1.691 rows=1 loops=1)\n        Recheck Cond: ((eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))\n        Rows Removed by Index Recheck: 1\n        Filter: ((eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR ((((($1)::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))\n        Heap Blocks: exact=2\n        Buffers: shared hit=224\n        ->  BitmapOr  (cost=61.76..61.76 rows=2000 width=0) (actual time=1.337..1.337 rows=0 loops=1)\n              Buffers: shared hit=176\n              ->  Bitmap Index Scan on json_tree_large_encrypted_v4_100000_query_gin_idx  (cost=0.00..30.63 rows=1000 width=0) (actual time=1.318..1.318 rows=2 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))\n                    Buffers: shared hit=176\n              ->  Bitmap Index Scan on json_tree_large_encrypted_v4_100000_query_gin_idx  (cost=0.00..30.63 rows=1000 width=0) (actual time=0.019..0.019 rows=0 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))\nPlanning:\n  Buffers: shared hit=2\nPlanning Time: 0.030 ms\nExecution Time: 1.699 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/json_tree/contains/nested_array_fn/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_tree_large_encrypted_v4_100000 WHERE eql_v4.json_tree_contains(value, $1::text::jsonb::eql_v4.query_json_tree) LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"6d6466f1acb57ea25fdb845810dc0dd7\",\"vs\":\"52dc39efe13a7361853666750e683983\"}],\"el\":[{\"sv\":[{\"s\":\"8a5ad1b8aebb962ee9539eb459ffea0e\",\"vs\":\"3689dfebaee0d41bceb7e1257c01b389\"},{\"s\":\"208ff7873e752681e27ce2c390974061\",\"vs\":\"81246fe5a41d6d7410f4444f46017bab\"},{\"s\":\"ceb3c7568c3524d4ff8ec4ae300e48dc\",\"vs\":\"198b13c2d30f94dc4ad757628dad7e16\"}],\"el\":[{\"sv\":[{\"s\":\"faddaae22fe3537b1695f51828fa0816\",\"vs\":\"5d397e3721894e3ed1868b4e64e0dae2\"},{\"s\":\"eea0565362df46070fce9c9aaab8d2cb\",\"vs\":\"a48506e926fdfadbb684dfbbfc4fec51\"}],\"el\":[]}]}]}"
+    ],
+    "plan": "Limit  (cost=61.76..167.97 rows=10 width=4) (actual time=6.266..8.501 rows=10 loops=1)\n  Buffers: shared hit=572\n  ->  Bitmap Heap Scan on json_tree_large_encrypted_v4_100000  (cost=61.76..10788.76 rows=1010 width=4) (actual time=6.266..8.500 rows=10 loops=1)\n        Recheck Cond: ((eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))\n        Filter: ((eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR ((((($1)::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))\n        Heap Blocks: exact=1\n        Buffers: shared hit=572\n        ->  BitmapOr  (cost=61.76..61.76 rows=2000 width=0) (actual time=6.038..6.038 rows=0 loops=1)\n              Buffers: shared hit=331\n              ->  Bitmap Index Scan on json_tree_large_encrypted_v4_100000_query_gin_idx  (cost=0.00..30.63 rows=1000 width=0) (actual time=6.010..6.010 rows=4617 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))\n                    Buffers: shared hit=331\n              ->  Bitmap Index Scan on json_tree_large_encrypted_v4_100000_query_gin_idx  (cost=0.00..30.63 rows=1000 width=0) (actual time=0.028..0.028 rows=0 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))\nPlanning:\n  Buffers: shared hit=2\nPlanning Time: 0.032 ms\nExecution Time: 8.510 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/json_tree/field_eq/nested/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_tree_large_encrypted_v4_100000 WHERE value @> $1::text::jsonb::eql_v4.query_json_tree LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"a558049b1f2b37854fad227cc078e7e1\",\"vs\":\"a9b2d5aead378c75603ded2fba1afb71\"},{\"s\":\"eb3cee3cb1af678f0f9982007e35e3ee\",\"vs\":\"d1579bb9d1b376c3eb5482d4821af4b9\"}],\"el\":[]}"
+    ],
+    "plan": "Limit  (cost=61.76..167.97 rows=10 width=4) (actual time=0.327..0.328 rows=1 loops=1)\n  Buffers: shared hit=62\n  ->  Bitmap Heap Scan on json_tree_large_encrypted_v4_100000  (cost=61.76..10788.76 rows=1010 width=4) (actual time=0.327..0.327 rows=1 loops=1)\n        Recheck Cond: ((eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))\n        Filter: ((eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR ((((($1)::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))\n        Heap Blocks: exact=1\n        Buffers: shared hit=62\n        ->  BitmapOr  (cost=61.76..61.76 rows=2000 width=0) (actual time=0.188..0.189 rows=0 loops=1)\n              Buffers: shared hit=39\n              ->  Bitmap Index Scan on json_tree_large_encrypted_v4_100000_query_gin_idx  (cost=0.00..30.63 rows=1000 width=0) (actual time=0.178..0.178 rows=1 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))\n                    Buffers: shared hit=39\n              ->  Bitmap Index Scan on json_tree_large_encrypted_v4_100000_query_gin_idx  (cost=0.00..30.63 rows=1000 width=0) (actual time=0.010..0.010 rows=0 loops=1)\n                    Index Cond: (eql_v4.json_tree_query(value) @> (((($1)::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))\nPlanning:\n  Buffers: shared hit=2\nPlanning Time: 0.031 ms\nExecution Time: 0.335 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/json_tree/field_gt/nested/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_tree_large_encrypted_v4_100000 WHERE (value -> 'f37909387e6b7f65fbb88f01ff94e2cc'::text) > $1::text::jsonb::eql_v4.query_json_tree_leaf LIMIT 10",
+    "parameter_types": [
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"s\":\"f37909387e6b7f65fbb88f01ff94e2cc\",\"op\":\"0126916d0e57e884d9861df5286c033ca0b564d003e7ba587767e24c912cfcf37b90b2be93543039e1e045f39e7668c8d78fa429514cce9fd1c677e492fa827285\"}"
+    ],
+    "plan": "Limit  (cost=0.43..1.77 rows=10 width=4) (actual time=0.004..0.006 rows=10 loops=1)\n  Buffers: shared hit=13\n  ->  Index Scan using json_tree_large_encrypted_v4_100000_field_order_idx on json_tree_large_encrypted_v4_100000  (cost=0.43..4475.76 rows=33333 width=4) (actual time=0.004..0.005 rows=10 loops=1)\n        Index Cond: (decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'f37909387e6b7f65fbb88f01ff94e2cc'::text))::jsonb ->> 'op'::text), 'hex'::text) > decode((((($1)::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'hex'::text))\n        Buffers: shared hit=13\nPlanning Time: 0.053 ms\nExecution Time: 0.011 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/json_tree/field_between/nested/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_tree_large_encrypted_v4_100000 WHERE (value -> 'f37909387e6b7f65fbb88f01ff94e2cc'::text) >= $1::text::jsonb::eql_v4.query_json_tree_leaf AND (value -> 'f37909387e6b7f65fbb88f01ff94e2cc'::text) <= $2::text::jsonb::eql_v4.query_json_tree_leaf LIMIT 10",
+    "parameter_types": [
+      "text",
+      "text"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "{\"s\":\"f37909387e6b7f65fbb88f01ff94e2cc\",\"op\":\"0126916d0e57e884d9861df5286c033ca0b564d003e7ba587767e24c912cfcf37b90b2be93543039e1e045f39e7668c8d78fa429514cce9fd1c677e492fa827285\"}",
+      "{\"s\":\"f37909387e6b7f65fbb88f01ff94e2cc\",\"op\":\"0126916d0e57e884d9861df5286c033d20efc08b66d08428f9cf688936131e12f2af630627a0dcfa9efd749488a622b5de6822d091e05d23e48bf1da22cf08e993\"}"
+    ],
+    "plan": "Limit  (cost=0.43..9.52 rows=10 width=4) (actual time=0.005..0.007 rows=10 loops=1)\n  Buffers: shared hit=13\n  ->  Index Scan using json_tree_large_encrypted_v4_100000_field_order_idx on json_tree_large_encrypted_v4_100000  (cost=0.43..2732.53 rows=3005 width=4) (actual time=0.005..0.006 rows=10 loops=1)\n        Index Cond: ((decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'f37909387e6b7f65fbb88f01ff94e2cc'::text))::jsonb ->> 'op'::text), 'hex'::text) >= decode(((('{\"s\": \"f37909387e6b7f65fbb88f01ff94e2cc\", \"op\": \"0126916d0e57e884d9861df5286c033ca0b564d003e7ba587767e24c912cfcf37b90b2be93543039e1e045f39e7668c8d78fa429514cce9fd1c677e492fa827285\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'hex'::text)) AND (decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'f37909387e6b7f65fbb88f01ff94e2cc'::text))::jsonb ->> 'op'::text), 'hex'::text) <= decode(((('{\"s\": \"f37909387e6b7f65fbb88f01ff94e2cc\", \"op\": \"0126916d0e57e884d9861df5286c033d20efc08b66d08428f9cf688936131e12f2af630627a0dcfa9efd749488a622b5de6822d091e05d23e48bf1da22cf08e993\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'hex'::text)))\n        Buffers: shared hit=13\nPlanning Time: 0.192 ms\nExecution Time: 0.014 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/json_tree/field_order/nested/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_tree_large_encrypted_v4_100000 ORDER BY eql_v4.ord_term(value -> 'f37909387e6b7f65fbb88f01ff94e2cc'::text) LIMIT 10",
+    "parameter_types": [],
+    "warm_executions": 5,
+    "parameters": [],
+    "plan": "Limit  (cost=0.42..26.28 rows=10 width=36) (actual time=0.390..3.487 rows=10 loops=1)\n  Buffers: shared hit=465\n  ->  Index Scan using json_tree_large_encrypted_v4_100000_field_order_idx on json_tree_large_encrypted_v4_100000  (cost=0.42..258580.42 rows=100000 width=36) (actual time=0.390..3.486 rows=10 loops=1)\n        Buffers: shared hit=465\nPlanning Time: 0.000 ms\nExecution Time: 3.490 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/json_tree/subtree/company/100000",
+    "corpus": "nested",
+    "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_100000, eql_v4.json_tree_subtree(value, $1::text) e WHERE id = $2",
+    "parameter_types": [
+      "text",
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "eefdeed04a85f5da54de79d61c2a9ee1",
+      50000
+    ],
+    "plan": "Nested Loop  (cost=0.54..33.56 rows=1000 width=32) (actual time=1.526..1.534 rows=6 loops=1)\n  Buffers: shared hit=80\n  ->  Index Scan using json_tree_large_encrypted_v4_100000_pkey on json_tree_large_encrypted_v4_100000  (cost=0.29..8.31 rows=1 width=18) (actual time=0.002..0.002 rows=1 loops=1)\n        Index Cond: (id = $2)\n        Buffers: shared hit=3\n  ->  Function Scan on json_tree_subtree e  (cost=0.25..10.25 rows=1000 width=32) (actual time=1.522..1.522 rows=6 loops=1)\n        Buffers: shared hit=77\nPlanning Time: 0.018 ms\nExecution Time: 1.537 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/json_tree/subtree/user/100000",
+    "corpus": "nested",
+    "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_100000, eql_v4.json_tree_subtree(value, $1::text) e WHERE id = $2",
+    "parameter_types": [
+      "text",
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "f605554208568ad644419c1e9e38a3e4",
+      50000
+    ],
+    "plan": "Nested Loop  (cost=0.54..33.56 rows=1000 width=32) (actual time=1.979..1.995 rows=12 loops=1)\n  Buffers: shared hit=80\n  ->  Index Scan using json_tree_large_encrypted_v4_100000_pkey on json_tree_large_encrypted_v4_100000  (cost=0.29..8.31 rows=1 width=18) (actual time=0.002..0.002 rows=1 loops=1)\n        Index Cond: (id = $2)\n        Buffers: shared hit=3\n  ->  Function Scan on json_tree_subtree e  (cost=0.25..10.25 rows=1000 width=32) (actual time=1.975..1.975 rows=12 loops=1)\n        Buffers: shared hit=77\nPlanning Time: 0.019 ms\nExecution Time: 1.999 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/json_tree/subtree/orders/100000",
+    "corpus": "nested",
+    "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_100000, eql_v4.json_tree_subtree(value, $1::text) e WHERE id = $2",
+    "parameter_types": [
+      "text",
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "0f5023ce4f5f9736a384e6f1daf79c79",
+      50000
+    ],
+    "plan": "Nested Loop  (cost=0.54..33.56 rows=1000 width=32) (actual time=5.042..5.043 rows=1 loops=1)\n  Buffers: shared hit=80\n  ->  Index Scan using json_tree_large_encrypted_v4_100000_pkey on json_tree_large_encrypted_v4_100000  (cost=0.29..8.31 rows=1 width=18) (actual time=0.002..0.002 rows=1 loops=1)\n        Index Cond: (id = $2)\n        Buffers: shared hit=3\n  ->  Function Scan on json_tree_subtree e  (cost=0.25..10.25 rows=1000 width=32) (actual time=5.032..5.032 rows=1 loops=1)\n        Buffers: shared hit=77\nPlanning Time: 0.021 ms\nExecution Time: 5.047 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/json_tree/subtree_at/items/100000",
+    "corpus": "nested",
+    "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_100000, eql_v4.json_tree_subtree_at(value, $1::text, $2::text[]) e WHERE id = $3",
+    "parameter_types": [
+      "text",
+      "text[]",
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "0f5023ce4f5f9736a384e6f1daf79c79",
+      [
+        "8a5ad1b8aebb962ee9539eb459ffea0e",
+        "208ff7873e752681e27ce2c390974061"
+      ],
+      50000
+    ],
+    "plan": "Nested Loop  (cost=0.54..33.56 rows=1000 width=32) (actual time=6.517..6.518 rows=1 loops=1)\n  Buffers: shared hit=80\n  ->  Index Scan using json_tree_large_encrypted_v4_100000_pkey on json_tree_large_encrypted_v4_100000  (cost=0.29..8.31 rows=1 width=18) (actual time=0.002..0.002 rows=1 loops=1)\n        Index Cond: (id = $3)\n        Buffers: shared hit=3\n  ->  Function Scan on json_tree_subtree_at e  (cost=0.25..10.25 rows=1000 width=32) (actual time=6.507..6.507 rows=1 loops=1)\n        Buffers: shared hit=77\nPlanning Time: 0.021 ms\nExecution Time: 6.522 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/json_tree/subtree/orders_walked/100000",
+    "corpus": "nested",
+    "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_100000, eql_v4.json_tree_subtree(value, $1::text, 0) e WHERE id = $2",
+    "parameter_types": [
+      "text",
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "0f5023ce4f5f9736a384e6f1daf79c79",
+      50000
+    ],
+    "plan": "Nested Loop  (cost=0.54..33.56 rows=1000 width=32) (actual time=10.222..10.389 rows=130 loops=1)\n  Buffers: shared hit=69\n  ->  Index Scan using json_tree_large_encrypted_v4_100000_pkey on json_tree_large_encrypted_v4_100000  (cost=0.29..8.31 rows=1 width=18) (actual time=0.002..0.002 rows=1 loops=1)\n        Index Cond: (id = $2)\n        Buffers: shared hit=3\n  ->  Function Scan on json_tree_subtree e  (cost=0.25..10.25 rows=1000 width=32) (actual time=10.218..10.221 rows=130 loops=1)\n        Buffers: shared hit=66\nPlanning Time: 0.019 ms\nExecution Time: 10.396 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/json_tree/subtree_at/items_walked/100000",
+    "corpus": "nested",
+    "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_100000, eql_v4.json_tree_subtree_at(value, $1::text, $2::text[], 0) e WHERE id = $3",
+    "parameter_types": [
+      "text",
+      "text[]",
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "0f5023ce4f5f9736a384e6f1daf79c79",
+      [
+        "8a5ad1b8aebb962ee9539eb459ffea0e",
+        "208ff7873e752681e27ce2c390974061"
+      ],
+      50000
+    ],
+    "plan": "Nested Loop  (cost=0.54..33.56 rows=1000 width=32) (actual time=10.091..10.225 rows=105 loops=1)\n  Buffers: shared hit=69\n  ->  Index Scan using json_tree_large_encrypted_v4_100000_pkey on json_tree_large_encrypted_v4_100000  (cost=0.29..8.31 rows=1 width=18) (actual time=0.002..0.002 rows=1 loops=1)\n        Index Cond: (id = $3)\n        Buffers: shared hit=3\n  ->  Function Scan on json_tree_subtree_at e  (cost=0.25..10.25 rows=1000 width=32) (actual time=10.087..10.090 rows=105 loops=1)\n        Buffers: shared hit=66\nPlanning Time: 0.021 ms\nExecution Time: 10.232 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/json_tree/children/orders/100000",
+    "corpus": "nested",
+    "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_100000, eql_v4.json_tree_children(value, $1::text) e WHERE id = $2",
+    "parameter_types": [
+      "text",
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "0f5023ce4f5f9736a384e6f1daf79c79",
+      50000
+    ],
+    "plan": "Nested Loop  (cost=0.54..33.56 rows=1000 width=32) (actual time=1.188..1.193 rows=5 loops=1)\n  Buffers: shared hit=58\n  ->  Index Scan using json_tree_large_encrypted_v4_100000_pkey on json_tree_large_encrypted_v4_100000  (cost=0.29..8.31 rows=1 width=18) (actual time=0.002..0.002 rows=1 loops=1)\n        Index Cond: (id = $2)\n        Buffers: shared hit=3\n  ->  Function Scan on json_tree_children e  (cost=0.25..10.25 rows=1000 width=32) (actual time=1.185..1.185 rows=5 loops=1)\n        Buffers: shared hit=55\nPlanning Time: 0.019 ms\nExecution Time: 1.197 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/json_tree/child_count/orders/100000",
+    "corpus": "nested",
+    "query": "SELECT eql_v4.json_tree_child_count(value, $1::text) FROM json_tree_large_encrypted_v4_100000 WHERE id = $2",
+    "parameter_types": [
+      "text",
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "0f5023ce4f5f9736a384e6f1daf79c79",
+      50000
+    ],
+    "plan": "Index Scan using json_tree_large_encrypted_v4_100000_pkey on json_tree_large_encrypted_v4_100000  (cost=0.29..8.56 rows=1 width=4) (actual time=1.197..1.198 rows=1 loops=1)\n  Index Cond: (id = $2)\n  Buffers: shared hit=58\nPlanning Time: 0.020 ms\nExecution Time: 1.200 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/json_tree/path_query/wildcard/100000",
+    "corpus": "nested",
+    "query": "SELECT e::jsonb::text FROM json_tree_large_encrypted_v4_100000, eql_v4.json_tree_path_query(value::jsonb, $1::text) e WHERE id = $2",
+    "parameter_types": [
+      "text",
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      "ceb3c7568c3524d4ff8ec4ae300e48dc",
+      50000
+    ],
+    "plan": "Nested Loop  (cost=0.54..33.56 rows=1000 width=32) (actual time=1.098..1.104 rows=5 loops=1)\n  Buffers: shared hit=179\n  ->  Index Scan using json_tree_large_encrypted_v4_100000_pkey on json_tree_large_encrypted_v4_100000  (cost=0.29..8.31 rows=1 width=18) (actual time=0.002..0.002 rows=1 loops=1)\n        Index Cond: (id = $2)\n        Buffers: shared hit=3\n  ->  Function Scan on json_tree_path_query e  (cost=0.25..10.25 rows=1000 width=32) (actual time=1.094..1.094 rows=5 loops=1)\n        Buffers: shared hit=176\nPlanning Time: 0.016 ms\nExecution Time: 1.107 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/json_tree/extract/nested/100000",
+    "corpus": "nested",
+    "query": "SELECT (value -> 'f37909387e6b7f65fbb88f01ff94e2cc'::text)::jsonb::text FROM json_tree_large_encrypted_v4_100000 WHERE id = $1",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      50000
+    ],
+    "plan": "Index Scan using json_tree_large_encrypted_v4_100000_pkey on json_tree_large_encrypted_v4_100000  (cost=0.29..10.82 rows=1 width=32) (actual time=0.304..0.304 rows=1 loops=1)\n  Index Cond: (id = $1)\n  Buffers: shared hit=47\nPlanning Time: 0.023 ms\nExecution Time: 0.307 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/plain/contains/deep_object/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_tree_large_plain_v4_100000 WHERE plain @> $1 LIMIT 10",
+    "parameter_types": [
+      "jsonb"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      {
+        "user": {
+          "contact": {
+            "emergency_contact": {
+              "relationship": "Sibling"
+            }
+          }
+        }
+      }
+    ],
+    "plan": "Limit  (cost=30.87..59.62 rows=10 width=4) (actual time=1.643..1.702 rows=10 loops=1)\n  Buffers: shared hit=33\n  ->  Bitmap Heap Scan on json_tree_large_plain_v4_100000  (cost=30.87..2905.68 rows=1000 width=4) (actual time=1.643..1.701 rows=10 loops=1)\n        Recheck Cond: (plain @> $1)\n        Heap Blocks: exact=3\n        Buffers: shared hit=33\n        ->  Bitmap Index Scan on json_tree_large_plain_v4_100000_gin_idx  (cost=0.00..30.62 rows=1000 width=0) (actual time=0.996..0.996 rows=19761 loops=1)\n              Index Cond: (plain @> $1)\n              Buffers: shared hit=9\nPlanning:\n  Buffers: shared hit=1\nPlanning Time: 0.012 ms\nExecution Time: 1.707 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/plain/contains/array_element/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_tree_large_plain_v4_100000 WHERE plain @> $1 LIMIT 10",
+    "parameter_types": [
+      "jsonb"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      {
+        "addresses": [
+          {
+            "city": "Dooley chester",
+            "state": "Arizona"
+          }
+        ]
+      }
+    ],
+    "plan": "Limit  (cost=30.87..59.62 rows=10 width=4) (actual time=0.032..0.032 rows=1 loops=1)\n  Buffers: shared hit=13\n  ->  Bitmap Heap Scan on json_tree_large_plain_v4_100000  (cost=30.87..2905.68 rows=1000 width=4) (actual time=0.032..0.032 rows=1 loops=1)\n        Recheck Cond: (plain @> $1)\n        Rows Removed by Index Recheck: 1\n        Heap Blocks: exact=2\n        Buffers: shared hit=13\n        ->  Bitmap Index Scan on json_tree_large_plain_v4_100000_gin_idx  (cost=0.00..30.62 rows=1000 width=0) (actual time=0.020..0.020 rows=2 loops=1)\n              Index Cond: (plain @> $1)\n              Buffers: shared hit=8\nPlanning:\n  Buffers: shared hit=1\nPlanning Time: 0.012 ms\nExecution Time: 0.035 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/plain/contains/nested_array/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_tree_large_plain_v4_100000 WHERE plain @> $1 LIMIT 10",
+    "parameter_types": [
+      "jsonb"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      {
+        "orders": [
+          {
+            "items": [
+              {
+                "product": "Team-oriented"
+              }
+            ],
+            "status": "Processing"
+          }
+        ]
+      }
+    ],
+    "plan": "Limit  (cost=30.87..59.62 rows=10 width=4) (actual time=1.233..1.314 rows=10 loops=1)\n  Buffers: shared hit=56\n  ->  Bitmap Heap Scan on json_tree_large_plain_v4_100000  (cost=30.87..2905.68 rows=1000 width=4) (actual time=1.233..1.314 rows=10 loops=1)\n        Recheck Cond: (plain @> $1)\n        Heap Blocks: exact=7\n        Buffers: shared hit=56\n        ->  Bitmap Index Scan on json_tree_large_plain_v4_100000_gin_idx  (cost=0.00..30.62 rows=1000 width=0) (actual time=0.983..0.983 rows=4617 loops=1)\n              Index Cond: (plain @> $1)\n              Buffers: shared hit=22\nPlanning:\n  Buffers: shared hit=1\nPlanning Time: 0.013 ms\nExecution Time: 1.319 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/plain/field_eq/nested/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_tree_large_plain_v4_100000 WHERE plain @> $1 LIMIT 10",
+    "parameter_types": [
+      "jsonb"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      {
+        "user": {
+          "email": "madge_sed@yahoo.com"
+        }
+      }
+    ],
+    "plan": "Limit  (cost=30.87..59.62 rows=10 width=4) (actual time=0.006..0.006 rows=1 loops=1)\n  Buffers: shared hit=5\n  ->  Bitmap Heap Scan on json_tree_large_plain_v4_100000  (cost=30.87..2905.68 rows=1000 width=4) (actual time=0.006..0.006 rows=1 loops=1)\n        Recheck Cond: (plain @> $1)\n        Heap Blocks: exact=1\n        Buffers: shared hit=5\n        ->  Bitmap Index Scan on json_tree_large_plain_v4_100000_gin_idx  (cost=0.00..30.62 rows=1000 width=0) (actual time=0.002..0.002 rows=1 loops=1)\n              Index Cond: (plain @> $1)\n              Buffers: shared hit=4\nPlanning:\n  Buffers: shared hit=1\nPlanning Time: 0.012 ms\nExecution Time: 0.009 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/plain/field_gt/nested/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_tree_large_plain_v4_100000 WHERE (plain -> 'company' ->> 'salary')::int > $1 LIMIT 10",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      151704
+    ],
+    "plan": "Limit  (cost=0.00..3.35 rows=10 width=4) (actual time=0.006..0.081 rows=10 loops=1)\n  Buffers: shared hit=32\n  ->  Seq Scan on json_tree_large_plain_v4_100000  (cost=0.00..11170.00 rows=33333 width=4) (actual time=0.005..0.081 rows=10 loops=1)\n        Filter: ((((plain -> 'company'::text) ->> 'salary'::text))::integer > $1)\n        Rows Removed by Filter: 4\n        Buffers: shared hit=32\nPlanning Time: 0.012 ms\nExecution Time: 0.083 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/plain/field_between/nested/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_tree_large_plain_v4_100000 WHERE (plain -> 'company' ->> 'salary')::int BETWEEN $1 AND $2 LIMIT 10",
+    "parameter_types": [
+      "int4",
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      151704,
+      161707
+    ],
+    "plan": "Limit  (cost=0.00..31.99 rows=10 width=4) (actual time=0.049..2.125 rows=10 loops=1)\n  Buffers: shared hit=874\n  ->  Seq Scan on json_tree_large_plain_v4_100000  (cost=0.00..12420.00 rows=3882 width=4) (actual time=0.048..2.124 rows=10 loops=1)\n        Filter: (((((plain -> 'company'::text) ->> 'salary'::text))::integer >= 151704) AND ((((plain -> 'company'::text) ->> 'salary'::text))::integer <= 161707))\n        Rows Removed by Filter: 235\n        Buffers: shared hit=874\nPlanning Time: 0.028 ms\nExecution Time: 2.129 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/plain/field_order/nested/100000",
+    "corpus": "nested",
+    "query": "SELECT id FROM json_tree_large_plain_v4_100000 ORDER BY (plain -> 'company' ->> 'salary')::int LIMIT 10",
+    "parameter_types": [],
+    "warm_executions": 5,
+    "parameters": [],
+    "plan": "Limit  (cost=0.29..4.22 rows=10 width=8) (actual time=0.009..0.056 rows=10 loops=1)\n  Buffers: shared hit=30\n  ->  Index Scan using json_tree_large_plain_v4_100000_salary_idx on json_tree_large_plain_v4_100000  (cost=0.29..39236.27 rows=100000 width=8) (actual time=0.009..0.055 rows=10 loops=1)\n        Buffers: shared hit=30\nPlanning Time: 0.000 ms\nExecution Time: 0.058 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/plain/subtree/company/100000",
+    "corpus": "nested",
+    "query": "SELECT (plain -> 'company')::text FROM json_tree_large_plain_v4_100000 WHERE id = $1",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      50000
+    ],
+    "plan": "Index Scan using json_tree_large_plain_v4_100000_pkey on json_tree_large_plain_v4_100000  (cost=0.29..8.32 rows=1 width=32) (actual time=0.005..0.005 rows=1 loops=1)\n  Index Cond: (id = $1)\n  Buffers: shared hit=3\nPlanning Time: 0.010 ms\nExecution Time: 0.008 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/plain/subtree/user/100000",
+    "corpus": "nested",
+    "query": "SELECT (plain -> 'user')::text FROM json_tree_large_plain_v4_100000 WHERE id = $1",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      50000
+    ],
+    "plan": "Index Scan using json_tree_large_plain_v4_100000_pkey on json_tree_large_plain_v4_100000  (cost=0.29..8.32 rows=1 width=32) (actual time=0.006..0.006 rows=1 loops=1)\n  Index Cond: (id = $1)\n  Buffers: shared hit=3\nPlanning Time: 0.011 ms\nExecution Time: 0.009 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/plain/subtree/orders/100000",
+    "corpus": "nested",
+    "query": "SELECT (plain -> 'orders')::text FROM json_tree_large_plain_v4_100000 WHERE id = $1",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      50000
+    ],
+    "plan": "Index Scan using json_tree_large_plain_v4_100000_pkey on json_tree_large_plain_v4_100000  (cost=0.29..8.32 rows=1 width=32) (actual time=0.013..0.013 rows=1 loops=1)\n  Index Cond: (id = $1)\n  Buffers: shared hit=3\nPlanning Time: 0.011 ms\nExecution Time: 0.017 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/plain/subtree_at/items/100000",
+    "corpus": "nested",
+    "query": "SELECT e::text FROM json_tree_large_plain_v4_100000, jsonb_path_query(plain, '$.orders[*].items') e WHERE id = $1",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      50000
+    ],
+    "plan": "Nested Loop  (cost=0.29..33.31 rows=1000 width=32) (actual time=0.008..0.014 rows=5 loops=1)\n  Buffers: shared hit=3\n  ->  Index Scan using json_tree_large_plain_v4_100000_pkey on json_tree_large_plain_v4_100000  (cost=0.29..8.31 rows=1 width=656) (actual time=0.002..0.002 rows=1 loops=1)\n        Index Cond: (id = $1)\n        Buffers: shared hit=3\n  ->  Function Scan on jsonb_path_query e  (cost=0.00..10.00 rows=1000 width=32) (actual time=0.004..0.004 rows=5 loops=1)\nPlanning Time: 0.015 ms\nExecution Time: 0.017 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/plain/subtree/orders_walked/100000",
+    "corpus": "nested",
+    "query": "SELECT (plain -> 'orders')::text FROM json_tree_large_plain_v4_100000 WHERE id = $1",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      50000
+    ],
+    "plan": "Index Scan using json_tree_large_plain_v4_100000_pkey on json_tree_large_plain_v4_100000  (cost=0.29..8.32 rows=1 width=32) (actual time=0.013..0.013 rows=1 loops=1)\n  Index Cond: (id = $1)\n  Buffers: shared hit=3\nPlanning Time: 0.011 ms\nExecution Time: 0.017 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/plain/subtree_at/items_walked/100000",
+    "corpus": "nested",
+    "query": "SELECT e::text FROM json_tree_large_plain_v4_100000, jsonb_path_query(plain, '$.orders[*].items') e WHERE id = $1",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      50000
+    ],
+    "plan": "Nested Loop  (cost=0.29..33.31 rows=1000 width=32) (actual time=0.007..0.014 rows=5 loops=1)\n  Buffers: shared hit=3\n  ->  Index Scan using json_tree_large_plain_v4_100000_pkey on json_tree_large_plain_v4_100000  (cost=0.29..8.31 rows=1 width=656) (actual time=0.002..0.002 rows=1 loops=1)\n        Index Cond: (id = $1)\n        Buffers: shared hit=3\n  ->  Function Scan on jsonb_path_query e  (cost=0.00..10.00 rows=1000 width=32) (actual time=0.004..0.004 rows=5 loops=1)\nPlanning Time: 0.015 ms\nExecution Time: 0.017 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/plain/children/orders/100000",
+    "corpus": "nested",
+    "query": "SELECT e::text FROM json_tree_large_plain_v4_100000, jsonb_array_elements(plain -> 'orders') e WHERE id = $1",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      50000
+    ],
+    "plan": "Nested Loop  (cost=0.30..10.81 rows=100 width=32) (actual time=0.009..0.017 rows=5 loops=1)\n  Buffers: shared hit=3\n  ->  Index Scan using json_tree_large_plain_v4_100000_pkey on json_tree_large_plain_v4_100000  (cost=0.29..8.31 rows=1 width=656) (actual time=0.002..0.002 rows=1 loops=1)\n        Index Cond: (id = $1)\n        Buffers: shared hit=3\n  ->  Function Scan on jsonb_array_elements e  (cost=0.01..1.00 rows=100 width=32) (actual time=0.005..0.005 rows=5 loops=1)\nPlanning Time: 0.014 ms\nExecution Time: 0.020 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/plain/child_count/orders/100000",
+    "corpus": "nested",
+    "query": "SELECT jsonb_array_length(plain -> 'orders') FROM json_tree_large_plain_v4_100000 WHERE id = $1",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      50000
+    ],
+    "plan": "Index Scan using json_tree_large_plain_v4_100000_pkey on json_tree_large_plain_v4_100000  (cost=0.29..8.32 rows=1 width=4) (actual time=0.004..0.005 rows=1 loops=1)\n  Index Cond: (id = $1)\n  Buffers: shared hit=3\nPlanning Time: 0.011 ms\nExecution Time: 0.008 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/plain/path_query/wildcard/100000",
+    "corpus": "nested",
+    "query": "SELECT e::text FROM json_tree_large_plain_v4_100000, jsonb_path_query(plain, '$.orders[*].status') e WHERE id = $1",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      50000
+    ],
+    "plan": "Nested Loop  (cost=0.29..33.31 rows=1000 width=32) (actual time=0.008..0.009 rows=5 loops=1)\n  Buffers: shared hit=3\n  ->  Index Scan using json_tree_large_plain_v4_100000_pkey on json_tree_large_plain_v4_100000  (cost=0.29..8.31 rows=1 width=656) (actual time=0.001..0.002 rows=1 loops=1)\n        Index Cond: (id = $1)\n        Buffers: shared hit=3\n  ->  Function Scan on jsonb_path_query e  (cost=0.00..10.00 rows=1000 width=32) (actual time=0.006..0.006 rows=5 loops=1)\nPlanning Time: 0.015 ms\nExecution Time: 0.012 ms"
+  },
+  {
+    "id": "JSON_TREE_NESTED/plain/extract/nested/100000",
+    "corpus": "nested",
+    "query": "SELECT (plain -> 'company' -> 'salary')::text FROM json_tree_large_plain_v4_100000 WHERE id = $1",
+    "parameter_types": [
+      "int4"
+    ],
+    "warm_executions": 5,
+    "parameters": [
+      50000
+    ],
+    "plan": "Index Scan using json_tree_large_plain_v4_100000_pkey on json_tree_large_plain_v4_100000  (cost=0.29..8.32 rows=1 width=32) (actual time=0.007..0.007 rows=1 loops=1)\n  Index Cond: (id = $1)\n  Buffers: shared hit=3\nPlanning Time: 0.011 ms\nExecution Time: 0.010 ms"
+  }
+]

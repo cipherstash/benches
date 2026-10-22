@@ -9,8 +9,13 @@
 //!   contains/deep_object      @> a needle four objects deep (`$.user.contact.emergency_contact.relationship`, ~1 in 5 rows)
 //!   contains/array_element    @> one address object's city + state (selective)
 //!   contains/nested_array     @> an order's status with one of its items' product (array in array)
+//!   contains/<needle>_fn      the three needles above through the function spelling,
+//!                             eql_v4.json_tree_contains(value, $1) (same plan as `@>`)
 //!   field_eq/nested           AtPath(Eq) on `$.user.email` — containment of the one-field needle
 //!   field_gt/nested           (value -> sel) > leaf on `$.company.salary`, functional btree on ord_term
+//!   field_between/nested      AtPath(Between) on `$.company.salary`: >= lo AND <= hi on the same
+//!                             btree; lo is the sampled salary, hi the smallest salary in the
+//!                             corpus at least 10,000 above it (so SteVec has stored leaves for both)
 //!   field_order/nested        ORDER BY eql_v4.ord_term(value -> sel) LIMIT 10, same btree
 //!   subtree/company           eql_v4.json_tree_subtree(value, token) by id — 6 leaves
 //!   subtree/user              … `$.user`: 3 levels, 12 leaves
@@ -151,6 +156,18 @@ fn criterion_benchmark(c: &mut Criterion) {
             "items": [{"product": order["items"][0]["product"]}]}]});
         let email = json!({"user": {"email": sample["user"]["email"]}});
         let salary = sample["company"]["salary"].as_i64().expect("integer salary");
+        // The between bounds: the sampled salary and the smallest salary in
+        // the corpus at least 10,000 above it. Both are stored values, so the
+        // SteVec bench (which compares against stored leaves) uses the same
+        // plaintext bounds.
+        let (salary_hi,): (i32,) = sqlx::query_as(&format!(
+            "SELECT MIN((plain #>> '{{company,salary}}')::int) FROM {plain_table} \
+             WHERE (plain #>> '{{company,salary}}')::int >= $1"
+        ))
+        .bind(salary as i32 + 10_000)
+        .fetch_one(&pool)
+        .await
+        .expect("salary upper bound");
 
         let enc_deep = contains_operand(&cipher, &plan, &deep_object).await;
         let enc_array = contains_operand(&cipher, &plan, &array_element).await;
@@ -170,6 +187,17 @@ fn criterion_benchmark(c: &mut Criterion) {
                 .await
                 .expect("derive AtPath(Gt) operand");
             serde_json::to_string(&JsonTreeLeafQuery::try_from(&q).expect("typed leaf")).unwrap()
+        };
+        let salary_between = {
+            let q = cipher
+                .query(op::AtPath(op::Between), &("$.company.salary", (salary, i64::from(salary_hi))))
+                .on(&plan)
+                .await
+                .expect("derive AtPath(Between) operand");
+            let leaf = |l: &stack_encrypt::json::JsonLeafQuery| {
+                serde_json::to_string(&JsonTreeLeafQuery::try_from(l).expect("typed leaf")).unwrap()
+            };
+            (leaf(q.lo()), leaf(q.hi()))
         };
         let sel_salary = selector(&cipher, "$.company.salary").await;
         let sel_status = selector(&cipher, "$.orders[*].status").await;
@@ -266,12 +294,25 @@ fn criterion_benchmark(c: &mut Criterion) {
             Scenario { name: "json_tree/contains/nested_array",
                 sql: format!("SELECT id FROM {table} WHERE value @> $1{CONTAINS_CAST} LIMIT 10"),
                 args: vec![t(&enc_nested)] },
+            Scenario { name: "json_tree/contains/deep_object_fn",
+                sql: format!("SELECT id FROM {table} WHERE eql_v4.json_tree_contains(value, $1{CONTAINS_CAST}) LIMIT 10"),
+                args: vec![t(&enc_deep)] },
+            Scenario { name: "json_tree/contains/array_element_fn",
+                sql: format!("SELECT id FROM {table} WHERE eql_v4.json_tree_contains(value, $1{CONTAINS_CAST}) LIMIT 10"),
+                args: vec![t(&enc_array)] },
+            Scenario { name: "json_tree/contains/nested_array_fn",
+                sql: format!("SELECT id FROM {table} WHERE eql_v4.json_tree_contains(value, $1{CONTAINS_CAST}) LIMIT 10"),
+                args: vec![t(&enc_nested)] },
             Scenario { name: "json_tree/field_eq/nested",
                 sql: format!("SELECT id FROM {table} WHERE value @> $1{CONTAINS_CAST} LIMIT 10"),
                 args: vec![t(&enc_email)] },
             Scenario { name: "json_tree/field_gt/nested",
                 sql: format!("SELECT id FROM {table} WHERE (value -> '{sel_salary}'::text) > $1{LEAF_CAST} LIMIT 10"),
                 args: vec![t(&salary_gt)] },
+            Scenario { name: "json_tree/field_between/nested",
+                sql: format!("SELECT id FROM {table} WHERE (value -> '{sel_salary}'::text) >= $1{LEAF_CAST} \
+                              AND (value -> '{sel_salary}'::text) <= $2{LEAF_CAST} LIMIT 10"),
+                args: vec![t(&salary_between.0), t(&salary_between.1)] },
             Scenario { name: "json_tree/field_order/nested",
                 sql: format!("SELECT id FROM {table} ORDER BY eql_v4.ord_term(value -> '{sel_salary}'::text) LIMIT 10"),
                 args: vec![] },
@@ -323,6 +364,9 @@ fn criterion_benchmark(c: &mut Criterion) {
             Scenario { name: "plain/field_gt/nested",
                 sql: format!("SELECT id FROM {plain_table} WHERE (plain -> 'company' ->> 'salary')::int > $1 LIMIT 10"),
                 args: vec![i(salary as i32)] },
+            Scenario { name: "plain/field_between/nested",
+                sql: format!("SELECT id FROM {plain_table} WHERE (plain -> 'company' ->> 'salary')::int BETWEEN $1 AND $2 LIMIT 10"),
+                args: vec![i(salary as i32), i(salary_hi)] },
             Scenario { name: "plain/field_order/nested",
                 sql: format!("SELECT id FROM {plain_table} ORDER BY (plain -> 'company' ->> 'salary')::int LIMIT 10"),
                 args: vec![] },

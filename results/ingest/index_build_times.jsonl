@@ -41,3 +41,7 @@
 {"table": "json_tree_large_encrypted_v4_10000", "build_seconds": 5, "recorded_at": "2026-10-21T13:09:04Z"}
 {"table": "json_tree_small_encrypted_v4_100000", "build_seconds": 0, "recorded_at": "2026-10-21T13:19:41Z"}
 {"table": "json_tree_large_encrypted_v4_100000", "build_seconds": 65, "recorded_at": "2026-10-21T13:30:16Z"}
+{"table": "json_ste_vec_large_encrypted_v3_10000", "build_seconds": 141, "recorded_at": "2026-10-22T00:39:25Z"}
+{"table": "json_ste_vec_large_encrypted_v3_100000", "build_seconds": 1634, "recorded_at": "2026-10-22T01:31:57Z"}
+{"table": "json_ste_vec_small_encrypted_v3_10000", "build_seconds": 1, "recorded_at": "2026-10-22T01:33:23Z"}
+{"table": "json_ste_vec_small_encrypted_v3_100000", "build_seconds": 11, "recorded_at": "2026-10-22T01:35:03Z"}

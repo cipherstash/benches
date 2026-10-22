@@ -1,0 +1,116 @@
+    Finished `bench` profile [optimized] target(s) in 0.35s
+json_compare_v3 (large): row 50000 of `json_ste_vec_large_encrypted_v3_100000`
+json_compare_v3: building the per-selector functional index...
+[2m2026-10-22T02:35:10.463851Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"CREATE INDEX json_ste_vec_large_encrypted_v3_100000_field_order_idx ON …" [3mdb.statement[0m[2m=[0m"\n\nCREATE INDEX json_ste_vec_large_encrypted_v3_100000_field_order_idx ON json_ste_vec_large_encrypted_v3_100000 USING btree (eql_v3.ore_cllw(eql_v3.jsonb_path_query_first(value, '7a3882d0f44d16913361486af5f74096')))\n" [3mrows_affected[0m[2m=[0m0 [3mrows_returned[0m[2m=[0m0 [3melapsed[0m[2m=[0m55.243702625s [3melapsed_secs[0m[2m=[0m55.243702625 [3mslow_threshold[0m[2m=[0m1s
+[2m2026-10-22T02:36:33.327933Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"ANALYZE json_ste_vec_large_encrypted_v3_100000" [3mdb.statement[0m[2m=[0m"" [3mrows_affected[0m[2m=[0m0 [3mrows_returned[0m[2m=[0m0 [3melapsed[0m[2m=[0m82.863373792s [3melapsed_secs[0m[2m=[0m82.863373792 [3mslow_threshold[0m[2m=[0m1s
+[2m2026-10-22T02:38:55.795082Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"SELECT id FROM json_ste_vec_large_encrypted_v3_100000 …" [3mdb.statement[0m[2m=[0m"\n\nSELECT id FROM json_ste_vec_large_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10\n" [3mrows_affected[0m[2m=[0m2 [3mrows_returned[0m[2m=[0m2 [3melapsed[0m[2m=[0m142.289040083s [3melapsed_secs[0m[2m=[0m142.289040083 [3mslow_threshold[0m[2m=[0m1s
+[2m2026-10-22T02:41:18.506671Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"SELECT id FROM json_ste_vec_large_encrypted_v3_100000 …" [3mdb.statement[0m[2m=[0m"\n\nSELECT id FROM json_ste_vec_large_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10\n" [3mrows_affected[0m[2m=[0m2 [3mrows_returned[0m[2m=[0m2 [3melapsed[0m[2m=[0m142.709840917s [3melapsed_secs[0m[2m=[0m142.709840917 [3mslow_threshold[0m[2m=[0m1s
+[2m2026-10-22T02:43:41.934804Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"SELECT id FROM json_ste_vec_large_encrypted_v3_100000 …" [3mdb.statement[0m[2m=[0m"\n\nSELECT id FROM json_ste_vec_large_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10\n" [3mrows_affected[0m[2m=[0m2 [3mrows_returned[0m[2m=[0m2 [3melapsed[0m[2m=[0m143.426323625s [3melapsed_secs[0m[2m=[0m143.426323625 [3mslow_threshold[0m[2m=[0m1s
+[2m2026-10-22T02:46:04.490297Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"SELECT id FROM json_ste_vec_large_encrypted_v3_100000 …" [3mdb.statement[0m[2m=[0m"\n\nSELECT id FROM json_ste_vec_large_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10\n" [3mrows_affected[0m[2m=[0m2 [3mrows_returned[0m[2m=[0m2 [3melapsed[0m[2m=[0m142.554491625s [3melapsed_secs[0m[2m=[0m142.554491625 [3mslow_threshold[0m[2m=[0m1s
+json_compare_v3: JSON_COMPARE_V3/large/contains/array_element/100000 is slow (142290 ms), timed 3x: [142711.031583, 143426.75675, 142554.733709]
+bench metadata written to /Users/dan/Projects/CipherStash/benches/results/query/compare/stevec_large_metadata_100000.json
+Benchmarking JSON_COMPARE_V3/large/contains/deep_object/100000
+Benchmarking JSON_COMPARE_V3/large/contains/deep_object/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/large/contains/deep_object/100000: Collecting 10 samples in estimated 6.2200 s (110 iterations)
+Benchmarking JSON_COMPARE_V3/large/contains/deep_object/100000: Analyzing
+JSON_COMPARE_V3/large/contains/deep_object/100000
+                        time:   [56.697 ms 56.921 ms 57.189 ms]
+Benchmarking JSON_COMPARE_V3/large/contains/deep_object_fn/100000
+Benchmarking JSON_COMPARE_V3/large/contains/deep_object_fn/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/large/contains/deep_object_fn/100000: Collecting 10 samples in estimated 5.6171 s (110 iterations)
+Benchmarking JSON_COMPARE_V3/large/contains/deep_object_fn/100000: Analyzing
+JSON_COMPARE_V3/large/contains/deep_object_fn/100000
+                        time:   [48.598 ms 48.672 ms 48.791 ms]
+Benchmarking JSON_COMPARE_V3/large/contains/array_element_fn/100000
+Benchmarking JSON_COMPARE_V3/large/contains/array_element_fn/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/large/contains/array_element_fn/100000: Collecting 10 samples in estimated 5.0221 s (4895 iterations)
+Benchmarking JSON_COMPARE_V3/large/contains/array_element_fn/100000: Analyzing
+JSON_COMPARE_V3/large/contains/array_element_fn/100000
+                        time:   [1.0189 ms 1.0271 ms 1.0344 ms]
+Benchmarking JSON_COMPARE_V3/large/contains/nested_array/100000
+Benchmarking JSON_COMPARE_V3/large/contains/nested_array/100000: Warming up for 3.0000 s
+
+Warning: Unable to complete 10 samples in 5.0s. You may wish to increase target time to 8.4s or enable flat sampling.
+Benchmarking JSON_COMPARE_V3/large/contains/nested_array/100000: Collecting 10 samples in estimated 8.4500 s (55 iterations)
+Benchmarking JSON_COMPARE_V3/large/contains/nested_array/100000: Analyzing
+JSON_COMPARE_V3/large/contains/nested_array/100000
+                        time:   [152.91 ms 153.46 ms 154.36 ms]
+Benchmarking JSON_COMPARE_V3/large/contains/nested_array_fn/100000
+Benchmarking JSON_COMPARE_V3/large/contains/nested_array_fn/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/large/contains/nested_array_fn/100000: Collecting 10 samples in estimated 5.3097 s (825 iterations)
+Benchmarking JSON_COMPARE_V3/large/contains/nested_array_fn/100000: Analyzing
+JSON_COMPARE_V3/large/contains/nested_array_fn/100000
+                        time:   [6.3942 ms 6.4225 ms 6.4470 ms]
+Benchmarking JSON_COMPARE_V3/large/field_eq/nested/100000
+Benchmarking JSON_COMPARE_V3/large/field_eq/nested/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/large/field_eq/nested/100000: Collecting 10 samples in estimated 5.0063 s (18k iterations)
+Benchmarking JSON_COMPARE_V3/large/field_eq/nested/100000: Analyzing
+JSON_COMPARE_V3/large/field_eq/nested/100000
+                        time:   [270.65 µs 272.23 µs 274.23 µs]
+Benchmarking JSON_COMPARE_V3/large/field_gt/nested/100000
+Benchmarking JSON_COMPARE_V3/large/field_gt/nested/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/large/field_gt/nested/100000: Collecting 10 samples in estimated 5.0012 s (20k iterations)
+Benchmarking JSON_COMPARE_V3/large/field_gt/nested/100000: Analyzing
+JSON_COMPARE_V3/large/field_gt/nested/100000
+                        time:   [245.07 µs 246.07 µs 246.87 µs]
+Benchmarking JSON_COMPARE_V3/large/field_between/nested/100000
+Benchmarking JSON_COMPARE_V3/large/field_between/nested/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/large/field_between/nested/100000: Collecting 10 samples in estimated 5.0290 s (7865 iterations)
+Benchmarking JSON_COMPARE_V3/large/field_between/nested/100000: Analyzing
+JSON_COMPARE_V3/large/field_between/nested/100000
+                        time:   [636.51 µs 640.32 µs 648.47 µs]
+Benchmarking JSON_COMPARE_V3/large/field_order/nested/100000
+Benchmarking JSON_COMPARE_V3/large/field_order/nested/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/large/field_order/nested/100000: Collecting 10 samples in estimated 5.0560 s (1100 iterations)
+Benchmarking JSON_COMPARE_V3/large/field_order/nested/100000: Analyzing
+JSON_COMPARE_V3/large/field_order/nested/100000
+                        time:   [4.5419 ms 4.6902 ms 4.8338 ms]
+Benchmarking JSON_COMPARE_V3/large/subtree/company/100000
+Benchmarking JSON_COMPARE_V3/large/subtree/company/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/large/subtree/company/100000: Collecting 10 samples in estimated 5.0176 s (9460 iterations)
+Benchmarking JSON_COMPARE_V3/large/subtree/company/100000: Analyzing
+JSON_COMPARE_V3/large/subtree/company/100000
+                        time:   [534.39 µs 545.04 µs 558.64 µs]
+Benchmarking JSON_COMPARE_V3/large/subtree/user/100000
+Benchmarking JSON_COMPARE_V3/large/subtree/user/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/large/subtree/user/100000: Collecting 10 samples in estimated 5.0028 s (9240 iterations)
+Benchmarking JSON_COMPARE_V3/large/subtree/user/100000: Analyzing
+JSON_COMPARE_V3/large/subtree/user/100000
+                        time:   [480.44 µs 513.10 µs 545.25 µs]
+Benchmarking JSON_COMPARE_V3/large/subtree/orders/100000
+Benchmarking JSON_COMPARE_V3/large/subtree/orders/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/large/subtree/orders/100000: Collecting 10 samples in estimated 5.0041 s (9240 iterations)
+Benchmarking JSON_COMPARE_V3/large/subtree/orders/100000: Analyzing
+JSON_COMPARE_V3/large/subtree/orders/100000
+                        time:   [538.21 µs 543.98 µs 550.09 µs]
+Benchmarking JSON_COMPARE_V3/large/subtree_at/items/100000
+Benchmarking JSON_COMPARE_V3/large/subtree_at/items/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/large/subtree_at/items/100000: Collecting 10 samples in estimated 5.0276 s (4070 iterations)
+Benchmarking JSON_COMPARE_V3/large/subtree_at/items/100000: Analyzing
+JSON_COMPARE_V3/large/subtree_at/items/100000
+                        time:   [1.2426 ms 1.2742 ms 1.2993 ms]
+Benchmarking JSON_COMPARE_V3/large/children/orders/100000
+Benchmarking JSON_COMPARE_V3/large/children/orders/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/large/children/orders/100000: Collecting 10 samples in estimated 5.0153 s (3960 iterations)
+Benchmarking JSON_COMPARE_V3/large/children/orders/100000: Analyzing
+JSON_COMPARE_V3/large/children/orders/100000
+                        time:   [1.2125 ms 1.2409 ms 1.2604 ms]
+Benchmarking JSON_COMPARE_V3/large/child_count/orders/100000
+Benchmarking JSON_COMPARE_V3/large/child_count/orders/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/large/child_count/orders/100000: Collecting 10 samples in estimated 5.0593 s (4015 iterations)
+Benchmarking JSON_COMPARE_V3/large/child_count/orders/100000: Analyzing
+JSON_COMPARE_V3/large/child_count/orders/100000
+                        time:   [1.2401 ms 1.2558 ms 1.2778 ms]
+Benchmarking JSON_COMPARE_V3/large/path_query/wildcard/100000
+Benchmarking JSON_COMPARE_V3/large/path_query/wildcard/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/large/path_query/wildcard/100000: Collecting 10 samples in estimated 5.0521 s (4070 iterations)
+Benchmarking JSON_COMPARE_V3/large/path_query/wildcard/100000: Analyzing
+JSON_COMPARE_V3/large/path_query/wildcard/100000
+                        time:   [1.2491 ms 1.2592 ms 1.2711 ms]
+Benchmarking JSON_COMPARE_V3/large/extract/nested/100000
+Benchmarking JSON_COMPARE_V3/large/extract/nested/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/large/extract/nested/100000: Collecting 10 samples in estimated 5.0212 s (9350 iterations)
+Benchmarking JSON_COMPARE_V3/large/extract/nested/100000: Analyzing
+JSON_COMPARE_V3/large/extract/nested/100000
+                        time:   [482.50 µs 510.40 µs 526.42 µs]
+

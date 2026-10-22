@@ -33,6 +33,7 @@ impl EqlV2Encrypted {
         self.data.0
     }
 }
+pub mod twin;
 pub mod v3;
 
 use stack_profile::ProfileStore;

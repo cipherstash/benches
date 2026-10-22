@@ -1,0 +1,4 @@
+{"table": "json_ste_vec_large_encrypted_v3_10000", "wall_seconds": 306, "rc": 0, "finished": "2026-10-22T00:39:48Z"}
+{"table": "json_ste_vec_large_encrypted_v3_100000", "wall_seconds": 3200, "rc": 0, "finished": "2026-10-22T01:33:08Z"}
+{"table": "json_ste_vec_small_encrypted_v3_10000", "wall_seconds": 16, "rc": 0, "finished": "2026-10-22T01:33:24Z"}
+{"table": "json_ste_vec_small_encrypted_v3_100000", "wall_seconds": 103, "rc": 0, "finished": "2026-10-22T01:35:07Z"}

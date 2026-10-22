@@ -202,3 +202,17 @@ CREATE TABLE IF NOT EXISTS category_encrypted_v3_10000000 (
     id SERIAL PRIMARY KEY,
     value public.text_eq NOT NULL
 );
+
+-- JSON SteVec, nested corpus (FakeJsonLarge, ~213 nodes per document):
+-- sealed from the json_tree plaintext twins json_tree_large_plain_v4_<N>,
+-- id for id (src/twin.rs), for the three-way JSON comparison. Ids are
+-- explicit; the serial is resynced after an ingest.
+CREATE TABLE IF NOT EXISTS json_ste_vec_large_encrypted_v3_10000 (
+    id SERIAL PRIMARY KEY,
+    value public.json NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS json_ste_vec_large_encrypted_v3_100000 (
+    id SERIAL PRIMARY KEY,
+    value public.json NOT NULL
+);

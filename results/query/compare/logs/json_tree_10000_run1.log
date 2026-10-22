@@ -1,0 +1,124 @@
+    Finished `bench` profile [optimized] target(s) in 0.31s
+json_tree_v4 bench picked row 5000 from `json_tree_small_encrypted_v4_10000` — age selector a7b53d9b98181a98c49559f86362fcce
+json_tree_v4 bench: building the per-selector functional index...
+json_tree_v4 bench: containment oracle agrees (1 row(s))
+bench metadata written to /Users/dan/Projects/CipherStash/benches/results/query/compare/json_tree_metadata_10000.json
+Benchmarking JSON_TREE/json_tree/contains/functional/10000
+Benchmarking JSON_TREE/json_tree/contains/functional/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE/json_tree/contains/functional/10000: Collecting 10 samples in estimated 5.0049 s (10k iterations)
+Benchmarking JSON_TREE/json_tree/contains/functional/10000: Analyzing
+JSON_TREE/json_tree/contains/functional/10000
+                        time:   [477.80 µs 480.99 µs 488.78 µs]
+                        change: [-11.254% -7.3354% -3.1145%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Benchmarking JSON_TREE/json_tree/contains/operator/10000
+Benchmarking JSON_TREE/json_tree/contains/operator/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE/json_tree/contains/operator/10000: Collecting 10 samples in estimated 5.0136 s (9790 iterations)
+Benchmarking JSON_TREE/json_tree/contains/operator/10000: Analyzing
+JSON_TREE/json_tree/contains/operator/10000
+                        time:   [525.85 µs 548.89 µs 566.54 µs]
+                        change: [-3.4807% +0.0877% +3.6734%] (p = 0.97 > 0.05)
+                        No change in performance detected.
+Benchmarking JSON_TREE/json_tree/field_eq/extractor/10000
+Benchmarking JSON_TREE/json_tree/field_eq/extractor/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE/json_tree/field_eq/extractor/10000: Collecting 10 samples in estimated 5.0029 s (9240 iterations)
+Benchmarking JSON_TREE/json_tree/field_eq/extractor/10000: Analyzing
+JSON_TREE/json_tree/field_eq/extractor/10000
+                        time:   [534.15 µs 545.68 µs 564.26 µs]
+                        change: [-9.9402% -7.4765% -4.7058%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Benchmarking JSON_TREE/json_tree/field_eq/unique/10000
+Benchmarking JSON_TREE/json_tree/field_eq/unique/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE/json_tree/field_eq/unique/10000: Collecting 10 samples in estimated 5.0001 s (12k iterations)
+Benchmarking JSON_TREE/json_tree/field_eq/unique/10000: Analyzing
+JSON_TREE/json_tree/field_eq/unique/10000
+                        time:   [402.43 µs 407.51 µs 416.41 µs]
+                        change: [-16.173% -14.465% -12.221%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Benchmarking JSON_TREE/json_tree/field_gt/functional/10000
+Benchmarking JSON_TREE/json_tree/field_gt/functional/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE/json_tree/field_gt/functional/10000: Collecting 10 samples in estimated 5.0024 s (47k iterations)
+Benchmarking JSON_TREE/json_tree/field_gt/functional/10000: Analyzing
+JSON_TREE/json_tree/field_gt/functional/10000
+                        time:   [105.90 µs 107.17 µs 108.19 µs]
+                        change: [+3.6215% +4.8620% +5.9506%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking JSON_TREE/json_tree/field_between/functional/10000
+Benchmarking JSON_TREE/json_tree/field_between/functional/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE/json_tree/field_between/functional/10000: Collecting 10 samples in estimated 5.0088 s (24k iterations)
+Benchmarking JSON_TREE/json_tree/field_between/functional/10000: Analyzing
+JSON_TREE/json_tree/field_between/functional/10000
+                        time:   [208.10 µs 209.39 µs 210.93 µs]
+                        change: [-2.9150% -2.0904% -1.3582%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Benchmarking JSON_TREE/json_tree/field_order/functional/10000
+Benchmarking JSON_TREE/json_tree/field_order/functional/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE/json_tree/field_order/functional/10000: Collecting 10 samples in estimated 5.0037 s (6215 iterations)
+Benchmarking JSON_TREE/json_tree/field_order/functional/10000: Analyzing
+JSON_TREE/json_tree/field_order/functional/10000
+                        time:   [785.92 µs 789.45 µs 793.77 µs]
+                        change: [-10.019% -8.9838% -7.8170%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Benchmarking JSON_TREE/json_tree/extract/by_id/10000
+Benchmarking JSON_TREE/json_tree/extract/by_id/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE/json_tree/extract/by_id/10000: Collecting 10 samples in estimated 5.0018 s (28k iterations)
+Benchmarking JSON_TREE/json_tree/extract/by_id/10000: Analyzing
+JSON_TREE/json_tree/extract/by_id/10000
+                        time:   [179.52 µs 180.71 µs 181.81 µs]
+                        change: [-5.4956% -3.1463% -0.7706%] (p = 0.02 < 0.05)
+                        Change within noise threshold.
+Benchmarking JSON_TREE/json_tree/path_query/field/10000
+Benchmarking JSON_TREE/json_tree/path_query/field/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE/json_tree/path_query/field/10000: Collecting 10 samples in estimated 5.0068 s (27k iterations)
+Benchmarking JSON_TREE/json_tree/path_query/field/10000: Analyzing
+JSON_TREE/json_tree/path_query/field/10000
+                        time:   [179.87 µs 182.10 µs 183.58 µs]
+Benchmarking JSON_TREE/plain/contains/operator/10000
+Benchmarking JSON_TREE/plain/contains/operator/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE/plain/contains/operator/10000: Collecting 10 samples in estimated 5.0006 s (49k iterations)
+Benchmarking JSON_TREE/plain/contains/operator/10000: Analyzing
+JSON_TREE/plain/contains/operator/10000
+                        time:   [102.89 µs 103.76 µs 104.73 µs]
+Benchmarking JSON_TREE/plain/field_eq/extractor/10000
+Benchmarking JSON_TREE/plain/field_eq/extractor/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE/plain/field_eq/extractor/10000: Collecting 10 samples in estimated 5.0029 s (47k iterations)
+Benchmarking JSON_TREE/plain/field_eq/extractor/10000: Analyzing
+JSON_TREE/plain/field_eq/extractor/10000
+                        time:   [104.29 µs 104.60 µs 105.11 µs]
+Benchmarking JSON_TREE/plain/field_eq/unique/10000
+Benchmarking JSON_TREE/plain/field_eq/unique/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE/plain/field_eq/unique/10000: Collecting 10 samples in estimated 5.0001 s (50k iterations)
+Benchmarking JSON_TREE/plain/field_eq/unique/10000: Analyzing
+JSON_TREE/plain/field_eq/unique/10000
+                        time:   [97.609 µs 99.253 µs 100.04 µs]
+Benchmarking JSON_TREE/plain/field_gt/functional/10000
+Benchmarking JSON_TREE/plain/field_gt/functional/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE/plain/field_gt/functional/10000: Collecting 10 samples in estimated 5.0053 s (50k iterations)
+Benchmarking JSON_TREE/plain/field_gt/functional/10000: Analyzing
+JSON_TREE/plain/field_gt/functional/10000
+                        time:   [98.440 µs 99.465 µs 100.44 µs]
+Benchmarking JSON_TREE/plain/field_between/functional/10000
+Benchmarking JSON_TREE/plain/field_between/functional/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE/plain/field_between/functional/10000: Collecting 10 samples in estimated 5.0057 s (41k iterations)
+Benchmarking JSON_TREE/plain/field_between/functional/10000: Analyzing
+JSON_TREE/plain/field_between/functional/10000
+                        time:   [121.05 µs 121.50 µs 122.25 µs]
+Benchmarking JSON_TREE/plain/field_order/functional/10000
+Benchmarking JSON_TREE/plain/field_order/functional/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE/plain/field_order/functional/10000: Collecting 10 samples in estimated 5.0032 s (48k iterations)
+Benchmarking JSON_TREE/plain/field_order/functional/10000: Analyzing
+JSON_TREE/plain/field_order/functional/10000
+                        time:   [102.37 µs 102.97 µs 103.35 µs]
+Benchmarking JSON_TREE/plain/extract/by_id/10000
+Benchmarking JSON_TREE/plain/extract/by_id/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE/plain/extract/by_id/10000: Collecting 10 samples in estimated 5.0016 s (52k iterations)
+Benchmarking JSON_TREE/plain/extract/by_id/10000: Analyzing
+JSON_TREE/plain/extract/by_id/10000
+                        time:   [95.164 µs 95.833 µs 96.673 µs]
+Benchmarking JSON_TREE/plain/path_query/field/10000
+Benchmarking JSON_TREE/plain/path_query/field/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE/plain/path_query/field/10000: Collecting 10 samples in estimated 5.0000 s (51k iterations)
+Benchmarking JSON_TREE/plain/path_query/field/10000: Analyzing
+JSON_TREE/plain/path_query/field/10000
+                        time:   [98.367 µs 98.917 µs 99.415 µs]
+

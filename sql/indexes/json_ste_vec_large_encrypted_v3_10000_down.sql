@@ -1,0 +1,1 @@
+DROP INDEX IF EXISTS json_ste_vec_large_encrypted_v3_10000_jsonb_array_index;

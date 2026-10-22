@@ -1,0 +1,83 @@
+    Finished `bench` profile [optimized] target(s) in 0.34s
+json_compare_v3 (small): row 50000 of `json_ste_vec_small_encrypted_v3_100000`
+json_compare_v3: building the per-selector functional indexes...
+[2m2026-10-22T02:19:02.426021Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"CREATE INDEX json_ste_vec_small_encrypted_v3_100000_field_order_idx ON …" [3mdb.statement[0m[2m=[0m"\n\nCREATE INDEX json_ste_vec_small_encrypted_v3_100000_field_order_idx ON json_ste_vec_small_encrypted_v3_100000 USING btree (eql_v3.ore_cllw(eql_v3.jsonb_path_query_first(value, 'cc6e1824ab3319e8f92dc6199ce671b9')))\n" [3mrows_affected[0m[2m=[0m0 [3mrows_returned[0m[2m=[0m0 [3melapsed[0m[2m=[0m4.249348333s [3melapsed_secs[0m[2m=[0m4.249348333 [3mslow_threshold[0m[2m=[0m1s
+[2m2026-10-22T02:19:06.997333Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"ANALYZE json_ste_vec_small_encrypted_v3_100000" [3mdb.statement[0m[2m=[0m"" [3mrows_affected[0m[2m=[0m0 [3mrows_returned[0m[2m=[0m0 [3melapsed[0m[2m=[0m4.056265375s [3melapsed_secs[0m[2m=[0m4.056265375 [3mslow_threshold[0m[2m=[0m1s
+[2m2026-10-22T02:19:09.567991Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"SELECT id FROM json_ste_vec_small_encrypted_v3_100000 …" [3mdb.statement[0m[2m=[0m"\n\nSELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10\n" [3mrows_affected[0m[2m=[0m1 [3mrows_returned[0m[2m=[0m1 [3melapsed[0m[2m=[0m2.566661s [3melapsed_secs[0m[2m=[0m2.566661 [3mslow_threshold[0m[2m=[0m1s
+bench metadata written to /Users/dan/Projects/CipherStash/benches/results/query/compare/stevec_small_metadata_100000.json
+Benchmarking JSON_COMPARE_V3/small/contains/functional/100000
+Benchmarking JSON_COMPARE_V3/small/contains/functional/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/small/contains/functional/100000: Collecting 10 samples in estimated 5.0139 s (13k iterations)
+Benchmarking JSON_COMPARE_V3/small/contains/functional/100000: Analyzing
+JSON_COMPARE_V3/small/contains/functional/100000
+                        time:   [362.27 µs 365.16 µs 367.31 µs]
+Benchmarking JSON_COMPARE_V3/small/contains/operator/100000
+Benchmarking JSON_COMPARE_V3/small/contains/operator/100000: Warming up for 3.0000 s
+[2m2026-10-22T02:19:20.267696Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"SELECT id FROM json_ste_vec_small_encrypted_v3_100000 …" [3mdb.statement[0m[2m=[0m"\n\nSELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10\n" [3mrows_affected[0m[2m=[0m1 [3mrows_returned[0m[2m=[0m1 [3melapsed[0m[2m=[0m2.572755417s [3melapsed_secs[0m[2m=[0m2.5727554169999998 [3mslow_threshold[0m[2m=[0m1s
+[2m2026-10-22T02:19:22.854969Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"SELECT id FROM json_ste_vec_small_encrypted_v3_100000 …" [3mdb.statement[0m[2m=[0m"\n\nSELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10\n" [3mrows_affected[0m[2m=[0m1 [3mrows_returned[0m[2m=[0m1 [3melapsed[0m[2m=[0m2.587031208s [3melapsed_secs[0m[2m=[0m2.587031208 [3mslow_threshold[0m[2m=[0m1s
+[2m2026-10-22T02:19:25.437228Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"SELECT id FROM json_ste_vec_small_encrypted_v3_100000 …" [3mdb.statement[0m[2m=[0m"\n\nSELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10\n" [3mrows_affected[0m[2m=[0m1 [3mrows_returned[0m[2m=[0m1 [3melapsed[0m[2m=[0m2.582015083s [3melapsed_secs[0m[2m=[0m2.582015083 [3mslow_threshold[0m[2m=[0m1s
+
+Warning: Unable to complete 10 samples in 5.0s. You may wish to increase target time to 25.8s.
+Benchmarking JSON_COMPARE_V3/small/contains/operator/100000: Collecting 10 samples in estimated 25.808 s (10 iterations)
+[2m2026-10-22T02:19:28.047780Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"SELECT id FROM json_ste_vec_small_encrypted_v3_100000 …" [3mdb.statement[0m[2m=[0m"\n\nSELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10\n" [3mrows_affected[0m[2m=[0m1 [3mrows_returned[0m[2m=[0m1 [3melapsed[0m[2m=[0m2.610008042s [3melapsed_secs[0m[2m=[0m2.610008042 [3mslow_threshold[0m[2m=[0m1s
+[2m2026-10-22T02:19:30.624310Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"SELECT id FROM json_ste_vec_small_encrypted_v3_100000 …" [3mdb.statement[0m[2m=[0m"\n\nSELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10\n" [3mrows_affected[0m[2m=[0m1 [3mrows_returned[0m[2m=[0m1 [3melapsed[0m[2m=[0m2.576304708s [3melapsed_secs[0m[2m=[0m2.576304708 [3mslow_threshold[0m[2m=[0m1s
+[2m2026-10-22T02:19:33.211436Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"SELECT id FROM json_ste_vec_small_encrypted_v3_100000 …" [3mdb.statement[0m[2m=[0m"\n\nSELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10\n" [3mrows_affected[0m[2m=[0m1 [3mrows_returned[0m[2m=[0m1 [3melapsed[0m[2m=[0m2.586912417s [3melapsed_secs[0m[2m=[0m2.5869124169999997 [3mslow_threshold[0m[2m=[0m1s
+[2m2026-10-22T02:19:35.802193Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"SELECT id FROM json_ste_vec_small_encrypted_v3_100000 …" [3mdb.statement[0m[2m=[0m"\n\nSELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10\n" [3mrows_affected[0m[2m=[0m1 [3mrows_returned[0m[2m=[0m1 [3melapsed[0m[2m=[0m2.590479792s [3melapsed_secs[0m[2m=[0m2.590479792 [3mslow_threshold[0m[2m=[0m1s
+[2m2026-10-22T02:19:38.369311Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"SELECT id FROM json_ste_vec_small_encrypted_v3_100000 …" [3mdb.statement[0m[2m=[0m"\n\nSELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10\n" [3mrows_affected[0m[2m=[0m1 [3mrows_returned[0m[2m=[0m1 [3melapsed[0m[2m=[0m2.566887084s [3melapsed_secs[0m[2m=[0m2.566887084 [3mslow_threshold[0m[2m=[0m1s
+[2m2026-10-22T02:19:41.124399Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"SELECT id FROM json_ste_vec_small_encrypted_v3_100000 …" [3mdb.statement[0m[2m=[0m"\n\nSELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10\n" [3mrows_affected[0m[2m=[0m1 [3mrows_returned[0m[2m=[0m1 [3melapsed[0m[2m=[0m2.754902791s [3melapsed_secs[0m[2m=[0m2.754902791 [3mslow_threshold[0m[2m=[0m1s
+[2m2026-10-22T02:19:43.689778Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"SELECT id FROM json_ste_vec_small_encrypted_v3_100000 …" [3mdb.statement[0m[2m=[0m"\n\nSELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10\n" [3mrows_affected[0m[2m=[0m1 [3mrows_returned[0m[2m=[0m1 [3melapsed[0m[2m=[0m2.565149167s [3melapsed_secs[0m[2m=[0m2.565149167 [3mslow_threshold[0m[2m=[0m1s
+[2m2026-10-22T02:19:46.417334Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"SELECT id FROM json_ste_vec_small_encrypted_v3_100000 …" [3mdb.statement[0m[2m=[0m"\n\nSELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10\n" [3mrows_affected[0m[2m=[0m1 [3mrows_returned[0m[2m=[0m1 [3melapsed[0m[2m=[0m2.72736675s [3melapsed_secs[0m[2m=[0m2.72736675 [3mslow_threshold[0m[2m=[0m1s
+[2m2026-10-22T02:19:49.162534Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"SELECT id FROM json_ste_vec_small_encrypted_v3_100000 …" [3mdb.statement[0m[2m=[0m"\n\nSELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10\n" [3mrows_affected[0m[2m=[0m1 [3mrows_returned[0m[2m=[0m1 [3melapsed[0m[2m=[0m2.744959875s [3melapsed_secs[0m[2m=[0m2.744959875 [3mslow_threshold[0m[2m=[0m1s
+[2m2026-10-22T02:19:51.894332Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"SELECT id FROM json_ste_vec_small_encrypted_v3_100000 …" [3mdb.statement[0m[2m=[0m"\n\nSELECT id FROM json_ste_vec_small_encrypted_v3_100000 WHERE value @> $1::jsonb::eql_v3.query_jsonb LIMIT 10\n" [3mrows_affected[0m[2m=[0m1 [3mrows_returned[0m[2m=[0m1 [3melapsed[0m[2m=[0m2.731495583s [3melapsed_secs[0m[2m=[0m2.731495583 [3mslow_threshold[0m[2m=[0m1s
+Benchmarking JSON_COMPARE_V3/small/contains/operator/100000: Analyzing
+JSON_COMPARE_V3/small/contains/operator/100000
+                        time:   [2.5983 s 2.6457 s 2.6950 s]
+Benchmarking JSON_COMPARE_V3/small/field_eq/extractor/100000
+Benchmarking JSON_COMPARE_V3/small/field_eq/extractor/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/small/field_eq/extractor/100000: Collecting 10 samples in estimated 5.0171 s (9735 iterations)
+Benchmarking JSON_COMPARE_V3/small/field_eq/extractor/100000: Analyzing
+JSON_COMPARE_V3/small/field_eq/extractor/100000
+                        time:   [509.06 µs 523.19 µs 533.31 µs]
+Benchmarking JSON_COMPARE_V3/small/field_eq/unique/100000
+Benchmarking JSON_COMPARE_V3/small/field_eq/unique/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/small/field_eq/unique/100000: Collecting 10 samples in estimated 5.0079 s (22k iterations)
+Benchmarking JSON_COMPARE_V3/small/field_eq/unique/100000: Analyzing
+JSON_COMPARE_V3/small/field_eq/unique/100000
+                        time:   [222.53 µs 223.91 µs 224.65 µs]
+Benchmarking JSON_COMPARE_V3/small/field_eq/eq_term/100000
+Benchmarking JSON_COMPARE_V3/small/field_eq/eq_term/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/small/field_eq/eq_term/100000: Collecting 10 samples in estimated 5.0047 s (44k iterations)
+Benchmarking JSON_COMPARE_V3/small/field_eq/eq_term/100000: Analyzing
+JSON_COMPARE_V3/small/field_eq/eq_term/100000
+                        time:   [112.09 µs 112.49 µs 112.78 µs]
+Benchmarking JSON_COMPARE_V3/small/field_gt/functional/100000
+Benchmarking JSON_COMPARE_V3/small/field_gt/functional/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/small/field_gt/functional/100000: Collecting 10 samples in estimated 5.0305 s (5885 iterations)
+Benchmarking JSON_COMPARE_V3/small/field_gt/functional/100000: Analyzing
+JSON_COMPARE_V3/small/field_gt/functional/100000
+                        time:   [851.70 µs 860.60 µs 870.69 µs]
+Benchmarking JSON_COMPARE_V3/small/field_between/functional/100000
+Benchmarking JSON_COMPARE_V3/small/field_between/functional/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/small/field_between/functional/100000: Collecting 10 samples in estimated 5.0763 s (3410 iterations)
+Benchmarking JSON_COMPARE_V3/small/field_between/functional/100000: Analyzing
+JSON_COMPARE_V3/small/field_between/functional/100000
+                        time:   [1.4364 ms 1.4420 ms 1.4462 ms]
+Benchmarking JSON_COMPARE_V3/small/field_order/functional/100000
+Benchmarking JSON_COMPARE_V3/small/field_order/functional/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/small/field_order/functional/100000: Collecting 10 samples in estimated 5.0016 s (20k iterations)
+Benchmarking JSON_COMPARE_V3/small/field_order/functional/100000: Analyzing
+JSON_COMPARE_V3/small/field_order/functional/100000
+                        time:   [242.97 µs 243.88 µs 245.09 µs]
+Benchmarking JSON_COMPARE_V3/small/extract/by_id/100000
+Benchmarking JSON_COMPARE_V3/small/extract/by_id/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/small/extract/by_id/100000: Collecting 10 samples in estimated 5.0011 s (41k iterations)
+Benchmarking JSON_COMPARE_V3/small/extract/by_id/100000: Analyzing
+JSON_COMPARE_V3/small/extract/by_id/100000
+                        time:   [121.23 µs 121.46 µs 121.64 µs]
+Benchmarking JSON_COMPARE_V3/small/path_query/field/100000
+Benchmarking JSON_COMPARE_V3/small/path_query/field/100000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/small/path_query/field/100000: Collecting 10 samples in estimated 5.0004 s (40k iterations)
+Benchmarking JSON_COMPARE_V3/small/path_query/field/100000: Analyzing
+JSON_COMPARE_V3/small/path_query/field/100000
+                        time:   [120.84 µs 122.84 µs 123.74 µs]
+

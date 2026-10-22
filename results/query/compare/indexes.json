@@ -1,0 +1,216 @@
+{
+  "json_tree_small_plain_v4_10000": [
+    {
+      "name": "json_tree_small_plain_v4_10000_age_idx",
+      "def": "CREATE INDEX json_tree_small_plain_v4_10000_age_idx ON public.json_tree_small_plain_v4_10000 USING btree ((((plain ->> 'age'::text))::integer))",
+      "bytes": "90112"
+    },
+    {
+      "name": "json_tree_small_plain_v4_10000_gin_idx",
+      "def": "CREATE INDEX json_tree_small_plain_v4_10000_gin_idx ON public.json_tree_small_plain_v4_10000 USING gin (plain jsonb_path_ops)",
+      "bytes": "901120"
+    },
+    {
+      "name": "json_tree_small_plain_v4_10000_pkey",
+      "def": "CREATE UNIQUE INDEX json_tree_small_plain_v4_10000_pkey ON public.json_tree_small_plain_v4_10000 USING btree (id)",
+      "bytes": "245760"
+    }
+  ],
+  "json_ste_vec_small_encrypted_v3_10000": [
+    {
+      "name": "json_ste_vec_small_encrypted_v3_10000_field_eq_idx",
+      "def": "CREATE INDEX json_ste_vec_small_encrypted_v3_10000_field_eq_idx ON public.json_ste_vec_small_encrypted_v3_10000 USING btree (eql_v3.eq_term(eql_v3.jsonb_path_query_first((value)::jsonb, 'b81940706ae05004a9b95b6dbd1aaa60'::text)))",
+      "bytes": "2547712"
+    },
+    {
+      "name": "json_ste_vec_small_encrypted_v3_10000_field_order_idx",
+      "def": "CREATE INDEX json_ste_vec_small_encrypted_v3_10000_field_order_idx ON public.json_ste_vec_small_encrypted_v3_10000 USING btree (eql_v3.ore_cllw(eql_v3.jsonb_path_query_first((value)::jsonb, 'cc6e1824ab3319e8f92dc6199ce671b9'::text)))",
+      "bytes": "1163264"
+    },
+    {
+      "name": "json_ste_vec_small_encrypted_v3_10000_jsonb_array_index",
+      "def": "CREATE INDEX json_ste_vec_small_encrypted_v3_10000_jsonb_array_index ON public.json_ste_vec_small_encrypted_v3_10000 USING gin (eql_v3.jsonb_array((value)::jsonb))",
+      "bytes": "11329536"
+    },
+    {
+      "name": "json_ste_vec_small_encrypted_v3_10000_pkey",
+      "def": "CREATE UNIQUE INDEX json_ste_vec_small_encrypted_v3_10000_pkey ON public.json_ste_vec_small_encrypted_v3_10000 USING btree (id)",
+      "bytes": "245760"
+    }
+  ],
+  "json_tree_small_encrypted_v4_10000": [
+    {
+      "name": "json_tree_small_encrypted_v4_10000_field_order_idx",
+      "def": "CREATE INDEX json_tree_small_encrypted_v4_10000_field_order_idx ON public.json_tree_small_encrypted_v4_10000 USING btree (eql_v4.ord_term((value -> 'a7b53d9b98181a98c49559f86362fcce'::text)))",
+      "bytes": "98304"
+    },
+    {
+      "name": "json_tree_small_encrypted_v4_10000_pkey",
+      "def": "CREATE UNIQUE INDEX json_tree_small_encrypted_v4_10000_pkey ON public.json_tree_small_encrypted_v4_10000 USING btree (id)",
+      "bytes": "245760"
+    },
+    {
+      "name": "json_tree_small_encrypted_v4_10000_query_gin_idx",
+      "def": "CREATE INDEX json_tree_small_encrypted_v4_10000_query_gin_idx ON public.json_tree_small_encrypted_v4_10000 USING gin (eql_v4.json_tree_query(value) jsonb_path_ops)",
+      "bytes": "1032192"
+    }
+  ],
+  "json_tree_large_plain_v4_10000": [
+    {
+      "name": "json_tree_large_plain_v4_10000_gin_idx",
+      "def": "CREATE INDEX json_tree_large_plain_v4_10000_gin_idx ON public.json_tree_large_plain_v4_10000 USING gin (plain jsonb_path_ops)",
+      "bytes": "40771584"
+    },
+    {
+      "name": "json_tree_large_plain_v4_10000_pkey",
+      "def": "CREATE UNIQUE INDEX json_tree_large_plain_v4_10000_pkey ON public.json_tree_large_plain_v4_10000 USING btree (id)",
+      "bytes": "245760"
+    },
+    {
+      "name": "json_tree_large_plain_v4_10000_salary_idx",
+      "def": "CREATE INDEX json_tree_large_plain_v4_10000_salary_idx ON public.json_tree_large_plain_v4_10000 USING btree (((((plain -> 'company'::text) ->> 'salary'::text))::integer))",
+      "bytes": "245760"
+    }
+  ],
+  "json_ste_vec_large_encrypted_v3_10000": [
+    {
+      "name": "json_ste_vec_large_encrypted_v3_10000_field_order_idx",
+      "def": "CREATE INDEX json_ste_vec_large_encrypted_v3_10000_field_order_idx ON public.json_ste_vec_large_encrypted_v3_10000 USING btree (eql_v3.ore_cllw(eql_v3.jsonb_path_query_first((value)::jsonb, '7a3882d0f44d16913361486af5f74096'::text)))",
+      "bytes": "1163264"
+    },
+    {
+      "name": "json_ste_vec_large_encrypted_v3_10000_jsonb_array_index",
+      "def": "CREATE INDEX json_ste_vec_large_encrypted_v3_10000_jsonb_array_index ON public.json_ste_vec_large_encrypted_v3_10000 USING gin (eql_v3.jsonb_array((value)::jsonb))",
+      "bytes": "915726336"
+    },
+    {
+      "name": "json_ste_vec_large_encrypted_v3_10000_pkey",
+      "def": "CREATE UNIQUE INDEX json_ste_vec_large_encrypted_v3_10000_pkey ON public.json_ste_vec_large_encrypted_v3_10000 USING btree (id)",
+      "bytes": "245760"
+    }
+  ],
+  "json_tree_large_encrypted_v4_10000": [
+    {
+      "name": "json_tree_large_encrypted_v4_10000_field_order_idx",
+      "def": "CREATE INDEX json_tree_large_encrypted_v4_10000_field_order_idx ON public.json_tree_large_encrypted_v4_10000 USING btree (eql_v4.ord_term((value -> 'f37909387e6b7f65fbb88f01ff94e2cc'::text)))",
+      "bytes": "966656"
+    },
+    {
+      "name": "json_tree_large_encrypted_v4_10000_pkey",
+      "def": "CREATE UNIQUE INDEX json_tree_large_encrypted_v4_10000_pkey ON public.json_tree_large_encrypted_v4_10000 USING btree (id)",
+      "bytes": "245760"
+    },
+    {
+      "name": "json_tree_large_encrypted_v4_10000_query_gin_idx",
+      "def": "CREATE INDEX json_tree_large_encrypted_v4_10000_query_gin_idx ON public.json_tree_large_encrypted_v4_10000 USING gin (eql_v4.json_tree_query(value) jsonb_path_ops)",
+      "bytes": "41869312"
+    }
+  ],
+  "json_tree_small_plain_v4_100000": [
+    {
+      "name": "json_tree_small_plain_v4_100000_age_idx",
+      "def": "CREATE INDEX json_tree_small_plain_v4_100000_age_idx ON public.json_tree_small_plain_v4_100000 USING btree ((((plain ->> 'age'::text))::integer))",
+      "bytes": "720896"
+    },
+    {
+      "name": "json_tree_small_plain_v4_100000_gin_idx",
+      "def": "CREATE INDEX json_tree_small_plain_v4_100000_gin_idx ON public.json_tree_small_plain_v4_100000 USING gin (plain jsonb_path_ops)",
+      "bytes": "6881280"
+    },
+    {
+      "name": "json_tree_small_plain_v4_100000_pkey",
+      "def": "CREATE UNIQUE INDEX json_tree_small_plain_v4_100000_pkey ON public.json_tree_small_plain_v4_100000 USING btree (id)",
+      "bytes": "2260992"
+    }
+  ],
+  "json_ste_vec_small_encrypted_v3_100000": [
+    {
+      "name": "json_ste_vec_small_encrypted_v3_100000_field_eq_idx",
+      "def": "CREATE INDEX json_ste_vec_small_encrypted_v3_100000_field_eq_idx ON public.json_ste_vec_small_encrypted_v3_100000 USING btree (eql_v3.eq_term(eql_v3.jsonb_path_query_first((value)::jsonb, 'b81940706ae05004a9b95b6dbd1aaa60'::text)))",
+      "bytes": "24305664"
+    },
+    {
+      "name": "json_ste_vec_small_encrypted_v3_100000_field_order_idx",
+      "def": "CREATE INDEX json_ste_vec_small_encrypted_v3_100000_field_order_idx ON public.json_ste_vec_small_encrypted_v3_100000 USING btree (eql_v3.ore_cllw(eql_v3.jsonb_path_query_first((value)::jsonb, 'cc6e1824ab3319e8f92dc6199ce671b9'::text)))",
+      "bytes": "11452416"
+    },
+    {
+      "name": "json_ste_vec_small_encrypted_v3_100000_jsonb_array_index",
+      "def": "CREATE INDEX json_ste_vec_small_encrypted_v3_100000_jsonb_array_index ON public.json_ste_vec_small_encrypted_v3_100000 USING gin (eql_v3.jsonb_array((value)::jsonb))",
+      "bytes": "96657408"
+    },
+    {
+      "name": "json_ste_vec_small_encrypted_v3_100000_pkey",
+      "def": "CREATE UNIQUE INDEX json_ste_vec_small_encrypted_v3_100000_pkey ON public.json_ste_vec_small_encrypted_v3_100000 USING btree (id)",
+      "bytes": "2260992"
+    }
+  ],
+  "json_tree_small_encrypted_v4_100000": [
+    {
+      "name": "json_tree_small_encrypted_v4_100000_field_order_idx",
+      "def": "CREATE INDEX json_tree_small_encrypted_v4_100000_field_order_idx ON public.json_tree_small_encrypted_v4_100000 USING btree (eql_v4.ord_term((value -> 'a7b53d9b98181a98c49559f86362fcce'::text)))",
+      "bytes": "827392"
+    },
+    {
+      "name": "json_tree_small_encrypted_v4_100000_pkey",
+      "def": "CREATE UNIQUE INDEX json_tree_small_encrypted_v4_100000_pkey ON public.json_tree_small_encrypted_v4_100000 USING btree (id)",
+      "bytes": "2260992"
+    },
+    {
+      "name": "json_tree_small_encrypted_v4_100000_query_gin_idx",
+      "def": "CREATE INDEX json_tree_small_encrypted_v4_100000_query_gin_idx ON public.json_tree_small_encrypted_v4_100000 USING gin (eql_v4.json_tree_query(value) jsonb_path_ops)",
+      "bytes": "7438336"
+    }
+  ],
+  "json_tree_large_plain_v4_100000": [
+    {
+      "name": "json_tree_large_plain_v4_100000_gin_idx",
+      "def": "CREATE INDEX json_tree_large_plain_v4_100000_gin_idx ON public.json_tree_large_plain_v4_100000 USING gin (plain jsonb_path_ops)",
+      "bytes": "372080640"
+    },
+    {
+      "name": "json_tree_large_plain_v4_100000_pkey",
+      "def": "CREATE UNIQUE INDEX json_tree_large_plain_v4_100000_pkey ON public.json_tree_large_plain_v4_100000 USING btree (id)",
+      "bytes": "2260992"
+    },
+    {
+      "name": "json_tree_large_plain_v4_100000_salary_idx",
+      "def": "CREATE INDEX json_tree_large_plain_v4_100000_salary_idx ON public.json_tree_large_plain_v4_100000 USING btree (((((plain -> 'company'::text) ->> 'salary'::text))::integer))",
+      "bytes": "2162688"
+    }
+  ],
+  "json_ste_vec_large_encrypted_v3_100000": [
+    {
+      "name": "json_ste_vec_large_encrypted_v3_100000_field_order_idx",
+      "def": "CREATE INDEX json_ste_vec_large_encrypted_v3_100000_field_order_idx ON public.json_ste_vec_large_encrypted_v3_100000 USING btree (eql_v3.ore_cllw(eql_v3.jsonb_path_query_first((value)::jsonb, '7a3882d0f44d16913361486af5f74096'::text)))",
+      "bytes": "11444224"
+    },
+    {
+      "name": "json_ste_vec_large_encrypted_v3_100000_jsonb_array_index",
+      "def": "CREATE INDEX json_ste_vec_large_encrypted_v3_100000_jsonb_array_index ON public.json_ste_vec_large_encrypted_v3_100000 USING gin (eql_v3.jsonb_array((value)::jsonb))",
+      "bytes": "5918474240"
+    },
+    {
+      "name": "json_ste_vec_large_encrypted_v3_100000_pkey",
+      "def": "CREATE UNIQUE INDEX json_ste_vec_large_encrypted_v3_100000_pkey ON public.json_ste_vec_large_encrypted_v3_100000 USING btree (id)",
+      "bytes": "2260992"
+    }
+  ],
+  "json_tree_large_encrypted_v4_100000": [
+    {
+      "name": "json_tree_large_encrypted_v4_100000_field_order_idx",
+      "def": "CREATE INDEX json_tree_large_encrypted_v4_100000_field_order_idx ON public.json_tree_large_encrypted_v4_100000 USING btree (eql_v4.ord_term((value -> 'f37909387e6b7f65fbb88f01ff94e2cc'::text)))",
+      "bytes": "8257536"
+    },
+    {
+      "name": "json_tree_large_encrypted_v4_100000_pkey",
+      "def": "CREATE UNIQUE INDEX json_tree_large_encrypted_v4_100000_pkey ON public.json_tree_large_encrypted_v4_100000 USING btree (id)",
+      "bytes": "2260992"
+    },
+    {
+      "name": "json_tree_large_encrypted_v4_100000_query_gin_idx",
+      "def": "CREATE INDEX json_tree_large_encrypted_v4_100000_query_gin_idx ON public.json_tree_large_encrypted_v4_100000 USING gin (eql_v4.json_tree_query(value) jsonb_path_ops)",
+      "bytes": "375562240"
+    }
+  ]
+}

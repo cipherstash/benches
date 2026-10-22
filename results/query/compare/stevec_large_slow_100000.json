@@ -1,0 +1,12 @@
+[
+  {
+    "first_ms": 142290,
+    "id": "JSON_COMPARE_V3/large/contains/array_element/100000",
+    "median_ms": 142711.031583,
+    "runs_ms": [
+      142711.031583,
+      143426.75675,
+      142554.733709
+    ]
+  }
+]

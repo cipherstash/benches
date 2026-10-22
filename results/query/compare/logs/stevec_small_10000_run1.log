@@ -1,0 +1,66 @@
+    Finished `bench` profile [optimized] target(s) in 0.35s
+json_compare_v3 (small): row 5000 of `json_ste_vec_small_encrypted_v3_10000`
+json_compare_v3: building the per-selector functional indexes...
+[2m2026-10-22T02:10:42.884653Z[0m [33m WARN[0m [2msqlx::query[0m[2m:[0m slow statement: execution time exceeded alert threshold [3msummary[0m[2m=[0m"ANALYZE json_ste_vec_small_encrypted_v3_10000" [3mdb.statement[0m[2m=[0m"" [3mrows_affected[0m[2m=[0m0 [3mrows_returned[0m[2m=[0m0 [3melapsed[0m[2m=[0m1.241936875s [3melapsed_secs[0m[2m=[0m1.241936875 [3mslow_threshold[0m[2m=[0m1s
+bench metadata written to /Users/dan/Projects/CipherStash/benches/results/query/compare/stevec_small_metadata_10000.json
+Benchmarking JSON_COMPARE_V3/small/contains/functional/10000
+Benchmarking JSON_COMPARE_V3/small/contains/functional/10000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/small/contains/functional/10000: Collecting 10 samples in estimated 5.0049 s (22k iterations)
+Benchmarking JSON_COMPARE_V3/small/contains/functional/10000: Analyzing
+JSON_COMPARE_V3/small/contains/functional/10000
+                        time:   [232.00 µs 232.97 µs 234.70 µs]
+Benchmarking JSON_COMPARE_V3/small/contains/operator/10000
+Benchmarking JSON_COMPARE_V3/small/contains/operator/10000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/small/contains/operator/10000: Collecting 10 samples in estimated 5.1083 s (20 iterations)
+Benchmarking JSON_COMPARE_V3/small/contains/operator/10000: Analyzing
+JSON_COMPARE_V3/small/contains/operator/10000
+                        time:   [256.82 ms 257.67 ms 258.57 ms]
+Benchmarking JSON_COMPARE_V3/small/field_eq/extractor/10000
+Benchmarking JSON_COMPARE_V3/small/field_eq/extractor/10000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/small/field_eq/extractor/10000: Collecting 10 samples in estimated 5.0010 s (27k iterations)
+Benchmarking JSON_COMPARE_V3/small/field_eq/extractor/10000: Analyzing
+JSON_COMPARE_V3/small/field_eq/extractor/10000
+                        time:   [189.63 µs 190.36 µs 190.92 µs]
+Benchmarking JSON_COMPARE_V3/small/field_eq/unique/10000
+Benchmarking JSON_COMPARE_V3/small/field_eq/unique/10000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/small/field_eq/unique/10000: Collecting 10 samples in estimated 5.0087 s (25k iterations)
+Benchmarking JSON_COMPARE_V3/small/field_eq/unique/10000: Analyzing
+JSON_COMPARE_V3/small/field_eq/unique/10000
+                        time:   [184.32 µs 191.83 µs 196.12 µs]
+Benchmarking JSON_COMPARE_V3/small/field_eq/eq_term/10000
+Benchmarking JSON_COMPARE_V3/small/field_eq/eq_term/10000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/small/field_eq/eq_term/10000: Collecting 10 samples in estimated 5.0017 s (44k iterations)
+Benchmarking JSON_COMPARE_V3/small/field_eq/eq_term/10000: Analyzing
+JSON_COMPARE_V3/small/field_eq/eq_term/10000
+                        time:   [112.14 µs 112.67 µs 113.14 µs]
+Benchmarking JSON_COMPARE_V3/small/field_gt/functional/10000
+Benchmarking JSON_COMPARE_V3/small/field_gt/functional/10000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/small/field_gt/functional/10000: Collecting 10 samples in estimated 5.0277 s (5885 iterations)
+Benchmarking JSON_COMPARE_V3/small/field_gt/functional/10000: Analyzing
+JSON_COMPARE_V3/small/field_gt/functional/10000
+                        time:   [835.92 µs 854.12 µs 885.45 µs]
+Benchmarking JSON_COMPARE_V3/small/field_between/functional/10000
+Benchmarking JSON_COMPARE_V3/small/field_between/functional/10000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/small/field_between/functional/10000: Collecting 10 samples in estimated 5.0040 s (2695 iterations)
+Benchmarking JSON_COMPARE_V3/small/field_between/functional/10000: Analyzing
+JSON_COMPARE_V3/small/field_between/functional/10000
+                        time:   [1.8352 ms 1.8501 ms 1.8776 ms]
+Benchmarking JSON_COMPARE_V3/small/field_order/functional/10000
+Benchmarking JSON_COMPARE_V3/small/field_order/functional/10000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/small/field_order/functional/10000: Collecting 10 samples in estimated 5.0048 s (19k iterations)
+Benchmarking JSON_COMPARE_V3/small/field_order/functional/10000: Analyzing
+JSON_COMPARE_V3/small/field_order/functional/10000
+                        time:   [261.54 µs 263.42 µs 267.21 µs]
+Benchmarking JSON_COMPARE_V3/small/extract/by_id/10000
+Benchmarking JSON_COMPARE_V3/small/extract/by_id/10000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/small/extract/by_id/10000: Collecting 10 samples in estimated 5.0035 s (41k iterations)
+Benchmarking JSON_COMPARE_V3/small/extract/by_id/10000: Analyzing
+JSON_COMPARE_V3/small/extract/by_id/10000
+                        time:   [122.06 µs 122.70 µs 123.81 µs]
+Benchmarking JSON_COMPARE_V3/small/path_query/field/10000
+Benchmarking JSON_COMPARE_V3/small/path_query/field/10000: Warming up for 3.0000 s
+Benchmarking JSON_COMPARE_V3/small/path_query/field/10000: Collecting 10 samples in estimated 5.0019 s (41k iterations)
+Benchmarking JSON_COMPARE_V3/small/path_query/field/10000: Analyzing
+JSON_COMPARE_V3/small/path_query/field/10000
+                        time:   [123.66 µs 124.18 µs 124.71 µs]
+

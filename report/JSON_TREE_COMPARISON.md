@@ -1,5 +1,7 @@
 # JSON: SteVec (EQL v3) vs json_tree (EQL v4) — third measurement
 
+Three-way comparison over identical documents (native jsonb, SteVec, json_tree; stack 6adf37fcc): [JSON_TREE_VS_STEVEC_VS_PLAINTEXT.md](JSON_TREE_VS_STEVEC_VS_PLAINTEXT.md).
+
 The JSON tree family (`public.eql_v4_json_tree`, sealed by stack-encrypt's `Json`
 index) against the SteVec scheme it succeeds (`public.json`, EQL 3.0.0-alpha.3,
 cipherstash-client 0.38.1) and native jsonb, at 10,000 and 100,000 rows, on one

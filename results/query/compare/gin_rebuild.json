@@ -1,0 +1,122 @@
+[
+  {
+    "system": "plaintext",
+    "corpus": "flat",
+    "rows": 10000,
+    "table": "json_tree_small_plain_v4_10000",
+    "index": "json_tree_small_plain_v4_10000_gin_idx",
+    "indexdef": "CREATE INDEX json_tree_small_plain_v4_10000_gin_idx ON public.json_tree_small_plain_v4_10000 USING gin (plain jsonb_path_ops)",
+    "build_seconds": 0.042025209055282176,
+    "bytes": 901120
+  },
+  {
+    "system": "SteVec",
+    "corpus": "flat",
+    "rows": 10000,
+    "table": "json_ste_vec_small_encrypted_v3_10000",
+    "index": "json_ste_vec_small_encrypted_v3_10000_jsonb_array_index",
+    "indexdef": "CREATE INDEX json_ste_vec_small_encrypted_v3_10000_jsonb_array_index ON public.json_ste_vec_small_encrypted_v3_10000 USING gin (eql_v3.jsonb_array((value)::jsonb))",
+    "build_seconds": 0.9436102909967303,
+    "bytes": 11329536
+  },
+  {
+    "system": "json_tree",
+    "corpus": "flat",
+    "rows": 10000,
+    "table": "json_tree_small_encrypted_v4_10000",
+    "index": "json_tree_small_encrypted_v4_10000_query_gin_idx",
+    "indexdef": "CREATE INDEX json_tree_small_encrypted_v4_10000_query_gin_idx ON public.json_tree_small_encrypted_v4_10000 USING gin (eql_v4.json_tree_query(value) jsonb_path_ops)",
+    "build_seconds": 0.06920058303512633,
+    "bytes": 1032192
+  },
+  {
+    "system": "plaintext",
+    "corpus": "nested",
+    "rows": 10000,
+    "table": "json_tree_large_plain_v4_10000",
+    "index": "json_tree_large_plain_v4_10000_gin_idx",
+    "indexdef": "CREATE INDEX json_tree_large_plain_v4_10000_gin_idx ON public.json_tree_large_plain_v4_10000 USING gin (plain jsonb_path_ops)",
+    "build_seconds": 1.1512393329758197,
+    "bytes": 40771584
+  },
+  {
+    "system": "SteVec",
+    "corpus": "nested",
+    "rows": 10000,
+    "table": "json_ste_vec_large_encrypted_v3_10000",
+    "index": "json_ste_vec_large_encrypted_v3_10000_jsonb_array_index",
+    "indexdef": "CREATE INDEX json_ste_vec_large_encrypted_v3_10000_jsonb_array_index ON public.json_ste_vec_large_encrypted_v3_10000 USING gin (eql_v3.jsonb_array((value)::jsonb))",
+    "build_seconds": 139.76490570791066,
+    "bytes": 915726336
+  },
+  {
+    "system": "json_tree",
+    "corpus": "nested",
+    "rows": 10000,
+    "table": "json_tree_large_encrypted_v4_10000",
+    "index": "json_tree_large_encrypted_v4_10000_query_gin_idx",
+    "indexdef": "CREATE INDEX json_tree_large_encrypted_v4_10000_query_gin_idx ON public.json_tree_large_encrypted_v4_10000 USING gin (eql_v4.json_tree_query(value) jsonb_path_ops)",
+    "build_seconds": 2.339035207987763,
+    "bytes": 41869312
+  },
+  {
+    "system": "plaintext",
+    "corpus": "flat",
+    "rows": 100000,
+    "table": "json_tree_small_plain_v4_100000",
+    "index": "json_tree_small_plain_v4_100000_gin_idx",
+    "indexdef": "CREATE INDEX json_tree_small_plain_v4_100000_gin_idx ON public.json_tree_small_plain_v4_100000 USING gin (plain jsonb_path_ops)",
+    "build_seconds": 0.16927479195874184,
+    "bytes": 6881280
+  },
+  {
+    "system": "SteVec",
+    "corpus": "flat",
+    "rows": 100000,
+    "table": "json_ste_vec_small_encrypted_v3_100000",
+    "index": "json_ste_vec_small_encrypted_v3_100000_jsonb_array_index",
+    "indexdef": "CREATE INDEX json_ste_vec_small_encrypted_v3_100000_jsonb_array_index ON public.json_ste_vec_small_encrypted_v3_100000 USING gin (eql_v3.jsonb_array((value)::jsonb))",
+    "build_seconds": 10.92491779208649,
+    "bytes": 96657408
+  },
+  {
+    "system": "json_tree",
+    "corpus": "flat",
+    "rows": 100000,
+    "table": "json_tree_small_encrypted_v4_100000",
+    "index": "json_tree_small_encrypted_v4_100000_query_gin_idx",
+    "indexdef": "CREATE INDEX json_tree_small_encrypted_v4_100000_query_gin_idx ON public.json_tree_small_encrypted_v4_100000 USING gin (eql_v4.json_tree_query(value) jsonb_path_ops)",
+    "build_seconds": 0.5541449160082266,
+    "bytes": 7438336
+  },
+  {
+    "system": "plaintext",
+    "corpus": "nested",
+    "rows": 100000,
+    "table": "json_tree_large_plain_v4_100000",
+    "index": "json_tree_large_plain_v4_100000_gin_idx",
+    "indexdef": "CREATE INDEX json_tree_large_plain_v4_100000_gin_idx ON public.json_tree_large_plain_v4_100000 USING gin (plain jsonb_path_ops)",
+    "build_seconds": 18.145976332947612,
+    "bytes": 372080640
+  },
+  {
+    "system": "SteVec",
+    "corpus": "nested",
+    "rows": 100000,
+    "table": "json_ste_vec_large_encrypted_v3_100000",
+    "index": "json_ste_vec_large_encrypted_v3_100000_jsonb_array_index",
+    "indexdef": "CREATE INDEX json_ste_vec_large_encrypted_v3_100000_jsonb_array_index ON public.json_ste_vec_large_encrypted_v3_100000 USING gin (eql_v3.jsonb_array((value)::jsonb))",
+    "build_seconds": 1616.0690901249181,
+    "bytes": 5918474240
+  },
+  {
+    "system": "json_tree",
+    "corpus": "nested",
+    "rows": 100000,
+    "table": "json_tree_large_encrypted_v4_100000",
+    "index": "json_tree_large_encrypted_v4_100000_query_gin_idx",
+    "indexdef": "CREATE INDEX json_tree_large_encrypted_v4_100000_query_gin_idx ON public.json_tree_large_encrypted_v4_100000 USING gin (eql_v4.json_tree_query(value) jsonb_path_ops)",
+    "build_seconds": 33.72994258394465,
+    "bytes": 375562240
+  }
+]

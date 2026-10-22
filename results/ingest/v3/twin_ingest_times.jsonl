@@ -1,0 +1,4 @@
+{"batch_size":500,"recorded_at":"2026-10-22T00:37:04.880775+00:00","sealed":10000,"seconds":141.276200917,"table":"json_ste_vec_large_encrypted_v3_10000","twin":"json_tree_large_plain_v4_10000"}
+{"batch_size":500,"recorded_at":"2026-10-22T01:04:43.600553+00:00","sealed":100000,"seconds":1444.069345916,"table":"json_ste_vec_large_encrypted_v3_100000","twin":"json_tree_large_plain_v4_100000"}
+{"batch_size":500,"recorded_at":"2026-10-22T01:33:22.456863+00:00","sealed":10000,"seconds":10.128379167,"table":"json_ste_vec_small_encrypted_v3_10000","twin":"json_tree_small_plain_v4_10000"}
+{"batch_size":500,"recorded_at":"2026-10-22T01:34:52.571913+00:00","sealed":100000,"seconds":85.737339375,"table":"json_ste_vec_small_encrypted_v3_100000","twin":"json_tree_small_plain_v4_100000"}
