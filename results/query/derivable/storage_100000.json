@@ -1,0 +1,58 @@
+{
+  "json_tree_small_encrypted_v4_100000": {
+    "gates": {
+      "rows": 100000.0,
+      "pg_column_size": 1398.47943,
+      "chars": 1278.90972,
+      "sv_chars": 742.90972,
+      "entries": 5.0,
+      "entries_with_x": 0.0,
+      "table_bytes": 163913728.0,
+      "toast_bytes": 8192.0,
+      "indexes_bytes": 10567680.0,
+      "gin_bytes": 8306688.0,
+      "total_bytes": 174481408.0
+    },
+    "derivable": {
+      "rows": 100000.0,
+      "pg_column_size": 1501.99763,
+      "chars": 1383.90972,
+      "sv_chars": 847.90972,
+      "entries": 5.0,
+      "entries_with_x": 5.0,
+      "table_bytes": 163913728.0,
+      "toast_bytes": 8192.0,
+      "indexes_bytes": 10567680.0,
+      "gin_bytes": 8306688.0,
+      "total_bytes": 174481408.0
+    }
+  },
+  "json_tree_large_encrypted_v4_100000": {
+    "gates": {
+      "rows": 100000.0,
+      "pg_column_size": 31690.72826,
+      "chars": 49002.92725,
+      "sv_chars": 32986.57037,
+      "entries": 217.05984,
+      "entries_with_x": 0.0,
+      "table_bytes": 3347652608.0,
+      "toast_bytes": 3342401536.0,
+      "indexes_bytes": 377782272.0,
+      "gin_bytes": 375521280.0,
+      "total_bytes": 3725434880.0
+    },
+    "derivable": {
+      "rows": 100000.0,
+      "pg_column_size": 35228.48512,
+      "chars": 53561.18389,
+      "sv_chars": 37544.82701,
+      "entries": 217.05984,
+      "entries_with_x": 217.05984,
+      "table_bytes": 3714695168.0,
+      "toast_bytes": 3709444096.0,
+      "indexes_bytes": 377782272.0,
+      "gin_bytes": 375521280.0,
+      "total_bytes": 4092477440.0
+    }
+  }
+}

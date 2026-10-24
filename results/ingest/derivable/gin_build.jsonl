@@ -1,0 +1,12 @@
+{"format": "gates", "index": "json_tree_large_encrypted_v4_10000_query_gin_idx", "rows": 10000, "seconds": 2.041}
+{"format": "gates", "index": "json_tree_small_encrypted_v4_10000_query_gin_idx", "rows": 10000, "seconds": 0.070}
+{"format": "derivable", "index": "json_tree_large_encrypted_v4_10000_query_gin_idx", "rows": 10000, "seconds": 2.167}
+{"format": "derivable", "index": "json_tree_small_encrypted_v4_10000_query_gin_idx", "rows": 10000, "seconds": 0.072}
+{"format": "derivable", "index": "json_tree_large_encrypted_v4_10000_query_gin_idx", "rows": 10000, "seconds": 2.111}
+{"format": "derivable", "index": "json_tree_small_encrypted_v4_10000_query_gin_idx", "rows": 10000, "seconds": 0.068}
+{"format": "gates", "index": "json_tree_large_encrypted_v4_10000_query_gin_idx", "rows": 10000, "seconds": 1.928}
+{"format": "gates", "index": "json_tree_small_encrypted_v4_10000_query_gin_idx", "rows": 10000, "seconds": 0.068}
+{"format": "gates", "index": "json_tree_large_encrypted_v4_10000_query_gin_idx", "rows": 10000, "seconds": 2.023}
+{"format": "gates", "index": "json_tree_small_encrypted_v4_10000_query_gin_idx", "rows": 10000, "seconds": 0.067}
+{"format": "derivable", "index": "json_tree_large_encrypted_v4_10000_query_gin_idx", "rows": 10000, "seconds": 2.049}
+{"format": "derivable", "index": "json_tree_small_encrypted_v4_10000_query_gin_idx", "rows": 10000, "seconds": 0.072}

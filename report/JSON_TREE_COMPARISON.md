@@ -1,4 +1,4 @@
-# JSON: SteVec (EQL v3) vs json_tree (EQL v4) — fourth measurement
+# JSON: SteVec (EQL v3) vs json_tree (EQL v4) — fifth measurement
 
 Three-way comparison over identical documents (native jsonb, SteVec, json_tree; stack 6adf37fcc): [JSON_TREE_VS_STEVEC_VS_PLAINTEXT.md](JSON_TREE_VS_STEVEC_VS_PLAINTEXT.md).
 
@@ -21,9 +21,56 @@ measured that branch. The third measures branch `feat/json-tree-ordinal-chain`
 walk by ordinal; its before/after comparison against the second measurement is
 the section after next. The fourth (stack ba62e3fc5, same branch) measures
 storage only: it makes the leaf ordering term opt-in per path, and the bench
-now orders only `$.age` (flat) and `$.company.salary` (nested); see the next
-section. The Summary and Findings further down are the second measurement's
-and quote its numbers. The Results tables are the third measurement's.
+now orders only `$.age` (flat) and `$.company.salary` (nested); see the
+fourth measurement's section. The fifth (2026-10-25) measures
+cipherstash/stack#1363 (derivable tokens and the self tag, commit 683802bcc)
+against its base (edabee625); it has a report of its own,
+[JSON_TREE_DERIVABLE_TOKENS.md](JSON_TREE_DERIVABLE_TOKENS.md), and the next
+section summarises it. The Summary and Findings further down are the second
+measurement's and quote its numbers. The Results tables are the fifth
+measurement's json_tree figures.
+
+## Fifth measurement (2026-10-25): derivable tokens
+
+Full report, with methodology, every table and the noise floor:
+[JSON_TREE_DERIVABLE_TOKENS.md](JSON_TREE_DERIVABLE_TOKENS.md).
+
+cipherstash/stack#1363 (commit 683802bcc) stores an eight-byte self tag `x` on
+every entry and drops the ordinal from an object member's token. So the client
+derives the token of any path with no wildcard, a read sends one token
+(`json_tree_subtree(doc, tokens text[], budget)`), and a wildcard is expanded
+on the client to N + 1 tokens a level. It was measured against its base
+(edabee625, the gated walk) on two new databases on this cluster
+(`jsonbench_base` and `jsonbench_new`, the same plaintext twins), timed
+interleaved by a new harness (`bench:dt:*`), at 10,000 rows in full and
+100,000 rows for sizes and the headline reads. Per-call medians at 10,000
+rows:
+
+| | gates | derivable | change |
+|---|--:|--:|--:|
+| `$.user.contact.emergency_contact.name` (4 steps) | 2.48 ms | 1.93 ms | −22% |
+| `$.company.name` (2 steps) | 1.97 ms | 1.98 ms | +0% |
+| `$.company` (whole object) | 2.00 ms | 2.81 ms | +41% |
+| `$.orders`, walked out (176 entries) | 18.1 ms | 25.9 ms | +43% |
+| `$.orders`, default budget (sealed root) | 6.36 ms | 9.62 ms | +51% |
+| `$.orders[*].total`, N = 64 | 5.51 ms | 2.54 ms | −54% |
+| `$.orders[*].items[*].price`, N = 64 (4,161 tokens) | 17.4 ms | 25.8 ms | +48% |
+| `json_tree_children`, 300-element array | 25.1 ms | 12.8 ms | −49% |
+| `json_tree_child_count`, `$.orders` | 1.75 ms | 2.79 ms | +59% |
+| full read of a 300-element array | 31.1 ms | 55.4 ms | +78% |
+| nested `pg_column_size` per document | 31,714 B | 35,256 B | +11.2% |
+
+Containment and `->` moved by 0 to +10%, in step with the larger document.
+Both formats passed every correctness check at both tiers (gates 692 and
+672, derivable 717 and 697, the difference being the read of `$` the base
+refuses).
+
+**Results tables.** The json_tree columns of the Results tables below were
+re-run on the derivable format (`BENCH_DB=jsonbench_new mise run
+bench:v4:query:json_tree{,_nested} <N>`). `subtree/*` and `subtree_at/items`
+there are now token-list reads (`subtree_at/items` keeps its name; it is
+`$.orders[*].items` at the default N = 64). The v3 SteVec and flat plaintext
+columns were not re-run and are the second measurement's.
 
 ## Fourth measurement (2026-10-22): ordering term opt-in
 
@@ -422,25 +469,30 @@ out of the planner's inlining.
 
 ## Results
 
-This run's numbers (the third measurement). Query-only medians (criterion, 10
+The fifth measurement's json_tree numbers (derivable tokens, stack 683802bcc,
+database `jsonbench_new`, 2026-10-25). Query-only medians (criterion, 10
 samples), no decrypt. Delta is v4 relative to v3; negative is faster. The v3
 SteVec and flat plaintext columns were not re-run and are the second
-measurement's. `subtree/orders` and `subtree_at/items` return the
-sealed root under the default budget (one row); the `_walked` twins call the
-same functions with the budget off and return every entry.
+measurement's. The nested plaintext column was re-run with the json_tree one.
+`subtree/orders` and `subtree_at/items` return the sealed root under the
+default budget (one row). The `_walked` twins call the same read with the
+budget off and return every entry. Each `subtree/*` read now returns its
+node at `d = 0` too (`subtree/company` 7 rows, was 6). The third
+measurement's tables, against the ordinal-chained walk, are in this file at
+commit cd9643d, and its before/after section above quotes them.
 
 ### 10,000 rows
 
 | scenario | v3 SteVec | v4 json_tree | v4 vs v3 | plaintext jsonb | v4 rows | v4 index | v3 index |
 |---|--:|--:|--:|--:|--:|---|---|
-| contains/functional | 0.23 ms | 0.53 ms | +131% | 0.10 ms | 1 | query_gin_idx | jsonb_array_index |
-| contains/operator *(v4-only)* | — | 0.54 ms | — | 0.10 ms | 1 | query_gin_idx | — |
-| field_eq/extractor | 0.81 ms | 0.59 ms | -27% | 0.20 ms | 6 | query_gin_idx | seq scan |
-| field_eq/unique *(v4-only)* | — | 0.47 ms | — | 0.20 ms | 1 | query_gin_idx | — |
-| field_gt/functional | 0.81 ms | 0.10 ms | -87% | — | 10 | field_order_idx | field_order_idx |
-| field_between/functional *(v4-only)* | — | 0.21 ms | — | — | 10 | field_order_idx | — |
-| field_order/functional | 0.25 ms | 0.87 ms | +248% | — | 10 | field_order_idx | field_order_idx |
-| extract/by_id *(v4-only)* | — | 0.19 ms | — | — | 1 | pkey | — |
+| contains/functional | 0.23 ms | 0.49 ms | +111% | 0.10 ms | 1 | query_gin_idx | jsonb_array_index |
+| contains/operator *(v4-only)* | — | 0.49 ms | — | 0.10 ms | 1 | query_gin_idx | — |
+| field_eq/extractor | 0.81 ms | 0.52 ms | -37% | 0.20 ms | 6 | query_gin_idx | seq scan |
+| field_eq/unique *(v4-only)* | — | 0.41 ms | — | 0.20 ms | 1 | query_gin_idx | — |
+| field_gt/functional | 0.81 ms | 0.15 ms | -82% | — | 10 | field_order_idx | field_order_idx |
+| field_between/functional *(v4-only)* | — | 0.20 ms | — | — | 10 | field_order_idx | — |
+| field_order/functional | 0.25 ms | 0.78 ms | +211% | — | 10 | field_order_idx | field_order_idx |
+| extract/by_id *(v4-only)* | — | 0.16 ms | — | — | 1 | pkey | — |
 
 v3-only scenarios (no v4 surface): `field_eq/bare`, `field_eq/functional`
 
@@ -448,14 +500,14 @@ v3-only scenarios (no v4 surface): `field_eq/bare`, `field_eq/functional`
 
 | scenario | v3 SteVec | v4 json_tree | v4 vs v3 | plaintext jsonb | v4 rows | v4 index | v3 index |
 |---|--:|--:|--:|--:|--:|---|---|
-| contains/functional | 0.25 ms | 0.53 ms | +108% | 0.20 ms | 1 | query_gin_idx | jsonb_array_index |
-| contains/operator *(v4-only)* | — | 0.50 ms | — | 0.20 ms | 1 | query_gin_idx | — |
-| field_eq/extractor | 6.06 ms | 1.16 ms | -81% | 0.22 ms | 10 | query_gin_idx | seq scan |
-| field_eq/unique *(v4-only)* | — | 0.26 ms | — | 0.22 ms | 1 | query_gin_idx | — |
-| field_gt/functional | 0.86 ms | 0.10 ms | -88% | — | 10 | field_order_idx | field_order_idx |
-| field_between/functional *(v4-only)* | — | 0.22 ms | — | — | 10 | field_order_idx | — |
-| field_order/functional | 0.24 ms | 0.87 ms | +257% | — | 10 | field_order_idx | field_order_idx |
-| extract/by_id *(v4-only)* | — | 0.19 ms | — | — | 1 | pkey | — |
+| contains/functional | 0.25 ms | 0.41 ms | +63% | 0.20 ms | 1 | query_gin_idx | jsonb_array_index |
+| contains/operator *(v4-only)* | — | 0.41 ms | — | 0.20 ms | 1 | query_gin_idx | — |
+| field_eq/extractor | 6.06 ms | 1.12 ms | -82% | 0.22 ms | 10 | query_gin_idx | seq scan |
+| field_eq/unique *(v4-only)* | — | 0.36 ms | — | 0.22 ms | 1 | query_gin_idx | — |
+| field_gt/functional | 0.86 ms | 0.16 ms | -82% | — | 10 | field_order_idx | field_order_idx |
+| field_between/functional *(v4-only)* | — | 0.21 ms | — | — | 10 | field_order_idx | — |
+| field_order/functional | 0.24 ms | 0.76 ms | +210% | — | 10 | field_order_idx | field_order_idx |
+| extract/by_id *(v4-only)* | — | 0.17 ms | — | — | 1 | pkey | — |
 
 v3-only scenarios (no v4 surface): `field_eq/bare`, `field_eq/functional`
 
@@ -463,49 +515,43 @@ v3-only scenarios (no v4 surface): `field_eq/bare`, `field_eq/functional`
 
 | scenario | v4 json_tree | plaintext jsonb | v4 / plain | rows | v4 index | plain index |
 |---|--:|--:|--:|--:|---|---|
-| contains/deep_object | 2.89 ms | 0.42 ms | 6.8× | 10 | query_gin_idx | gin_idx |
-| contains/array_element | 0.75 ms | 0.10 ms | 7.1× | 1 | query_gin_idx | gin_idx |
-| contains/nested_array | 3.48 ms | 0.43 ms | 8.1× | 10 | query_gin_idx | gin_idx |
-| field_eq/nested | 0.52 ms | 0.10 ms | 5.1× | 1 | query_gin_idx | gin_idx |
-| field_gt/nested | 0.11 ms | 0.14 ms | 0.7× | 10 | field_order_idx | seq scan |
-| field_order/nested | 3.81 ms | 0.14 ms | 26.7× | 10 | field_order_idx | salary_idx |
-| subtree/company | 1.99 ms | 0.10 ms | 20.0× | 6 | pkey | pkey |
-| subtree/user | 2.38 ms | 0.10 ms | 24.7× | 12 | pkey | pkey |
-| subtree/orders | 5.71 ms | 0.10 ms | 54.7× | 1 | pkey | pkey |
-| subtree_at/items | 8.21 ms | 0.11 ms | 75.5× | 1 | pkey | pkey |
-| subtree/orders_walked | 10.92 ms | 0.11 ms | 103.4× | 122 | pkey | pkey |
-| subtree_at/items_walked | 10.93 ms | 0.11 ms | 97.1× | 87 | pkey | pkey |
-| children/orders | 1.54 ms | 0.12 ms | 13.3× | 7 | pkey | pkey |
-| child_count/orders | 1.53 ms | 0.10 ms | 14.6× | 1 | pkey | pkey |
-| path_query/wildcard | 1.64 ms | 0.10 ms | 15.7× | 7 | pkey | pkey |
-| extract/nested | 0.47 ms | 0.10 ms | 4.6× | 1 | pkey | pkey |
+| contains/deep_object | 1.92 ms | 0.37 ms | 5.2× | 10 | query_gin_idx | gin_idx |
+| contains/array_element | 0.62 ms | 0.08 ms | 7.5× | 1 | query_gin_idx | gin_idx |
+| contains/nested_array | 2.62 ms | 0.36 ms | 7.2× | 10 | query_gin_idx | gin_idx |
+| field_eq/nested | 0.44 ms | 0.08 ms | 5.6× | 1 | query_gin_idx | gin_idx |
+| field_gt/nested | 0.08 ms | 0.13 ms | 0.7× | 10 | field_order_idx | seq scan |
+| field_order/nested | 2.37 ms | 0.12 ms | 19.5× | 10 | field_order_idx | salary_idx |
+| subtree/company | 2.39 ms | 0.08 ms | 29.8× | 7 | pkey | pkey |
+| subtree/user | 3.13 ms | 0.08 ms | 39.4× | 13 | pkey | pkey |
+| subtree/orders | 9.19 ms | 0.09 ms | 103.1× | 1 | pkey | pkey |
+| subtree_at/items | 8.96 ms | 0.09 ms | 100.0× | 1 | pkey | pkey |
+| subtree/orders_walked | 17.89 ms | 0.08 ms | 227.3× | 123 | pkey | pkey |
+| subtree_at/items_walked | 12.94 ms | 0.08 ms | 156.5× | 87 | pkey | pkey |
+| children/orders | 1.50 ms | 0.09 ms | 17.6× | 7 | pkey | pkey |
+| child_count/orders | 2.29 ms | 0.07 ms | 33.6× | 1 | pkey | pkey |
+| path_query/wildcard | 1.19 ms | 0.08 ms | 14.9× | 7 | pkey | pkey |
+| extract/nested | 0.39 ms | 0.07 ms | 5.3× | 1 | pkey | pkey |
 
 ### Nested corpus, 100,000 rows (no SteVec twin; baseline is native jsonb over the same rows)
 
 | scenario | v4 json_tree | plaintext jsonb | v4 / plain | rows | v4 index | plain index |
 |---|--:|--:|--:|--:|---|---|
-| contains/deep_object | 7.15 ms | 2.07 ms | 3.5× | 10 | query_gin_idx | gin_idx |
-| contains/array_element | 2.11 ms | 0.13 ms | 16.8× | 1 | query_gin_idx | gin_idx |
-| contains/nested_array | 9.49 ms | 1.59 ms | 6.0× | 10 | query_gin_idx | gin_idx |
-| field_eq/nested | 0.55 ms | 0.10 ms | 5.5× | 1 | query_gin_idx | gin_idx |
-| field_gt/nested | 0.11 ms | 0.17 ms | 0.6× | 10 | field_order_idx | seq scan |
-| field_order/nested | 4.12 ms | 0.15 ms | 27.1× | 10 | field_order_idx | salary_idx |
-| subtree/company | 1.96 ms | 0.10 ms | 19.7× | 6 | pkey | pkey |
-| subtree/user | 2.45 ms | 0.10 ms | 24.5× | 12 | pkey | pkey |
-| subtree/orders | 5.46 ms | 0.11 ms | 50.7× | 1 | pkey | pkey |
-| subtree_at/items | 7.18 ms | 0.11 ms | 65.4× | 1 | pkey | pkey |
-| subtree/orders_walked | 11.35 ms | 0.11 ms | 103.9× | 130 | pkey | pkey |
-| subtree_at/items_walked | 11.27 ms | 0.11 ms | 100.4× | 105 | pkey | pkey |
-| children/orders | 1.49 ms | 0.11 ms | 13.5× | 5 | pkey | pkey |
-| child_count/orders | 1.52 ms | 0.10 ms | 16.0× | 1 | pkey | pkey |
-| path_query/wildcard | 1.41 ms | 0.10 ms | 14.0× | 5 | pkey | pkey |
-| extract/nested | 0.54 ms | 0.09 ms | 5.7× | 1 | pkey | pkey |
-
-Plaintext baseline for the flat corpus is `json_small_plaintext_<N>` (`value @>
-'{"age": n}'` and `value -> 'age' = $1`, jsonb_path_ops GIN); for the nested
-corpus it is the plaintext twin table itself (same rows). `field_gt/functional`
-is now the index at both tiers under the prepared statement's generic plan
-(finding 3 of the first run).
+| contains/deep_object | 6.13 ms | 1.96 ms | 3.1× | 10 | query_gin_idx | gin_idx |
+| contains/array_element | 1.83 ms | 0.13 ms | 14.6× | 1 | query_gin_idx | gin_idx |
+| contains/nested_array | 8.09 ms | 1.56 ms | 5.2× | 10 | query_gin_idx | gin_idx |
+| field_eq/nested | 0.46 ms | 0.10 ms | 4.5× | 1 | query_gin_idx | gin_idx |
+| field_gt/nested | 0.10 ms | 0.18 ms | 0.6× | 10 | field_order_idx | seq scan |
+| field_order/nested | 2.41 ms | 0.14 ms | 17.3× | 10 | field_order_idx | salary_idx |
+| subtree/company | 2.35 ms | 0.09 ms | 25.5× | 7 | pkey | pkey |
+| subtree/user | 3.06 ms | 0.09 ms | 33.0× | 13 | pkey | pkey |
+| subtree/orders | 8.91 ms | 0.10 ms | 85.9× | 1 | pkey | pkey |
+| subtree_at/items | 8.92 ms | 0.10 ms | 85.1× | 1 | pkey | pkey |
+| subtree/orders_walked | 18.27 ms | 0.10 ms | 175.6× | 131 | pkey | pkey |
+| subtree_at/items_walked | 14.98 ms | 0.10 ms | 144.1× | 105 | pkey | pkey |
+| children/orders | 1.43 ms | 0.11 ms | 13.5× | 5 | pkey | pkey |
+| child_count/orders | 2.24 ms | 0.09 ms | 24.8× | 1 | pkey | pkey |
+| path_query/wildcard | 0.93 ms | 0.10 ms | 9.6× | 5 | pkey | pkey |
+| extract/nested | 0.38 ms | 0.09 ms | 4.2× | 1 | pkey | pkey |
 
 ### Sizes (second measurement)
 

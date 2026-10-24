@@ -1,0 +1,114 @@
+{
+  "json_tree_small_encrypted_v4_10000": {
+    "gates": {
+      "rows": 10000.0,
+      "pg_column_size": 1398.449,
+      "chars": 1278.8833,
+      "sv_chars": 742.8833,
+      "entries": 5.0,
+      "entries_with_x": 0.0,
+      "table_bytes": 16424960.0,
+      "toast_bytes": 8192.0,
+      "indexes_bytes": 1327104.0,
+      "gin_bytes": 1081344.0,
+      "total_bytes": 17752064.0
+    },
+    "derivable": {
+      "rows": 10000.0,
+      "pg_column_size": 1502.0026,
+      "chars": 1383.8833,
+      "sv_chars": 847.8833,
+      "entries": 5.0,
+      "entries_with_x": 5.0,
+      "table_bytes": 16424960.0,
+      "toast_bytes": 8192.0,
+      "indexes_bytes": 1327104.0,
+      "gin_bytes": 1081344.0,
+      "total_bytes": 17752064.0
+    }
+  },
+  "json_tree_large_encrypted_v4_10000": {
+    "gates": {
+      "rows": 10000.0,
+      "pg_column_size": 31714.0607,
+      "chars": 49041.6249,
+      "sv_chars": 33013.0875,
+      "entries": 217.2266,
+      "entries_with_x": 0.0,
+      "table_bytes": 335060992.0,
+      "toast_bytes": 334503936.0,
+      "indexes_bytes": 42123264.0,
+      "gin_bytes": 41877504.0,
+      "total_bytes": 377184256.0
+    },
+    "derivable": {
+      "rows": 10000.0,
+      "pg_column_size": 35256.1994,
+      "chars": 53603.3835,
+      "sv_chars": 37574.8461,
+      "entries": 217.2266,
+      "entries_with_x": 217.2266,
+      "table_bytes": 371761152.0,
+      "toast_bytes": 371204096.0,
+      "indexes_bytes": 42123264.0,
+      "gin_bytes": 41877504.0,
+      "total_bytes": 413884416.0
+    }
+  },
+  "json_tree_large_open_encrypted_v4_10000": {
+    "gates": {
+      "rows": 10000.0,
+      "pg_column_size": 26457.9148,
+      "chars": 44519.4383,
+      "sv_chars": 28490.9009,
+      "entries": 217.2266,
+      "entries_with_x": 0.0,
+      "table_bytes": 280494080.0,
+      "toast_bytes": 279937024.0,
+      "indexes_bytes": 245760.0,
+      "gin_bytes": 0.0,
+      "total_bytes": 280739840.0
+    },
+    "derivable": {
+      "rows": 10000.0,
+      "pg_column_size": 30013.4555,
+      "chars": 49081.1969,
+      "sv_chars": 33052.6595,
+      "entries": 217.2266,
+      "entries_with_x": 217.2266,
+      "table_bytes": 317546496.0,
+      "toast_bytes": 316989440.0,
+      "indexes_bytes": 245760.0,
+      "gin_bytes": 0.0,
+      "total_bytes": 317792256.0
+    }
+  },
+  "json_tree_wide_encrypted_v4_1000": {
+    "gates": {
+      "rows": 1000.0,
+      "pg_column_size": 91194.501,
+      "chars": 125966.642,
+      "sv_chars": 84168.642,
+      "entries": 603.0,
+      "entries_with_x": 0.0,
+      "table_bytes": 95387648.0,
+      "toast_bytes": 95297536.0,
+      "indexes_bytes": 40960.0,
+      "gin_bytes": 0.0,
+      "total_bytes": 95428608.0
+    },
+    "derivable": {
+      "rows": 1000.0,
+      "pg_column_size": 99998.222,
+      "chars": 138629.642,
+      "sv_chars": 96831.642,
+      "entries": 603.0,
+      "entries_with_x": 603.0,
+      "table_bytes": 105103360.0,
+      "toast_bytes": 105013248.0,
+      "indexes_bytes": 40960.0,
+      "gin_bytes": 0.0,
+      "total_bytes": 105144320.0
+    }
+  }
+}

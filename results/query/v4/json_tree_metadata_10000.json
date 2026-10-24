@@ -13,7 +13,7 @@
               {
                 "Alias": "json_tree_small_encrypted_v4_10000",
                 "Async Capable": false,
-                "Filter": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
+                "Filter": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"p7U9m5gYGpjElVn4Y2L8zg==\", \"vs\": \"23H9FHzGPEbpPZqsCYedfQ==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}, {\"s\": \"rd5HZRKhDEZjQ3rFm8U1mA==\", \"vs\": \"9tOekYZ4JgR4bln8uTgyFA==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"p7U9m5gYGpjElVn4Y2L8zg==\", \"vs\": \"23H9FHzGPEbpPZqsCYedfQ==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}, {\"s\": \"rd5HZRKhDEZjQ3rFm8U1mA==\", \"vs\": \"9tOekYZ4JgR4bln8uTgyFA==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"p7U9m5gYGpjElVn4Y2L8zg==\", \"vs\": \"23H9FHzGPEbpPZqsCYedfQ==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}, {\"s\": \"rd5HZRKhDEZjQ3rFm8U1mA==\", \"vs\": \"9tOekYZ4JgR4bln8uTgyFA==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
                 "Node Type": "Bitmap Heap Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
@@ -30,7 +30,7 @@
                     "Plans": [
                       {
                         "Async Capable": false,
-                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"p7U9m5gYGpjElVn4Y2L8zg==\", \"vs\": \"23H9FHzGPEbpPZqsCYedfQ==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}, {\"s\": \"rd5HZRKhDEZjQ3rFm8U1mA==\", \"vs\": \"9tOekYZ4JgR4bln8uTgyFA==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
                         "Index Name": "json_tree_small_encrypted_v4_10000_query_gin_idx",
                         "Node Type": "Bitmap Index Scan",
                         "Parallel Aware": false,
@@ -42,7 +42,7 @@
                       },
                       {
                         "Async Capable": false,
-                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"p7U9m5gYGpjElVn4Y2L8zg==\", \"vs\": \"23H9FHzGPEbpPZqsCYedfQ==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}, {\"s\": \"rd5HZRKhDEZjQ3rFm8U1mA==\", \"vs\": \"9tOekYZ4JgR4bln8uTgyFA==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
                         "Index Name": "json_tree_small_encrypted_v4_10000_query_gin_idx",
                         "Node Type": "Bitmap Index Scan",
                         "Parallel Aware": false,
@@ -57,7 +57,7 @@
                     "Total Cost": 91.11
                   }
                 ],
-                "Recheck Cond": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
+                "Recheck Cond": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"p7U9m5gYGpjElVn4Y2L8zg==\", \"vs\": \"23H9FHzGPEbpPZqsCYedfQ==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}, {\"s\": \"rd5HZRKhDEZjQ3rFm8U1mA==\", \"vs\": \"9tOekYZ4JgR4bln8uTgyFA==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"p7U9m5gYGpjElVn4Y2L8zg==\", \"vs\": \"23H9FHzGPEbpPZqsCYedfQ==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}, {\"s\": \"rd5HZRKhDEZjQ3rFm8U1mA==\", \"vs\": \"9tOekYZ4JgR4bln8uTgyFA==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
                 "Relation Name": "json_tree_small_encrypted_v4_10000",
                 "Startup Cost": 91.11,
                 "Total Cost": 100.14
@@ -73,7 +73,7 @@
         "json_tree_small_encrypted_v4_10000_query_gin_idx"
       ],
       "parameters": [
-        "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"vs\":\"db71fd147cc63c46e93d9aac09879d7d\"},{\"s\":\"7349633426741ad6074ff9e7ffa69599\",\"vs\":\"62848e70087d6feb4e4976f8eac93fbd\"},{\"s\":\"9f7f562232761fd6f7624026c36859c9\",\"vs\":\"1d985c42f8ec8ab42714f069cc4811aa\"},{\"s\":\"adde476512a10c4663437ac59bc53598\",\"vs\":\"f6d39e9186782604786e59fcb9383214\"}],\"el\":[]}"
+        "{\"sv\":[{\"s\":\"GlMXtksEqRNhV6lcimMUMA==\",\"vs\":\"OY9sbcz49JDaIHfhsJIs3A==\"},{\"s\":\"p7U9m5gYGpjElVn4Y2L8zg==\",\"vs\":\"23H9FHzGPEbpPZqsCYedfQ==\"},{\"s\":\"c0ljNCZ0GtYHT/nn/6aVmQ==\",\"vs\":\"YoSOcAh9b+tOSXb46sk/vQ==\"},{\"s\":\"n39WIjJ2H9b3YkAmw2hZyQ==\",\"vs\":\"HZhcQvjsirQnFPBpzEgRqg==\"},{\"s\":\"rd5HZRKhDEZjQ3rFm8U1mA==\",\"vs\":\"9tOekYZ4JgR4bln8uTgyFA==\"}],\"el\":[]}"
       ],
       "query": "SELECT id FROM json_tree_small_encrypted_v4_10000 WHERE eql_v4.json_tree_contains(value, $1::text::jsonb::eql_v4.query_json_tree) LIMIT 10",
       "rows_returned": 1
@@ -91,7 +91,7 @@
               {
                 "Alias": "json_tree_small_encrypted_v4_10000",
                 "Async Capable": false,
-                "Filter": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
+                "Filter": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"p7U9m5gYGpjElVn4Y2L8zg==\", \"vs\": \"23H9FHzGPEbpPZqsCYedfQ==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}, {\"s\": \"rd5HZRKhDEZjQ3rFm8U1mA==\", \"vs\": \"9tOekYZ4JgR4bln8uTgyFA==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"p7U9m5gYGpjElVn4Y2L8zg==\", \"vs\": \"23H9FHzGPEbpPZqsCYedfQ==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}, {\"s\": \"rd5HZRKhDEZjQ3rFm8U1mA==\", \"vs\": \"9tOekYZ4JgR4bln8uTgyFA==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"p7U9m5gYGpjElVn4Y2L8zg==\", \"vs\": \"23H9FHzGPEbpPZqsCYedfQ==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}, {\"s\": \"rd5HZRKhDEZjQ3rFm8U1mA==\", \"vs\": \"9tOekYZ4JgR4bln8uTgyFA==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
                 "Node Type": "Bitmap Heap Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
@@ -108,7 +108,7 @@
                     "Plans": [
                       {
                         "Async Capable": false,
-                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"p7U9m5gYGpjElVn4Y2L8zg==\", \"vs\": \"23H9FHzGPEbpPZqsCYedfQ==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}, {\"s\": \"rd5HZRKhDEZjQ3rFm8U1mA==\", \"vs\": \"9tOekYZ4JgR4bln8uTgyFA==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
                         "Index Name": "json_tree_small_encrypted_v4_10000_query_gin_idx",
                         "Node Type": "Bitmap Index Scan",
                         "Parallel Aware": false,
@@ -120,7 +120,7 @@
                       },
                       {
                         "Async Capable": false,
-                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"p7U9m5gYGpjElVn4Y2L8zg==\", \"vs\": \"23H9FHzGPEbpPZqsCYedfQ==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}, {\"s\": \"rd5HZRKhDEZjQ3rFm8U1mA==\", \"vs\": \"9tOekYZ4JgR4bln8uTgyFA==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
                         "Index Name": "json_tree_small_encrypted_v4_10000_query_gin_idx",
                         "Node Type": "Bitmap Index Scan",
                         "Parallel Aware": false,
@@ -135,7 +135,7 @@
                     "Total Cost": 91.11
                   }
                 ],
-                "Recheck Cond": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"vs\": \"db71fd147cc63c46e93d9aac09879d7d\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}, {\"s\": \"adde476512a10c4663437ac59bc53598\", \"vs\": \"f6d39e9186782604786e59fcb9383214\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
+                "Recheck Cond": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"p7U9m5gYGpjElVn4Y2L8zg==\", \"vs\": \"23H9FHzGPEbpPZqsCYedfQ==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}, {\"s\": \"rd5HZRKhDEZjQ3rFm8U1mA==\", \"vs\": \"9tOekYZ4JgR4bln8uTgyFA==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"p7U9m5gYGpjElVn4Y2L8zg==\", \"vs\": \"23H9FHzGPEbpPZqsCYedfQ==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}, {\"s\": \"rd5HZRKhDEZjQ3rFm8U1mA==\", \"vs\": \"9tOekYZ4JgR4bln8uTgyFA==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
                 "Relation Name": "json_tree_small_encrypted_v4_10000",
                 "Startup Cost": 91.11,
                 "Total Cost": 100.14
@@ -151,7 +151,7 @@
         "json_tree_small_encrypted_v4_10000_query_gin_idx"
       ],
       "parameters": [
-        "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"vs\":\"db71fd147cc63c46e93d9aac09879d7d\"},{\"s\":\"7349633426741ad6074ff9e7ffa69599\",\"vs\":\"62848e70087d6feb4e4976f8eac93fbd\"},{\"s\":\"9f7f562232761fd6f7624026c36859c9\",\"vs\":\"1d985c42f8ec8ab42714f069cc4811aa\"},{\"s\":\"adde476512a10c4663437ac59bc53598\",\"vs\":\"f6d39e9186782604786e59fcb9383214\"}],\"el\":[]}"
+        "{\"sv\":[{\"s\":\"GlMXtksEqRNhV6lcimMUMA==\",\"vs\":\"OY9sbcz49JDaIHfhsJIs3A==\"},{\"s\":\"p7U9m5gYGpjElVn4Y2L8zg==\",\"vs\":\"23H9FHzGPEbpPZqsCYedfQ==\"},{\"s\":\"c0ljNCZ0GtYHT/nn/6aVmQ==\",\"vs\":\"YoSOcAh9b+tOSXb46sk/vQ==\"},{\"s\":\"n39WIjJ2H9b3YkAmw2hZyQ==\",\"vs\":\"HZhcQvjsirQnFPBpzEgRqg==\"},{\"s\":\"rd5HZRKhDEZjQ3rFm8U1mA==\",\"vs\":\"9tOekYZ4JgR4bln8uTgyFA==\"}],\"el\":[]}"
       ],
       "query": "SELECT id FROM json_tree_small_encrypted_v4_10000 WHERE value @> $1::text::jsonb::eql_v4.query_json_tree LIMIT 10",
       "rows_returned": 1
@@ -169,7 +169,7 @@
               {
                 "Alias": "json_tree_small_encrypted_v4_10000",
                 "Async Capable": false,
-                "Filter": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
+                "Filter": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
                 "Node Type": "Bitmap Heap Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
@@ -186,7 +186,7 @@
                     "Plans": [
                       {
                         "Async Capable": false,
-                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
                         "Index Name": "json_tree_small_encrypted_v4_10000_query_gin_idx",
                         "Node Type": "Bitmap Index Scan",
                         "Parallel Aware": false,
@@ -198,7 +198,7 @@
                       },
                       {
                         "Async Capable": false,
-                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
                         "Index Name": "json_tree_small_encrypted_v4_10000_query_gin_idx",
                         "Node Type": "Bitmap Index Scan",
                         "Parallel Aware": false,
@@ -213,7 +213,7 @@
                     "Total Cost": 38.93
                   }
                 ],
-                "Recheck Cond": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"9f7f562232761fd6f7624026c36859c9\", \"vs\": \"1d985c42f8ec8ab42714f069cc4811aa\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
+                "Recheck Cond": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"n39WIjJ2H9b3YkAmw2hZyQ==\", \"vs\": \"HZhcQvjsirQnFPBpzEgRqg==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
                 "Relation Name": "json_tree_small_encrypted_v4_10000",
                 "Startup Cost": 38.93,
                 "Total Cost": 47.96
@@ -229,7 +229,7 @@
         "json_tree_small_encrypted_v4_10000_query_gin_idx"
       ],
       "parameters": [
-        "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"9f7f562232761fd6f7624026c36859c9\",\"vs\":\"1d985c42f8ec8ab42714f069cc4811aa\"}],\"el\":[]}"
+        "{\"sv\":[{\"s\":\"GlMXtksEqRNhV6lcimMUMA==\",\"vs\":\"OY9sbcz49JDaIHfhsJIs3A==\"},{\"s\":\"n39WIjJ2H9b3YkAmw2hZyQ==\",\"vs\":\"HZhcQvjsirQnFPBpzEgRqg==\"}],\"el\":[]}"
       ],
       "query": "SELECT id FROM json_tree_small_encrypted_v4_10000 WHERE eql_v4.json_tree_contains(value, $1::text::jsonb::eql_v4.query_json_tree) LIMIT 10",
       "rows_returned": 6
@@ -247,7 +247,7 @@
               {
                 "Alias": "json_tree_small_encrypted_v4_10000",
                 "Async Capable": false,
-                "Filter": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
+                "Filter": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb ? 'alt'::text) AND (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))))",
                 "Node Type": "Bitmap Heap Scan",
                 "Parallel Aware": false,
                 "Parent Relationship": "Outer",
@@ -264,7 +264,7 @@
                     "Plans": [
                       {
                         "Async Capable": false,
-                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text))",
                         "Index Name": "json_tree_small_encrypted_v4_10000_query_gin_idx",
                         "Node Type": "Bitmap Index Scan",
                         "Parallel Aware": false,
@@ -276,7 +276,7 @@
                       },
                       {
                         "Async Capable": false,
-                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
+                        "Index Cond": "(eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text))",
                         "Index Name": "json_tree_small_encrypted_v4_10000_query_gin_idx",
                         "Node Type": "Bitmap Index Scan",
                         "Parallel Aware": false,
@@ -291,7 +291,7 @@
                     "Total Cost": 38.93
                   }
                 ],
-                "Recheck Cond": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"1a5317b64b04a9136157a95c8a631430\", \"vs\": \"398f6c6dccf8f490da2077e1b0922cdc\"}, {\"s\": \"7349633426741ad6074ff9e7ffa69599\", \"vs\": \"62848e70087d6feb4e4976f8eac93fbd\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
+                "Recheck Cond": "((eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb - 'alt'::text)) OR (eql_v4.json_tree_query(value) @> ((('{\"el\": [], \"sv\": [{\"s\": \"GlMXtksEqRNhV6lcimMUMA==\", \"vs\": \"OY9sbcz49JDaIHfhsJIs3A==\"}, {\"s\": \"c0ljNCZ0GtYHT/nn/6aVmQ==\", \"vs\": \"YoSOcAh9b+tOSXb46sk/vQ==\"}]}'::jsonb)::eql_v4.query_json_tree)::jsonb -> 'alt'::text)))",
                 "Relation Name": "json_tree_small_encrypted_v4_10000",
                 "Startup Cost": 38.93,
                 "Total Cost": 47.96
@@ -307,7 +307,7 @@
         "json_tree_small_encrypted_v4_10000_query_gin_idx"
       ],
       "parameters": [
-        "{\"sv\":[{\"s\":\"1a5317b64b04a9136157a95c8a631430\",\"vs\":\"398f6c6dccf8f490da2077e1b0922cdc\"},{\"s\":\"7349633426741ad6074ff9e7ffa69599\",\"vs\":\"62848e70087d6feb4e4976f8eac93fbd\"}],\"el\":[]}"
+        "{\"sv\":[{\"s\":\"GlMXtksEqRNhV6lcimMUMA==\",\"vs\":\"OY9sbcz49JDaIHfhsJIs3A==\"},{\"s\":\"c0ljNCZ0GtYHT/nn/6aVmQ==\",\"vs\":\"YoSOcAh9b+tOSXb46sk/vQ==\"}],\"el\":[]}"
       ],
       "query": "SELECT id FROM json_tree_small_encrypted_v4_10000 WHERE eql_v4.json_tree_contains(value, $1::text::jsonb::eql_v4.query_json_tree) LIMIT 10",
       "rows_returned": 1
@@ -325,7 +325,7 @@
               {
                 "Alias": "json_tree_small_encrypted_v4_10000",
                 "Async Capable": false,
-                "Index Cond": "(decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'a7b53d9b98181a98c49559f86362fcce'::text))::jsonb ->> 'op'::text), 'hex'::text) > decode(((('{\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"op\": \"0126916d0e57e8845986fe3bfe60f9c87467ec1e474738bc2fc6bd329ec6511790c29a32280543e78d3da8283fd27d119e2901afc6cd86d7f45d8f33d3e422e2cc\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'hex'::text))",
+                "Index Cond": "(decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'p7U9m5gYGpjElVn4Y2L8zg=='::text))::jsonb ->> 'op'::text), 'base64'::text) > decode(((('{\"s\": \"p7U9m5gYGpjElVn4Y2L8zg==\", \"op\": \"AV224hSsZNDGY6IEwk4ntwBOH3XR6VRU05IPOWEzYjVQwPS+NBCkI9I5fmN9y8FjFBQP8IEsGl+J02h+YlJMqwk=\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'base64'::text))",
                 "Index Name": "json_tree_small_encrypted_v4_10000_field_order_idx",
                 "Node Type": "Index Scan",
                 "Parallel Aware": false,
@@ -335,11 +335,11 @@
                 "Relation Name": "json_tree_small_encrypted_v4_10000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.29,
-                "Total Cost": 473.04
+                "Total Cost": 8217.02
               }
             ],
             "Startup Cost": 0.29,
-            "Total Cost": 0.78
+            "Total Cost": 8.81
           }
         }
       ],
@@ -348,9 +348,9 @@
         "json_tree_small_encrypted_v4_10000_field_order_idx"
       ],
       "parameters": [
-        "{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"op\":\"0126916d0e57e8845986fe3bfe60f9c87467ec1e474738bc2fc6bd329ec6511790c29a32280543e78d3da8283fd27d119e2901afc6cd86d7f45d8f33d3e422e2cc\"}"
+        "{\"s\":\"p7U9m5gYGpjElVn4Y2L8zg==\",\"op\":\"AV224hSsZNDGY6IEwk4ntwBOH3XR6VRU05IPOWEzYjVQwPS+NBCkI9I5fmN9y8FjFBQP8IEsGl+J02h+YlJMqwk=\"}"
       ],
-      "query": "SELECT id FROM json_tree_small_encrypted_v4_10000 WHERE (value -> 'a7b53d9b98181a98c49559f86362fcce'::text) > $1::text::jsonb::eql_v4.query_json_tree_leaf LIMIT 10",
+      "query": "SELECT id FROM json_tree_small_encrypted_v4_10000 WHERE (value -> 'p7U9m5gYGpjElVn4Y2L8zg=='::text) > $1::text::jsonb::eql_v4.query_json_tree_leaf LIMIT 10",
       "rows_returned": 10
     },
     {
@@ -366,7 +366,7 @@
               {
                 "Alias": "json_tree_small_encrypted_v4_10000",
                 "Async Capable": false,
-                "Index Cond": "((decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'a7b53d9b98181a98c49559f86362fcce'::text))::jsonb ->> 'op'::text), 'hex'::text) >= decode(((('{\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"op\": \"0126916d0e57e8845986fe3bfe607a7609eee1bd205fe95c135006d95b2914b21b1f381acc6ad0e6a05a372477ab4edff6900674e7da6d680b43ebbf915f67b1c8\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'hex'::text)) AND (decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'a7b53d9b98181a98c49559f86362fcce'::text))::jsonb ->> 'op'::text), 'hex'::text) <= decode(((('{\"s\": \"a7b53d9b98181a98c49559f86362fcce\", \"op\": \"0126916d0e57e8845986fe3bfee0cb10ecc20c6c3af9481a7d2215198fccd536dfae347a6a977d6c37ce0c406356bc99e22f52f3164e83e884e2ef76385527d50c\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'hex'::text)))",
+                "Index Cond": "((decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'p7U9m5gYGpjElVn4Y2L8zg=='::text))::jsonb ->> 'op'::text), 'base64'::text) >= decode(((('{\"s\": \"p7U9m5gYGpjElVn4Y2L8zg==\", \"op\": \"AV224hSsZNDGY6IEwk2no1VHrcLmzxKrarBNPVAEhJIyOucyZAoCKKmd2HXzKZV1HvCuNnR4KhQ5VgEr/deJdqM=\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'base64'::text)) AND (decode(((eql_v4.json_tree_path_query_first((value)::jsonb, 'p7U9m5gYGpjElVn4Y2L8zg=='::text))::jsonb ->> 'op'::text), 'base64'::text) <= decode(((('{\"s\": \"p7U9m5gYGpjElVn4Y2L8zg==\", \"op\": \"AV224hSsZNDGY6IEws3O4sprD5ZYxc4/fGETRamJ8jd3zZ74QnBaUEzLnKkG4OKKaAa5BKfciiZDH79V2AWv0VI=\"}'::jsonb)::eql_v4.query_json_tree_leaf)::jsonb ->> 'op'::text), 'base64'::text)))",
                 "Index Name": "json_tree_small_encrypted_v4_10000_field_order_idx",
                 "Node Type": "Index Scan",
                 "Parallel Aware": false,
@@ -376,11 +376,11 @@
                 "Relation Name": "json_tree_small_encrypted_v4_10000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.3,
-                "Total Cost": 284.2
+                "Total Cost": 3216.19
               }
             ],
             "Startup Cost": 0.3,
-            "Total Cost": 3.15
+            "Total Cost": 32.62
           }
         }
       ],
@@ -389,10 +389,10 @@
         "json_tree_small_encrypted_v4_10000_field_order_idx"
       ],
       "parameters": [
-        "{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"op\":\"0126916d0e57e8845986fe3bfe607a7609eee1bd205fe95c135006d95b2914b21b1f381acc6ad0e6a05a372477ab4edff6900674e7da6d680b43ebbf915f67b1c8\"}",
-        "{\"s\":\"a7b53d9b98181a98c49559f86362fcce\",\"op\":\"0126916d0e57e8845986fe3bfee0cb10ecc20c6c3af9481a7d2215198fccd536dfae347a6a977d6c37ce0c406356bc99e22f52f3164e83e884e2ef76385527d50c\"}"
+        "{\"s\":\"p7U9m5gYGpjElVn4Y2L8zg==\",\"op\":\"AV224hSsZNDGY6IEwk2no1VHrcLmzxKrarBNPVAEhJIyOucyZAoCKKmd2HXzKZV1HvCuNnR4KhQ5VgEr/deJdqM=\"}",
+        "{\"s\":\"p7U9m5gYGpjElVn4Y2L8zg==\",\"op\":\"AV224hSsZNDGY6IEws3O4sprD5ZYxc4/fGETRamJ8jd3zZ74QnBaUEzLnKkG4OKKaAa5BKfciiZDH79V2AWv0VI=\"}"
       ],
-      "query": "SELECT id FROM json_tree_small_encrypted_v4_10000 WHERE (value -> 'a7b53d9b98181a98c49559f86362fcce'::text) >= $1::text::jsonb::eql_v4.query_json_tree_leaf AND (value -> 'a7b53d9b98181a98c49559f86362fcce'::text) <= $2::text::jsonb::eql_v4.query_json_tree_leaf LIMIT 10",
+      "query": "SELECT id FROM json_tree_small_encrypted_v4_10000 WHERE (value -> 'p7U9m5gYGpjElVn4Y2L8zg=='::text) >= $1::text::jsonb::eql_v4.query_json_tree_leaf AND (value -> 'p7U9m5gYGpjElVn4Y2L8zg=='::text) <= $2::text::jsonb::eql_v4.query_json_tree_leaf LIMIT 10",
       "rows_returned": 10
     },
     {
@@ -417,11 +417,11 @@
                 "Relation Name": "json_tree_small_encrypted_v4_10000",
                 "Scan Direction": "Forward",
                 "Startup Cost": 0.29,
-                "Total Cost": 25504.28
+                "Total Cost": 33248.26
               }
             ],
             "Startup Cost": 0.29,
-            "Total Cost": 25.79
+            "Total Cost": 33.53
           }
         }
       ],
@@ -430,7 +430,7 @@
         "json_tree_small_encrypted_v4_10000_field_order_idx"
       ],
       "parameters": [],
-      "query": "SELECT id FROM json_tree_small_encrypted_v4_10000 ORDER BY eql_v4.ord_term(value -> 'a7b53d9b98181a98c49559f86362fcce'::text) LIMIT 10",
+      "query": "SELECT id FROM json_tree_small_encrypted_v4_10000 ORDER BY eql_v4.ord_term(value -> 'p7U9m5gYGpjElVn4Y2L8zg=='::text) LIMIT 10",
       "rows_returned": 10
     },
     {
@@ -459,7 +459,428 @@
       "parameters": [
         5000
       ],
-      "query": "SELECT (value -> 'a7b53d9b98181a98c49559f86362fcce'::text)::jsonb::text FROM json_tree_small_encrypted_v4_10000 WHERE id = $1",
+      "query": "SELECT (value -> 'p7U9m5gYGpjElVn4Y2L8zg=='::text)::jsonb::text FROM json_tree_small_encrypted_v4_10000 WHERE id = $1",
+      "rows_returned": 1
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Inner Unique": false,
+            "Join Type": "Inner",
+            "Node Type": "Nested Loop",
+            "Parallel Aware": false,
+            "Plan Rows": 1000,
+            "Plan Width": 32,
+            "Plans": [
+              {
+                "Alias": "json_tree_small_encrypted_v4_10000",
+                "Async Capable": false,
+                "Index Cond": "(id = 5000)",
+                "Index Name": "json_tree_small_encrypted_v4_10000_pkey",
+                "Node Type": "Index Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 1,
+                "Plan Width": 1502,
+                "Relation Name": "json_tree_small_encrypted_v4_10000",
+                "Scan Direction": "Forward",
+                "Startup Cost": 0.29,
+                "Total Cost": 8.3
+              },
+              {
+                "Alias": "e",
+                "Async Capable": false,
+                "Function Name": "json_tree_path_query",
+                "Node Type": "Function Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Inner",
+                "Plan Rows": 1000,
+                "Plan Width": 32,
+                "Startup Cost": 0.25,
+                "Total Cost": 10.25
+              }
+            ],
+            "Startup Cost": 0.54,
+            "Total Cost": 33.55
+          }
+        }
+      ],
+      "id": "JSON_TREE/json_tree/path_query/field/10000",
+      "indexes_used": [
+        "json_tree_small_encrypted_v4_10000_pkey"
+      ],
+      "parameters": [
+        "c0ljNCZ0GtYHT/nn/6aVmQ==",
+        5000
+      ],
+      "query": "SELECT e::jsonb::text FROM json_tree_small_encrypted_v4_10000, eql_v4.json_tree_path_query(value::jsonb, $1::text) e WHERE id = $2",
+      "rows_returned": 1
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 1,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_small_plain_v4_10000",
+                "Async Capable": false,
+                "Node Type": "Bitmap Heap Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 1,
+                "Plan Width": 4,
+                "Plans": [
+                  {
+                    "Async Capable": false,
+                    "Index Cond": "(plain @> '{\"age\": 20, \"email\": \"melvin_quia@yahoo.com\", \"last_name\": \"Streich\", \"first_name\": \"Darrick\"}'::jsonb)",
+                    "Index Name": "json_tree_small_plain_v4_10000_gin_idx",
+                    "Node Type": "Bitmap Index Scan",
+                    "Parallel Aware": false,
+                    "Parent Relationship": "Outer",
+                    "Plan Rows": 1,
+                    "Plan Width": 0,
+                    "Startup Cost": 0.0,
+                    "Total Cost": 38.92
+                  }
+                ],
+                "Recheck Cond": "(plain @> '{\"age\": 20, \"email\": \"melvin_quia@yahoo.com\", \"last_name\": \"Streich\", \"first_name\": \"Darrick\"}'::jsonb)",
+                "Relation Name": "json_tree_small_plain_v4_10000",
+                "Startup Cost": 38.92,
+                "Total Cost": 42.93
+              }
+            ],
+            "Startup Cost": 38.92,
+            "Total Cost": 42.93
+          }
+        }
+      ],
+      "id": "JSON_TREE/plain/contains/operator/10000",
+      "indexes_used": [
+        "json_tree_small_plain_v4_10000_gin_idx"
+      ],
+      "parameters": [
+        {
+          "age": 20,
+          "email": "melvin_quia@yahoo.com",
+          "first_name": "Darrick",
+          "last_name": "Streich"
+        }
+      ],
+      "query": "SELECT id FROM json_tree_small_plain_v4_10000 WHERE plain @> $1 LIMIT 10",
+      "rows_returned": 1
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 1,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_small_plain_v4_10000",
+                "Async Capable": false,
+                "Node Type": "Bitmap Heap Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 1,
+                "Plan Width": 4,
+                "Plans": [
+                  {
+                    "Async Capable": false,
+                    "Index Cond": "(plain @> '{\"first_name\": \"Darrick\"}'::jsonb)",
+                    "Index Name": "json_tree_small_plain_v4_10000_gin_idx",
+                    "Node Type": "Bitmap Index Scan",
+                    "Parallel Aware": false,
+                    "Parent Relationship": "Outer",
+                    "Plan Rows": 1,
+                    "Plan Width": 0,
+                    "Startup Cost": 0.0,
+                    "Total Cost": 12.83
+                  }
+                ],
+                "Recheck Cond": "(plain @> '{\"first_name\": \"Darrick\"}'::jsonb)",
+                "Relation Name": "json_tree_small_plain_v4_10000",
+                "Startup Cost": 12.83,
+                "Total Cost": 16.84
+              }
+            ],
+            "Startup Cost": 12.83,
+            "Total Cost": 16.84
+          }
+        }
+      ],
+      "id": "JSON_TREE/plain/field_eq/extractor/10000",
+      "indexes_used": [
+        "json_tree_small_plain_v4_10000_gin_idx"
+      ],
+      "parameters": [
+        {
+          "first_name": "Darrick"
+        }
+      ],
+      "query": "SELECT id FROM json_tree_small_plain_v4_10000 WHERE plain @> $1 LIMIT 10",
+      "rows_returned": 6
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 1,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_small_plain_v4_10000",
+                "Async Capable": false,
+                "Node Type": "Bitmap Heap Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 1,
+                "Plan Width": 4,
+                "Plans": [
+                  {
+                    "Async Capable": false,
+                    "Index Cond": "(plain @> '{\"email\": \"melvin_quia@yahoo.com\"}'::jsonb)",
+                    "Index Name": "json_tree_small_plain_v4_10000_gin_idx",
+                    "Node Type": "Bitmap Index Scan",
+                    "Parallel Aware": false,
+                    "Parent Relationship": "Outer",
+                    "Plan Rows": 1,
+                    "Plan Width": 0,
+                    "Startup Cost": 0.0,
+                    "Total Cost": 12.83
+                  }
+                ],
+                "Recheck Cond": "(plain @> '{\"email\": \"melvin_quia@yahoo.com\"}'::jsonb)",
+                "Relation Name": "json_tree_small_plain_v4_10000",
+                "Startup Cost": 12.83,
+                "Total Cost": 16.84
+              }
+            ],
+            "Startup Cost": 12.83,
+            "Total Cost": 16.84
+          }
+        }
+      ],
+      "id": "JSON_TREE/plain/field_eq/unique/10000",
+      "indexes_used": [
+        "json_tree_small_plain_v4_10000_gin_idx"
+      ],
+      "parameters": [
+        {
+          "email": "melvin_quia@yahoo.com"
+        }
+      ],
+      "query": "SELECT id FROM json_tree_small_plain_v4_10000 WHERE plain @> $1 LIMIT 10",
+      "rows_returned": 1
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_small_plain_v4_10000",
+                "Async Capable": false,
+                "Filter": "(((plain ->> 'age'::text))::integer > 20)",
+                "Node Type": "Seq Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 9643,
+                "Plan Width": 4,
+                "Relation Name": "json_tree_small_plain_v4_10000",
+                "Startup Cost": 0.0,
+                "Total Cost": 379.0
+              }
+            ],
+            "Startup Cost": 0.0,
+            "Total Cost": 0.39
+          }
+        }
+      ],
+      "id": "JSON_TREE/plain/field_gt/functional/10000",
+      "indexes_used": [],
+      "parameters": [
+        20
+      ],
+      "query": "SELECT id FROM json_tree_small_plain_v4_10000 WHERE (plain ->> 'age')::int > $1 LIMIT 10",
+      "rows_returned": 10
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 4,
+            "Plans": [
+              {
+                "Alias": "json_tree_small_plain_v4_10000",
+                "Async Capable": false,
+                "Filter": "((((plain ->> 'age'::text))::integer >= 18) AND (((plain ->> 'age'::text))::integer <= 25))",
+                "Node Type": "Seq Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 995,
+                "Plan Width": 4,
+                "Relation Name": "json_tree_small_plain_v4_10000",
+                "Startup Cost": 0.0,
+                "Total Cost": 479.0
+              }
+            ],
+            "Startup Cost": 0.0,
+            "Total Cost": 4.81
+          }
+        }
+      ],
+      "id": "JSON_TREE/plain/field_between/functional/10000",
+      "indexes_used": [],
+      "parameters": [
+        18,
+        25
+      ],
+      "query": "SELECT id FROM json_tree_small_plain_v4_10000 WHERE (plain ->> 'age')::int BETWEEN $1 AND $2 LIMIT 10",
+      "rows_returned": 10
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Plan Rows": 10,
+            "Plan Width": 8,
+            "Plans": [
+              {
+                "Alias": "json_tree_small_plain_v4_10000",
+                "Async Capable": false,
+                "Index Name": "json_tree_small_plain_v4_10000_age_idx",
+                "Node Type": "Index Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 10000,
+                "Plan Width": 8,
+                "Relation Name": "json_tree_small_plain_v4_10000",
+                "Scan Direction": "Forward",
+                "Startup Cost": 0.29,
+                "Total Cost": 985.28
+              }
+            ],
+            "Startup Cost": 0.29,
+            "Total Cost": 1.27
+          }
+        }
+      ],
+      "id": "JSON_TREE/plain/field_order/functional/10000",
+      "indexes_used": [
+        "json_tree_small_plain_v4_10000_age_idx"
+      ],
+      "parameters": [],
+      "query": "SELECT id FROM json_tree_small_plain_v4_10000 ORDER BY (plain ->> 'age')::int LIMIT 10",
+      "rows_returned": 10
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Alias": "json_tree_small_plain_v4_10000",
+            "Async Capable": false,
+            "Index Cond": "(id = 5000)",
+            "Index Name": "json_tree_small_plain_v4_10000_pkey",
+            "Node Type": "Index Scan",
+            "Parallel Aware": false,
+            "Plan Rows": 1,
+            "Plan Width": 32,
+            "Relation Name": "json_tree_small_plain_v4_10000",
+            "Scan Direction": "Forward",
+            "Startup Cost": 0.29,
+            "Total Cost": 8.31
+          }
+        }
+      ],
+      "id": "JSON_TREE/plain/extract/by_id/10000",
+      "indexes_used": [
+        "json_tree_small_plain_v4_10000_pkey"
+      ],
+      "parameters": [
+        5000
+      ],
+      "query": "SELECT (plain -> 'age')::text FROM json_tree_small_plain_v4_10000 WHERE id = $1",
+      "rows_returned": 1
+    },
+    {
+      "explain": [
+        {
+          "Plan": {
+            "Async Capable": false,
+            "Inner Unique": false,
+            "Join Type": "Inner",
+            "Node Type": "Nested Loop",
+            "Parallel Aware": false,
+            "Plan Rows": 1000,
+            "Plan Width": 32,
+            "Plans": [
+              {
+                "Alias": "json_tree_small_plain_v4_10000",
+                "Async Capable": false,
+                "Index Cond": "(id = 5000)",
+                "Index Name": "json_tree_small_plain_v4_10000_pkey",
+                "Node Type": "Index Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Outer",
+                "Plan Rows": 1,
+                "Plan Width": 108,
+                "Relation Name": "json_tree_small_plain_v4_10000",
+                "Scan Direction": "Forward",
+                "Startup Cost": 0.29,
+                "Total Cost": 8.3
+              },
+              {
+                "Alias": "e",
+                "Async Capable": false,
+                "Function Name": "jsonb_path_query",
+                "Node Type": "Function Scan",
+                "Parallel Aware": false,
+                "Parent Relationship": "Inner",
+                "Plan Rows": 1000,
+                "Plan Width": 32,
+                "Startup Cost": 0.0,
+                "Total Cost": 10.0
+              }
+            ],
+            "Startup Cost": 0.29,
+            "Total Cost": 33.3
+          }
+        }
+      ],
+      "id": "JSON_TREE/plain/path_query/field/10000",
+      "indexes_used": [
+        "json_tree_small_plain_v4_10000_pkey"
+      ],
+      "parameters": [
+        5000
+      ],
+      "query": "SELECT e::text FROM json_tree_small_plain_v4_10000, jsonb_path_query(plain, '$.email') e WHERE id = $1",
       "rows_returned": 1
     }
   ],

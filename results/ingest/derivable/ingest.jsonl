@@ -1,0 +1,28 @@
+{"format":"gates","insert_seconds":1.2870257920000001,"inserted":10000,"seal_seconds":0.294233291,"table":"json_tree_small_encrypted_v4_10000","total_seconds":1.60070275}
+{"format": "gates", "table": "json_tree_small_encrypted_v4_10000", "index_build_seconds": 0}
+{"format":"derivable","insert_seconds":1.365895711,"inserted":10000,"seal_seconds":0.311370792,"table":"json_tree_small_encrypted_v4_10000","total_seconds":1.701316792}
+{"format": "derivable", "table": "json_tree_small_encrypted_v4_10000", "index_build_seconds": 0}
+{"format":"derivable","insert_seconds":1.346684375,"inserted":10000,"seal_seconds":0.304491583,"table":"json_tree_small_encrypted_v4","total_seconds":1.675127583}
+{"format":"gates","insert_seconds":1.2772233769999999,"inserted":10000,"seal_seconds":0.28997175,"table":"json_tree_small_encrypted_v4","total_seconds":1.590775542}
+{"format":"gates","insert_seconds":1.302379249,"inserted":10000,"seal_seconds":0.297488749,"table":"json_tree_small_encrypted_v4","total_seconds":1.6237163749999999}
+{"format":"derivable","insert_seconds":1.354418624,"inserted":10000,"seal_seconds":0.310179125,"table":"json_tree_small_encrypted_v4","total_seconds":1.689331167}
+{"format":"gates","insert_seconds":23.680181207,"inserted":10000,"seal_seconds":8.349401833,"table":"json_tree_large_encrypted_v4_10000","total_seconds":32.645654625}
+{"format": "gates", "table": "json_tree_large_encrypted_v4_10000", "index_build_seconds": 4}
+{"format":"derivable","insert_seconds":25.617439374,"inserted":10000,"seal_seconds":8.578601209,"table":"json_tree_large_encrypted_v4_10000","total_seconds":34.845008333}
+{"format": "derivable", "table": "json_tree_large_encrypted_v4_10000", "index_build_seconds": 3}
+{"format":"derivable","insert_seconds":25.58918629,"inserted":10000,"seal_seconds":8.746461624,"table":"json_tree_large_encrypted_v4","total_seconds":34.981537625}
+{"format":"gates","insert_seconds":23.70043625,"inserted":10000,"seal_seconds":8.367136291,"table":"json_tree_large_encrypted_v4","total_seconds":32.689593292}
+{"format":"gates","insert_seconds":23.663641002,"inserted":10000,"seal_seconds":8.411536082,"table":"json_tree_large_encrypted_v4","total_seconds":32.69499975}
+{"format":"derivable","insert_seconds":25.859277792,"inserted":10000,"seal_seconds":8.864665875,"table":"json_tree_large_encrypted_v4","total_seconds":35.383865}
+{"format":"gates","insert_seconds":22.968116461,"inserted":10000,"seal_seconds":8.119464959,"table":"json_tree_large_open_encrypted_v4_10000","total_seconds":31.703943875}
+{"format":"derivable","insert_seconds":24.648374376,"inserted":10000,"seal_seconds":8.455456585,"table":"json_tree_large_open_encrypted_v4_10000","total_seconds":33.7470065}
+{"format":"gates","insert_seconds":5.673252,"inserted":1000,"seal_seconds":1.90703175,"table":"json_tree_wide_encrypted_v4_1000","total_seconds":7.699604791}
+{"format":"derivable","insert_seconds":6.180512833,"inserted":1000,"seal_seconds":2.07623175,"table":"json_tree_wide_encrypted_v4_1000","total_seconds":8.383326457999999}
+{"format":"gates","insert_seconds":224.95901409,"inserted":100000,"seal_seconds":79.995938293,"table":"json_tree_large_encrypted_v4_100000","total_seconds":311.020738541}
+{"format": "gates", "table": "json_tree_large_encrypted_v4_100000", "index_build_seconds": 43.957}
+{"format":"derivable","insert_seconds":245.12894654,"inserted":100000,"seal_seconds":82.731249003,"table":"json_tree_large_encrypted_v4_100000","total_seconds":334.215891916}
+{"format": "derivable", "table": "json_tree_large_encrypted_v4_100000", "index_build_seconds": 45.134}
+{"format":"gates","insert_seconds":12.279986038,"inserted":100000,"seal_seconds":2.8339130839999997,"table":"json_tree_small_encrypted_v4_100000","total_seconds":15.313190209}
+{"format": "gates", "table": "json_tree_small_encrypted_v4_100000", "index_build_seconds": 0.521}
+{"format":"derivable","insert_seconds":12.948409542,"inserted":100000,"seal_seconds":2.954285747,"table":"json_tree_small_encrypted_v4_100000","total_seconds":16.102521042}
+{"format": "derivable", "table": "json_tree_small_encrypted_v4_100000", "index_build_seconds": 0.493}
