@@ -2,8 +2,34 @@
 //! the ingest and the query bench derive under, the document generator
 //! (the same shape as the root crate's `FakeJsonSmall`), and the result
 //! helpers copied from the root `dbbenches` crate so the sidecars match.
+//!
+//! The crate builds against one of two stored formats, chosen by feature
+//! (see Cargo.toml): `derivable` (default; cipherstash/stack#1363) or
+//! `gates` (its base). Each format's `stack-encrypt` and `eql-bindings` are
+//! re-exported here under their usual names, and every target imports them
+//! from this crate (`use json_tree_bench::{eql_bindings, stack_encrypt};`),
+//! so the code reads the same under either. What differs between the two
+//! is confined to [`ReadKey`]: how a subtree read is derived and called.
+
+#[cfg(all(feature = "derivable", feature = "gates"))]
+compile_error!("features `derivable` and `gates` are exclusive: build `gates` with --no-default-features");
+#[cfg(not(any(feature = "derivable", feature = "gates")))]
+compile_error!("enable one of the features `derivable` (default) or `gates`");
+
+#[cfg(feature = "derivable")]
+pub extern crate eql_bindings_derivable as eql_bindings;
+#[cfg(feature = "derivable")]
+pub extern crate stack_encrypt_derivable as stack_encrypt;
+#[cfg(feature = "gates")]
+pub extern crate eql_bindings_gates as eql_bindings;
+#[cfg(feature = "gates")]
+pub extern crate stack_encrypt_gates as stack_encrypt;
+
+/// The stored format this build reads and writes: `"derivable"` or `"gates"`.
+pub const FORMAT: &str = if cfg!(feature = "gates") { "gates" } else { "derivable" };
 
 use std::env;
+use std::time::{Duration, Instant};
 use std::path::PathBuf;
 
 use anyhow::{Context, Result};
@@ -34,14 +60,26 @@ pub enum Corpus {
     Flat,
     /// `FakeJsonLarge`: tables `json_tree_large_*_v4_<N>`.
     Nested,
+    /// The nested corpus sealed with the root OPEN (no sealed root): tables
+    /// `json_tree_large_open_*_v4_<N>`, the same documents as `Nested` id
+    /// for id. Only for the read of `$` with the root open.
+    NestedOpen,
+    /// [`fake_json_wide`]: one object of [`WIDE`] keys and one array of
+    /// [`WIDE`] elements, for the cost of enumerating a wide node. Tables
+    /// `json_tree_wide_*_v4_<N>`.
+    Wide,
 }
+
+/// The fan-out of the wide corpus's object and array.
+pub const WIDE: usize = 300;
 
 impl Corpus {
     /// The paths the corpus's index orders.
     pub fn ordered(self) -> &'static [&'static str] {
         match self {
             Corpus::Flat => &["$.age"],
-            Corpus::Nested => &["$.company.salary"],
+            Corpus::Nested | Corpus::NestedOpen => &["$.company.salary"],
+            Corpus::Wide => &[],
         }
     }
 
@@ -50,14 +88,18 @@ impl Corpus {
         match self {
             Corpus::Flat => "small",
             Corpus::Nested => "large",
+            Corpus::NestedOpen => "large_open",
+            Corpus::Wide => "wide",
         }
     }
 
     /// The JSON index options the corpus is sealed and queried under.
     pub fn options(self) -> JsonOptions {
-        JsonOptions::default()
+        let mut options = JsonOptions::default()
             .ordering(self.ordered().iter().copied())
-            .expect("valid ordered paths")
+            .expect("valid ordered paths");
+        options.sealed_root = self != Corpus::NestedOpen;
+        options
     }
 
     /// The engine plan a query derives through, laid out under the corpus's
@@ -68,7 +110,7 @@ impl Corpus {
     pub fn plan(self) -> JsonPlan {
         Plan::value::<Value>()
             .context(format!("{TABLE}/{COLUMN}"))
-            .encrypt_as(JsonIndex::new(self.options()))
+            .encrypt_with_layout(JsonIndex::new(self.options()))
             .build()
             .expect("a valid plan")
     }
@@ -121,6 +163,19 @@ pub fn fake_json_small() -> Value {
         "age": (18..=99).fake::<i32>(),
         "email": internet::en::FreeEmail().fake::<String>(),
     })
+}
+
+/// The wide document: `attrs`, an object of [`WIDE`] members (`k000` …),
+/// and `list`, an array of [`WIDE`] numbers. Enumerating either is one
+/// level of [`WIDE`] hits, members in one and elements in the other, which
+/// is what separates the member rule's self-tag test from the element
+/// rule's fallback in the derivable format's walk.
+pub fn fake_json_wide() -> Value {
+    let attrs: serde_json::Map<String, Value> = (0..WIDE)
+        .map(|k| (format!("k{k:03}"), json!((0..1_000_000).fake::<i32>())))
+        .collect();
+    let list: Vec<Value> = (0..WIDE).map(|_| json!((0..1_000_000).fake::<i32>())).collect();
+    json!({ "attrs": attrs, "list": list })
 }
 
 /// The nested document of the root crate's `FakeJsonLarge` (user / company /
@@ -259,6 +314,12 @@ pub async fn ingest(bench_name: &str, corpus: Corpus, generate: fn() -> Value) -
             .fetch_one(&pool)
             .await?;
 
+    // Time spent sealing (client, in-process key source) and inserting
+    // (the INSERTs and their commit), reported separately.
+    let mut seal_time = Duration::ZERO;
+    let mut insert_time = Duration::ZERO;
+    let started = Instant::now();
+
     let mut id = i64::from(next_id);
     let mut remaining = num_records;
     while remaining > 0 {
@@ -289,6 +350,7 @@ pub async fn ingest(bench_name: &str, corpus: Corpus, generate: fn() -> Value) -
         // ordered paths): the layout has no `Vec` form, so each document
         // is one `generate_keys` call. Ingest speed is not what these
         // benches measure, and the key source is in-process.
+        let seal_start = Instant::now();
         let mut sealed: Vec<JsonTreeDocument> = Vec::with_capacity(docs.len());
         for doc in &docs {
             sealed.push(
@@ -298,7 +360,9 @@ pub async fn ingest(bench_name: &str, corpus: Corpus, generate: fn() -> Value) -
                     .context("seal document")?,
             );
         }
+        seal_time += seal_start.elapsed();
 
+        let insert_start = Instant::now();
         let mut tx = pool.begin().await?;
         QueryBuilder::new(format!("INSERT INTO {encrypted} (id, value) "))
             .push_values(ids.iter().zip(&sealed), |mut b, (id, doc)| {
@@ -324,6 +388,7 @@ pub async fn ingest(bench_name: &str, corpus: Corpus, generate: fn() -> Value) -
                 .await?;
         }
         tx.commit().await?;
+        insert_time += insert_start.elapsed();
 
         id += count as i64;
         remaining -= count as i64;
@@ -337,7 +402,20 @@ pub async fn ingest(bench_name: &str, corpus: Corpus, generate: fn() -> Value) -
 
     // The marker the root crate's combine_benchmark reads after a hyperfine
     // run, at the path it expects (this crate's directory is the cwd).
-    let result = json!({ "inserted": num_records });
+    let result = json!({
+        "inserted": num_records,
+        "format": FORMAT,
+        "table": encrypted,
+        "seal_seconds": seal_time.as_secs_f64(),
+        "insert_seconds": insert_time.as_secs_f64(),
+        "total_seconds": started.elapsed().as_secs_f64(),
+    });
+    eprintln!("ingest {encrypted} ({FORMAT}): {result}");
+    if let Ok(log) = env::var("INGEST_LOG") {
+        use std::io::Write;
+        let mut f = std::fs::OpenOptions::new().create(true).append(true).open(log)?;
+        writeln!(f, "{result}")?;
+    }
     std::fs::create_dir_all("target")?;
     std::fs::write(
         format!("target/{bench_name}-{num_records}_{hf_iteration}.json"),
@@ -431,4 +509,164 @@ pub fn write_metadata_file_in(
     std::fs::write(&path, serde_json::to_string_pretty(&payload)?)?;
     eprintln!("bench metadata written to {}", path.display());
     Ok(())
+}
+
+// ---------------------------------------------------------------------------
+// Reads, by format
+// ---------------------------------------------------------------------------
+
+/// A bound SQL parameter, as the benches and the check bind them.
+#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+pub enum Arg {
+    Text(String),
+    Jsonb(Value),
+    Int(i32),
+    TextArray(Vec<String>),
+    IntArray(Vec<i32>),
+}
+
+impl Arg {
+    /// The parameter as JSON, for the metadata sidecars and plan files.
+    pub fn to_json(&self) -> Value {
+        match self {
+            Arg::Text(t) => Value::String(t.clone()),
+            Arg::Jsonb(v) => v.clone(),
+            Arg::Int(i) => Value::from(*i),
+            Arg::TextArray(v) => Value::from(v.clone()),
+            Arg::IntArray(v) => Value::from(v.clone()),
+        }
+    }
+
+    /// The bytes of query material the parameter carries: the characters of
+    /// a text, the sum of an array's elements' characters.
+    pub fn text_bytes(&self) -> usize {
+        match self {
+            Arg::Text(t) => t.len(),
+            Arg::TextArray(v) => v.iter().map(String::len).sum(),
+            Arg::Jsonb(v) => v.to_string().len(),
+            Arg::Int(_) => 4,
+            Arg::IntArray(v) => 4 * v.len(),
+        }
+    }
+}
+
+/// Bind `args` to `sql` in order.
+pub fn query_with<'q>(
+    sql: &'q str,
+    args: &'q [Arg],
+) -> sqlx::query::Query<'q, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    args.iter().fold(sqlx::query(sql), |q, a| match a {
+        Arg::Text(t) => q.bind(t),
+        Arg::Jsonb(v) => q.bind(Json(v)),
+        Arg::Int(i) => q.bind(*i),
+        Arg::TextArray(v) => q.bind(v),
+        Arg::IntArray(v) => q.bind(v),
+    })
+}
+
+pub use stack_encrypt::json::JsonSubtreeKey;
+
+/// A subtree read's key and how this build's format calls it. The one
+/// place the two formats differ for the benches:
+///
+/// - `gates`: the key is the deepest derivable token (a chain head, or an
+///   array position just below one) and one gate per step below it; the read
+///   is `json_tree_subtree_at(value, token, gates[, budget])`, and with no
+///   gates it returns the token's node's descendants, not the node (#1356).
+///   A wildcard is one gate; `bound` is ignored.
+/// - `derivable`: the key is one token per concrete path (one for a path
+///   with no wildcard; `bound` per wildcard level plus a probe), and the read
+///   is `json_tree_subtree(value, tokens[, budget])`, which returns each
+///   token's node at `d = 0` with its descendants.
+pub struct ReadKey {
+    pub path: String,
+    pub key: JsonSubtreeKey,
+}
+
+impl ReadKey {
+    /// Derive the key for `path` under `options`, a wildcard expanded to
+    /// `bound` (the derivable format's default, 64, when `None`).
+    pub async fn derive(cipher: &Cipher, path: &str, options: &JsonOptions, bound: Option<u32>) -> Self {
+        let parsed = stack_encrypt::json::JsonPath::parse(path).expect("a valid path");
+        let keyset = cipher.default_keyset();
+        #[cfg(feature = "gates")]
+        let key = {
+            let _ = bound;
+            keyset.json_subtree_key(&parsed, options, column()).await
+        };
+        #[cfg(feature = "derivable")]
+        let key = keyset
+            .json_subtree_key_with_bound(
+                &parsed,
+                options,
+                bound.unwrap_or(JsonSubtreeKey::DEFAULT_BOUND),
+                column(),
+            )
+            .await;
+        ReadKey {
+            path: path.to_string(),
+            key: key.unwrap_or_else(|e| panic!("derive subtree key for {path}: {e}")),
+        }
+    }
+
+    /// The read in a FROM clause, `eql_v4.json_tree_subtree…(value, …) e`,
+    /// its parameters numbered from `$1`, and the parameters. `budget`
+    /// `None` is the function's default (64).
+    pub fn read(&self, budget: Option<i32>) -> (String, Vec<Arg>) {
+        let b = budget.map(|b| format!(", {b}")).unwrap_or_default();
+        #[cfg(feature = "gates")]
+        return (
+            format!("eql_v4.json_tree_subtree_at(value, $1::text, $2::text[]{b}) e"),
+            vec![Arg::Text(self.key.token()), Arg::TextArray(self.key.gates())],
+        );
+        #[cfg(feature = "derivable")]
+        return (
+            format!("eql_v4.json_tree_subtree(value, $1::text[]{b}) e"),
+            vec![Arg::TextArray(self.key.tokens())],
+        );
+    }
+
+    /// `json_tree_children` of the key's node, as [`read`](Self::read).
+    pub fn children(&self) -> (String, Vec<Arg>) {
+        #[cfg(feature = "gates")]
+        return (
+            "eql_v4.json_tree_children(value, $1::text, $2::text[]) e".to_string(),
+            vec![Arg::Text(self.key.token()), Arg::TextArray(self.key.gates())],
+        );
+        #[cfg(feature = "derivable")]
+        return (
+            "eql_v4.json_tree_children(value, $1::text) e".to_string(),
+            vec![Arg::Text(self.single_token())],
+        );
+    }
+
+    /// `json_tree_child_count` of the key's node: an expression, not a FROM
+    /// item, and its parameters.
+    pub fn child_count(&self) -> (String, Vec<Arg>) {
+        #[cfg(feature = "gates")]
+        return (
+            "eql_v4.json_tree_child_count(value, $1::text, $2::text[])".to_string(),
+            vec![Arg::Text(self.key.token()), Arg::TextArray(self.key.gates())],
+        );
+        #[cfg(feature = "derivable")]
+        return (
+            "eql_v4.json_tree_child_count(value, $1::text)".to_string(),
+            vec![Arg::Text(self.single_token())],
+        );
+    }
+
+    #[cfg(feature = "derivable")]
+    fn single_token(&self) -> String {
+        let tokens = self.key.tokens();
+        assert_eq!(tokens.len(), 1, "{}: a wildcard-free path sends one token", self.path);
+        tokens.into_iter().next().unwrap()
+    }
+
+    /// How many tokens and gates the read sends.
+    pub fn sent(&self) -> (usize, usize) {
+        #[cfg(feature = "gates")]
+        return (1, self.key.gates().len());
+        #[cfg(feature = "derivable")]
+        return (self.key.tokens().len(), 0);
+    }
 }

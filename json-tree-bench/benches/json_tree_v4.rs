@@ -54,6 +54,7 @@
 //! parameter type and fail (see the v3 bench's note on `::jsonb::` casts).
 
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use json_tree_bench::{eql_bindings, stack_encrypt};
 use eql_bindings::v4::json_tree::{JsonTreeLeafQuery, JsonTreeQuery};
 use json_tree_bench::{
     bench_assert, cipher, column, extract_indexes_used, write_metadata_file_in, Cipher, Corpus,

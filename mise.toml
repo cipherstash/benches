@@ -1467,3 +1467,120 @@ run = """
 #!/usr/bin/env bash
 python3 report_json_three_way.py "$@"
 """
+
+# ---------------------------------------------------------------------------
+# The derivable-tokens comparison: cipherstash/stack#1363 (format
+# `derivable`) against its base (format `gates`), same documents, one
+# database per format on this cluster, timed interleaved from one process.
+# Report: report/JSON_TREE_DERIVABLE_TOKENS.md. Results under
+# results/query/derivable/ and results/ingest/derivable/.
+#
+# Databases (each with the v4 bundle built from the matching stack commit
+# and sql/schema_v4.sql, the plaintext twins copied from `jsonbench`):
+#   DT_GATES_DB      default jsonbench_base
+#   DT_DERIVABLE_DB  default jsonbench_new
+# The json-tree-bench crate builds the derivable format into
+# json-tree-bench/target and the gates format into json-tree-bench/target-gates.
+# ---------------------------------------------------------------------------
+
+[tasks."bench:dt:build"]
+description = "Build json-tree-bench in both stored formats (derivable into target/, gates into target-gates/)"
+run = """
+#!/usr/bin/env bash
+set -e
+cargo build --release --manifest-path json-tree-bench/Cargo.toml --bins --benches
+CARGO_TARGET_DIR=json-tree-bench/target-gates cargo build --release --manifest-path json-tree-bench/Cargo.toml --no-default-features --features gates --bins --benches
+"""
+
+[tasks."bench:dt:ingest"]
+description = "Seal and load one corpus into both formats' databases, interleaved: <small|large|open|wide> <rows> [reps]. Rep 1 fills the tier table and builds its indexes; later reps time a reload of the unsuffixed table"
+depends = ["bench:dt:build"]
+run = """
+#!/usr/bin/env bash
+set -e
+CORPUS_ARG="$1"; ROWS="$2"; REPS="${3:-1}"
+LOG="$PWD/results/ingest/derivable/ingest.jsonl"
+mkdir -p results/ingest/derivable
+case "$CORPUS_ARG" in
+  small) BIN=encrypt_json_tree_v4; ENC=json_tree_small_encrypted_v4 ;;
+  large) BIN=encrypt_json_tree_large_v4; ENC=json_tree_large_encrypted_v4 ;;
+  open)  BIN=encrypt_json_tree_extra_v4; ENC=json_tree_large_open_encrypted_v4; export CORPUS=open ;;
+  wide)  BIN=encrypt_json_tree_extra_v4; ENC=json_tree_wide_encrypted_v4; export CORPUS=wide ;;
+  *) echo "corpus must be small, large, open or wide"; exit 1 ;;
+esac
+GATES_DB="${DT_GATES_DB:-jsonbench_base}"; DERIVABLE_DB="${DT_DERIVABLE_DB:-jsonbench_new}"
+for rep in $(seq 1 "$REPS"); do
+  # Alternate which format goes first.
+  if [ $((rep % 2)) -eq 1 ]; then ORDER="gates derivable"; else ORDER="derivable gates"; fi
+  for fmt in $ORDER; do
+    if [ "$fmt" = gates ]; then DB="$GATES_DB"; TGT=json-tree-bench/target-gates; else DB="$DERIVABLE_DB"; TGT=json-tree-bench/target; fi
+    if [ "$rep" -eq 1 ]; then SUFFIX="_$ROWS"; else SUFFIX=""; fi
+    TABLE="$ENC$SUFFIX"
+    psql -q -d "$DB" -c "TRUNCATE $TABLE"
+    if [ "$rep" -eq 1 ] && [ -f "sql/indexes/${TABLE}_down.sql" ]; then psql -q -d "$DB" -f "sql/indexes/${TABLE}_down.sql"; fi
+    echo "[$(date -u +%FT%TZ)] $fmt $TABLE rep $rep"
+    DATABASE_URL="postgres://postgres:postgres@localhost:5400/$DB" NUM_RECORDS="$ROWS" TABLE_SUFFIX="$SUFFIX" \
+      INGEST_LOG="$LOG" HYPERFINE_ITERATION="$rep" "$TGT/release/$BIN"
+    if [ "$rep" -eq 1 ]; then
+      if [ -f "sql/indexes/${TABLE}_up.sql" ]; then
+        START=$(perl -MTime::HiRes=time -e 'printf "%.3f", time')
+        psql -q -d "$DB" -f "sql/indexes/${TABLE}_up.sql"
+        END=$(perl -MTime::HiRes=time -e 'printf "%.3f", time')
+        printf '{"format": "%s", "table": "%s", "index_build_seconds": %s}' "$fmt" "$TABLE" "$(perl -e "printf '%.3f', $END - $START")" >> "$LOG"
+        echo >> "$LOG"
+      fi
+      psql -q -d "$DB" -c "VACUUM (ANALYZE) $TABLE"
+    fi
+  done
+done
+"""
+
+[tasks."bench:dt:check"]
+description = "Correctness of both formats' tables at a tier: check_json_tree_v4 from each build against its own database"
+depends = ["bench:dt:build"]
+run = """
+#!/usr/bin/env bash
+set -e
+ROWS="${1:-10000}"
+OUT="$PWD/results/query/derivable"
+mkdir -p "$OUT"
+DATABASE_URL="postgres://postgres:postgres@localhost:5400/${DT_GATES_DB:-jsonbench_base}" TARGET_ROWS="$ROWS" RESULTS_DIR="$OUT" \
+  json-tree-bench/target-gates/release/check_json_tree_v4
+DATABASE_URL="postgres://postgres:postgres@localhost:5400/${DT_DERIVABLE_DB:-jsonbench_new}" TARGET_ROWS="$ROWS" RESULTS_DIR="$OUT" \
+  json-tree-bench/target/release/check_json_tree_v4
+"""
+
+[tasks."bench:dt:plan"]
+description = "Derive both formats' scenario plans (tokens, gates, operands) at a tier: dt_bench plan from each build"
+depends = ["bench:dt:build"]
+run = """
+#!/usr/bin/env bash
+set -e
+ROWS="${1:-10000}"
+OUT="$PWD/results/query/derivable"
+mkdir -p "$OUT"
+DATABASE_URL="postgres://postgres:postgres@localhost:5400/${DT_GATES_DB:-jsonbench_base}" TARGET_ROWS="$ROWS" OUT_DIR="$OUT" \
+  json-tree-bench/target-gates/release/dt_bench plan
+DATABASE_URL="postgres://postgres:postgres@localhost:5400/${DT_DERIVABLE_DB:-jsonbench_new}" TARGET_ROWS="$ROWS" OUT_DIR="$OUT" \
+  json-tree-bench/target/release/dt_bench plan
+"""
+
+[tasks."bench:dt:time"]
+description = "Time both formats' plans interleaved: <rows> [tag]. PASSES, TABLE_PASSES, REPS and ONLY (scenario-name filter) tune it"
+depends = ["bench:dt:build"]
+run = """
+#!/usr/bin/env bash
+set -e
+ROWS="${1:-10000}"
+GATES_URL="postgres://postgres:postgres@localhost:5400/${DT_GATES_DB:-jsonbench_base}" \
+DERIVABLE_URL="postgres://postgres:postgres@localhost:5400/${DT_DERIVABLE_DB:-jsonbench_new}" \
+TARGET_ROWS="$ROWS" TAG="${2:-}" OUT_DIR="$PWD/results/query/derivable" \
+  json-tree-bench/target/release/dt_bench time
+"""
+
+[tasks."report:dt"]
+description = "Sizes (live tables) and result tables for the derivable-tokens comparison: report_derivable_tokens.py <sizes|render> ..."
+run = """
+#!/usr/bin/env bash
+python3 report_derivable_tokens.py "$@"
+"""

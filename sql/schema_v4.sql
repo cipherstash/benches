@@ -113,3 +113,30 @@ CREATE TABLE IF NOT EXISTS json_tree_large_plain_v4_1000000 (
     id INTEGER PRIMARY KEY,
     plain JSONB NOT NULL
 );
+
+-- The derivable-tokens comparison (report/JSON_TREE_DERIVABLE_TOKENS.md):
+-- the nested corpus sealed with the root OPEN, for the read of `$` with no
+-- sealed root (its twin is filled from json_tree_large_plain_v4_<N>, so the
+-- documents are the nested corpus's, id for id), and the wide corpus (one
+-- 300-member object, one 300-element array) for the cost of enumerating a
+-- wide node. No containment index on either: only reads run on them.
+
+CREATE TABLE IF NOT EXISTS json_tree_large_open_encrypted_v4_10000 (
+    id SERIAL PRIMARY KEY,
+    value public.eql_v4_json_tree NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS json_tree_large_open_plain_v4_10000 (
+    id INTEGER PRIMARY KEY,
+    plain JSONB NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS json_tree_wide_encrypted_v4_1000 (
+    id SERIAL PRIMARY KEY,
+    value public.eql_v4_json_tree NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS json_tree_wide_plain_v4_1000 (
+    id INTEGER PRIMARY KEY,
+    plain JSONB NOT NULL
+);

@@ -17,13 +17,33 @@ publish = false
 [dependencies]
 # stack-encrypt's JSON index (the EQL v4 `json_tree` family) and the EQL
 # v4 wire types that put `v`/`i` on a stored document and type the query
-# operands. Both from the stack monorepo's feature branch until they ship;
-# Cargo.lock pins the rev. `default-features = false` on stack-encrypt
-# drops the HTTP/ZeroKMS transport: the benches seal and derive terms under
-# `DeterministicSource` (feature `test-support`), because what is measured
-# is Postgres, not a KMS round-trip.
-stack-encrypt = { git = "https://github.com/cipherstash/stack", branch = "feat/json-tree-ordinal-chain", default-features = false, features = ["test-support"] }
-eql-bindings = { git = "https://github.com/cipherstash/stack", branch = "feat/json-tree-ordinal-chain", default-features = false, features = ["stack-encrypt"] }
+# operands, from the stack monorepo until they ship. `default-features =
+# false` on stack-encrypt drops the HTTP/ZeroKMS transport: the benches seal
+# and derive terms under `DeterministicSource` (feature `test-support`),
+# because what is measured is Postgres, not a KMS round-trip.
+#
+# Two stored formats are built from one crate, one per feature, each pinned
+# to the stack commit it measures (a `rev`, not a branch, so a measurement
+# names its code):
+#
+#   derivable (default)  cipherstash/stack#1363, `feat/json-tree-derivable-tokens`:
+#                        every entry carries a self tag `x`, a member's token
+#                        drops its ordinal, and a read is
+#                        `json_tree_subtree(doc, tokens text[], budget)`.
+#   gates                its base, `docs/json-tree-derivable-tokens` (code-identical
+#                        to #1358): a read is a head token plus one gate per
+#                        step, `json_tree_subtree_at(doc, token, gates, budget)`.
+#
+# The features are exclusive. Each package is renamed so the two copies of
+# the stack tree resolve side by side in one Cargo.lock; the crate imports
+# them under their usual names (`extern crate .. as stack_encrypt` in each
+# target, see src/lib.rs). Build the base format with
+# `--no-default-features --features gates` into its own target dir
+# (`JSON_TREE_FORMAT=gates` does this in the mise tasks).
+stack-encrypt-derivable = { package = "stack-encrypt", git = "https://github.com/cipherstash/stack", rev = "683802bccd56f828ebb8c1a325bbca9077d0e456", default-features = false, features = ["test-support"], optional = true }
+eql-bindings-derivable = { package = "eql-bindings", git = "https://github.com/cipherstash/stack", rev = "683802bccd56f828ebb8c1a325bbca9077d0e456", default-features = false, features = ["stack-encrypt"], optional = true }
+stack-encrypt-gates = { package = "stack-encrypt", git = "https://github.com/cipherstash/stack", rev = "edabee625de2777131a919fcf5484e7333e607de", default-features = false, features = ["test-support"], optional = true }
+eql-bindings-gates = { package = "eql-bindings", git = "https://github.com/cipherstash/stack", rev = "edabee625de2777131a919fcf5484e7333e607de", default-features = false, features = ["stack-encrypt"], optional = true }
 sqlx = { version = "0.8", features = ["runtime-tokio-native-tls", "postgres", "json"] }
 tokio = { version = "1.47.1", features = ["full"] }
 criterion = { version = "0.4.0", features = ["async_tokio"] }
@@ -32,6 +52,11 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 fake = { version = "4.4.0", features = ["chrono"] }
 
+[features]
+default = ["derivable"]
+derivable = ["dep:stack-encrypt-derivable", "dep:eql-bindings-derivable"]
+gates = ["dep:stack-encrypt-gates", "dep:eql-bindings-gates"]
+
 [[bin]]
 name = "encrypt_json_tree_v4"
 path = "src/bin/encrypt_json_tree_v4.rs"
@@ -39,6 +64,14 @@ path = "src/bin/encrypt_json_tree_v4.rs"
 [[bin]]
 name = "encrypt_json_tree_large_v4"
 path = "src/bin/encrypt_json_tree_large_v4.rs"
+
+[[bin]]
+name = "encrypt_json_tree_extra_v4"
+path = "src/bin/encrypt_json_tree_extra_v4.rs"
+
+[[bin]]
+name = "dt_bench"
+path = "src/bin/dt_bench.rs"
 
 [[bench]]
 name = "json_tree_v4"

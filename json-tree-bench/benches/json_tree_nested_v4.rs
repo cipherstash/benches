@@ -17,11 +17,14 @@
 //!                             btree; lo is the sampled salary, hi the smallest salary in the
 //!                             corpus at least 10,000 above it (so SteVec has stored leaves for both)
 //!   field_order/nested        ORDER BY eql_v4.ord_term(value -> sel) LIMIT 10, same btree
-//!   subtree/company           eql_v4.json_tree_subtree(value, token) by id — 6 leaves
+//!   subtree/company           the subtree read of `$.company` by id — 6 leaves (see `ReadKey`:
+//!                             `json_tree_subtree(value, tokens)` in the derivable format,
+//!                             `json_tree_subtree_at(value, token, gates)` in the gates format)
 //!   subtree/user              … `$.user`: 3 levels, 12 leaves
 //!   subtree/orders            … `$.orders`: every order and item, the largest walk (hundreds of entries)
-//!   subtree_at/items          eql_v4.json_tree_subtree_at(value, token, gates) for `$.orders[*].items`
-//!                             (the `$.orders` token, gates [s($.orders[*]), s($.orders[*].items)])
+//!   subtree_at/items          the read of `$.orders[*].items`: derivable, 64 + 1 tokens (the
+//!                             default bound and its probe); gates, the `$.orders` token and
+//!                             gates [s($.orders[*]), s($.orders[*].items)]
 //!   subtree/orders_walked     the two above with the budget off (0): the walk returns every
 //!   subtree_at/items_walked   entry, where the default budget (64) returns the sealed root
 //!   children/orders           eql_v4.json_tree_children(value, token) — one row per order
@@ -37,8 +40,8 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use eql_bindings::v4::json_tree::{JsonTreeLeafQuery, JsonTreeQuery};
 use json_tree_bench::{
-    bench_assert, cipher, column, extract_indexes_used, write_metadata_file_in, Cipher, Corpus,
-    JsonPlan, ScenarioMetadata,
+    bench_assert, cipher, column, eql_bindings, extract_indexes_used, query_with, stack_encrypt,
+    write_metadata_file_in, Arg, Cipher, Corpus, JsonPlan, ReadKey, ScenarioMetadata,
 };
 use serde_json::{json, Value as JsonValue};
 use sqlx::postgres::PgPoolOptions;
@@ -51,30 +54,10 @@ use tokio::runtime::Runtime;
 const CONTAINS_CAST: &str = "::text::jsonb::eql_v4.query_json_tree";
 const LEAF_CAST: &str = "::text::jsonb::eql_v4.query_json_tree_leaf";
 
-#[derive(Clone)]
-enum Arg {
-    Text(String),
-    Jsonb(JsonValue),
-    Int(i32),
-    TextArray(Vec<String>),
-}
-
 struct Scenario {
     name: &'static str,
     sql: String,
     args: Vec<Arg>,
-}
-
-fn query_with<'q>(
-    sql: &'q str,
-    args: &'q [Arg],
-) -> sqlx::query::Query<'q, sqlx::Postgres, sqlx::postgres::PgArguments> {
-    args.iter().fold(sqlx::query(sql), |q, a| match a {
-        Arg::Text(t) => q.bind(t),
-        Arg::Jsonb(v) => q.bind(Json(v)),
-        Arg::Int(i) => q.bind(*i),
-        Arg::TextArray(v) => q.bind(v),
-    })
 }
 
 async fn contains_operand(cipher: &Cipher, plan: &JsonPlan, needle: &JsonValue) -> String {
@@ -95,17 +78,12 @@ async fn selector(cipher: &Cipher, path: &str) -> String {
         .to_string()
 }
 
-async fn token(cipher: &Cipher, path: &str) -> String {
-    cipher
-        .default_keyset()
-        .json_subtree_key(
-            &JsonPath::parse(path).unwrap(),
-            &Corpus::Nested.options(),
-            column(),
-        )
-        .await
-        .expect("derive subtree key")
-        .token()
+/// A by-id subtree read of `path` (see `ReadKey`), its id the last parameter.
+fn read_by_id(key: &ReadKey, table: &str, budget: Option<i32>, id: i32) -> (String, Vec<Arg>) {
+    let (from, mut args) = key.read(budget);
+    let sql = format!("SELECT e::jsonb::text FROM {table}, {from} WHERE id = ${}", args.len() + 1);
+    args.push(Arg::Int(id));
+    (sql, args)
 }
 
 fn criterion_benchmark(c: &mut Criterion) {
@@ -201,25 +179,19 @@ fn criterion_benchmark(c: &mut Criterion) {
         };
         let sel_salary = selector(&cipher, "$.company.salary").await;
         let sel_status = selector(&cipher, "$.orders[*].status").await;
-        let tok_company = token(&cipher, "$.company").await;
-        let tok_user = token(&cipher, "$.user").await;
-        let tok_orders = token(&cipher, "$.orders").await;
-        let items_key = cipher
-            .default_keyset()
-            .json_subtree_key(
-                &JsonPath::parse("$.orders[*].items").unwrap(),
-                &Corpus::Nested.options(),
-                column(),
-            )
-            .await
-            .expect("derive subtree key");
-        // `$.orders[*].items` walks from the chain head `$.orders`'s token
-        // through one gate per step below it: the wildcard's selector, then
-        // `items`'s.
-        let tok_items = items_key.token();
-        let gates_items = items_key.gates();
-        assert_eq!(tok_items, tok_orders, "anchored at the chain head");
-        assert_eq!(gates_items.len(), 2, "one gate per step below the head");
+        let options = Corpus::Nested.options();
+        let key_company = ReadKey::derive(&cipher, "$.company", &options, None).await;
+        let key_user = ReadKey::derive(&cipher, "$.user", &options, None).await;
+        let key_orders = ReadKey::derive(&cipher, "$.orders", &options, None).await;
+        // `$.orders[*].items`: in the gates format the chain head `$.orders`'s
+        // token and one gate per step below it; in the derivable format the
+        // default bound's 64 positions and the probe.
+        let key_items = ReadKey::derive(&cipher, "$.orders[*].items", &options, None).await;
+        let read = |key: &ReadKey, budget: Option<i32>| read_by_id(key, &table, budget, id);
+        let (children_from, mut children_args) = key_orders.children();
+        children_args.push(Arg::Int(id));
+        let (count_expr, mut count_args) = key_orders.child_count();
+        count_args.push(Arg::Int(id));
 
         // --- Per-path functional indexes for the ordering scenarios ---
         for (name, expr) in [
@@ -282,7 +254,6 @@ fn criterion_benchmark(c: &mut Criterion) {
         let i = |n: i32| Arg::Int(n);
         let t = |s: &str| Arg::Text(s.to_string());
         let j = |v: &JsonValue| Arg::Jsonb(v.clone());
-        let ta = |v: &[String]| Arg::TextArray(v.to_vec());
         let mut scenarios = vec![
             // ---- encrypted ----
             Scenario { name: "json_tree/contains/deep_object",
@@ -316,32 +287,38 @@ fn criterion_benchmark(c: &mut Criterion) {
             Scenario { name: "json_tree/field_order/nested",
                 sql: format!("SELECT id FROM {table} ORDER BY eql_v4.ord_term(value -> '{sel_salary}'::text) LIMIT 10"),
                 args: vec![] },
-            Scenario { name: "json_tree/subtree/company",
-                sql: format!("SELECT e::jsonb::text FROM {table}, eql_v4.json_tree_subtree(value, $1::text) e WHERE id = $2"),
-                args: vec![t(&tok_company), i(id)] },
-            Scenario { name: "json_tree/subtree/user",
-                sql: format!("SELECT e::jsonb::text FROM {table}, eql_v4.json_tree_subtree(value, $1::text) e WHERE id = $2"),
-                args: vec![t(&tok_user), i(id)] },
-            Scenario { name: "json_tree/subtree/orders",
-                sql: format!("SELECT e::jsonb::text FROM {table}, eql_v4.json_tree_subtree(value, $1::text) e WHERE id = $2"),
-                args: vec![t(&tok_orders), i(id)] },
-            Scenario { name: "json_tree/subtree_at/items",
-                sql: format!("SELECT e::jsonb::text FROM {table}, eql_v4.json_tree_subtree_at(value, $1::text, $2::text[]) e WHERE id = $3"),
-                args: vec![t(&tok_items), ta(&gates_items), i(id)] },
-            // The same two walks with the budget off (0): every entry of the
+            {
+                let (sql, args) = read(&key_company, None);
+                Scenario { name: "json_tree/subtree/company", sql, args }
+            },
+            {
+                let (sql, args) = read(&key_user, None);
+                Scenario { name: "json_tree/subtree/user", sql, args }
+            },
+            {
+                let (sql, args) = read(&key_orders, None);
+                Scenario { name: "json_tree/subtree/orders", sql, args }
+            },
+            {
+                let (sql, args) = read(&key_items, None);
+                Scenario { name: "json_tree/subtree_at/items", sql, args }
+            },
+            // The same two reads with the budget off (0): every entry of the
             // subtree, where the default budget returns the sealed root.
-            Scenario { name: "json_tree/subtree/orders_walked",
-                sql: format!("SELECT e::jsonb::text FROM {table}, eql_v4.json_tree_subtree(value, $1::text, 0) e WHERE id = $2"),
-                args: vec![t(&tok_orders), i(id)] },
-            Scenario { name: "json_tree/subtree_at/items_walked",
-                sql: format!("SELECT e::jsonb::text FROM {table}, eql_v4.json_tree_subtree_at(value, $1::text, $2::text[], 0) e WHERE id = $3"),
-                args: vec![t(&tok_items), ta(&gates_items), i(id)] },
+            {
+                let (sql, args) = read(&key_orders, Some(0));
+                Scenario { name: "json_tree/subtree/orders_walked", sql, args }
+            },
+            {
+                let (sql, args) = read(&key_items, Some(0));
+                Scenario { name: "json_tree/subtree_at/items_walked", sql, args }
+            },
             Scenario { name: "json_tree/children/orders",
-                sql: format!("SELECT e::jsonb::text FROM {table}, eql_v4.json_tree_children(value, $1::text) e WHERE id = $2"),
-                args: vec![t(&tok_orders), i(id)] },
+                sql: format!("SELECT e::jsonb::text FROM {table}, {children_from} WHERE id = ${}", children_args.len()),
+                args: children_args.clone() },
             Scenario { name: "json_tree/child_count/orders",
-                sql: format!("SELECT eql_v4.json_tree_child_count(value, $1::text) FROM {table} WHERE id = $2"),
-                args: vec![t(&tok_orders), i(id)] },
+                sql: format!("SELECT {count_expr} FROM {table} WHERE id = ${}", count_args.len()),
+                args: count_args.clone() },
             Scenario { name: "json_tree/path_query/wildcard",
                 sql: format!("SELECT e::jsonb::text FROM {table}, eql_v4.json_tree_path_query(value::jsonb, $1::text) e WHERE id = $2"),
                 args: vec![t(&sel_status), i(id)] },
@@ -420,16 +397,7 @@ fn criterion_benchmark(c: &mut Criterion) {
                 .fetch_all(&pool)
                 .await
                 .unwrap_or_else(|e| panic!("row-count execute failed for {id}: {e}"));
-            let parameters = s
-                .args
-                .iter()
-                .map(|a| match a {
-                    Arg::Text(t) => JsonValue::String(t.clone()),
-                    Arg::Jsonb(v) => v.clone(),
-                    Arg::Int(i) => JsonValue::from(*i),
-                    Arg::TextArray(v) => JsonValue::from(v.clone()),
-                })
-                .collect();
+            let parameters = s.args.iter().map(Arg::to_json).collect();
             out.push(ScenarioMetadata {
                 id,
                 query: s.sql.clone(),
