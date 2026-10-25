@@ -959,6 +959,23 @@ dependencies = [
 [[package]]
 name = "eql-bindings"
 version = "3.0.6"
+source = "git+https://github.com/cipherstash/stack?rev=ebdb5de0a12bbec06842851eece283fb7faea30b#ebdb5de0a12bbec06842851eece283fb7faea30b"
+dependencies = [
+ "base64",
+ "base85-simd",
+ "hex",
+ "schemars",
+ "serde",
+ "serde_json",
+ "stack-encrypt 0.3.0 (git+https://github.com/cipherstash/stack?rev=ebdb5de0a12bbec06842851eece283fb7faea30b)",
+ "thiserror 2.0.21",
+ "ts-rs",
+ "zeroize",
+]
+
+[[package]]
+name = "eql-bindings"
+version = "3.0.6"
 source = "git+https://github.com/cipherstash/stack?rev=edabee625de2777131a919fcf5484e7333e607de#edabee625de2777131a919fcf5484e7333e607de"
 dependencies = [
  "base64",
@@ -1650,12 +1667,14 @@ dependencies = [
  "anyhow",
  "criterion",
  "eql-bindings 3.0.6 (git+https://github.com/cipherstash/stack?rev=683802bccd56f828ebb8c1a325bbca9077d0e456)",
+ "eql-bindings 3.0.6 (git+https://github.com/cipherstash/stack?rev=ebdb5de0a12bbec06842851eece283fb7faea30b)",
  "eql-bindings 3.0.6 (git+https://github.com/cipherstash/stack?rev=edabee625de2777131a919fcf5484e7333e607de)",
  "fake 4.4.0",
  "serde",
  "serde_json",
  "sqlx",
  "stack-encrypt 0.3.0 (git+https://github.com/cipherstash/stack?rev=683802bccd56f828ebb8c1a325bbca9077d0e456)",
+ "stack-encrypt 0.3.0 (git+https://github.com/cipherstash/stack?rev=ebdb5de0a12bbec06842851eece283fb7faea30b)",
  "stack-encrypt 0.3.0 (git+https://github.com/cipherstash/stack?rev=edabee625de2777131a919fcf5484e7333e607de)",
  "tokio",
 ]
@@ -3103,6 +3122,34 @@ dependencies = [
 [[package]]
 name = "stack-auth"
 version = "0.43.0"
+source = "git+https://github.com/cipherstash/stack?rev=ebdb5de0a12bbec06842851eece283fb7faea30b#ebdb5de0a12bbec06842851eece283fb7faea30b"
+dependencies = [
+ "aquamarine",
+ "base64",
+ "cts-common",
+ "jsonwebtoken",
+ "miette",
+ "open",
+ "serde",
+ "serde_json",
+ "serde_urlencoded",
+ "sha2 0.10.9",
+ "stack-profile 0.43.0 (git+https://github.com/cipherstash/stack?rev=ebdb5de0a12bbec06842851eece283fb7faea30b)",
+ "thiserror 1.0.69",
+ "tokio",
+ "tracing",
+ "url",
+ "uuid",
+ "vitaminc 0.8.0",
+ "vitaminc-protected 0.8.0",
+ "web-time",
+ "zeroize",
+ "zerokms-protocol",
+]
+
+[[package]]
+name = "stack-auth"
+version = "0.43.0"
 source = "git+https://github.com/cipherstash/stack?rev=edabee625de2777131a919fcf5484e7333e607de#edabee625de2777131a919fcf5484e7333e607de"
 dependencies = [
  "aquamarine",
@@ -3159,6 +3206,34 @@ dependencies = [
 [[package]]
 name = "stack-encrypt"
 version = "0.3.0"
+source = "git+https://github.com/cipherstash/stack?rev=ebdb5de0a12bbec06842851eece283fb7faea30b#ebdb5de0a12bbec06842851eece283fb7faea30b"
+dependencies = [
+ "base64ct",
+ "base85-simd",
+ "clww-ore",
+ "miette",
+ "ore-rs",
+ "serde",
+ "serde_json",
+ "serdect",
+ "sha2 0.11.1",
+ "stack-encrypt-derive 0.3.0 (git+https://github.com/cipherstash/stack?rev=ebdb5de0a12bbec06842851eece283fb7faea30b)",
+ "stack-kms 0.1.0 (git+https://github.com/cipherstash/stack?rev=ebdb5de0a12bbec06842851eece283fb7faea30b)",
+ "thiserror 1.0.69",
+ "uuid",
+ "vitaminc-aead 0.8.0",
+ "vitaminc-encrypt 0.8.0",
+ "vitaminc-hmac",
+ "vitaminc-normalize",
+ "vitaminc-ore",
+ "vitaminc-prf",
+ "vitaminc-protected 0.8.0",
+ "zeroize",
+]
+
+[[package]]
+name = "stack-encrypt"
+version = "0.3.0"
 source = "git+https://github.com/cipherstash/stack?rev=edabee625de2777131a919fcf5484e7333e607de#edabee625de2777131a919fcf5484e7333e607de"
 dependencies = [
  "base64ct",
@@ -3188,6 +3263,16 @@ dependencies = [
 name = "stack-encrypt-derive"
 version = "0.3.0"
 source = "git+https://github.com/cipherstash/stack?rev=683802bccd56f828ebb8c1a325bbca9077d0e456#683802bccd56f828ebb8c1a325bbca9077d0e456"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 3.0.9",
+]
+
+[[package]]
+name = "stack-encrypt-derive"
+version = "0.3.0"
+source = "git+https://github.com/cipherstash/stack?rev=ebdb5de0a12bbec06842851eece283fb7faea30b#ebdb5de0a12bbec06842851eece283fb7faea30b"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -3236,6 +3321,35 @@ dependencies = [
 [[package]]
 name = "stack-kms"
 version = "0.1.0"
+source = "git+https://github.com/cipherstash/stack?rev=ebdb5de0a12bbec06842851eece283fb7faea30b#ebdb5de0a12bbec06842851eece283fb7faea30b"
+dependencies = [
+ "base16ct",
+ "base64ct",
+ "blake3",
+ "futures",
+ "miette",
+ "opaque-debug",
+ "recipher",
+ "serde",
+ "serde_cbor",
+ "serde_json",
+ "serdect",
+ "sha2 0.10.9",
+ "stack-auth 0.43.0 (git+https://github.com/cipherstash/stack?rev=ebdb5de0a12bbec06842851eece283fb7faea30b)",
+ "stack-profile 0.43.0 (git+https://github.com/cipherstash/stack?rev=ebdb5de0a12bbec06842851eece283fb7faea30b)",
+ "thiserror 1.0.69",
+ "tracing",
+ "url",
+ "uuid",
+ "vitaminc 0.8.0",
+ "vitaminc-protected 0.8.0",
+ "zeroize",
+ "zerokms-protocol",
+]
+
+[[package]]
+name = "stack-kms"
+version = "0.1.0"
 source = "git+https://github.com/cipherstash/stack?rev=edabee625de2777131a919fcf5484e7333e607de#edabee625de2777131a919fcf5484e7333e607de"
 dependencies = [
  "base16ct",
@@ -3266,6 +3380,20 @@ dependencies = [
 name = "stack-profile"
 version = "0.43.0"
 source = "git+https://github.com/cipherstash/stack?rev=683802bccd56f828ebb8c1a325bbca9077d0e456#683802bccd56f828ebb8c1a325bbca9077d0e456"
+dependencies = [
+ "dirs",
+ "gethostname",
+ "miette",
+ "serde",
+ "serde_json",
+ "thiserror 1.0.69",
+ "uuid",
+]
+
+[[package]]
+name = "stack-profile"
+version = "0.43.0"
+source = "git+https://github.com/cipherstash/stack?rev=ebdb5de0a12bbec06842851eece283fb7faea30b#ebdb5de0a12bbec06842851eece283fb7faea30b"
 dependencies = [
  "dirs",
  "gethostname",

@@ -44,6 +44,13 @@ stack-encrypt-derivable = { package = "stack-encrypt", git = "https://github.com
 eql-bindings-derivable = { package = "eql-bindings", git = "https://github.com/cipherstash/stack", rev = "683802bccd56f828ebb8c1a325bbca9077d0e456", default-features = false, features = ["stack-encrypt"], optional = true }
 stack-encrypt-gates = { package = "stack-encrypt", git = "https://github.com/cipherstash/stack", rev = "edabee625de2777131a919fcf5484e7333e607de", default-features = false, features = ["test-support"], optional = true }
 eql-bindings-gates = { package = "eql-bindings", git = "https://github.com/cipherstash/stack", rev = "edabee625de2777131a919fcf5484e7333e607de", default-features = false, features = ["stack-encrypt"], optional = true }
+# merged: the derivable format as #1363 merged to `next` (ebdb5de0a, with
+# #1358, #1362, #1363 and #1366 on it): the same stored bytes and tokens as
+# `derivable`, with f94a6eb11's SQL (inlined chain primitives, one read
+# index) and the review fixes after 683802bcc. Build with
+# `--no-default-features --features merged` into json-tree-bench/target-merged.
+stack-encrypt-merged = { package = "stack-encrypt", git = "https://github.com/cipherstash/stack", rev = "ebdb5de0a12bbec06842851eece283fb7faea30b", default-features = false, features = ["test-support"], optional = true }
+eql-bindings-merged = { package = "eql-bindings", git = "https://github.com/cipherstash/stack", rev = "ebdb5de0a12bbec06842851eece283fb7faea30b", default-features = false, features = ["stack-encrypt"], optional = true }
 sqlx = { version = "0.8", features = ["runtime-tokio-native-tls", "postgres", "json"] }
 tokio = { version = "1.47.1", features = ["full"] }
 criterion = { version = "0.4.0", features = ["async_tokio"] }
@@ -56,6 +63,7 @@ fake = { version = "4.4.0", features = ["chrono"] }
 default = ["derivable"]
 derivable = ["dep:stack-encrypt-derivable", "dep:eql-bindings-derivable"]
 gates = ["dep:stack-encrypt-gates", "dep:eql-bindings-gates"]
+merged = ["dep:stack-encrypt-merged", "dep:eql-bindings-merged"]
 
 [[bin]]
 name = "encrypt_json_tree_v4"
