@@ -1,0 +1,229 @@
+    Finished `bench` profile [optimized] target(s) in 0.37s
+json_tree_nested_v4 bench picked row 5000 from `json_tree_large_encrypted_v4_10000`
+json_tree_nested_v4 bench: deep_object oracle agrees (2038 rows)
+json_tree_nested_v4 bench: array_element oracle agrees (1 rows)
+json_tree_nested_v4 bench: nested_array oracle agrees (518 rows)
+bench metadata written to /Users/dan/Projects/CipherStash/_worktrees/benches-json-tree/results/query/merged/criterion/merged/json_tree_nested_metadata_10000.json
+Benchmarking JSON_TREE_NESTED/json_tree/contains/deep_object/10000
+Benchmarking JSON_TREE_NESTED/json_tree/contains/deep_object/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/json_tree/contains/deep_object/10000: Collecting 10 samples in estimated 5.0329 s (3245 iterations)
+Benchmarking JSON_TREE_NESTED/json_tree/contains/deep_object/10000: Analyzing
+JSON_TREE_NESTED/json_tree/contains/deep_object/10000
+                        time:   [1.5254 ms 1.5365 ms 1.5426 ms]
+Benchmarking JSON_TREE_NESTED/json_tree/contains/array_element/10000
+Benchmarking JSON_TREE_NESTED/json_tree/contains/array_element/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/json_tree/contains/array_element/10000: Collecting 10 samples in estimated 5.0182 s (8690 iterations)
+Benchmarking JSON_TREE_NESTED/json_tree/contains/array_element/10000: Analyzing
+JSON_TREE_NESTED/json_tree/contains/array_element/10000
+                        time:   [581.14 µs 583.23 µs 586.56 µs]
+Benchmarking JSON_TREE_NESTED/json_tree/contains/nested_array/10000
+Benchmarking JSON_TREE_NESTED/json_tree/contains/nested_array/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/json_tree/contains/nested_array/10000: Collecting 10 samples in estimated 5.0541 s (2365 iterations)
+Benchmarking JSON_TREE_NESTED/json_tree/contains/nested_array/10000: Analyzing
+JSON_TREE_NESTED/json_tree/contains/nested_array/10000
+                        time:   [2.1260 ms 2.1408 ms 2.1521 ms]
+Benchmarking JSON_TREE_NESTED/json_tree/contains/deep_object_fn/10000
+Benchmarking JSON_TREE_NESTED/json_tree/contains/deep_object_fn/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/json_tree/contains/deep_object_fn/10000: Collecting 10 samples in estimated 5.0632 s (3245 iterations)
+Benchmarking JSON_TREE_NESTED/json_tree/contains/deep_object_fn/10000: Analyzing
+JSON_TREE_NESTED/json_tree/contains/deep_object_fn/10000
+                        time:   [1.5326 ms 1.5407 ms 1.5492 ms]
+Benchmarking JSON_TREE_NESTED/json_tree/contains/array_element_fn/10000
+Benchmarking JSON_TREE_NESTED/json_tree/contains/array_element_fn/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/json_tree/contains/array_element_fn/10000: Collecting 10 samples in estimated 5.0160 s (8745 iterations)
+Benchmarking JSON_TREE_NESTED/json_tree/contains/array_element_fn/10000: Analyzing
+JSON_TREE_NESTED/json_tree/contains/array_element_fn/10000
+                        time:   [581.80 µs 588.05 µs 594.35 µs]
+Benchmarking JSON_TREE_NESTED/json_tree/contains/nested_array_fn/10000
+Benchmarking JSON_TREE_NESTED/json_tree/contains/nested_array_fn/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/json_tree/contains/nested_array_fn/10000: Collecting 10 samples in estimated 5.0864 s (2365 iterations)
+Benchmarking JSON_TREE_NESTED/json_tree/contains/nested_array_fn/10000: Analyzing
+JSON_TREE_NESTED/json_tree/contains/nested_array_fn/10000
+                        time:   [2.1130 ms 2.1194 ms 2.1300 ms]
+Benchmarking JSON_TREE_NESTED/json_tree/field_eq/nested/10000
+Benchmarking JSON_TREE_NESTED/json_tree/field_eq/nested/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/json_tree/field_eq/nested/10000: Collecting 10 samples in estimated 5.0183 s (10k iterations)
+Benchmarking JSON_TREE_NESTED/json_tree/field_eq/nested/10000: Analyzing
+JSON_TREE_NESTED/json_tree/field_eq/nested/10000
+                        time:   [510.20 µs 517.76 µs 526.95 µs]
+Benchmarking JSON_TREE_NESTED/json_tree/field_gt/nested/10000
+Benchmarking JSON_TREE_NESTED/json_tree/field_gt/nested/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/json_tree/field_gt/nested/10000: Collecting 10 samples in estimated 5.0077 s (25k iterations)
+Benchmarking JSON_TREE_NESTED/json_tree/field_gt/nested/10000: Analyzing
+JSON_TREE_NESTED/json_tree/field_gt/nested/10000
+                        time:   [199.89 µs 201.82 µs 203.41 µs]
+Benchmarking JSON_TREE_NESTED/json_tree/field_between/nested/10000
+Benchmarking JSON_TREE_NESTED/json_tree/field_between/nested/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/json_tree/field_between/nested/10000: Collecting 10 samples in estimated 5.0129 s (18k iterations)
+Benchmarking JSON_TREE_NESTED/json_tree/field_between/nested/10000: Analyzing
+JSON_TREE_NESTED/json_tree/field_between/nested/10000
+                        time:   [287.97 µs 289.36 µs 290.97 µs]
+Benchmarking JSON_TREE_NESTED/json_tree/field_order/nested/10000
+Benchmarking JSON_TREE_NESTED/json_tree/field_order/nested/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/json_tree/field_order/nested/10000: Collecting 10 samples in estimated 5.1065 s (2310 iterations)
+Benchmarking JSON_TREE_NESTED/json_tree/field_order/nested/10000: Analyzing
+JSON_TREE_NESTED/json_tree/field_order/nested/10000
+                        time:   [2.1911 ms 2.2100 ms 2.2483 ms]
+Benchmarking JSON_TREE_NESTED/json_tree/subtree/company/10000
+Benchmarking JSON_TREE_NESTED/json_tree/subtree/company/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/json_tree/subtree/company/10000: Collecting 10 samples in estimated 5.0368 s (4015 iterations)
+Benchmarking JSON_TREE_NESTED/json_tree/subtree/company/10000: Analyzing
+JSON_TREE_NESTED/json_tree/subtree/company/10000
+                        time:   [1.2438 ms 1.2567 ms 1.2676 ms]
+Benchmarking JSON_TREE_NESTED/json_tree/subtree/user/10000
+Benchmarking JSON_TREE_NESTED/json_tree/subtree/user/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/json_tree/subtree/user/10000: Collecting 10 samples in estimated 5.0704 s (3795 iterations)
+Benchmarking JSON_TREE_NESTED/json_tree/subtree/user/10000: Analyzing
+JSON_TREE_NESTED/json_tree/subtree/user/10000
+                        time:   [1.3165 ms 1.3309 ms 1.3397 ms]
+Benchmarking JSON_TREE_NESTED/json_tree/subtree/orders/10000
+Benchmarking JSON_TREE_NESTED/json_tree/subtree/orders/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/json_tree/subtree/orders/10000: Collecting 10 samples in estimated 5.0747 s (3355 iterations)
+Benchmarking JSON_TREE_NESTED/json_tree/subtree/orders/10000: Analyzing
+JSON_TREE_NESTED/json_tree/subtree/orders/10000
+                        time:   [1.4974 ms 1.5120 ms 1.5352 ms]
+Benchmarking JSON_TREE_NESTED/json_tree/subtree_at/items/10000
+Benchmarking JSON_TREE_NESTED/json_tree/subtree_at/items/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/json_tree/subtree_at/items/10000: Collecting 10 samples in estimated 5.0162 s (3355 iterations)
+Benchmarking JSON_TREE_NESTED/json_tree/subtree_at/items/10000: Analyzing
+JSON_TREE_NESTED/json_tree/subtree_at/items/10000
+                        time:   [1.4740 ms 1.4802 ms 1.4868 ms]
+Benchmarking JSON_TREE_NESTED/json_tree/subtree/orders_walked/10000
+Benchmarking JSON_TREE_NESTED/json_tree/subtree/orders_walked/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/json_tree/subtree/orders_walked/10000: Collecting 10 samples in estimated 5.1454 s (1045 iterations)
+Benchmarking JSON_TREE_NESTED/json_tree/subtree/orders_walked/10000: Analyzing
+JSON_TREE_NESTED/json_tree/subtree/orders_walked/10000
+                        time:   [4.9175 ms 4.9309 ms 4.9416 ms]
+Benchmarking JSON_TREE_NESTED/json_tree/subtree_at/items_walked/10000
+Benchmarking JSON_TREE_NESTED/json_tree/subtree_at/items_walked/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/json_tree/subtree_at/items_walked/10000: Collecting 10 samples in estimated 5.2309 s (1210 iterations)
+Benchmarking JSON_TREE_NESTED/json_tree/subtree_at/items_walked/10000: Analyzing
+JSON_TREE_NESTED/json_tree/subtree_at/items_walked/10000
+                        time:   [4.3330 ms 4.4026 ms 4.4419 ms]
+Benchmarking JSON_TREE_NESTED/json_tree/children/orders/10000
+Benchmarking JSON_TREE_NESTED/json_tree/children/orders/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/json_tree/children/orders/10000: Collecting 10 samples in estimated 5.0372 s (5445 iterations)
+Benchmarking JSON_TREE_NESTED/json_tree/children/orders/10000: Analyzing
+JSON_TREE_NESTED/json_tree/children/orders/10000
+                        time:   [901.94 µs 919.35 µs 929.28 µs]
+Benchmarking JSON_TREE_NESTED/json_tree/child_count/orders/10000
+Benchmarking JSON_TREE_NESTED/json_tree/child_count/orders/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/json_tree/child_count/orders/10000: Collecting 10 samples in estimated 5.0424 s (6215 iterations)
+Benchmarking JSON_TREE_NESTED/json_tree/child_count/orders/10000: Analyzing
+JSON_TREE_NESTED/json_tree/child_count/orders/10000
+                        time:   [820.89 µs 824.75 µs 828.26 µs]
+Benchmarking JSON_TREE_NESTED/json_tree/path_query/wildcard/10000
+Benchmarking JSON_TREE_NESTED/json_tree/path_query/wildcard/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/json_tree/path_query/wildcard/10000: Collecting 10 samples in estimated 5.0743 s (2365 iterations)
+Benchmarking JSON_TREE_NESTED/json_tree/path_query/wildcard/10000: Analyzing
+JSON_TREE_NESTED/json_tree/path_query/wildcard/10000
+                        time:   [2.1387 ms 2.1547 ms 2.1697 ms]
+Benchmarking JSON_TREE_NESTED/json_tree/extract/nested/10000
+Benchmarking JSON_TREE_NESTED/json_tree/extract/nested/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/json_tree/extract/nested/10000: Collecting 10 samples in estimated 5.0255 s (8525 iterations)
+Benchmarking JSON_TREE_NESTED/json_tree/extract/nested/10000: Analyzing
+JSON_TREE_NESTED/json_tree/extract/nested/10000
+                        time:   [580.31 µs 588.51 µs 594.76 µs]
+Benchmarking JSON_TREE_NESTED/plain/contains/deep_object/10000
+Benchmarking JSON_TREE_NESTED/plain/contains/deep_object/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/plain/contains/deep_object/10000: Collecting 10 samples in estimated 5.0133 s (13k iterations)
+Benchmarking JSON_TREE_NESTED/plain/contains/deep_object/10000: Analyzing
+JSON_TREE_NESTED/plain/contains/deep_object/10000
+                        time:   [320.27 µs 339.92 µs 373.63 µs]
+Benchmarking JSON_TREE_NESTED/plain/contains/array_element/10000
+Benchmarking JSON_TREE_NESTED/plain/contains/array_element/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/plain/contains/array_element/10000: Collecting 10 samples in estimated 5.0011 s (25k iterations)
+Benchmarking JSON_TREE_NESTED/plain/contains/array_element/10000: Analyzing
+JSON_TREE_NESTED/plain/contains/array_element/10000
+                        time:   [195.97 µs 197.70 µs 200.43 µs]
+Benchmarking JSON_TREE_NESTED/plain/contains/nested_array/10000
+Benchmarking JSON_TREE_NESTED/plain/contains/nested_array/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/plain/contains/nested_array/10000: Collecting 10 samples in estimated 5.0184 s (14k iterations)
+Benchmarking JSON_TREE_NESTED/plain/contains/nested_array/10000: Analyzing
+JSON_TREE_NESTED/plain/contains/nested_array/10000
+                        time:   [349.85 µs 354.89 µs 358.16 µs]
+Benchmarking JSON_TREE_NESTED/plain/field_eq/nested/10000
+Benchmarking JSON_TREE_NESTED/plain/field_eq/nested/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/plain/field_eq/nested/10000: Collecting 10 samples in estimated 5.0098 s (25k iterations)
+Benchmarking JSON_TREE_NESTED/plain/field_eq/nested/10000: Analyzing
+JSON_TREE_NESTED/plain/field_eq/nested/10000
+                        time:   [194.36 µs 197.00 µs 199.87 µs]
+Benchmarking JSON_TREE_NESTED/plain/field_gt/nested/10000
+Benchmarking JSON_TREE_NESTED/plain/field_gt/nested/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/plain/field_gt/nested/10000: Collecting 10 samples in estimated 5.0097 s (19k iterations)
+Benchmarking JSON_TREE_NESTED/plain/field_gt/nested/10000: Analyzing
+JSON_TREE_NESTED/plain/field_gt/nested/10000
+                        time:   [258.58 µs 261.27 µs 264.54 µs]
+Benchmarking JSON_TREE_NESTED/plain/field_between/nested/10000
+Benchmarking JSON_TREE_NESTED/plain/field_between/nested/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/plain/field_between/nested/10000: Collecting 10 samples in estimated 5.0091 s (22k iterations)
+Benchmarking JSON_TREE_NESTED/plain/field_between/nested/10000: Analyzing
+JSON_TREE_NESTED/plain/field_between/nested/10000
+                        time:   [226.65 µs 228.97 µs 231.98 µs]
+Benchmarking JSON_TREE_NESTED/plain/field_order/nested/10000
+Benchmarking JSON_TREE_NESTED/plain/field_order/nested/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/plain/field_order/nested/10000: Collecting 10 samples in estimated 5.0084 s (22k iterations)
+Benchmarking JSON_TREE_NESTED/plain/field_order/nested/10000: Analyzing
+JSON_TREE_NESTED/plain/field_order/nested/10000
+                        time:   [224.84 µs 226.25 µs 227.28 µs]
+Benchmarking JSON_TREE_NESTED/plain/subtree/company/10000
+Benchmarking JSON_TREE_NESTED/plain/subtree/company/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/plain/subtree/company/10000: Collecting 10 samples in estimated 5.0003 s (26k iterations)
+Benchmarking JSON_TREE_NESTED/plain/subtree/company/10000: Analyzing
+JSON_TREE_NESTED/plain/subtree/company/10000
+                        time:   [190.08 µs 193.01 µs 195.82 µs]
+Benchmarking JSON_TREE_NESTED/plain/subtree/user/10000
+Benchmarking JSON_TREE_NESTED/plain/subtree/user/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/plain/subtree/user/10000: Collecting 10 samples in estimated 5.0008 s (26k iterations)
+Benchmarking JSON_TREE_NESTED/plain/subtree/user/10000: Analyzing
+JSON_TREE_NESTED/plain/subtree/user/10000
+                        time:   [188.85 µs 191.92 µs 193.74 µs]
+Benchmarking JSON_TREE_NESTED/plain/subtree/orders/10000
+Benchmarking JSON_TREE_NESTED/plain/subtree/orders/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/plain/subtree/orders/10000: Collecting 10 samples in estimated 5.0115 s (24k iterations)
+Benchmarking JSON_TREE_NESTED/plain/subtree/orders/10000: Analyzing
+JSON_TREE_NESTED/plain/subtree/orders/10000
+                        time:   [202.18 µs 206.14 µs 209.83 µs]
+Benchmarking JSON_TREE_NESTED/plain/subtree_at/items/10000
+Benchmarking JSON_TREE_NESTED/plain/subtree_at/items/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/plain/subtree_at/items/10000: Collecting 10 samples in estimated 5.0026 s (24k iterations)
+Benchmarking JSON_TREE_NESTED/plain/subtree_at/items/10000: Analyzing
+JSON_TREE_NESTED/plain/subtree_at/items/10000
+                        time:   [204.27 µs 207.24 µs 209.53 µs]
+Benchmarking JSON_TREE_NESTED/plain/subtree/orders_walked/10000
+Benchmarking JSON_TREE_NESTED/plain/subtree/orders_walked/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/plain/subtree/orders_walked/10000: Collecting 10 samples in estimated 5.0013 s (24k iterations)
+Benchmarking JSON_TREE_NESTED/plain/subtree/orders_walked/10000: Analyzing
+JSON_TREE_NESTED/plain/subtree/orders_walked/10000
+                        time:   [203.95 µs 206.65 µs 209.33 µs]
+Benchmarking JSON_TREE_NESTED/plain/subtree_at/items_walked/10000
+Benchmarking JSON_TREE_NESTED/plain/subtree_at/items_walked/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/plain/subtree_at/items_walked/10000: Collecting 10 samples in estimated 5.0113 s (24k iterations)
+Benchmarking JSON_TREE_NESTED/plain/subtree_at/items_walked/10000: Analyzing
+JSON_TREE_NESTED/plain/subtree_at/items_walked/10000
+                        time:   [204.22 µs 209.53 µs 216.83 µs]
+Benchmarking JSON_TREE_NESTED/plain/children/orders/10000
+Benchmarking JSON_TREE_NESTED/plain/children/orders/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/plain/children/orders/10000: Collecting 10 samples in estimated 5.0097 s (24k iterations)
+Benchmarking JSON_TREE_NESTED/plain/children/orders/10000: Analyzing
+JSON_TREE_NESTED/plain/children/orders/10000
+                        time:   [208.06 µs 209.84 µs 211.98 µs]
+Benchmarking JSON_TREE_NESTED/plain/child_count/orders/10000
+Benchmarking JSON_TREE_NESTED/plain/child_count/orders/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/plain/child_count/orders/10000: Collecting 10 samples in estimated 5.0094 s (27k iterations)
+Benchmarking JSON_TREE_NESTED/plain/child_count/orders/10000: Analyzing
+JSON_TREE_NESTED/plain/child_count/orders/10000
+                        time:   [190.96 µs 192.69 µs 194.05 µs]
+Benchmarking JSON_TREE_NESTED/plain/path_query/wildcard/10000
+Benchmarking JSON_TREE_NESTED/plain/path_query/wildcard/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/plain/path_query/wildcard/10000: Collecting 10 samples in estimated 5.0079 s (25k iterations)
+Benchmarking JSON_TREE_NESTED/plain/path_query/wildcard/10000: Analyzing
+JSON_TREE_NESTED/plain/path_query/wildcard/10000
+                        time:   [195.07 µs 196.21 µs 197.27 µs]
+Benchmarking JSON_TREE_NESTED/plain/extract/nested/10000
+Benchmarking JSON_TREE_NESTED/plain/extract/nested/10000: Warming up for 3.0000 s
+Benchmarking JSON_TREE_NESTED/plain/extract/nested/10000: Collecting 10 samples in estimated 5.0004 s (26k iterations)
+Benchmarking JSON_TREE_NESTED/plain/extract/nested/10000: Analyzing
+JSON_TREE_NESTED/plain/extract/nested/10000
+                        time:   [186.54 µs 188.78 µs 191.80 µs]
+

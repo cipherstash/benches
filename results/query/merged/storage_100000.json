@@ -1,0 +1,84 @@
+{
+  "json_tree_small_encrypted_v4_100000": {
+    "gates": {
+      "rows": 100000.0,
+      "pg_column_size": 1398.50672,
+      "chars": 1278.92882,
+      "sv_chars": 742.92882,
+      "entries": 5.0,
+      "entries_with_x": 0.0,
+      "table_bytes": 163913728.0,
+      "toast_bytes": 8192.0,
+      "indexes_bytes": 10567680.0,
+      "gin_bytes": 8306688.0,
+      "total_bytes": 174481408.0
+    },
+    "derivable": {
+      "rows": 100000.0,
+      "pg_column_size": 1502.01532,
+      "chars": 1383.92882,
+      "sv_chars": 847.92882,
+      "entries": 5.0,
+      "entries_with_x": 5.0,
+      "table_bytes": 163913728.0,
+      "toast_bytes": 8192.0,
+      "indexes_bytes": 10567680.0,
+      "gin_bytes": 8306688.0,
+      "total_bytes": 174481408.0
+    },
+    "merged": {
+      "rows": 100000.0,
+      "pg_column_size": 1502.01532,
+      "chars": 1383.92882,
+      "sv_chars": 847.92882,
+      "entries": 5.0,
+      "entries_with_x": 5.0,
+      "table_bytes": 163913728.0,
+      "toast_bytes": 8192.0,
+      "indexes_bytes": 10567680.0,
+      "gin_bytes": 8306688.0,
+      "total_bytes": 174481408.0
+    }
+  },
+  "json_tree_large_encrypted_v4_100000": {
+    "gates": {
+      "rows": 100000.0,
+      "pg_column_size": 31677.69098,
+      "chars": 48975.24422,
+      "sv_chars": 32970.47617,
+      "entries": 216.90235,
+      "entries_with_x": 0.0,
+      "table_bytes": 3346653184.0,
+      "toast_bytes": 3341402112.0,
+      "indexes_bytes": 377577472.0,
+      "gin_bytes": 375316480.0,
+      "total_bytes": 3724230656.0
+    },
+    "derivable": {
+      "rows": 100000.0,
+      "pg_column_size": 35206.25712,
+      "chars": 53523.02014,
+      "sv_chars": 37518.25209,
+      "entries": 216.90235,
+      "entries_with_x": 216.90235,
+      "table_bytes": 3712720896.0,
+      "toast_bytes": 3707469824.0,
+      "indexes_bytes": 377569280.0,
+      "gin_bytes": 375308288.0,
+      "total_bytes": 4090290176.0
+    },
+    "merged": {
+      "rows": 100000.0,
+      "pg_column_size": 35211.71185,
+      "chars": 53530.19357,
+      "sv_chars": 37525.42552,
+      "entries": 216.90235,
+      "entries_with_x": 216.90235,
+      "table_bytes": 3713409024.0,
+      "toast_bytes": 3708157952.0,
+      "indexes_bytes": 377577472.0,
+      "gin_bytes": 375316480.0,
+      "total_bytes": 4090986496.0
+    }
+  }
+}
