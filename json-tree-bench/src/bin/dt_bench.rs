@@ -10,10 +10,11 @@
 //!                   (tokens, gates, selectors, containment needles) and
 //!                   writes `$OUT_DIR/plan_<format>_<rows>.json`, with the row
 //!                   ids every scenario samples.
-//! `dt_bench time`  (format-neutral; either build): reads both plans,
-//!                   connects to both databases (`GATES_URL`, `DERIVABLE_URL`)
-//!                   and, for each pass and each scenario, runs both formats
-//!                   back to back, alternating which goes first, then writes
+//! `dt_bench time`  (format-neutral; any build): reads the plans of the
+//!                   formats in `FORMATS` (default `gates,derivable`),
+//!                   connects to each one's database (`<FORMAT>_URL`) and,
+//!                   for each pass and each scenario, runs them back to
+//!                   back, rotating which goes first, then writes
 //!                   `$OUT_DIR/time_<rows><TAG>.json`.
 //!
 //! Per scenario and format, `time` records:
@@ -307,17 +308,32 @@ mod plan {
         );
         // The per-call maps every read builds over the whole document: by
         // parent tag (both formats) and, in the derivable format, by self tag.
-        cx.push_expr(
-            "map/by_parent (nested)",
-            "floor",
-            &nested,
-            "jsonb_typeof(eql_v4_internal.json_tree_by_parent(value::jsonb))",
-            vec![],
-            0,
-            0,
-            "the parent-tag map a read builds",
-        );
-        if !gates {
+        // The merged SQL (f94a6eb11) replaces both with one pass,
+        // `json_tree_index`, which returns the two maps as columns.
+        if FORMAT == "merged" {
+            cx.push_expr(
+                "map/index (nested)",
+                "floor",
+                &nested,
+                "(SELECT jsonb_typeof(i.map) FROM eql_v4_internal.json_tree_index(value::jsonb) i)",
+                vec![],
+                0,
+                0,
+                "the one index a read builds: parent-tag and self-tag maps in one pass (merged only)",
+            );
+        } else {
+            cx.push_expr(
+                "map/by_parent (nested)",
+                "floor",
+                &nested,
+                "jsonb_typeof(eql_v4_internal.json_tree_by_parent(value::jsonb))",
+                vec![],
+                0,
+                0,
+                "the parent-tag map a read builds",
+            );
+        }
+        if FORMAT == "derivable" {
             cx.push_expr(
                 "map/by_self (nested)",
                 "floor",
@@ -775,10 +791,17 @@ async fn time() -> Result<()> {
     let table_passes: usize = env("TABLE_PASSES", "3").parse()?;
     let reps: usize = env("REPS", "30").parse()?;
     let only = std::env::var("ONLY").ok();
-    let formats = ["gates", "derivable"];
+    // The formats to time against each other, each with a plan file and a
+    // `<FORMAT>_URL`. Default the original pair; `FORMATS=gates,merged` (or
+    // all three) times the merged SQL.
+    let formats_env = env("FORMATS", "gates,derivable");
+    let formats: Vec<&str> = formats_env.split(',').map(str::trim).filter(|f| !f.is_empty()).collect();
+    if formats.len() < 2 {
+        bail!("FORMATS names at least two formats");
+    }
     let mut plans = BTreeMap::new();
     let mut pools = BTreeMap::new();
-    for f in formats {
+    for &f in &formats {
         let p: Plan = serde_json::from_str(&std::fs::read_to_string(format!(
             "{out_dir}/plan_{f}_{rows}.json"
         ))?)?;
@@ -787,12 +810,15 @@ async fn time() -> Result<()> {
         pools.insert(f, connect(&url).await?);
         plans.insert(f, p);
     }
-    if plans["gates"].sample_ids != plans["derivable"].sample_ids {
-        bail!("the two plans sample different ids: the twins differ");
+    for &f in &formats[1..] {
+        if plans[formats[0]].sample_ids != plans[f].sample_ids {
+            bail!("plans {} and {f} sample different ids: the twins differ", formats[0]);
+        }
     }
-    // Scenario names in plan order, the union of both.
+    // Scenario names in plan order, the union of all, the newest format's
+    // order first.
     let mut names: Vec<String> = Vec::new();
-    for f in ["derivable", "gates"] {
+    for &f in formats.iter().rev() {
         for s in &plans[f].scenarios {
             let wanted = only
                 .as_ref()
@@ -806,7 +832,7 @@ async fn time() -> Result<()> {
     let mut measured: BTreeMap<(String, &str), Measured> = BTreeMap::new();
 
     // Warm both databases: every table each plan reads, detoasted end to end.
-    for f in formats {
+    for &f in &formats {
         let tables: std::collections::BTreeSet<_> =
             plans[f].scenarios.iter().map(|s| s.table.clone()).collect();
         for t in tables {
@@ -820,7 +846,7 @@ async fn time() -> Result<()> {
 
     // Representative EXPLAIN ANALYZE and row/byte counts, once.
     for name in &names {
-        for f in formats {
+        for &f in &formats {
             let Some(s) = find(f, name) else { continue };
             let p = &plans[f];
             let rep = s.by_id.then(|| p.representative[&s.table]);
@@ -837,11 +863,10 @@ async fn time() -> Result<()> {
     let t0 = Instant::now();
     for p in 0..passes {
         for (i, name) in names.iter().enumerate() {
-            let order = if (p + i) % 2 == 0 {
-                formats
-            } else {
-                [formats[1], formats[0]]
-            };
+            // Rotate which format goes first, pass by pass and scenario by
+            // scenario (for two formats, alternate).
+            let k = (p + i) % formats.len();
+            let order: Vec<&str> = formats[k..].iter().chain(&formats[..k]).copied().collect();
             for f in order {
                 let Some(s) = find(f, name) else { continue };
                 let ids = &plans[f].sample_ids[&s.table];
@@ -865,11 +890,10 @@ async fn time() -> Result<()> {
     }
     for p in 0..table_passes {
         for (i, name) in names.iter().enumerate() {
-            let order = if (p + i) % 2 == 0 {
-                formats
-            } else {
-                [formats[1], formats[0]]
-            };
+            // Rotate which format goes first, pass by pass and scenario by
+            // scenario (for two formats, alternate).
+            let k = (p + i) % formats.len();
+            let order: Vec<&str> = formats[k..].iter().chain(&formats[..k]).copied().collect();
             for f in order {
                 let Some(s) = find(f, name) else { continue };
                 if !s.by_id {
@@ -895,7 +919,7 @@ async fn time() -> Result<()> {
     let mut out = serde_json::Map::new();
     for name in &names {
         let mut per = serde_json::Map::new();
-        for f in formats {
+        for &f in &formats {
             let Some(s) = find(f, name) else { continue };
             let m = &measured[&(name.clone(), f)];
             per.insert(
@@ -913,8 +937,9 @@ async fn time() -> Result<()> {
         "passes": passes,
         "table_passes": table_passes,
         "reps": reps,
-        "sample_ids": plans["gates"].sample_ids.iter().map(|(k, v)| (k.clone(), v.len())).collect::<BTreeMap<_, _>>(),
-        "pass_ids": plans["gates"].pass_ids.iter().map(|(k, v)| (k.clone(), v.len())).collect::<BTreeMap<_, _>>(),
+        "formats": formats,
+        "sample_ids": plans[formats[0]].sample_ids.iter().map(|(k, v)| (k.clone(), v.len())).collect::<BTreeMap<_, _>>(),
+        "pass_ids": plans[formats[0]].pass_ids.iter().map(|(k, v)| (k.clone(), v.len())).collect::<BTreeMap<_, _>>(),
         "seconds": t0.elapsed().as_secs_f64(),
         "scenarios": out,
     });

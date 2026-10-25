@@ -11,10 +11,14 @@
 //! so the code reads the same under either. What differs between the two
 //! is confined to [`ReadKey`]: how a subtree read is derived and called.
 
-#[cfg(all(feature = "derivable", feature = "gates"))]
-compile_error!("features `derivable` and `gates` are exclusive: build `gates` with --no-default-features");
-#[cfg(not(any(feature = "derivable", feature = "gates")))]
-compile_error!("enable one of the features `derivable` (default) or `gates`");
+#[cfg(any(
+    all(feature = "derivable", feature = "gates"),
+    all(feature = "derivable", feature = "merged"),
+    all(feature = "gates", feature = "merged"),
+))]
+compile_error!("features `derivable`, `gates` and `merged` are exclusive: build `gates` or `merged` with --no-default-features");
+#[cfg(not(any(feature = "derivable", feature = "gates", feature = "merged")))]
+compile_error!("enable one of the features `derivable` (default), `gates` or `merged`");
 
 #[cfg(feature = "derivable")]
 pub extern crate eql_bindings_derivable as eql_bindings;
@@ -24,9 +28,23 @@ pub extern crate stack_encrypt_derivable as stack_encrypt;
 pub extern crate eql_bindings_gates as eql_bindings;
 #[cfg(feature = "gates")]
 pub extern crate stack_encrypt_gates as stack_encrypt;
+#[cfg(feature = "merged")]
+pub extern crate eql_bindings_merged as eql_bindings;
+#[cfg(feature = "merged")]
+pub extern crate stack_encrypt_merged as stack_encrypt;
 
-/// The stored format this build reads and writes: `"derivable"` or `"gates"`.
-pub const FORMAT: &str = if cfg!(feature = "gates") { "gates" } else { "derivable" };
+/// The stored format this build reads and writes: `"derivable"`, `"gates"`
+/// or `"merged"`. `merged` is the derivable format as it merged to `next`
+/// (cipherstash/stack ebdb5de0a): the same stored bytes and tokens as
+/// `derivable`, with the SQL of f94a6eb11 (inlined chain primitives, one
+/// read index) and the review fixes after it.
+pub const FORMAT: &str = if cfg!(feature = "gates") {
+    "gates"
+} else if cfg!(feature = "merged") {
+    "merged"
+} else {
+    "derivable"
+};
 
 use std::env;
 use std::time::{Duration, Instant};
@@ -594,7 +612,7 @@ impl ReadKey {
             let _ = bound;
             keyset.json_subtree_key(&parsed, options, column()).await
         };
-        #[cfg(feature = "derivable")]
+        #[cfg(not(feature = "gates"))]
         let key = keyset
             .json_subtree_key_with_bound(
                 &parsed,
@@ -619,7 +637,7 @@ impl ReadKey {
             format!("eql_v4.json_tree_subtree_at(value, $1::text, $2::text[]{b}) e"),
             vec![Arg::Text(self.key.token()), Arg::TextArray(self.key.gates())],
         );
-        #[cfg(feature = "derivable")]
+        #[cfg(not(feature = "gates"))]
         return (
             format!("eql_v4.json_tree_subtree(value, $1::text[]{b}) e"),
             vec![Arg::TextArray(self.key.tokens())],
@@ -633,7 +651,7 @@ impl ReadKey {
             "eql_v4.json_tree_children(value, $1::text, $2::text[]) e".to_string(),
             vec![Arg::Text(self.key.token()), Arg::TextArray(self.key.gates())],
         );
-        #[cfg(feature = "derivable")]
+        #[cfg(not(feature = "gates"))]
         return (
             "eql_v4.json_tree_children(value, $1::text) e".to_string(),
             vec![Arg::Text(self.single_token())],
@@ -648,14 +666,14 @@ impl ReadKey {
             "eql_v4.json_tree_child_count(value, $1::text, $2::text[])".to_string(),
             vec![Arg::Text(self.key.token()), Arg::TextArray(self.key.gates())],
         );
-        #[cfg(feature = "derivable")]
+        #[cfg(not(feature = "gates"))]
         return (
             "eql_v4.json_tree_child_count(value, $1::text)".to_string(),
             vec![Arg::Text(self.single_token())],
         );
     }
 
-    #[cfg(feature = "derivable")]
+    #[cfg(not(feature = "gates"))]
     fn single_token(&self) -> String {
         let tokens = self.key.tokens();
         assert_eq!(tokens.len(), 1, "{}: a wildcard-free path sends one token", self.path);
@@ -666,7 +684,7 @@ impl ReadKey {
     pub fn sent(&self) -> (usize, usize) {
         #[cfg(feature = "gates")]
         return (1, self.key.gates().len());
-        #[cfg(feature = "derivable")]
+        #[cfg(not(feature = "gates"))]
         return (self.key.tokens().len(), 0);
     }
 }

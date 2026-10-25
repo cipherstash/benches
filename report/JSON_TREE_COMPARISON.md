@@ -1,4 +1,4 @@
-# JSON: SteVec (EQL v3) vs json_tree (EQL v4) — fifth measurement
+# JSON: SteVec (EQL v3) vs json_tree (EQL v4) — sixth measurement
 
 Three-way comparison over identical documents (native jsonb, SteVec, json_tree; stack 6adf37fcc): [JSON_TREE_VS_STEVEC_VS_PLAINTEXT.md](JSON_TREE_VS_STEVEC_VS_PLAINTEXT.md).
 
@@ -29,6 +29,25 @@ against its base (edabee625); it has a report of its own,
 section summarises it. The Summary and Findings further down are the second
 measurement's and quote its numbers. The Results tables are the fifth
 measurement's json_tree figures.
+
+## Sixth measurement (2026-10-26): the merged format on `next`, on an M4
+
+Full report: [JSON_TREE_MERGED.md](JSON_TREE_MERGED.md).
+
+cipherstash/stack `next` at ebdb5de0a, with #1363 merged and f94a6eb11 on it
+(the chain primitives inlined, one read index, the document decompressed once).
+It was timed interleaved against edabee625 (gates) and 683802bcc (#1363 as the
+fifth measurement measured it), on an Apple M4 with PostgreSQL 17.10 in Docker.
+
+- Every json_tree read and enumeration is now faster than the gated walk:
+  whole subtrees −25% to −75% per call, wildcards −66% to −88%, the budget
+  fallback −68%, `json_tree_child_count` −46% to −91%.
+- Each regression the fifth measurement found is reversed.
+- The stored-format costs stand: +11% on disk nested, +7% flat, ingest +4% to
+  +10%, `->` and nested containment +1% to +12%.
+- One small read is slower: a five-entry document's top-level scalar, +46% per
+  call. Every merged read carries about 0.2 ms more fixed cost per statement.
+- The Results tables below are still the fifth measurement's, on the M1.
 
 ## Fifth measurement (2026-10-25): derivable tokens
 

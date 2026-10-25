@@ -19,16 +19,19 @@ import subprocess
 import sys
 from collections import defaultdict
 
-OUT = "results/query/derivable"
-INGEST = "results/ingest/derivable"
+OUT = os.environ.get("DT_OUT", "results/query/derivable")
+INGEST = os.path.dirname(os.environ["DT_INGEST_LOG"]) if os.environ.get("DT_INGEST_LOG") else "results/ingest/derivable"
 FORMATS = ("gates", "derivable")
 
 
 def dbs():
-    return {
+    every = {
         "gates": os.environ.get("DT_GATES_DB", "jsonbench_base"),
         "derivable": os.environ.get("DT_DERIVABLE_DB", "jsonbench_new"),
+        "merged": os.environ.get("DT_MERGED_DB", "jsonbench_merged"),
     }
+    wanted = os.environ.get("DT_FORMATS", "gates derivable").split()
+    return {f: every[f] for f in wanted}
 
 
 def psql(db, sql):

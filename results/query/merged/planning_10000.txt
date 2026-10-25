@@ -1,0 +1,9 @@
+gates     read/first_name          planning 0.221 ms  execution 0.082 ms
+gates     read/company             planning 1.464 ms  execution 0.875 ms
+gates     read/orders[2].status    planning 1.467 ms  execution 0.821 ms
+derivable read/first_name          planning 0.194 ms  execution 0.129 ms
+derivable read/company             planning 1.597 ms  execution 1.624 ms
+derivable read/orders[2].status    planning 1.583 ms  execution 1.122 ms
+merged    read/first_name          planning 0.402 ms  execution 0.086 ms
+merged    read/company             planning 1.790 ms  execution 0.449 ms
+merged    read/orders[2].status    planning 1.790 ms  execution 0.377 ms

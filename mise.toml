@@ -1484,38 +1484,85 @@ python3 report_json_three_way.py "$@"
 # ---------------------------------------------------------------------------
 
 [tasks."bench:dt:build"]
-description = "Build json-tree-bench in both stored formats (derivable into target/, gates into target-gates/)"
+description = "Build json-tree-bench in each stored format of DT_FORMATS (derivable into target/, gates into target-gates/, merged into target-merged/)"
 run = """
 #!/usr/bin/env bash
 set -e
-cargo build --release --manifest-path json-tree-bench/Cargo.toml --bins --benches
-CARGO_TARGET_DIR=json-tree-bench/target-gates cargo build --release --manifest-path json-tree-bench/Cargo.toml --no-default-features --features gates --bins --benches
+# Format -> database and build. Sourced by each bench:dt task.
+fmt_db() { case "$1" in gates) echo "${DT_GATES_DB:-jsonbench_base}" ;; derivable) echo "${DT_DERIVABLE_DB:-jsonbench_new}" ;; merged) echo "${DT_MERGED_DB:-jsonbench_merged}" ;; *) echo "unknown format $1" >&2; exit 1 ;; esac; }
+fmt_target() { case "$1" in gates) echo json-tree-bench/target-gates ;; derivable) echo json-tree-bench/target ;; merged) echo json-tree-bench/target-merged ;; esac; }
+FORMATS="${DT_FORMATS:-gates derivable}"
+for fmt in $FORMATS; do
+  if [ "$fmt" = derivable ]; then
+    cargo build --release --manifest-path json-tree-bench/Cargo.toml --bins --benches
+  else
+    CARGO_TARGET_DIR="$(fmt_target "$fmt")" cargo build --release --manifest-path json-tree-bench/Cargo.toml --no-default-features --features "$fmt" --bins --benches
+  fi
+done
+"""
+
+[tasks."bench:dt:twin"]
+description = "Copy one plaintext twin table from one format's database (default the first of DT_FORMATS) into the others: <table> [source format]. So every format seals the same documents"
+run = """
+#!/usr/bin/env bash
+set -e
+# Format -> database and build. Sourced by each bench:dt task.
+fmt_db() { case "$1" in gates) echo "${DT_GATES_DB:-jsonbench_base}" ;; derivable) echo "${DT_DERIVABLE_DB:-jsonbench_new}" ;; merged) echo "${DT_MERGED_DB:-jsonbench_merged}" ;; *) echo "unknown format $1" >&2; exit 1 ;; esac; }
+fmt_target() { case "$1" in gates) echo json-tree-bench/target-gates ;; derivable) echo json-tree-bench/target ;; merged) echo json-tree-bench/target-merged ;; esac; }
+FORMATS="${DT_FORMATS:-gates derivable}"
+TABLE="$1"; SRCFMT="${2:-}"
+set -- $FORMATS
+SRCFMT="${SRCFMT:-$1}"
+SRC="$(fmt_db "$SRCFMT")"
+for fmt in $FORMATS; do
+  [ "$fmt" = "$SRCFMT" ] && continue
+  DB="$(fmt_db "$fmt")"
+  psql -q -d "$DB" -c "TRUNCATE $TABLE"
+  pg_dump -a -t "$TABLE" "$SRC" | psql -q -d "$DB"
+  a=$(psql -tA -d "$SRC" -c "SELECT md5(string_agg(id::text || plain::text, ',' ORDER BY id)) FROM $TABLE")
+  b=$(psql -tA -d "$DB" -c "SELECT md5(string_agg(id::text || plain::text, ',' ORDER BY id)) FROM $TABLE")
+  if [ "$a" != "$b" ]; then echo "twin $TABLE differs in $DB"; exit 1; fi
+  echo "twin $TABLE copied to $DB ($a)"
+done
 """
 
 [tasks."bench:dt:ingest"]
-description = "Seal and load one corpus into both formats' databases, interleaved: <small|large|open|wide> <rows> [reps]. Rep 1 fills the tier table and builds its indexes; later reps time a reload of the unsuffixed table"
+description = "Seal and load one corpus into every format's database, interleaved: <small|large|open|wide> <rows> [reps]. Rep 1 fills the tier table and builds its indexes; later reps time a reload of the unsuffixed table. The first format's rep 1 generates the plaintext twin where none exists; it is copied to the others before they seal"
 depends = ["bench:dt:build"]
 run = """
 #!/usr/bin/env bash
 set -e
+# Format -> database and build. Sourced by each bench:dt task.
+fmt_db() { case "$1" in gates) echo "${DT_GATES_DB:-jsonbench_base}" ;; derivable) echo "${DT_DERIVABLE_DB:-jsonbench_new}" ;; merged) echo "${DT_MERGED_DB:-jsonbench_merged}" ;; *) echo "unknown format $1" >&2; exit 1 ;; esac; }
+fmt_target() { case "$1" in gates) echo json-tree-bench/target-gates ;; derivable) echo json-tree-bench/target ;; merged) echo json-tree-bench/target-merged ;; esac; }
+FORMATS="${DT_FORMATS:-gates derivable}"
 CORPUS_ARG="$1"; ROWS="$2"; REPS="${3:-1}"
-LOG="$PWD/results/ingest/derivable/ingest.jsonl"
-mkdir -p results/ingest/derivable
+LOG="${DT_INGEST_LOG:-$PWD/results/ingest/derivable/ingest.jsonl}"
+mkdir -p "$(dirname "$LOG")"
 case "$CORPUS_ARG" in
-  small) BIN=encrypt_json_tree_v4; ENC=json_tree_small_encrypted_v4 ;;
-  large) BIN=encrypt_json_tree_large_v4; ENC=json_tree_large_encrypted_v4 ;;
-  open)  BIN=encrypt_json_tree_extra_v4; ENC=json_tree_large_open_encrypted_v4; export CORPUS=open ;;
-  wide)  BIN=encrypt_json_tree_extra_v4; ENC=json_tree_wide_encrypted_v4; export CORPUS=wide ;;
+  small) BIN=encrypt_json_tree_v4; ENC=json_tree_small_encrypted_v4; PLAIN=json_tree_small_plain_v4 ;;
+  large) BIN=encrypt_json_tree_large_v4; ENC=json_tree_large_encrypted_v4; PLAIN=json_tree_large_plain_v4 ;;
+  open)  BIN=encrypt_json_tree_extra_v4; ENC=json_tree_large_open_encrypted_v4; PLAIN=json_tree_large_open_plain_v4; export CORPUS=open ;;
+  wide)  BIN=encrypt_json_tree_extra_v4; ENC=json_tree_wide_encrypted_v4; PLAIN=json_tree_wide_plain_v4; export CORPUS=wide ;;
   *) echo "corpus must be small, large, open or wide"; exit 1 ;;
 esac
-GATES_DB="${DT_GATES_DB:-jsonbench_base}"; DERIVABLE_DB="${DT_DERIVABLE_DB:-jsonbench_new}"
+read -r -a FMTS <<< "$FORMATS"
+N=$(echo "$FORMATS" | wc -w | tr -d " ")
 for rep in $(seq 1 "$REPS"); do
-  # Alternate which format goes first.
-  if [ $((rep % 2)) -eq 1 ]; then ORDER="gates derivable"; else ORDER="derivable gates"; fi
+  # Rotate which format goes first. The rep's first format reseals the twin
+  # if one exists, or generates it, and it is copied to the others before
+  # they seal, so every format seals the same documents.
+  k=$(( (rep - 1) % N ))
+  ORDER="${FMTS[*]:$k} ${FMTS[*]:0:$k}"
+  if [ "$rep" -eq 1 ]; then SUFFIX="_$ROWS"; else SUFFIX=""; fi
+  TABLE="$ENC$SUFFIX"
+  first=1; copied=0; leader="${FMTS[$k]}"
   for fmt in $ORDER; do
-    if [ "$fmt" = gates ]; then DB="$GATES_DB"; TGT=json-tree-bench/target-gates; else DB="$DERIVABLE_DB"; TGT=json-tree-bench/target; fi
-    if [ "$rep" -eq 1 ]; then SUFFIX="_$ROWS"; else SUFFIX=""; fi
-    TABLE="$ENC$SUFFIX"
+    DB="$(fmt_db "$fmt")"; TGT="$(fmt_target "$fmt")"
+    if [ $first -eq 0 ] && [ $copied -eq 0 ]; then
+      DT_FORMATS="$FORMATS" mise run bench:dt:twin "$PLAIN$SUFFIX" "$leader"
+      copied=1
+    fi
     psql -q -d "$DB" -c "TRUNCATE $TABLE"
     if [ "$rep" -eq 1 ] && [ -f "sql/indexes/${TABLE}_down.sql" ]; then psql -q -d "$DB" -f "sql/indexes/${TABLE}_down.sql"; fi
     echo "[$(date -u +%FT%TZ)] $fmt $TABLE rep $rep"
@@ -1530,52 +1577,69 @@ for rep in $(seq 1 "$REPS"); do
         echo >> "$LOG"
       fi
       psql -q -d "$DB" -c "VACUUM (ANALYZE) $TABLE"
+      psql -q -d "$DB" -c "VACUUM (ANALYZE) $PLAIN$SUFFIX"
     fi
+    first=0
   done
 done
 """
 
 [tasks."bench:dt:check"]
-description = "Correctness of both formats' tables at a tier: check_json_tree_v4 from each build against its own database"
+description = "Correctness of every format's tables at a tier: check_json_tree_v4 from each build against its own database"
 depends = ["bench:dt:build"]
 run = """
 #!/usr/bin/env bash
 set -e
+# Format -> database and build. Sourced by each bench:dt task.
+fmt_db() { case "$1" in gates) echo "${DT_GATES_DB:-jsonbench_base}" ;; derivable) echo "${DT_DERIVABLE_DB:-jsonbench_new}" ;; merged) echo "${DT_MERGED_DB:-jsonbench_merged}" ;; *) echo "unknown format $1" >&2; exit 1 ;; esac; }
+fmt_target() { case "$1" in gates) echo json-tree-bench/target-gates ;; derivable) echo json-tree-bench/target ;; merged) echo json-tree-bench/target-merged ;; esac; }
+FORMATS="${DT_FORMATS:-gates derivable}"
 ROWS="${1:-10000}"
-OUT="$PWD/results/query/derivable"
+OUT="${DT_OUT:-$PWD/results/query/derivable}"
 mkdir -p "$OUT"
-DATABASE_URL="postgres://postgres:postgres@localhost:5400/${DT_GATES_DB:-jsonbench_base}" TARGET_ROWS="$ROWS" RESULTS_DIR="$OUT" \
-  json-tree-bench/target-gates/release/check_json_tree_v4
-DATABASE_URL="postgres://postgres:postgres@localhost:5400/${DT_DERIVABLE_DB:-jsonbench_new}" TARGET_ROWS="$ROWS" RESULTS_DIR="$OUT" \
-  json-tree-bench/target/release/check_json_tree_v4
+for fmt in $FORMATS; do
+  DATABASE_URL="postgres://postgres:postgres@localhost:5400/$(fmt_db "$fmt")" TARGET_ROWS="$ROWS" RESULTS_DIR="$OUT" \
+    "$(fmt_target "$fmt")/release/check_json_tree_v4"
+done
 """
 
 [tasks."bench:dt:plan"]
-description = "Derive both formats' scenario plans (tokens, gates, operands) at a tier: dt_bench plan from each build"
+description = "Derive every format's scenario plans (tokens, gates, operands) at a tier: dt_bench plan from each build"
 depends = ["bench:dt:build"]
 run = """
 #!/usr/bin/env bash
 set -e
+# Format -> database and build. Sourced by each bench:dt task.
+fmt_db() { case "$1" in gates) echo "${DT_GATES_DB:-jsonbench_base}" ;; derivable) echo "${DT_DERIVABLE_DB:-jsonbench_new}" ;; merged) echo "${DT_MERGED_DB:-jsonbench_merged}" ;; *) echo "unknown format $1" >&2; exit 1 ;; esac; }
+fmt_target() { case "$1" in gates) echo json-tree-bench/target-gates ;; derivable) echo json-tree-bench/target ;; merged) echo json-tree-bench/target-merged ;; esac; }
+FORMATS="${DT_FORMATS:-gates derivable}"
 ROWS="${1:-10000}"
-OUT="$PWD/results/query/derivable"
+OUT="${DT_OUT:-$PWD/results/query/derivable}"
 mkdir -p "$OUT"
-DATABASE_URL="postgres://postgres:postgres@localhost:5400/${DT_GATES_DB:-jsonbench_base}" TARGET_ROWS="$ROWS" OUT_DIR="$OUT" \
-  json-tree-bench/target-gates/release/dt_bench plan
-DATABASE_URL="postgres://postgres:postgres@localhost:5400/${DT_DERIVABLE_DB:-jsonbench_new}" TARGET_ROWS="$ROWS" OUT_DIR="$OUT" \
-  json-tree-bench/target/release/dt_bench plan
+for fmt in $FORMATS; do
+  DATABASE_URL="postgres://postgres:postgres@localhost:5400/$(fmt_db "$fmt")" TARGET_ROWS="$ROWS" OUT_DIR="$OUT" \
+    "$(fmt_target "$fmt")/release/dt_bench" plan
+done
 """
 
 [tasks."bench:dt:time"]
-description = "Time both formats' plans interleaved: <rows> [tag]. PASSES, TABLE_PASSES, REPS and ONLY (scenario-name filter) tune it"
+description = "Time the formats' plans interleaved: <rows> [tag]. DT_FORMATS picks the formats; PASSES, TABLE_PASSES, REPS and ONLY (scenario-name filter) tune it"
 depends = ["bench:dt:build"]
 run = """
 #!/usr/bin/env bash
 set -e
+# Format -> database and build. Sourced by each bench:dt task.
+fmt_db() { case "$1" in gates) echo "${DT_GATES_DB:-jsonbench_base}" ;; derivable) echo "${DT_DERIVABLE_DB:-jsonbench_new}" ;; merged) echo "${DT_MERGED_DB:-jsonbench_merged}" ;; *) echo "unknown format $1" >&2; exit 1 ;; esac; }
+fmt_target() { case "$1" in gates) echo json-tree-bench/target-gates ;; derivable) echo json-tree-bench/target ;; merged) echo json-tree-bench/target-merged ;; esac; }
+FORMATS="${DT_FORMATS:-gates derivable}"
 ROWS="${1:-10000}"
-GATES_URL="postgres://postgres:postgres@localhost:5400/${DT_GATES_DB:-jsonbench_base}" \
-DERIVABLE_URL="postgres://postgres:postgres@localhost:5400/${DT_DERIVABLE_DB:-jsonbench_new}" \
-TARGET_ROWS="$ROWS" TAG="${2:-}" OUT_DIR="$PWD/results/query/derivable" \
-  json-tree-bench/target/release/dt_bench time
+for fmt in $FORMATS; do
+  export "$(echo "$fmt" | tr a-z A-Z)_URL=postgres://postgres:postgres@localhost:5400/$(fmt_db "$fmt")"
+done
+TAG="${2:-}"
+set -- $FORMATS
+FORMATS="$(echo "$FORMATS" | tr ' ' ',')" TARGET_ROWS="$ROWS" TAG="$TAG" OUT_DIR="${DT_OUT:-$PWD/results/query/derivable}" \
+  "$(fmt_target "$1")/release/dt_bench" time
 """
 
 [tasks."report:dt"]

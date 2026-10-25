@@ -25,7 +25,7 @@
 //!     300-element array).
 //!
 //! Prints one line per failure and a summary, writes the summary to
-//! `$RESULTS_DIR/json_tree_correctness_<N>[_gates].json`, and exits non-zero
+//! `$RESULTS_DIR/json_tree_correctness_<N>[_gates|_merged].json`, and exits non-zero
 //! on any failure.
 
 use std::collections::BTreeMap;
@@ -247,7 +247,7 @@ async fn check_walks(
     let key_prices_64 = key("$.orders[*].items[*].price", Some(64)).await;
     let sel_status = json_selector(cipher, "$.orders[*].status").await;
     let sel_salary = json_selector(cipher, "$.company.salary").await;
-    #[cfg(feature = "derivable")]
+    #[cfg(not(feature = "gates"))]
     let key_root = key("$", None).await;
 
     for (id, doc) in &rows {
@@ -289,7 +289,7 @@ async fn check_walks(
         check_many(pool, cipher, &table, id, &key_prices_64, Some(0), &prices, true, "wildcard/orders[*].items[*].price (N=64)", t).await?;
         // `$` under the sealed root: the root entry, which opens to the whole
         // document. The gates format refuses the key (`JsonSealedRoot`).
-        #[cfg(feature = "derivable")]
+        #[cfg(not(feature = "gates"))]
         check_one(pool, cipher, &table, id, &key_root, None, doc, "subtree/$ (sealed root)", t).await?;
         // Children and child count of `$.orders`, against the array.
         let (children_from, mut cargs) = key_orders.children();
@@ -692,7 +692,11 @@ async fn main() -> Result<()> {
         "checks": t.by_check.iter().map(|(k, (p, f))| (k.clone(), json!({"pass": p, "fail": f}))).collect::<serde_json::Map<_, _>>(),
         "failures": t.failures,
     });
-    let suffix = if FORMAT == "gates" { "_gates" } else { "" };
+    let suffix = match FORMAT {
+        "gates" => "_gates",
+        "merged" => "_merged",
+        _ => "",
+    };
     let path = format!("{results_dir}/json_tree_correctness_{tier}{suffix}.json");
     std::fs::write(&path, serde_json::to_string_pretty(&summary)?)?;
     eprintln!("written to {path}");
