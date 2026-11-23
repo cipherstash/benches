@@ -14,7 +14,7 @@ import os
 import statistics
 from collections import OrderedDict
 
-ORDER = ["native", "shipped", "rebuilt-s", "noclose", "o3", "o3-noclose", "next", "next-fix"]
+ORDER = ["native", "shipped", "rebuilt-s", "noclose", "o3", "o3-noclose", "next", "next-fix", "next-yield"]
 
 
 def label(r):
