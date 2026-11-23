@@ -1,0 +1,20 @@
+# AES-256-GCM against ChaCha20-Poly1305 in a wasm guest: is ChaCha
+# significantly cheaper where AES has no hardware support?
+#
+# aes-gcm is pinned to what the Go SDK's guest links (vitaminc-encrypt
+# 0.10's rust-crypto backend), so the AES column is the guest's own cost.
+[package]
+name = "aead-wasm"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[dependencies]
+aes-gcm = { version = "=0.10.3", default-features = false, features = ["aes", "alloc", "zeroize"] }
+chacha20poly1305 = { version = "0.10", default-features = false, features = ["alloc"] }
+
+[profile.release]
+opt-level = 3
+lto = true

@@ -9,3 +9,5 @@
 /go/variants/
 /go/bin/
 /v4/target
+/experiments/aead-wasm/target
+/experiments/aead-wasm/target-simd
