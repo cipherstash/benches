@@ -89,6 +89,21 @@ On branch `fix/golang-guest-decrypt-perf` of `cipherstash/stack`, from `next`:
 
 The trade-off: before, wazero stopped a stuck guest call. Now it keeps running, holding one goroutine and the guest's memory, until it returns. A stuck call has never been seen; it would be a bug in the guest.
 
+## What removing the option costs
+
+GC pause latency. wazero's native code cannot be preempted by the Go scheduler, and the option's calls into Go were the guest's only safe points. Without them, a stop-the-world GC pause waits for the running guest step, and every goroutine in the process waits with it.
+
+**The longest GC pause grows from 0.3 ms to as much as 25 ms while the guest decrypts**
+
+| Build | One decrypt (ms) | GC pause p99 (ms) | GC pause max (ms) | 1 ms ticker, max lateness (ms) |
+|---|--:|--:|--:|--:|
+| rc.6 as shipped | 120 | 0.08 | 0.3 | 2.6 |
+| rc.6, option removed | 23 | 8.4 | 14.7 | 12.4 |
+| rc.6, both changes | 17 | 7.3 | 8.4 | 7.8 |
+| Go on `next`, with the fix | 21 | 10.5 | 25 | 22.7 |
+
+One goroutine decrypted 100 rows of 14 columns in a loop for 5 seconds, with offline keys. The test forced a GC every 5 ms. See `go/offline/latency_test.go`. Making the guest yield to the host every few hundred values would bound the wait without the per-loop cost.
+
 ## What is left
 
 - **ZeroKMS requests run one at a time.** The guest sets `max_concurrent_reqs` to 1, so 1,400 values go to ZeroKMS as 3 requests, one after another. Native Rust sends them together. Running them at the same time would close most of the remaining wall-time gap. The guest's step interface can already hand the host several requests.
