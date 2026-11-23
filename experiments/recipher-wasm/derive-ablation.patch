@@ -1,0 +1,35 @@
+diff --git a/packages/stack-kms/src/key.rs b/packages/stack-kms/src/key.rs
+index 5526e600d..392edc1cf 100644
+--- a/packages/stack-kms/src/key.rs
++++ b/packages/stack-kms/src/key.rs
+@@ -111,6 +111,21 @@ impl DataKey {
+         // hash would alter the derived key, so that residue is accepted.)
+         let rect = Zeroizing::new(cipher.reencrypt::<16>(&iv, key_material)?);
+ 
++        // EXPERIMENT (throwaway): repeat parts of the derivation so their
++        // in-situ cost shows as the CPU each repeat adds. Counts are baked in
++        // at build time; unset means 0.
++        for _ in 0..extra(option_env!("DERIVE_EXTRA_REENCRYPT")) {
++            let r = Zeroizing::new(
++                cipher.reencrypt::<16>(std::hint::black_box(&iv), std::hint::black_box(key_material))?,
++            );
++            std::hint::black_box(r.as_slice());
++        }
++        for _ in 0..extra(option_env!("DERIVE_EXTRA_SHA")) {
++            let mut h = Sha256::new();
++            h.update(std::hint::black_box(rect.as_slice()));
++            std::hint::black_box(h.finalize());
++        }
++
+         let mut hasher = Sha256::new();
+         hasher.update(rect.as_slice());
+ 
+@@ -569,3 +584,8 @@ mod tests {
+         assert_eq!(toml, table.to_string());
+     }
+ }
++
++// EXPERIMENT (throwaway): see DataKey::from_key_material.
++fn extra(v: Option<&'static str>) -> usize {
++    v.and_then(|s| s.parse().ok()).unwrap_or(0)
++}

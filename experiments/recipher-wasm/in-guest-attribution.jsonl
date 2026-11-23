@@ -1,0 +1,72 @@
+{"run": "ablation-loaded", "round": 1, "build": "base", "cpu_ms_per_call": 91.4, "wall_ms_per_call": 342.7, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 1, "build": "r4", "cpu_ms_per_call": 127.6, "wall_ms_per_call": 372.7, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 1, "build": "s16", "cpu_ms_per_call": 131.4, "wall_ms_per_call": 393.6, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 2, "build": "r4", "cpu_ms_per_call": 125.3, "wall_ms_per_call": 366.7, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 2, "build": "s16", "cpu_ms_per_call": 132.9, "wall_ms_per_call": 384.5, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 2, "build": "base", "cpu_ms_per_call": 108.1, "wall_ms_per_call": 376.7, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 3, "build": "s16", "cpu_ms_per_call": 132.9, "wall_ms_per_call": 403.5, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 3, "build": "base", "cpu_ms_per_call": 100.9, "wall_ms_per_call": 347.7, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 3, "build": "r4", "cpu_ms_per_call": 122.3, "wall_ms_per_call": 363.5, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 4, "build": "base", "cpu_ms_per_call": 94.1, "wall_ms_per_call": 344.2, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 4, "build": "r4", "cpu_ms_per_call": 130.8, "wall_ms_per_call": 386.7, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 4, "build": "s16", "cpu_ms_per_call": 141.1, "wall_ms_per_call": 405.9, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 5, "build": "r4", "cpu_ms_per_call": 132.3, "wall_ms_per_call": 387.4, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 5, "build": "s16", "cpu_ms_per_call": 129.0, "wall_ms_per_call": 368.7, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 5, "build": "base", "cpu_ms_per_call": 104.8, "wall_ms_per_call": 350.3, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 6, "build": "s16", "cpu_ms_per_call": 120.9, "wall_ms_per_call": 373.9, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 6, "build": "base", "cpu_ms_per_call": 101.2, "wall_ms_per_call": 344.7, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 6, "build": "r4", "cpu_ms_per_call": 137.1, "wall_ms_per_call": 390.5, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 7, "build": "base", "cpu_ms_per_call": 103.0, "wall_ms_per_call": 339.2, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 7, "build": "r4", "cpu_ms_per_call": 145.7, "wall_ms_per_call": 427.7, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 7, "build": "s16", "cpu_ms_per_call": 129.7, "wall_ms_per_call": 376.5, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 8, "build": "r4", "cpu_ms_per_call": 128.2, "wall_ms_per_call": 380.1, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 8, "build": "s16", "cpu_ms_per_call": 135.9, "wall_ms_per_call": 390.2, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-loaded", "round": 8, "build": "base", "cpu_ms_per_call": 96.5, "wall_ms_per_call": 348.5, "note": "machine loaded; base, r4 = 4 extra reencrypts per value, s16 = 16 extra SHA-256 per value"}
+{"run": "ablation-quiet", "round": 1, "build": "base", "cpu_ms_per_call": 39.7, "wall_ms_per_call": 302.7, "note": "machine quiet"}
+{"run": "ablation-quiet", "round": 1, "build": "r4", "cpu_ms_per_call": 77.7, "wall_ms_per_call": 327.2, "note": "machine quiet"}
+{"run": "ablation-quiet", "round": 1, "build": "s16", "cpu_ms_per_call": 69.7, "wall_ms_per_call": 335.0, "note": "machine quiet"}
+{"run": "ablation-quiet", "round": 2, "build": "r4", "cpu_ms_per_call": 77.1, "wall_ms_per_call": 337.6, "note": "machine quiet"}
+{"run": "ablation-quiet", "round": 2, "build": "s16", "cpu_ms_per_call": 66.2, "wall_ms_per_call": 356.1, "note": "machine quiet"}
+{"run": "ablation-quiet", "round": 2, "build": "base", "cpu_ms_per_call": 39.2, "wall_ms_per_call": 270.4, "note": "machine quiet"}
+{"run": "ablation-quiet", "round": 3, "build": "s16", "cpu_ms_per_call": 67.7, "wall_ms_per_call": 316.3, "note": "machine quiet"}
+{"run": "ablation-quiet", "round": 3, "build": "base", "cpu_ms_per_call": 39.9, "wall_ms_per_call": 330.8, "note": "machine quiet"}
+{"run": "ablation-quiet", "round": 3, "build": "r4", "cpu_ms_per_call": 77.5, "wall_ms_per_call": 347.5, "note": "machine quiet"}
+{"run": "ablation-quiet", "round": 4, "build": "base", "cpu_ms_per_call": 39.2, "wall_ms_per_call": 313.3, "note": "machine quiet"}
+{"run": "ablation-quiet", "round": 4, "build": "r4", "cpu_ms_per_call": 78.5, "wall_ms_per_call": 342.2, "note": "machine quiet"}
+{"run": "ablation-quiet", "round": 4, "build": "s16", "cpu_ms_per_call": 66.5, "wall_ms_per_call": 323.8, "note": "machine quiet"}
+{"run": "ablation-quiet", "round": 5, "build": "r4", "cpu_ms_per_call": 79.4, "wall_ms_per_call": 351.3, "note": "machine quiet"}
+{"run": "ablation-quiet", "round": 5, "build": "s16", "cpu_ms_per_call": 68.2, "wall_ms_per_call": 331.1, "note": "machine quiet"}
+{"run": "ablation-quiet", "round": 5, "build": "base", "cpu_ms_per_call": 39.6, "wall_ms_per_call": 310.2, "note": "machine quiet"}
+{"run": "ablation-quiet", "round": 6, "build": "s16", "cpu_ms_per_call": 66.6, "wall_ms_per_call": 343.5, "note": "machine quiet"}
+{"run": "ablation-quiet", "round": 6, "build": "base", "cpu_ms_per_call": 39.5, "wall_ms_per_call": 288.5, "note": "machine quiet"}
+{"run": "ablation-quiet", "round": 6, "build": "r4", "cpu_ms_per_call": 77.1, "wall_ms_per_call": 359.6, "note": "machine quiet"}
+{"run": "single-pass-quiet-1", "round": 1, "build": "base", "cpu_ms_per_call": 39.0, "wall_ms_per_call": 329.1, "note": "load spiked in rounds 4-6"}
+{"run": "single-pass-quiet-1", "round": 1, "build": "sp", "cpu_ms_per_call": 33.2, "wall_ms_per_call": 292.5, "note": "load spiked in rounds 4-6"}
+{"run": "single-pass-quiet-1", "round": 2, "build": "sp", "cpu_ms_per_call": 34.6, "wall_ms_per_call": 628.9, "note": "load spiked in rounds 4-6"}
+{"run": "single-pass-quiet-1", "round": 2, "build": "base", "cpu_ms_per_call": 40.0, "wall_ms_per_call": 332.1, "note": "load spiked in rounds 4-6"}
+{"run": "single-pass-quiet-1", "round": 3, "build": "base", "cpu_ms_per_call": 39.6, "wall_ms_per_call": 340.4, "note": "load spiked in rounds 4-6"}
+{"run": "single-pass-quiet-1", "round": 3, "build": "sp", "cpu_ms_per_call": 34.0, "wall_ms_per_call": 314.6, "note": "load spiked in rounds 4-6"}
+{"run": "single-pass-quiet-1", "round": 4, "build": "sp", "cpu_ms_per_call": 32.6, "wall_ms_per_call": 381.5, "note": "load spiked in rounds 4-6"}
+{"run": "single-pass-quiet-1", "round": 4, "build": "base", "cpu_ms_per_call": 95.9, "wall_ms_per_call": 405.6, "note": "load spiked in rounds 4-6"}
+{"run": "single-pass-quiet-1", "round": 5, "build": "base", "cpu_ms_per_call": 50.0, "wall_ms_per_call": 360.4, "note": "load spiked in rounds 4-6"}
+{"run": "single-pass-quiet-1", "round": 5, "build": "sp", "cpu_ms_per_call": 75.1, "wall_ms_per_call": 370.1, "note": "load spiked in rounds 4-6"}
+{"run": "single-pass-quiet-1", "round": 6, "build": "sp", "cpu_ms_per_call": 63.7, "wall_ms_per_call": 357.6, "note": "load spiked in rounds 4-6"}
+{"run": "single-pass-quiet-1", "round": 6, "build": "base", "cpu_ms_per_call": 86.6, "wall_ms_per_call": 407.3, "note": "load spiked in rounds 4-6"}
+{"run": "single-pass-quiet-2", "round": 1, "build": "base", "cpu_ms_per_call": 64.4, "wall_ms_per_call": 326.9, "note": "round 1-2 noisy"}
+{"run": "single-pass-quiet-2", "round": 1, "build": "sp", "cpu_ms_per_call": 44.5, "wall_ms_per_call": 341.7, "note": "round 1-2 noisy"}
+{"run": "single-pass-quiet-2", "round": 2, "build": "sp", "cpu_ms_per_call": 41.0, "wall_ms_per_call": 315.9, "note": "round 1-2 noisy"}
+{"run": "single-pass-quiet-2", "round": 2, "build": "base", "cpu_ms_per_call": 42.9, "wall_ms_per_call": 301.1, "note": "round 1-2 noisy"}
+{"run": "single-pass-quiet-2", "round": 3, "build": "base", "cpu_ms_per_call": 41.4, "wall_ms_per_call": 320.0, "note": "round 1-2 noisy"}
+{"run": "single-pass-quiet-2", "round": 3, "build": "sp", "cpu_ms_per_call": 35.3, "wall_ms_per_call": 281.3, "note": "round 1-2 noisy"}
+{"run": "single-pass-quiet-2", "round": 4, "build": "sp", "cpu_ms_per_call": 35.3, "wall_ms_per_call": 284.1, "note": "round 1-2 noisy"}
+{"run": "single-pass-quiet-2", "round": 4, "build": "base", "cpu_ms_per_call": 41.9, "wall_ms_per_call": 302.8, "note": "round 1-2 noisy"}
+{"run": "single-pass-quiet-2", "round": 5, "build": "base", "cpu_ms_per_call": 41.6, "wall_ms_per_call": 360.2, "note": "round 1-2 noisy"}
+{"run": "single-pass-quiet-2", "round": 5, "build": "sp", "cpu_ms_per_call": 35.1, "wall_ms_per_call": 283.1, "note": "round 1-2 noisy"}
+{"run": "single-pass-quiet-2", "round": 6, "build": "sp", "cpu_ms_per_call": 34.9, "wall_ms_per_call": 290.7, "note": "round 1-2 noisy"}
+{"run": "single-pass-quiet-2", "round": 6, "build": "base", "cpu_ms_per_call": 41.5, "wall_ms_per_call": 283.4, "note": "round 1-2 noisy"}
+{"run": "listener-quiet", "bucket": "derive", "ms_per_call": 11.66, "us_per_value": 8.3, "process_cpu_ms": 39.6}
+{"run": "listener-quiet", "bucket": "reencrypt", "ms_per_call": 9.37, "us_per_value": 6.7, "process_cpu_ms": 39.6}
+{"run": "listener-quiet", "bucket": "derive", "ms_per_call": 11.75, "us_per_value": 8.4, "process_cpu_ms": 39.9}
+{"run": "listener-quiet", "bucket": "reencrypt", "ms_per_call": 9.44, "us_per_value": 6.7, "process_cpu_ms": 39.9}
+{"run": "listener-quiet", "bucket": "derive", "ms_per_call": 11.8, "us_per_value": 8.4, "process_cpu_ms": 39.6}
+{"run": "listener-quiet", "bucket": "reencrypt", "ms_per_call": 9.51, "us_per_value": 6.8, "process_cpu_ms": 39.6}
