@@ -1,0 +1,22 @@
+# Where the client half of ZeroKMS key derivation spends its time in the Go
+# SDK's wasm guest: recipher's ProxyCipher::reencrypt, then SHA-256, as
+# stack-kms's DataKey::from_key_material does per value. Also times a
+# single-pass permutation that gives byte-identical output.
+[package]
+name = "recipher-wasm"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[dependencies]
+# The versions the guest links (languages/golang/encrypt/guest/Cargo.lock).
+recipher = "=0.3.1"
+sha2 = "0.10.6"
+serde = { version = "1", features = ["derive"] }
+serde_cbor = "0.11.2"
+
+[profile.release]
+opt-level = 3
+lto = true
