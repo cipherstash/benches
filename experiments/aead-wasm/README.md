@@ -1,6 +1,8 @@
 # AES-256-GCM or ChaCha20-Poly1305 in the Go SDK's wasm guest
 
-**Result: switching to ChaCha20-Poly1305 is not worth it.** ChaCha is 4.5 to 7 times faster than the guest's software AES-256-GCM per message. Against ZeroKMS, though, the AEAD is only about 1 to 3% of a decrypt's CPU per short value. For a 2 KB value it is about 12%. The rest is the ZeroKMS key path and the host. Switching would save at most about 10%, and less for typical short columns.
+**Result: switching to ChaCha20-Poly1305 is not worth it.** ChaCha is 4.5 to 7 times faster than the guest's software AES-256-GCM per message. Against ZeroKMS, though, the AEAD is only about 1 to 3% of a decrypt's CPU per short value. For a 2 KB value it is about 12%. The rest is the ZeroKMS key path and the host.
+
+Switching would save at most about 10%, and less for typical short columns.
 
 Measured on 23 November 2026, on one Apple silicon laptop.
 
@@ -39,7 +41,7 @@ The per-value figures are from `gobench` (`results/v4/`). The AES share uses the
 
 ## Why we stop here
 
-Besides the small gain, a switch would change the ciphertext format every SDK reads. AES-GCM is also FIPS-approved, and ChaCha20-Poly1305 is not. The ZeroKMS key path is where the remaining CPU is.
+Besides the small gain, a switch would change the ciphertext format every SDK reads. AES-GCM is also FIPS-approved. ChaCha20-Poly1305 is not. The ZeroKMS key path is where the remaining CPU is.
 
 ## Run it
 
