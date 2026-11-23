@@ -1,0 +1,36 @@
+{"round": 1, "build": "#1765", "case": "decrypt 100 rows x 14 columns, no database", "cpu_ms": 37.65, "wall_ms": 294.12}
+{"round": 1, "build": "#1765", "case": "decrypt a page of 100 rows from a 1M-row table", "cpu_ms": 37.97, "wall_ms": 300.89}
+{"round": 1, "build": "#1765 with 3 concurrent requests", "case": "decrypt 100 rows x 14 columns, no database", "cpu_ms": 36.53, "wall_ms": 138.02}
+{"round": 1, "build": "#1765 with 3 concurrent requests", "case": "decrypt a page of 100 rows from a 1M-row table", "cpu_ms": 36.86, "wall_ms": 138.42}
+{"round": 2, "build": "#1765 with 3 concurrent requests", "case": "decrypt 100 rows x 14 columns, no database", "cpu_ms": 36.86, "wall_ms": 138.8}
+{"round": 2, "build": "#1765 with 3 concurrent requests", "case": "decrypt a page of 100 rows from a 1M-row table", "cpu_ms": 37.31, "wall_ms": 139.37}
+{"round": 2, "build": "#1765", "case": "decrypt 100 rows x 14 columns, no database", "cpu_ms": 37.54, "wall_ms": 283.23}
+{"round": 2, "build": "#1765", "case": "decrypt a page of 100 rows from a 1M-row table", "cpu_ms": 38.06, "wall_ms": 300.86}
+{"round": 3, "build": "#1765", "case": "decrypt 100 rows x 14 columns, no database", "cpu_ms": 38.16, "wall_ms": 316.23}
+{"round": 3, "build": "#1765", "case": "decrypt a page of 100 rows from a 1M-row table", "cpu_ms": 37.55, "wall_ms": 282.15}
+{"round": 3, "build": "#1765 with 3 concurrent requests", "case": "decrypt 100 rows x 14 columns, no database", "cpu_ms": 36.94, "wall_ms": 137.41}
+{"round": 3, "build": "#1765 with 3 concurrent requests", "case": "decrypt a page of 100 rows from a 1M-row table", "cpu_ms": 36.5, "wall_ms": 144.26}
+{"round": 4, "build": "#1765 with 3 concurrent requests", "case": "decrypt 100 rows x 14 columns, no database", "cpu_ms": 36.52, "wall_ms": 127.86}
+{"round": 4, "build": "#1765 with 3 concurrent requests", "case": "decrypt a page of 100 rows from a 1M-row table", "cpu_ms": 37.11, "wall_ms": 136.35}
+{"round": 4, "build": "#1765", "case": "decrypt 100 rows x 14 columns, no database", "cpu_ms": 37.42, "wall_ms": 291.79}
+{"round": 4, "build": "#1765", "case": "decrypt a page of 100 rows from a 1M-row table", "cpu_ms": 37.83, "wall_ms": 293.85}
+{"round": 5, "build": "#1765", "case": "decrypt 100 rows x 14 columns, no database", "cpu_ms": 37.76, "wall_ms": 316.85}
+{"round": 5, "build": "#1765", "case": "decrypt a page of 100 rows from a 1M-row table", "cpu_ms": 37.59, "wall_ms": 284.5}
+{"round": 5, "build": "#1765 with 3 concurrent requests", "case": "decrypt 100 rows x 14 columns, no database", "cpu_ms": 37.64, "wall_ms": 139.8}
+{"round": 5, "build": "#1765 with 3 concurrent requests", "case": "decrypt a page of 100 rows from a 1M-row table", "cpu_ms": 36.5, "wall_ms": 136.73}
+{"round": 6, "build": "#1765 with 3 concurrent requests", "case": "decrypt 100 rows x 14 columns, no database", "cpu_ms": 36.44, "wall_ms": 142.44}
+{"round": 6, "build": "#1765 with 3 concurrent requests", "case": "decrypt a page of 100 rows from a 1M-row table", "cpu_ms": 37.02, "wall_ms": 132.23}
+{"round": 6, "build": "#1765", "case": "decrypt 100 rows x 14 columns, no database", "cpu_ms": 37.64, "wall_ms": 299.39}
+{"round": 6, "build": "#1765", "case": "decrypt a page of 100 rows from a 1M-row table", "cpu_ms": 37.67, "wall_ms": 282.33}
+{"round": 1, "build": "#1765", "case": "guest steps per decrypt, 100 rows x 14 columns", "steps": 228, "longest_step_ms": 8.9}
+{"round": 1, "build": "#1765 with 3 concurrent requests", "case": "guest steps per decrypt, 100 rows x 14 columns", "steps": 223, "longest_step_ms": 9.48}
+{"round": 2, "build": "#1765", "case": "guest steps per decrypt, 100 rows x 14 columns", "steps": 228, "longest_step_ms": 8.82}
+{"round": 2, "build": "#1765 with 3 concurrent requests", "case": "guest steps per decrypt, 100 rows x 14 columns", "steps": 223, "longest_step_ms": 9.38}
+{"round": 3, "build": "#1765", "case": "guest steps per decrypt, 100 rows x 14 columns", "steps": 228, "longest_step_ms": 8.71}
+{"round": 3, "build": "#1765 with 3 concurrent requests", "case": "guest steps per decrypt, 100 rows x 14 columns", "steps": 223, "longest_step_ms": 9.14}
+{"round": 1, "build": "#1765", "case": "encrypt 100 rows x 14 columns, no database", "cpu_ms": 43.24, "wall_ms": 229.73}
+{"round": 1, "build": "#1765 with 3 concurrent requests", "case": "encrypt 100 rows x 14 columns, no database", "cpu_ms": 41.82, "wall_ms": 118.74}
+{"round": 2, "build": "#1765", "case": "encrypt 100 rows x 14 columns, no database", "cpu_ms": 43.17, "wall_ms": 233.69}
+{"round": 2, "build": "#1765 with 3 concurrent requests", "case": "encrypt 100 rows x 14 columns, no database", "cpu_ms": 42.05, "wall_ms": 114.37}
+{"round": 3, "build": "#1765", "case": "encrypt 100 rows x 14 columns, no database", "cpu_ms": 43.03, "wall_ms": 231.98}
+{"round": 3, "build": "#1765 with 3 concurrent requests", "case": "encrypt 100 rows x 14 columns, no database", "cpu_ms": 41.66, "wall_ms": 108.97}

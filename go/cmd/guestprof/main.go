@@ -5,6 +5,8 @@
 // encrypt.NewClient, and times the guest functions whose names match each
 // -bucket pattern: inclusive time, counting only the outermost call of a
 // bucket, so recursion and nesting within a bucket are not counted twice.
+// It also reports each bucket's longest single call: for the "guest" bucket,
+// the longest guest step.
 // The guest's exports (se_*) always form the "guest" bucket: every guest
 // step, so the total time in the guest.
 //
@@ -48,6 +50,7 @@ type bucket struct {
 	depth int
 	start time.Time
 	total time.Duration
+	max   time.Duration
 	calls int
 }
 
@@ -83,7 +86,9 @@ func (l listener) After(context.Context, api.Module, api.FunctionDefinition, []u
 	l.b.mu.Lock()
 	l.b.depth--
 	if l.b.depth == 0 {
-		l.b.total += time.Since(l.b.start)
+		d := time.Since(l.b.start)
+		l.b.total += d
+		l.b.max = max(l.b.max, d)
 		l.b.calls++
 	}
 	l.b.mu.Unlock()
@@ -169,7 +174,7 @@ func main() {
 		log.Fatal(err)
 	}
 	for _, b := range f.buckets {
-		b.total, b.calls = 0, 0
+		b.total, b.max, b.calls = 0, 0, 0
 	}
 	if *cpuprofile != "" {
 		out, err := os.Create(*cpuprofile)
@@ -193,10 +198,10 @@ func main() {
 	fmt.Printf("%s of 100 rows x 14 columns, %d calls: process CPU %.1f ms/call, wall %.1f ms/call\n",
 		*op, *calls, float64(cpu.Microseconds())/1000/n, float64(wall.Microseconds())/1000/n)
 	sort.SliceStable(f.buckets, func(i, j int) bool { return f.buckets[i].total > f.buckets[j].total })
-	fmt.Printf("%-34s %10s %10s %12s %8s\n", "bucket", "ms/call", "µs/value", "calls/call", "% CPU")
+	fmt.Printf("%-34s %10s %10s %12s %8s %12s\n", "bucket", "ms/call", "µs/value", "calls/call", "% CPU", "longest (ms)")
 	for _, b := range f.buckets {
 		ms := float64(b.total.Microseconds()) / 1000 / n
-		fmt.Printf("%-34s %10.2f %10.1f %12.0f %7.0f%%\n", b.name, ms, ms*1000/values, float64(b.calls)/n,
-			100*float64(b.total)/float64(cpu))
+		fmt.Printf("%-34s %10.2f %10.1f %12.0f %7.0f%% %12.2f\n", b.name, ms, ms*1000/values, float64(b.calls)/n,
+			100*float64(b.total)/float64(cpu), float64(b.max.Microseconds())/1000)
 	}
 }
