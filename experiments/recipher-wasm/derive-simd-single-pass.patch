@@ -1,0 +1,164 @@
+diff --git a/packages/stack-kms/src/key.rs b/packages/stack-kms/src/key.rs
+index 5526e600d..cf6942d1a 100644
+--- a/packages/stack-kms/src/key.rs
++++ b/packages/stack-kms/src/key.rs
+@@ -103,13 +103,15 @@ impl DataKey {
+         iv: Iv,
+         key_material: &ViturKeyMaterial,
+     ) -> Result<Self, InvalidKeyMaterialError> {
+-        let cipher = ProxyCipher::new(key.keyset.keyset());
+-        // `rect` is reencrypted key material — the derived data key is a hash of
+-        // it — so wipe the returned copy on drop; recipher wipes its own
+-        // intermediate block buffer. (The Sha256 block buffer keeps the final
+-        // <=64-byte block; sha2 0.10 doesn't implement Zeroize and changing the
+-        // hash would alter the derived key, so that residue is accepted.)
+-        let rect = Zeroizing::new(cipher.reencrypt::<16>(&iv, key_material)?);
++        // EXPERIMENT (not for merge): recipher's reencrypt with each
++        // permutation applied in one pass, cached per client key.
++        let rect = match single_pass::reencrypt(key, &iv, key_material) {
++            Some(rect) => Zeroizing::new(rect),
++            None => {
++                let cipher = ProxyCipher::new(key.keyset.keyset());
++                Zeroizing::new(cipher.reencrypt::<16>(&iv, key_material)?)
++            }
++        };
+ 
+         let mut hasher = Sha256::new();
+         hasher.update(rect.as_slice());
+@@ -569,3 +571,136 @@ mod tests {
+         assert_eq!(toml, table.to_string());
+     }
+ }
++
++
++/// EXPERIMENT (not for merge): see `DataKey::from_key_material`.
++mod single_pass {
++    use super::*;
++    use std::cell::RefCell;
++    use std::collections::HashMap;
++
++    #[derive(Deserialize)]
++    struct Perm {
++        permutation: Vec<u8>,
++    }
++
++    #[derive(Deserialize)]
++    struct Mirror {
++        p1: Perm,
++        p2_from: Perm,
++        p2_to: Perm,
++        p3: Perm,
++    }
++
++    #[derive(Clone, Copy)]
++    struct Fixed {
++        p1: [u8; 16],
++        p2_from: [u8; 16],
++        p2_to: [u8; 16],
++        p3: [u8; 33],
++    }
++
++    thread_local! {
++        static CACHE: RefCell<HashMap<Uuid, Option<Fixed>>> = RefCell::new(HashMap::new());
++    }
++
++    fn fixed(key: &ClientKey) -> Option<Fixed> {
++        CACHE.with(|cache| {
++            *cache.borrow_mut().entry(key.key_id).or_insert_with(|| {
++                let bytes = key.keyset.keyset().to_bytes().ok()?;
++                let m: Mirror = serde_cbor::from_slice(&bytes).ok()?;
++                Some(Fixed {
++                    p1: m.p1.permutation.try_into().ok()?,
++                    p2_from: m.p2_from.permutation.try_into().ok()?,
++                    p2_to: m.p2_to.permutation.try_into().ok()?,
++                    p3: m.p3.permutation.try_into().ok()?,
++                })
++            })
++        })
++    }
++
++    #[inline(always)]
++    fn permute<const N: usize, T: Copy>(perm: &[u8; N], input: &mut [T; N]) {
++        let src = *input;
++        for i in 0..N {
++            input[i] = src[perm[i] as usize];
++        }
++    }
++
++    pub(super) fn reencrypt(key: &ClientKey, iv: &[u8; 16], input: &[u8]) -> Option<Vec<u8>> {
++        let k = fixed(key)?;
++        if input.len() != 33 * 16 {
++            return None;
++        }
++        #[cfg(target_arch = "wasm32")]
++        if option_env!("DERIVE_SIMD").is_some() {
++            return Some(simd::reencrypt(&k, iv, input));
++        }
++        let mut data = Zeroizing::new([[0u8; 16]; 33]);
++        for (block, chunk) in data.iter_mut().zip(input.chunks_exact(16)) {
++            block.copy_from_slice(chunk);
++        }
++        let mut p2 = Zeroizing::new(*iv);
++        for block in data.iter_mut() {
++            let tmp = Zeroizing::new(*block);
++            permute(&k.p2_from, &mut p2);
++            for i in 0..16 {
++                block[i] ^= p2[i];
++            }
++            *p2 = *tmp;
++            permute(&k.p1, block);
++        }
++        permute(&k.p3, &mut data);
++        *p2 = *iv;
++        for c in data.iter_mut() {
++            permute(&k.p2_to, &mut p2);
++            for i in 0..16 {
++                c[i] ^= p2[i];
++            }
++            *p2 = *c;
++        }
++        Some(data.concat())
++    }
++
++    /// EXPERIMENT: wasm SIMD. Each 16-byte permutation is one i8x16.swizzle.
++    #[cfg(target_arch = "wasm32")]
++    #[allow(unsafe_code)]
++    mod simd {
++        use core::arch::wasm32::*;
++
++        fn v(bytes: [u8; 16]) -> v128 {
++            // SAFETY: v128 is 16 plain bytes.
++            unsafe { core::mem::transmute::<[u8; 16], v128>(bytes) }
++        }
++
++        #[target_feature(enable = "simd128")]
++        pub(super) fn reencrypt(k: &super::Fixed, iv: &[u8; 16], input: &[u8]) -> Vec<u8> {
++            let (p1, p2_from, p2_to) = (v(k.p1), v(k.p2_from), v(k.p2_to));
++            let iv = v(*iv);
++            let mut data = [iv; 33];
++            let mut prev = iv;
++            for (i, block) in input.chunks_exact(16).enumerate() {
++                // SAFETY: 16 readable bytes; wasm loads need no alignment.
++                let b = unsafe { v128_load(block.as_ptr() as *const v128) };
++                data[i] = i8x16_swizzle(v128_xor(b, i8x16_swizzle(prev, p2_from)), p1);
++                prev = b;
++            }
++            let mut out = vec![0u8; 33 * 16];
++            let mut p2 = iv;
++            for (i, chunk) in out.chunks_exact_mut(16).enumerate() {
++                p2 = i8x16_swizzle(p2, p2_to);
++                let c = v128_xor(data[k.p3[i] as usize], p2);
++                // SAFETY: 16 writable bytes.
++                unsafe { v128_store(chunk.as_mut_ptr() as *mut v128, c) };
++                p2 = c;
++            }
++            // Wipe the intermediate blocks, as the single-pass version does.
++            for d in data.iter_mut() {
++                // SAFETY: d is a valid, aligned v128.
++                unsafe { core::ptr::write_volatile(d, u8x16_splat(0)) };
++            }
++            let _ = (prev, p2);
++            out
++        }
++    }
++}

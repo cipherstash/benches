@@ -70,3 +70,79 @@
 {"run": "listener-quiet", "bucket": "reencrypt", "ms_per_call": 9.44, "us_per_value": 6.7, "process_cpu_ms": 39.9}
 {"run": "listener-quiet", "bucket": "derive", "ms_per_call": 11.8, "us_per_value": 8.4, "process_cpu_ms": 39.6}
 {"run": "listener-quiet", "bucket": "reencrypt", "ms_per_call": 9.51, "us_per_value": 6.8, "process_cpu_ms": 39.6}
+{"run": "simd-clock-low-1", "round": 1, "build": "base", "cpu_ms_per_call": 102.9, "wall_ms_per_call": 345.4, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 1, "build": "sp", "cpu_ms_per_call": 88.9, "wall_ms_per_call": 322.8, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 1, "build": "simd", "cpu_ms_per_call": 91.4, "wall_ms_per_call": 362.3, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 2, "build": "sp", "cpu_ms_per_call": 91.2, "wall_ms_per_call": 361.5, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 2, "build": "simd", "cpu_ms_per_call": 87.8, "wall_ms_per_call": 408.1, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 2, "build": "base", "cpu_ms_per_call": 97.9, "wall_ms_per_call": 350.3, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 3, "build": "simd", "cpu_ms_per_call": 88.6, "wall_ms_per_call": 342.0, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 3, "build": "base", "cpu_ms_per_call": 95.6, "wall_ms_per_call": 345.8, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 3, "build": "sp", "cpu_ms_per_call": 93.2, "wall_ms_per_call": 442.1, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 4, "build": "base", "cpu_ms_per_call": 103.6, "wall_ms_per_call": 365.0, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 4, "build": "sp", "cpu_ms_per_call": 94.8, "wall_ms_per_call": 358.2, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 4, "build": "simd", "cpu_ms_per_call": 87.5, "wall_ms_per_call": 344.4, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 5, "build": "sp", "cpu_ms_per_call": 87.3, "wall_ms_per_call": 326.8, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 5, "build": "simd", "cpu_ms_per_call": 77.3, "wall_ms_per_call": 331.4, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 5, "build": "base", "cpu_ms_per_call": 101.4, "wall_ms_per_call": 341.1, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 6, "build": "simd", "cpu_ms_per_call": 85.0, "wall_ms_per_call": 322.5, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 6, "build": "base", "cpu_ms_per_call": 102.5, "wall_ms_per_call": 358.3, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 6, "build": "sp", "cpu_ms_per_call": 92.8, "wall_ms_per_call": 354.5, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 7, "build": "base", "cpu_ms_per_call": 102.5, "wall_ms_per_call": 359.6, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 7, "build": "sp", "cpu_ms_per_call": 89.6, "wall_ms_per_call": 424.8, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 7, "build": "simd", "cpu_ms_per_call": 80.5, "wall_ms_per_call": 331.8, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 8, "build": "sp", "cpu_ms_per_call": 90.1, "wall_ms_per_call": 326.6, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 8, "build": "simd", "cpu_ms_per_call": 84.1, "wall_ms_per_call": 335.4, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-1", "round": 8, "build": "base", "cpu_ms_per_call": 101.5, "wall_ms_per_call": 350.5, "note": "cores clocked down between bursts; base, sp = single-pass, simd = wasm SIMD swizzle"}
+{"run": "simd-clock-low-2", "round": 1, "build": "base", "cpu_ms_per_call": 99.1, "wall_ms_per_call": 366.1, "note": "cores clocked down between bursts"}
+{"run": "simd-clock-low-2", "round": 1, "build": "sp", "cpu_ms_per_call": 95.7, "wall_ms_per_call": 347.5, "note": "cores clocked down between bursts"}
+{"run": "simd-clock-low-2", "round": 1, "build": "simd", "cpu_ms_per_call": 85.2, "wall_ms_per_call": 349.7, "note": "cores clocked down between bursts"}
+{"run": "simd-clock-low-2", "round": 2, "build": "sp", "cpu_ms_per_call": 93.4, "wall_ms_per_call": 361.4, "note": "cores clocked down between bursts"}
+{"run": "simd-clock-low-2", "round": 2, "build": "simd", "cpu_ms_per_call": 86.5, "wall_ms_per_call": 330.0, "note": "cores clocked down between bursts"}
+{"run": "simd-clock-low-2", "round": 2, "build": "base", "cpu_ms_per_call": 98.3, "wall_ms_per_call": 350.6, "note": "cores clocked down between bursts"}
+{"run": "simd-clock-low-2", "round": 3, "build": "simd", "cpu_ms_per_call": 84.1, "wall_ms_per_call": 327.2, "note": "cores clocked down between bursts"}
+{"run": "simd-clock-low-2", "round": 3, "build": "base", "cpu_ms_per_call": 100.7, "wall_ms_per_call": 353.5, "note": "cores clocked down between bursts"}
+{"run": "simd-clock-low-2", "round": 3, "build": "sp", "cpu_ms_per_call": 90.5, "wall_ms_per_call": 326.2, "note": "cores clocked down between bursts"}
+{"run": "simd-clock-low-2", "round": 4, "build": "base", "cpu_ms_per_call": 101.0, "wall_ms_per_call": 374.7, "note": "cores clocked down between bursts"}
+{"run": "simd-clock-low-2", "round": 4, "build": "sp", "cpu_ms_per_call": 94.4, "wall_ms_per_call": 346.0, "note": "cores clocked down between bursts"}
+{"run": "simd-clock-low-2", "round": 4, "build": "simd", "cpu_ms_per_call": 79.2, "wall_ms_per_call": 333.3, "note": "cores clocked down between bursts"}
+{"run": "simd-clock-low-2", "round": 5, "build": "sp", "cpu_ms_per_call": 93.3, "wall_ms_per_call": 342.4, "note": "cores clocked down between bursts"}
+{"run": "simd-clock-low-2", "round": 5, "build": "simd", "cpu_ms_per_call": 87.3, "wall_ms_per_call": 367.1, "note": "cores clocked down between bursts"}
+{"run": "simd-clock-low-2", "round": 5, "build": "base", "cpu_ms_per_call": 102.6, "wall_ms_per_call": 361.0, "note": "cores clocked down between bursts"}
+{"run": "simd-clock-low-2", "round": 6, "build": "simd", "cpu_ms_per_call": 86.6, "wall_ms_per_call": 327.2, "note": "cores clocked down between bursts"}
+{"run": "simd-clock-low-2", "round": 6, "build": "base", "cpu_ms_per_call": 101.1, "wall_ms_per_call": 349.9, "note": "cores clocked down between bursts"}
+{"run": "simd-clock-low-2", "round": 6, "build": "sp", "cpu_ms_per_call": 87.7, "wall_ms_per_call": 378.0, "note": "cores clocked down between bursts"}
+{"run": "simd-clock-held", "round": 1, "build": "base", "cpu_ms_per_call": 39.2, "wall_ms_per_call": 289.3, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 1, "build": "sp", "cpu_ms_per_call": 32.5, "wall_ms_per_call": 283.1, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 1, "build": "simd", "cpu_ms_per_call": 30.9, "wall_ms_per_call": 275.6, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 2, "build": "sp", "cpu_ms_per_call": 32.6, "wall_ms_per_call": 307.5, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 2, "build": "simd", "cpu_ms_per_call": 29.7, "wall_ms_per_call": 313.1, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 2, "build": "base", "cpu_ms_per_call": 38.5, "wall_ms_per_call": 282.8, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 3, "build": "simd", "cpu_ms_per_call": 30.8, "wall_ms_per_call": 302.1, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 3, "build": "base", "cpu_ms_per_call": 39.0, "wall_ms_per_call": 305.4, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 3, "build": "sp", "cpu_ms_per_call": 32.5, "wall_ms_per_call": 291.3, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 4, "build": "base", "cpu_ms_per_call": 40.8, "wall_ms_per_call": 333.4, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 4, "build": "sp", "cpu_ms_per_call": 32.3, "wall_ms_per_call": 305.2, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 4, "build": "simd", "cpu_ms_per_call": 30.5, "wall_ms_per_call": 287.8, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 5, "build": "sp", "cpu_ms_per_call": 32.1, "wall_ms_per_call": 305.8, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 5, "build": "simd", "cpu_ms_per_call": 30.1, "wall_ms_per_call": 281.3, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 5, "build": "base", "cpu_ms_per_call": 39.4, "wall_ms_per_call": 291.9, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 6, "build": "simd", "cpu_ms_per_call": 29.5, "wall_ms_per_call": 275.5, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 6, "build": "base", "cpu_ms_per_call": 38.9, "wall_ms_per_call": 328.2, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 6, "build": "sp", "cpu_ms_per_call": 32.0, "wall_ms_per_call": 317.4, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 7, "build": "base", "cpu_ms_per_call": 39.5, "wall_ms_per_call": 323.4, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 7, "build": "sp", "cpu_ms_per_call": 33.3, "wall_ms_per_call": 281.8, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 7, "build": "simd", "cpu_ms_per_call": 31.3, "wall_ms_per_call": 285.8, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 8, "build": "sp", "cpu_ms_per_call": 32.2, "wall_ms_per_call": 293.8, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 8, "build": "simd", "cpu_ms_per_call": 30.0, "wall_ms_per_call": 309.7, "note": "a separate spinning process held the performance cores' clock up"}
+{"run": "simd-clock-held", "round": 8, "build": "base", "cpu_ms_per_call": 38.9, "wall_ms_per_call": 310.9, "note": "a separate spinning process held the performance cores' clock up"}
+{"run":"listener-simd-clock-held","build":"base","round":1,"process_cpu_ms":39.9,"guest_ms":34.37,"derive_ms":12.01,"sha_ms":1.80}
+{"run":"listener-simd-clock-held","build":"simd","round":1,"process_cpu_ms":29.8,"guest_ms":24.92,"derive_ms":2.68,"sha_ms":1.77}
+{"run":"listener-simd-clock-held","build":"base","round":2,"process_cpu_ms":38.8,"guest_ms":33.80,"derive_ms":11.78,"sha_ms":1.76}
+{"run":"listener-simd-clock-held","build":"simd","round":2,"process_cpu_ms":30.1,"guest_ms":25.03,"derive_ms":2.70,"sha_ms":1.78}
+{"run":"listener-simd-clock-held","build":"base","round":3,"process_cpu_ms":39.2,"guest_ms":33.95,"derive_ms":11.83,"sha_ms":1.75}
+{"run":"listener-simd-clock-held","build":"simd","round":3,"process_cpu_ms":30.0,"guest_ms":25.11,"derive_ms":2.70,"sha_ms":1.77}
+{"run":"listener-simd-clock-low","build":"base","round":1,"process_cpu_ms":101.8,"guest_ms":86.16,"derive_ms":33.36,"sha_ms":5.60}
+{"run":"listener-simd-clock-low","build":"simd","round":1,"process_cpu_ms":86.4,"guest_ms":71.15,"derive_ms":10.72,"sha_ms":6.87}
+{"run":"listener-simd-clock-low","build":"base","round":2,"process_cpu_ms":97.2,"guest_ms":82.54,"derive_ms":31.75,"sha_ms":5.26}
+{"run":"listener-simd-clock-low","build":"simd","round":2,"process_cpu_ms":90.3,"guest_ms":74.92,"derive_ms":11.54,"sha_ms":7.58}
