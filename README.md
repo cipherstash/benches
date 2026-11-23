@@ -54,6 +54,68 @@ output through `eql-bindings::from_v2` (the supported migration path — see
 `src/v3.rs` for the details and caveats). The `ope` benches use real
 CLLW-OPE `op` terms emitted by cipherstash-client 0.38.1 (`Index::new_ope()`).
 
+## 🆕 EQL v4, stack-encrypt and the Go SDK
+
+These benches cover the Stack Encrypt engine (`cipherstash/stack`, branch
+`next`) and the Go SDK that embeds it as a WebAssembly guest
+(`github.com/cipherstash/stack/languages/golang`, v0.1.0-rc.6). They were
+written to reproduce a customer's report that decrypting with the Go SDK
+costs far more CPU than it should.
+
+- `v4/` is a Rust crate with its own Cargo workspace. It uses stack-encrypt
+  and `eql_bindings::v4` from `next`, pinned by commit in `v4/Cargo.toml`.
+- `go/` is a Go module on rc.6, with `stashgen` codecs for the same records.
+- Both use the same records, in `go/model/model.go` and `v4/src/lib.rs`.
+  The main one is a 14-column `individual`. Three more hold one column
+  each: a short text, a 2 KB text, and a 2 KB JSON document.
+
+```bash
+# Install EQL v4 (build it from a stack checkout, or point at a bundle)
+STACK_DIR=~/Projects/CipherStash/stack mise run setup-db-v4
+
+# Encrypt and decrypt with no database. "micro" is the customer's five cases.
+mise run bench:v4:crypto                      # Rust, native
+mise run bench:v4:go micro                    # Go, against ZeroKMS, per variant
+mise run bench:v4:go:offline                  # Go, offline keys, needs no credentials
+
+# Fill and index individuals_v4_<tier> (written by Rust), then read pages and decrypt them
+mise run prepare:v4 1000000
+mise run bench:v4:query 1000000               # Rust
+TIER=1000000 mise run bench:v4:go db          # Go, per variant
+
+mise run report:v4                            # one table per mode, variants side by side
+```
+
+Every case reports wall time and process CPU time (getrusage, user + system)
+per call. CPU time is the useful figure for the guest: wall time also
+includes the ZeroKMS round trip.
+
+**Go SDK variants.** `scripts/go-variant.sh` builds each variant from the
+tagged source in a stack checkout (`STACK_REPO`, default
+`~/Projects/CipherStash/stack`). It prints a `-modfile` whose `replace`
+points `go` at that build.
+
+| Variant | Host (`encrypt/guest.go`) | Guest (`encrypt/guest`) |
+|---|---|---|
+| `shipped` | as released | as released |
+| `rebuilt-s` | as released | rebuilt at `opt-level = "s"`: a check that a local build matches the release |
+| `noclose` | without `WithCloseOnContextDone(true)` | as released |
+| `o3` | as released | rebuilt at `opt-level = 3` |
+| `o3-noclose` | without the option | rebuilt at `opt-level = 3` |
+| `local` | the checkout in `STACK_LOCAL` | built there (the fix under test) |
+
+`bench:v4:go:offline` uses `encrypttest`'s deterministic key source. It runs
+the same host and guest code with no ZeroKMS, so anyone can run it. It skips
+the ZeroKMS key derivation that each value needs. That is about half the
+guest's work against ZeroKMS, so its figures are lower than the live ones.
+
+**Credentials.** The benches find ZeroKMS credentials the way the SDKs do:
+`CS_*` variables, or else the profile under `CS_CONFIG_PATH` (default
+`~/.cipherstash`). To use a workspace other than your current one, point
+`CS_CONFIG_PATH` at a directory that contains a `current_workspace` file and
+a `workspaces/<id>` directory. A symlink to the workspace in `~/.cipherstash`
+works.
+
 ### Other benchmarks
 
 - **[ZeroKMS vs AWS KMS](kms-app/REPORT.md)** — bulk field‑encryption throughput

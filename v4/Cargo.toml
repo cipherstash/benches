@@ -1,0 +1,36 @@
+# EQL v4 benches: stack-encrypt (the Rust engine the Go SDK embeds) writing
+# eql_bindings::v4 payloads natively, plus the ingest that fills the
+# individuals_v4_<tier> tables the Go benches read.
+#
+# A workspace of its own: the root crate pins cipherstash-client 0.38.1 and
+# eql-bindings 0.4.2 for the v2/v3 benches, and stack-encrypt's vitaminc
+# 0.10 / eql-bindings 3.x tree must not be unified with them.
+[package]
+name = "benches-v4"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[dependencies]
+# cipherstash/stack `next` at the commit the benches were written against.
+# Bump all three together.
+stack-encrypt = { git = "https://github.com/cipherstash/stack", rev = "5949db074bf551529586b7898eaaf72849768245" }
+eql-bindings = { git = "https://github.com/cipherstash/stack", rev = "5949db074bf551529586b7898eaaf72849768245", features = ["stack-encrypt"] }
+jiff = { version = "1.0.0", default-features = false }
+zeroize = { version = "1", features = ["derive"] }
+vitaminc-protected = "0.10.0"
+
+tokio = { version = "1", features = ["full"] }
+sqlx = { version = "0.8", features = ["runtime-tokio-native-tls", "postgres", "json"] }
+futures = "0.3"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+rand = { version = "0.8", features = ["small_rng"] }
+anyhow = "1"
+libc = "0.2"
+chrono = { version = "0.4", default-features = false, features = ["clock"] }
+
+[profile.release]
+debug = 1

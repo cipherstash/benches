@@ -4,3 +4,8 @@
 .DS_Store
 .env
 *.pem
+
+# Go SDK variant modfiles and binaries (scripts/go-variant.sh)
+/go/variants/
+/go/bin/
+/v4/target
