@@ -27,9 +27,11 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"regexp"
 	"runtime/pprof"
+	"slices"
 	"sort"
 	"strings"
 	"sync"
@@ -52,6 +54,7 @@ type bucket struct {
 	total time.Duration
 	max   time.Duration
 	calls int
+	each  []time.Duration // every outermost call, for percentiles
 }
 
 type buckets []*bucket
@@ -87,6 +90,7 @@ func (l listener) After(context.Context, api.Module, api.FunctionDefinition, []u
 	l.b.depth--
 	if l.b.depth == 0 {
 		d := time.Since(l.b.start)
+		l.b.each = append(l.b.each, d)
 		l.b.total += d
 		l.b.max = max(l.b.max, d)
 		l.b.calls++
@@ -133,6 +137,7 @@ func main() {
 	flag.Var(&bs, "bucket", "name=regexp: time the guest functions matching regexp as one bucket (repeatable)")
 	op := flag.String("op", "decrypt", "decrypt | encrypt")
 	calls := flag.Int("calls", 10, "calls to time, after one warm-up")
+	rows := flag.Int("rows", 100, "rows of 14 columns per call")
 	cpuprofile := flag.String("cpuprofile", "", "write a Go CPU profile of the timed calls here")
 	flag.Parse()
 
@@ -142,7 +147,8 @@ func main() {
 		f.list = regexp.MustCompile(*list)
 	}
 	ctx := experimental.WithFunctionListenerFactory(context.Background(), f)
-	client, err := encrypt.NewClient(ctx)
+	arrivals := &arrivalLog{next: http.DefaultTransport}
+	client, err := encrypt.NewClient(ctx, encrypt.WithTransport(arrivals))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -154,7 +160,7 @@ func main() {
 	run := context.Background()
 
 	r := model.NewRand(42)
-	people := make([]model.Individual, 100)
+	people := make([]model.Individual, *rows)
 	for i := range people {
 		people[i] = model.GenIndividual(r, int64(i+1))
 	}
@@ -174,7 +180,7 @@ func main() {
 		log.Fatal(err)
 	}
 	for _, b := range f.buckets {
-		b.total, b.max, b.calls = 0, 0, 0
+		b.total, b.max, b.calls, b.each = 0, 0, 0, nil
 	}
 	if *cpuprofile != "" {
 		out, err := os.Create(*cpuprofile)
@@ -186,6 +192,7 @@ func main() {
 		}
 		defer pprof.StopCPUProfile()
 	}
+	arrivals.reset()
 	c0, t0 := cpuNow(), time.Now()
 	for range *calls {
 		if err := call(); err != nil {
@@ -194,9 +201,10 @@ func main() {
 	}
 	cpu, wall := cpuNow()-c0, time.Since(t0)
 	n := float64(*calls)
-	values := 1400.0
-	fmt.Printf("%s of 100 rows x 14 columns, %d calls: process CPU %.1f ms/call, wall %.1f ms/call\n",
-		*op, *calls, float64(cpu.Microseconds())/1000/n, float64(wall.Microseconds())/1000/n)
+	values := 14.0 * float64(*rows)
+	fmt.Printf("%s of %d rows x 14 columns, %d calls: process CPU %.1f ms/call, wall %.1f ms/call\n",
+		*op, *rows, *calls, float64(cpu.Microseconds())/1000/n, float64(wall.Microseconds())/1000/n)
+	reportSteps(guest, arrivals, *calls)
 	sort.SliceStable(f.buckets, func(i, j int) bool { return f.buckets[i].total > f.buckets[j].total })
 	fmt.Printf("%-34s %10s %10s %12s %8s %12s\n", "bucket", "ms/call", "µs/value", "calls/call", "% CPU", "longest (ms)")
 	for _, b := range f.buckets {
@@ -204,4 +212,73 @@ func main() {
 		fmt.Printf("%-34s %10.2f %10.1f %12.0f %7.0f%% %12.2f\n", b.name, ms, ms*1000/values, float64(b.calls)/n,
 			100*float64(b.total)/float64(cpu), float64(b.max.Microseconds())/1000)
 	}
+}
+
+// arrivalLog records when each ZeroKMS data-key request arrives. A step's
+// requests are sent together, microseconds apart; steps are a round trip
+// apart. So a gap of more than 5 ms starts a new step.
+type arrivalLog struct {
+	next http.RoundTripper
+	mu   sync.Mutex
+	at   []time.Time
+}
+
+func (a *arrivalLog) RoundTrip(r *http.Request) (*http.Response, error) {
+	if strings.Contains(r.URL.Path, "data-key") {
+		a.mu.Lock()
+		a.at = append(a.at, time.Now())
+		a.mu.Unlock()
+	}
+	return a.next.RoundTrip(r)
+}
+
+func (a *arrivalLog) reset() {
+	a.mu.Lock()
+	a.at = nil
+	a.mu.Unlock()
+}
+
+func (a *arrivalLog) groups() []int {
+	a.mu.Lock()
+	defer a.mu.Unlock()
+	var out []int
+	for i, t := range a.at {
+		if i == 0 || t.Sub(a.at[i-1]) > 5*time.Millisecond {
+			out = append(out, 0)
+		}
+		out[len(out)-1]++
+	}
+	return out
+}
+
+// reportSteps prints the steps per call: how many send requests and how
+// many each sends, the rest (yields and the last step), and the longest
+// and 99th percentile step.
+func reportSteps(guest *bucket, a *arrivalLog, calls int) {
+	g := a.groups()
+	hist := map[int]int{}
+	for _, n := range g {
+		hist[n]++
+	}
+	keys := make([]int, 0, len(hist))
+	for k := range hist {
+		keys = append(keys, k)
+	}
+	sort.Ints(keys)
+	var h []string
+	for _, k := range keys {
+		h = append(h, fmt.Sprintf("%d req x %.1f", k, float64(hist[k])/float64(calls)))
+	}
+	each := slices.Clone(guest.each)
+	slices.Sort(each)
+	p := func(q float64) float64 {
+		if len(each) == 0 {
+			return 0
+		}
+		return float64(each[min(len(each)-1, int(q*float64(len(each))))].Microseconds()) / 1000
+	}
+	n := float64(calls)
+	fmt.Printf("steps/call %.1f: request steps/call %.1f (%s), other steps/call %.1f; step ms: p50 %.2f p99 %.2f max %.2f\n",
+		float64(len(guest.each))/n, float64(len(g))/n, strings.Join(h, ", "),
+		(float64(len(guest.each))-float64(len(g)))/n, p(0.5), p(0.99), p(1))
 }
