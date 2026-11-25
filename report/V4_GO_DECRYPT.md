@@ -2,6 +2,8 @@
 
 Dan Draper's benches, 23 November 2026. Measured on one Apple silicon laptop against ZeroKMS in ap-southeast-2. Figures updated the same day: see [How we measured CPU](#how-we-measured-cpu).
 
+**Update, 25 November 2026:** Go SDK rc.7 ships the fix, the yield and concurrent ZeroKMS requests. It decrypts 100 rows of 14 columns in 29 ms of CPU and 114 ms of wall time. See [V4_GO_RC7.md](V4_GO_RC7.md).
+
 ## Summary
 
 We reproduced the customer's report. The Go SDK, v0.1.0-rc.6, spends about 40 times the CPU that the same Rust engine spends natively to decrypt the same rows. Two settings cause most of it, as the customer found:
