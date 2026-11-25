@@ -3,15 +3,15 @@ module github.com/cipherstash/benches/go
 go 1.26.10
 
 require (
-	github.com/cipherstash/stack/languages/golang v0.1.0-rc.6
-	github.com/cipherstash/stack/languages/golang/encrypt/encrypttest v0.1.0-rc.6
+	github.com/cipherstash/stack/languages/golang v0.1.0-rc.7
+	github.com/cipherstash/stack/languages/golang/encrypt/encrypttest v0.1.0-rc.7
 	github.com/jackc/pgx/v5 v5.11.0
 	github.com/tetratelabs/wazero v1.12.0
 )
 
 require (
-	github.com/cipherstash/vitaminc/bindings/go/vcffi v0.0.0-20261026122913-06568ba93bd9 // indirect
-	github.com/cipherstash/vitaminc/bindings/go/vcvalue v0.0.0-20261026122913-06568ba93bd9 // indirect
+	github.com/cipherstash/vitaminc/bindings/go/vcffi v0.0.0-20261119095843-f1fc9ae74882 // indirect
+	github.com/cipherstash/vitaminc/bindings/go/vcvalue v0.0.0-20261119095843-f1fc9ae74882 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	golang.org/x/mod v0.42.0 // indirect

@@ -15,14 +15,19 @@
 #   o3-noclose   both
 #   local        the stack worktree in $STACK_LOCAL as it stands (its own
 #                guest must already be built there): the fix under test
+#   rc.N         release v0.1.0-rc.N exactly as tagged, guests included,
+#                whatever go.mod requires: to compare two releases
 #
-# ref defaults to languages/golang/v0.1.0-rc.6. The stack checkout is
+# ref defaults to languages/golang/v0.1.0-rc.6 (an rc.N variant sets its own). The stack checkout is
 # $STACK_REPO (default ~/Projects/CipherStash/stack). Builds land in
 # ~/.eqlbench/go-variants/<ref-slug>/<variant>.
 set -euo pipefail
 
 variant=${1:?variant}
 ref=${2:-languages/golang/v0.1.0-rc.6}
+case "$variant" in
+  rc.[0-9]*) ref=languages/golang/v0.1.0-$variant ;;
+esac
 here=$(cd "$(dirname "$0")/.." && pwd)
 gomod="$here/go"
 stack_repo=${STACK_REPO:-$HOME/Projects/CipherStash/stack}

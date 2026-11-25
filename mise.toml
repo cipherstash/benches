@@ -1272,8 +1272,8 @@ description = "Native stack-encrypt: BNDRY's five encrypt/decrypt cases (CPU + w
 run = """
 #!/usr/bin/env bash
 set -euo pipefail
-mkdir -p results/v4
-cd v4 && cargo run -q --release --bin crypto_v4 -- --out ../results/v4/rust-micro.jsonl "$@"
+mkdir -p "${V4_RESULTS:-results/v4}"
+cd v4 && cargo run -q --release --bin crypto_v4 -- --out "../${V4_RESULTS:-results/v4}/rust-micro.jsonl" "$@"
 """
 
 [tasks."bench:v4:query"]
@@ -1282,22 +1282,23 @@ run = """
 #!/usr/bin/env bash
 set -euo pipefail
 tier=${1:-10000}; shift || true
-mkdir -p results/v4
-cd v4 && cargo run -q --release --bin query_v4 -- --tier "$tier" --out ../results/v4/rust-db.jsonl "$@"
+mkdir -p "${V4_RESULTS:-results/v4}"
+cd v4 && cargo run -q --release --bin query_v4 -- --tier "$tier" --out "../${V4_RESULTS:-results/v4}/rust-db.jsonl" "$@"
 """
 
 [tasks."bench:v4:go"]
-description = "Go SDK against ZeroKMS. Args: mode (micro|db), then variants (default: shipped noclose o3 o3-noclose). TIER=<n> for db, GO_FLAGS for gobench"
+description = "Go SDK against ZeroKMS. Args: mode (micro|db), then variants (default: shipped noclose o3 o3-noclose). TIER=<n> for db, GO_FLAGS for gobench, V4_RESULTS=<dir> (default results/v4)"
 run = """
 #!/usr/bin/env bash
 set -euo pipefail
 mode=${1:-micro}; shift || true
 variants=${*:-shipped noclose o3 o3-noclose}
-mkdir -p results/v4
+mkdir -p "${V4_RESULTS:-results/v4}"
+out=$(pwd)/${V4_RESULTS:-results/v4}
 for v in $variants; do
   mf=$(scripts/go-variant.sh "$v")
   (cd go && go run -modfile="$mf" ./cmd/gobench -mode "$mode" -tier "${TIER:-10000}" -variant "$v" \
-      -out ../results/v4/go-"$mode".jsonl ${GO_FLAGS:-})
+      -out "$out"/go-"$mode".jsonl ${GO_FLAGS:-})
 done
 """
 
@@ -1307,8 +1308,8 @@ run = """
 #!/usr/bin/env bash
 set -euo pipefail
 variants=${*:-shipped rebuilt-s noclose o3 o3-noclose}
-mkdir -p results/v4
-out=$(pwd)/results/v4/go-offline.jsonl
+mkdir -p "${V4_RESULTS:-results/v4}"
+out=$(pwd)/${V4_RESULTS:-results/v4}/go-offline.jsonl
 for v in $variants; do
   mf=$(scripts/go-variant.sh "$v")
   (cd go && go test -modfile="$mf" ./offline -run TestMicro -count=1 -v -args -variant "$v" -out "$out" | grep -E 'crypt  rows')

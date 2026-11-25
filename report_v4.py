@@ -2,10 +2,12 @@
 """Summarise the EQL v4 / Go SDK bench results (results/v4/*.jsonl).
 
 For each (sdk, variant, mode, tier, scenario, op) the latest run wins.
+With --pool, every run's calls are pooled instead, for builds run in
+alternating rounds.
 Prints one table per mode: median CPU per call for every variant side by
 side, so the effect of each Go SDK change reads across a row.
 
-    python3 report_v4.py [--op decrypt] [--metric cpu|wall] [--markdown]
+    python3 report_v4.py [--op decrypt] [--metric cpu|wall] [--markdown] [--pool] [--dir DIR]
 """
 import argparse
 import glob
@@ -14,7 +16,7 @@ import os
 import statistics
 from collections import OrderedDict
 
-ORDER = ["native", "shipped", "rebuilt-s", "noclose", "o3", "o3-noclose", "next", "next-fix", "next-yield"]
+ORDER = ["native", "rc.6", "rc.7", "shipped", "rebuilt-s", "noclose", "o3", "o3-noclose", "next", "next-fix", "next-yield"]
 
 
 def label(r):
@@ -26,6 +28,7 @@ def main():
     ap.add_argument("--op", default="decrypt")
     ap.add_argument("--metric", default="cpu", choices=["cpu", "wall"])
     ap.add_argument("--markdown", action="store_true")
+    ap.add_argument("--pool", action="store_true", help="pool every run's calls, not only the latest run's")
     ap.add_argument("--dir", default=os.path.join(os.path.dirname(__file__), "results", "v4"))
     a = ap.parse_args()
 
@@ -38,7 +41,10 @@ def main():
             if r["op"] != a.op:
                 continue
             key = (r["mode"], r.get("tier", 0), r["scenario"], label(r), r.get("clients", 1) or 1)
-            if key not in latest or r["at"] > latest[key]["at"]:
+            if a.pool and key in latest:
+                prev = latest[key]
+                latest[key] = dict(prev, cpu_ms=prev["cpu_ms"] + r["cpu_ms"], wall_ms=prev["wall_ms"] + r["wall_ms"])
+            elif key not in latest or r["at"] > latest[key]["at"]:
                 latest[key] = r
 
     modes = OrderedDict()

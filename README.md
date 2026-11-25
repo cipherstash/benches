@@ -58,13 +58,13 @@ CLLW-OPE `op` terms emitted by cipherstash-client 0.38.1 (`Index::new_ope()`).
 
 These benches cover the Stack Encrypt engine (`cipherstash/stack`, branch
 `next`) and the Go SDK that embeds it as a WebAssembly guest
-(`github.com/cipherstash/stack/languages/golang`, v0.1.0-rc.6). They were
+(`github.com/cipherstash/stack/languages/golang`, v0.1.0-rc.7). They were
 written to reproduce a customer's report that decrypting with the Go SDK
 costs far more CPU than it should.
 
 - `v4/` is a Rust crate with its own Cargo workspace. It uses stack-encrypt
   and `eql_bindings::v4` from `next`, pinned by commit in `v4/Cargo.toml`.
-- `go/` is a Go module on rc.6, with `stashgen` codecs for the same records.
+- `go/` is a Go module on rc.7, with `stashgen` codecs for the same records.
 - Both use the same records, in `go/model/model.go` and `v4/src/lib.rs`.
   The main one is a 14-column `individual`. Three more hold one column
   each: a short text, a 2 KB text, and a 2 KB JSON document.
@@ -84,6 +84,10 @@ mise run bench:v4:query 1000000               # Rust
 TIER=1000000 mise run bench:v4:go db          # Go, per variant
 
 mise run report:v4                            # one table per mode, variants side by side
+
+# Compare two releases: alternate them round by round, then pool the rounds
+V4_RESULTS=results/v4-rc7 GO_FLAGS="-rounds 1 -calls 9" mise run bench:v4:go micro rc.6 rc.7
+python3 report_v4.py --dir results/v4-rc7 --pool
 ```
 
 Every case reports wall time and process CPU time (getrusage, user + system)
@@ -93,16 +97,19 @@ includes the ZeroKMS round trip.
 **Go SDK variants.** `scripts/go-variant.sh` builds each variant from the
 tagged source in a stack checkout (`STACK_REPO`, default
 `~/Projects/CipherStash/stack`). It prints a `-modfile` whose `replace`
-points `go` at that build.
+points `go` at that build. `shipped` is the release in `go/go.mod`, now
+rc.7. `rebuilt-s`, `noclose`, `o3` and `o3-noclose` change rc.6, the
+release the decrypt study measured; rc.7 already has both changes.
 
 | Variant | Host (`encrypt/guest.go`) | Guest (`encrypt/guest`) |
 |---|---|---|
-| `shipped` | as released | as released |
+| `shipped` | as released (rc.7) | as released |
 | `rebuilt-s` | as released | rebuilt at `opt-level = "s"`: a check that a local build matches the release |
 | `noclose` | without `WithCloseOnContextDone(true)` | as released |
 | `o3` | as released | rebuilt at `opt-level = 3` |
 | `o3-noclose` | without the option | rebuilt at `opt-level = 3` |
 | `local` | the checkout in `STACK_LOCAL` | built there (the fix under test) |
+| `rc.N` | release v0.1.0-rc.N as tagged | as tagged |
 
 `bench:v4:go:offline` uses `encrypttest`'s deterministic key source. It runs
 the same host and guest code with no ZeroKMS, so anyone can run it. It skips
