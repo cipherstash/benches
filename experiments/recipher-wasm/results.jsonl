@@ -1,0 +1,40 @@
+{"build":"native","case":"from_key_material (reencrypt + sha256)","ns":2819}
+{"build":"native","case":"reencrypt","ns":1797}
+{"build":"native","case":"sha256 of 528 bytes","ns":1000}
+{"build":"native","case":"reencrypt, single-pass permutations","ns":669}
+{"build":"native","case":"from_key_material, single-pass","ns":1676}
+{"build":"wasm","case":"from_key_material (reencrypt + sha256)","ns":7208}
+{"build":"wasm","case":"reencrypt","ns":5921}
+{"build":"wasm","case":"sha256 of 528 bytes","ns":1192}
+{"build":"wasm","case":"reencrypt, single-pass permutations","ns":1893}
+{"build":"wasm","case":"from_key_material, single-pass","ns":3113}
+{"build":"wasm-closeondone","case":"from_key_material (reencrypt + sha256)","ns":72664}
+{"build":"wasm-closeondone","case":"reencrypt","ns":70032}
+{"build":"wasm-closeondone","case":"sha256 of 528 bytes","ns":1519}
+{"build":"wasm-closeondone","case":"reencrypt, single-pass permutations","ns":4171}
+{"build":"wasm-closeondone","case":"from_key_material, single-pass","ns":5685}
+{"build":"wasm-simd128","case":"from_key_material (reencrypt + sha256)","ns":6785}
+{"build":"wasm-simd128","case":"reencrypt","ns":5455}
+{"build":"wasm-simd128","case":"sha256 of 528 bytes","ns":1186}
+{"build":"wasm-simd128","case":"reencrypt, single-pass permutations","ns":1342}
+{"build":"wasm-simd128","case":"from_key_material, single-pass","ns":2515}
+{"build":"native","case":"from_key_material (reencrypt + sha256)","ns":2699}
+{"build":"native","case":"reencrypt","ns":1659}
+{"build":"native","case":"sha256 of 528 bytes","ns":1004}
+{"build":"native","case":"reencrypt, single-pass permutations","ns":670}
+{"build":"native","case":"from_key_material, single-pass","ns":1694}
+{"build":"wasm","case":"from_key_material (reencrypt + sha256)","ns":7277}
+{"build":"wasm","case":"reencrypt","ns":6090}
+{"build":"wasm","case":"sha256 of 528 bytes","ns":1184}
+{"build":"wasm","case":"reencrypt, single-pass permutations","ns":1909}
+{"build":"wasm","case":"from_key_material, single-pass","ns":3095}
+{"build":"wasm-closeondone","case":"from_key_material (reencrypt + sha256)","ns":74300}
+{"build":"wasm-closeondone","case":"reencrypt","ns":75493}
+{"build":"wasm-closeondone","case":"sha256 of 528 bytes","ns":1368}
+{"build":"wasm-closeondone","case":"reencrypt, single-pass permutations","ns":4236}
+{"build":"wasm-closeondone","case":"from_key_material, single-pass","ns":5551}
+{"build":"wasm-simd128","case":"from_key_material (reencrypt + sha256)","ns":6590}
+{"build":"wasm-simd128","case":"reencrypt","ns":5454}
+{"build":"wasm-simd128","case":"sha256 of 528 bytes","ns":1183}
+{"build":"wasm-simd128","case":"reencrypt, single-pass permutations","ns":1334}
+{"build":"wasm-simd128","case":"from_key_material, single-pass","ns":2746}

@@ -1,0 +1,143 @@
+diff --git a/languages/golang/encrypt/guest/src/abi.rs b/languages/golang/encrypt/guest/src/abi.rs
+index beaf1cf0e..2139d31ff 100644
+--- a/languages/golang/encrypt/guest/src/abi.rs
++++ b/languages/golang/encrypt/guest/src/abi.rs
+@@ -233,7 +233,7 @@ fn cipher_init(config: InitConfig) -> Result<Vec<u8>, u32> {
+     // for a claim the server need not honour, so the bound is kept and the
+     // docs say 500 rather than "one".
+     let opts = ClientOpts::new(config.endpoint)
+-        .with_max_concurrent_reqs(1)
++        .with_max_concurrent_reqs(3) // EXPERIMENT: was 1
+         .map_err(|e| last_error::record(&e, e.payload(), STATUS_INTERNAL))?;
+     let kms = StackKms::<HostTokenStrategy, WasiHostConnection>::connect(
+         opts,
+diff --git a/languages/golang/encrypt/step.go b/languages/golang/encrypt/step.go
+index 335d1712c..cc9a67ac5 100644
+--- a/languages/golang/encrypt/step.go
++++ b/languages/golang/encrypt/step.go
+@@ -4,6 +4,7 @@ import (
+ 	"context"
+ 	"errors"
+ 	"fmt"
++	"sync"
+ 
+ 	"github.com/cipherstash/stack/languages/golang/internal/guest"
+ 	"github.com/cipherstash/vitaminc/bindings/go/vcffi"
+@@ -173,8 +174,23 @@ func (t *transport) performStep(ctx context.Context, step *ioStep) ([]byte, erro
+ 			wipe(b)
+ 		}
+ 	}()
+-	for _, r := range step.requests {
+-		status, headers, body := t.perform(ctx, r.method, r.url, r.headers, r.body)
++	// EXPERIMENT: perform a step's requests at the same time; the responses
++	// keep the requests' order.
++	type result struct {
++		status        int32
++		headers, body []byte
++	}
++	results := make([]result, len(step.requests))
++	var wg sync.WaitGroup
++	for i, r := range step.requests {
++		wg.Go(func() {
++			s, h, b := t.perform(ctx, r.method, r.url, r.headers, r.body)
++			results[i] = result{s, h, b}
++		})
++	}
++	wg.Wait()
++	for _, res := range results {
++		status, headers, body := res.status, res.headers, res.body
+ 		if headers == nil {
+ 			headers = []byte{}
+ 		}
+diff --git a/packages/stack-kms/src/client.rs b/packages/stack-kms/src/client.rs
+index efc14398d..7e373be4f 100644
+--- a/packages/stack-kms/src/client.rs
++++ b/packages/stack-kms/src/client.rs
+@@ -175,48 +175,47 @@ impl<C: ZeroKMSConnection + Send + Sync> Client<C> {
+         Req: ViturRequest,
+         E: From<ViturRequestError> + std::fmt::Display,
+     {
+-        let result = map_async_chunked(
+-            specs,
+-            |chunk| async {
+-                tracing::trace!(target: "stack_kms::client", operation, "sending request with {} keys", chunk.len());
+-
+-                let keys = self
+-                    .connection
+-                    .send(make_request(chunk), access_token)
+-                    .await
+-                    .map(&response_keys)
+-                    .map_err(E::from)?;
+-
+-                // This should never happen with ZeroKMS but check just to be sure.
+-                if keys.len() != chunk.len() {
+-                    return Err(count_mismatch(chunk.len(), keys.len()));
+-                }
+-
+-                tracing::trace!(target: "stack_kms::client", operation, "received {} keys - creating data keys", keys.len());
+-
+-                // Deriving a key from its key material is the costly part of
+-                // a batch (a recipher re-encryption and a hash per key), so
+-                // the loop yields to the runtime every `YIELD_EVERY` keys. A
+-                // host that cannot preempt the work (a wasm guest) gets
+-                // control back between chunks.
+-                //
+-                // That is every `YIELD_EVERY` keys with one request in
+-                // flight, as a wasm guest has. With more, `buffered` passes
+-                // a yield on only once two requests have yielded or it has
+-                // polled them all, so about twice as many keys, or more,
+-                // are derived before the runtime gets control back.
+-                let mut out = Vec::with_capacity(keys.len());
+-                for (i, (spec, item)) in chunk.iter().zip(keys).enumerate() {
+-                    if i > 0 && i % YIELD_EVERY == 0 {
+-                        yield_now().await;
++        // EXPERIMENT: send every chunk's request first, up to
++        // `max_concurrent_reqs` at once, then derive every key, yielding
++        // every `YIELD_EVERY` keys. Deriving inside each request's future
++        // would let `buffered` derive for every ready chunk before passing a
++        // yield on, so a step would grow with the number of requests in
++        // flight.
++        let result: Result<Vec<Out>, E> = async {
++            let items: Vec<Item> = map_async_chunked(
++                specs,
++                |chunk| async {
++                    tracing::trace!(target: "stack_kms::client", operation, "sending request with {} keys", chunk.len());
++
++                    let keys = self
++                        .connection
++                        .send(make_request(chunk), access_token)
++                        .await
++                        .map(&response_keys)
++                        .map_err(E::from)?;
++
++                    // This should never happen with ZeroKMS but check just to be sure.
++                    if keys.len() != chunk.len() {
++                        return Err(count_mismatch(chunk.len(), keys.len()));
+                     }
+-                    out.push(map_key(spec, item)?);
++                    Ok(keys)
++                },
++                self.max_keys_per_req,
++                self.max_concurrent_reqs,
++            )
++            .await?;
++
++            tracing::trace!(target: "stack_kms::client", operation, "received {} keys - creating data keys", items.len());
++
++            let mut out = Vec::with_capacity(items.len());
++            for (i, (spec, item)) in specs.iter().zip(items).enumerate() {
++                if i > 0 && i % YIELD_EVERY == 0 {
++                    yield_now().await;
+                 }
+-                Ok(out)
+-            },
+-            self.max_keys_per_req,
+-            self.max_concurrent_reqs,
+-        )
++                out.push(map_key(spec, item)?);
++            }
++            Ok(out)
++        }
+         .await;
+ 
+         match &result {

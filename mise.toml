@@ -1,6 +1,8 @@
 [tools]
 python = "latest"
 rust = "latest"
+# The EQL v4 / Go SDK benches (go/). The SDK's go line needs 1.26.10.
+go = "1.26.10"
 
 [env]
 DATABASE_URL = "postgres://postgres:postgres@localhost:5400/postgres"
@@ -1223,4 +1225,100 @@ description = "Overview of ingest benchmark results — throughput per scenario,
 run = """
 #!/usr/bin/env bash
 python3 report_ingest.py "$@"
+"""
+
+
+# ---------------------------------------------------------------------------
+# EQL v4: stack-encrypt (Rust, v4/) and the Go SDK (go/)
+#
+# Bench workspace: the v4 benches find ZeroKMS credentials the way the SDKs
+# do: CS_* in the environment, else the profile under CS_CONFIG_PATH
+# (default ~/.cipherstash). To keep a bench-only workspace apart from your
+# current one, point CS_CONFIG_PATH at a directory holding
+# current_workspace + workspaces/<id> (a symlink to ~/.cipherstash's is fine).
+# ---------------------------------------------------------------------------
+
+[tasks.setup-db-v4]
+description = "Install the EQL v4 bundle. EQL_V4_SQL=<bundle>, or STACK_DIR=<cipherstash/stack checkout> to build packages/eql there"
+run = """
+#!/usr/bin/env bash
+set -euo pipefail
+sql=${EQL_V4_SQL:-}
+if [ -z "$sql" ]; then
+  : "${STACK_DIR:?set EQL_V4_SQL to a cipherstash-encrypt-v4.sql, or STACK_DIR to a stack checkout to build one}"
+  (cd "$STACK_DIR/packages/eql" && bash tasks/build.sh >/dev/null)
+  sql="$STACK_DIR/packages/eql/release/cipherstash-encrypt-v4.sql"
+fi
+psql -q -v ON_ERROR_STOP=1 -f "$sql"
+psql -Atc "select 'eql_v4 installed: ' || count(*) || ' domains' from pg_type where typname like 'eql_v4_%' and typtype = 'd'"
+"""
+
+[tasks."prepare:v4"]
+description = "Create and fill individuals_v4_<tier> via stack-encrypt (arg: tier, default 10000), then index it"
+run = """
+#!/usr/bin/env bash
+set -euo pipefail
+tier=${1:-10000}
+mkdir -p results/v4
+psql -q -v ON_ERROR_STOP=1 -v tier="$tier" -f sql/schema_v4.sql
+(cd v4 && cargo run -q --release --bin ingest_v4 -- --tier "$tier" --out ../results/v4/ingest.jsonl)
+t0=$(date +%s)
+psql -q -v ON_ERROR_STOP=1 -v tier="$tier" -f sql/indexes/v4_individuals.sql
+echo "indexes built in $(( $(date +%s) - t0 ))s"
+"""
+
+[tasks."bench:v4:crypto"]
+description = "Native stack-encrypt: BNDRY's five encrypt/decrypt cases (CPU + wall per call)"
+run = """
+#!/usr/bin/env bash
+set -euo pipefail
+mkdir -p "${V4_RESULTS:-results/v4}"
+cd v4 && cargo run -q --release --bin crypto_v4 -- --out "../${V4_RESULTS:-results/v4}/rust-micro.jsonl" "$@"
+"""
+
+[tasks."bench:v4:query"]
+description = "Native stack-encrypt: read pages from individuals_v4_<tier> and decrypt them (arg: tier)"
+run = """
+#!/usr/bin/env bash
+set -euo pipefail
+tier=${1:-10000}; shift || true
+mkdir -p "${V4_RESULTS:-results/v4}"
+cd v4 && cargo run -q --release --bin query_v4 -- --tier "$tier" --out "../${V4_RESULTS:-results/v4}/rust-db.jsonl" "$@"
+"""
+
+[tasks."bench:v4:go"]
+description = "Go SDK against ZeroKMS. Args: mode (micro|db), then variants (default: shipped noclose o3 o3-noclose). TIER=<n> for db, GO_FLAGS for gobench, V4_RESULTS=<dir> (default results/v4)"
+run = """
+#!/usr/bin/env bash
+set -euo pipefail
+mode=${1:-micro}; shift || true
+variants=${*:-shipped noclose o3 o3-noclose}
+mkdir -p "${V4_RESULTS:-results/v4}"
+out=$(pwd)/${V4_RESULTS:-results/v4}
+for v in $variants; do
+  mf=$(scripts/go-variant.sh "$v")
+  (cd go && go run -modfile="$mf" ./cmd/gobench -mode "$mode" -tier "${TIER:-10000}" -variant "$v" \
+      -out "$out"/go-"$mode".jsonl ${GO_FLAGS:-})
+done
+"""
+
+[tasks."bench:v4:go:offline"]
+description = "Go SDK with encrypttest's deterministic keys (no ZeroKMS, no credentials): BNDRY's five cases per variant"
+run = """
+#!/usr/bin/env bash
+set -euo pipefail
+variants=${*:-shipped rebuilt-s noclose o3 o3-noclose}
+mkdir -p "${V4_RESULTS:-results/v4}"
+out=$(pwd)/${V4_RESULTS:-results/v4}/go-offline.jsonl
+for v in $variants; do
+  mf=$(scripts/go-variant.sh "$v")
+  (cd go && go test -modfile="$mf" ./offline -run TestMicro -count=1 -v -args -variant "$v" -out "$out" | grep -E 'crypt  rows')
+done
+"""
+
+[tasks."report:v4"]
+description = "Median CPU / wall per case and variant from results/v4/*.jsonl"
+run = """
+#!/usr/bin/env bash
+python3 report_v4.py "$@"
 """
